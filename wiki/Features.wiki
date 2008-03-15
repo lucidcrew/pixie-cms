@@ -2,3 +2,5 @@
 #labels Featured,welcome,introduction,features
 
 Pixie is not all about features but...
+
+If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
