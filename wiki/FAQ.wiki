@@ -1,9 +1,7 @@
 #summary Frequently asked questions.
 #labels Featured,Phase-Support,faq
 
-= FAQ's =
-
-This document is a good place to start when looking for help with Pixie. The questions are ordered by popularity to keep the most relevant questions near the top.
+This document is a great place to start when looking for help with Pixie. The questions are ordered by popularity to keep the most relevant questions near the top. If you have any questions that are not answered here please head to the [http://www.pixieapp.com/forums/ forums].
 
 == What do I need to run Pixie? ==
 
