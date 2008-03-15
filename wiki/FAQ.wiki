@@ -6,3 +6,7 @@ This document is a great place to start when looking for help with Pixie. The qu
 == What do I need to run Pixie? ==
 
 == How do I use Pixie? ==
+
+== What licence is Pixie released under? ==
+
+== What is open source? ==
