@@ -1,0 +1,19 @@
+#summary Everything you need to know to get Pixie installed.
+#labels Featured,Phase-Deploy,installation,help
+
+Add your content here.
+
+
+== Server Requirements ==
+
+
+== Browser Requirements ==
+
+
+== Uploading your files ==
+
+
+== Running the installer ==
+
+
+== Manual Installation (if something goes wrong) ==
