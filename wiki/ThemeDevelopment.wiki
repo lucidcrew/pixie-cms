@@ -1,0 +1,10 @@
+#summary How to develop a theme for Pixie.
+#labels Phase-Design,Phase-Implementation,theme,development,style,css,design
+
+With Pixie you do not need to know any languages other than CSS to create a new theme. Pixie was created with the same philosophy as the [http://www.csszengarden.com/ CSS Zen Garden]: 
+
+     A quote about the CSS zen Garden and how it works
+
+= Starting your design =
+
+= CSS your theme =
