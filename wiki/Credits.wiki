@@ -4,3 +4,6 @@
 Pixie uses code from many other open source projects on the web. Without these projects Pixie would not be as great as it is today. 
 
 We would like to say  big thanks to:
+
+
+If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
