@@ -1,5 +1,5 @@
 #summary Introduction to Pixie, how it works and plans for the future.
-#labels Featured,Phase-Deploy,welcome,gettingstarted,beginners
+#labels Featured,Phase-Deploy,welcome,introduction,beginners
 
 = Introduction =
 
