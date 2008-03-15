@@ -12,3 +12,5 @@ With Pixie you do not need to know any languages other than CSS to create a new 
 To make life simple we have created a theme template which contains the files you need to get your theme started. The template can be downloaded here.
 
 The template is broken into a number of files.   
+
+If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
