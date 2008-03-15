@@ -1,4 +1,7 @@
-#summary How to develop new block for Pixie.
+#summary How to develop new blocks for Pixie.
 #labels Phase-Implementation,blocks,development,php
 
 Blocks are the little extra pieces of content that sit on your site. Example of blocks are
+
+
+If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
