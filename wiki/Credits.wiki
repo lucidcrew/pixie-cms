@@ -1,4 +1,6 @@
 #summary Open source projects that make Pixie possible.
 #labels credits,thanks,links
 
-Pixie uses code from many other open source projects on the web. Without these projects Pixie would not be as great as it is today. A big thanks goes to:
+Pixie uses code from many other open source projects on the web. Without these projects Pixie would not be as great as it is today. 
+
+I would like to say  big thanks to:
