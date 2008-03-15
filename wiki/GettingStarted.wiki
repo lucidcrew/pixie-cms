@@ -1,5 +1,5 @@
 #labels Phase-Requirements,gettingstarted,introduction,help
-An introduction to Pixie, its capabilities and aims for the future.
+# An introduction to Pixie, its capabilities and aims for the future.
 
 = Introduction =
 
