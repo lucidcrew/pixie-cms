@@ -1,11 +1,13 @@
-#summary One-sentence summary of this page.
+#summary Introduction to Pixie, how it works and plans for the future.
+#labels Featured,Phase-Deploy,welcome,gettingstarted,beginners
 
 = Introduction =
 
-Add your content here.
+Pixie was created with a vision that anyone should be able to create and maintain a website. 
 
+= Where are we now? =
 
-= Details =
+= Looking ahead =
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
