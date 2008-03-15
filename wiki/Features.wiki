@@ -1,0 +1,4 @@
+#summary The complete list of Pixie features
+#labels Featured,welcome,introduction,features
+
+Pixie is not all about features but...
