@@ -5,6 +5,10 @@ With Pixie you do not need to know any languages other than CSS to create a new 
 
      A quote about the CSS zen Garden and how it works
 
-= Starting your design =
+== Starting your design ==
 
-= CSS your theme =
+== CSS your theme ==
+
+To make life simple we have created a theme template which contains the files you need to get your theme started. The template can be downloaded here.
+
+The template is broken into a number of files.   
