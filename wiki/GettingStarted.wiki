@@ -1,8 +1,6 @@
 #summary Introduction to Pixie, how it works and plans for the future.
 #labels Featured,Phase-Deploy,welcome,introduction,beginners,help
 
-= Introduction =
-
 Pixie was created with a vision that anyone should be able to create and maintain a website. 
 
 = Where are we now? =
