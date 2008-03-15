@@ -1,2 +1,5 @@
 #summary The Pixie story so far...
 #labels history,introduction
+
+
+If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
