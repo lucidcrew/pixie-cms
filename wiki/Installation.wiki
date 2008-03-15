@@ -17,3 +17,5 @@ Add your content here.
 
 
 == Manual Installation (if something goes wrong) ==
+
+If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
