@@ -10,3 +10,6 @@ This document is a great place to start when looking for help with Pixie. The qu
 == What licence is Pixie released under? ==
 
 == What is open source? ==
+
+
+If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
