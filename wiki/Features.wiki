@@ -15,8 +15,9 @@ Pixie uses the latest web standards so your site is accessible to all your visit
 ==== Design ====
 Pixie itself has been designed to be simple. Pixie’s interface has been refined over a number of versions to be user friendly. On the visitor side... you will love the fact that all you need to know is CSS to customise your site. If that sounds too complicated you can choose from the ever increasing amount of free templates. 
 
+Look over the feature list for the full nitty gritty of what Pixie is capable of:
 
-=== And plenty of others... ===
+=== The full features list... ===
 ----
 
 === Still have questions? ===
