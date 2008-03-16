@@ -1,7 +1,7 @@
 #summary Useful Pixie links.
 #labels links,help
 
-=== Still have questions? ===
+
 ----
 
 If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
