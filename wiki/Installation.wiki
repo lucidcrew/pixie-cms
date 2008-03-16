@@ -3,19 +3,30 @@
 
 Add your content here.
 
+=== Requirements === 
+----
 
-== Server Requirements ==
-
-
-== Browser Requirements ==
-
-
-== Uploading your files ==
+==== Server Requirements ====
 
 
-== Running the installer ==
+==== Browser Requirements ====
 
 
-== Manual Installation (if something goes wrong) ==
+=== Hosting & Uploading ===
+----
+
+==== Web Hosting ====
+
+==== Uploading your files ====
+
+
+=== The Pixie Installer ===
+----
+
+=== Manual Installation (if something goes wrong) ===
+----
+
+=== Still have questions? ===
+----
 
 If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
