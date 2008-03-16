@@ -25,7 +25,15 @@ Look over the feature list below for the full nitty gritty of what Pixie is capa
 
 ==== Web Based ====
 
-You can install Pixie on your own server so you have full control over your own site and data. Pixie will work through most major browsers (we recommend Firefox and Flock) giving you control over your site from anywhere in the world. Nifty!
+You can install Pixie on your own server so you have full control over your own site and data. Pixie will work through most major browsers (we recommend Firefox) giving you control over your site from anywhere in the world.
+
+==== RSS 2.0 ====
+
+Let visitors subscribe to the blogs and news pages you create via RSS. Pixie also has RSS feeds available to the administrators for keeping an eye on your site.
+
+==== Modules, Themes, Plug ins and Blocks ====
+
+Make Pixie do more with downloadable extras. Browse the ever increasing extras section on the Pixie website.
 
 === Still have questions? ===
 ----
