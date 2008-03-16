@@ -7,18 +7,25 @@ Pixie is not out to compete with any other site management tool, the main goal i
 ----
 
 ==== The Installer ====
+
 Most website management tools will install the same package for everyone. Pixie takes a new approach and allows you to select the type of site you are after. A blog?, Band? or Business? you choose what best suits you. As Pixie matures so will the list of possibilities...
 
 ==== Web Standards ====
+
 Pixie uses the latest web standards so your site is accessible to all your visitors and is search engine friendly.  Pixie is especially fond of Microformats. It is not just the visitors that benefit though, we are working hard to make the administration area accessible too.
 
 ==== Design ====
+
 Pixie itself has been designed to be simple. Pixie’s interface has been refined over a number of versions to be user friendly. On the visitor side... you will love the fact that all you need to know is CSS to customise your site. If that sounds too complicated you can choose from the ever increasing amount of free templates. 
 
-Look over the feature list for the full nitty gritty of what Pixie is capable of:
+Look over the feature list below for the full nitty gritty of what Pixie is capable of:
 
 === The Complete Features list ===
 ----
+
+==== Web Based ====
+
+You can install Pixie on your own server so you have full control over your own site and data. Pixie will work through most major browsers (we recommend Firefox and Flock) giving you control over your site from anywhere in the world. Nifty!
 
 === Still have questions? ===
 ----
