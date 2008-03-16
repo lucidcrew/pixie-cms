@@ -15,7 +15,7 @@ This document is a great place to start when looking for help with Pixie. The qu
 ==== What is open source? ====
 
 
-=== Still have questions? ===
+
 ----
 
-If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
+If you have questions or comments about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
