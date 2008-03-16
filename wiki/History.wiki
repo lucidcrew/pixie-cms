@@ -15,4 +15,11 @@ I have a fair few features I would like to see in future versions of Pixie but w
 
 Some plans for the future include:
 
+  * one
+  * two 
+  * three
+
+
+==== Still have questions? ====
+
 If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
