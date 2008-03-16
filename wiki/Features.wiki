@@ -17,7 +17,7 @@ Pixie itself has been designed to be simple. Pixie’s interface has been refine
 
 Look over the feature list for the full nitty gritty of what Pixie is capable of:
 
-=== The full features list... ===
+=== The Complete Features list ===
 ----
 
 === Still have questions? ===
