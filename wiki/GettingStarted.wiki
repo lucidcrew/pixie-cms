@@ -3,13 +3,12 @@
 
 Pixie was created with a vision that anyone should be able to create and maintain a website. 
 
-== Where are we now? ==
+=== Where are we now? ===
 
-== Looking ahead ==
+=== Looking ahead ===
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+
+=== Still have questions? ===
+----
 
 If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
