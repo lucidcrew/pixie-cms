@@ -111,7 +111,6 @@ Look over the feature list below for the full nitty gritty of what Pixie is capa
     That sounds posh!... and it is. Pixie uses TinyMce to add a simple word processing interface so editing your text is simple and familiar. 
 
 
-=== Still have questions? ===
 ----
 
 If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
