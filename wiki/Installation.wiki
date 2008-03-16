@@ -21,8 +21,8 @@ I am not a big fan of requirements, they are restricting and a little bit compli
 
 ==== Browser Requirements ====
 
-  * JavaScript
-    You will need to have a JavaScript enabled browser to use Pixie. Pixie is tested on IE7, IE6, Firefox (Mac & PC) and Safari (Mac & PC). Our favorite browsers are: Firefox and Safari.
+  * !JavaScript
+    You will need to have a !JavaScript enabled browser to use Pixie. Pixie is tested on IE7, IE6, Firefox (Mac & PC) and Safari (Mac & PC). Our favorite browsers are: Firefox and Safari.
 
 === Hosting & Uploading ===
 ----
