@@ -21,8 +21,6 @@ Pixie is not out to compete with any other site management tool, the main goal i
 === The Complete Features List ===
 ----
 
-Look over the feature list below for the full nitty gritty of what Pixie is capable of:
-
 ==== Clean URLs ====
 
     Ugly dynamic URLs are a thing of the past, Pixie supports clean, search engine friendly URLs.
