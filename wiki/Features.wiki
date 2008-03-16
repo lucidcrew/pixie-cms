@@ -1,7 +1,7 @@
 #summary The complete list of Pixie features
 #labels Featured,welcome,introduction,features
 
-Pixie is not out to compete with any other site management tool, the main goal is to keep Pixie so simple that even your Grandma could use it. Keeping it simple does not stop Pixie from having plenty of features, lets start with the top three:
+Pixie is not out to compete with any other site management tool, the main goal is to keep Pixie so simple that even your Grandma could use it. Keeping Pixie simple does not stop it from having plenty of useful features, lets start with the top three:
 
 === The Top Three ===
 ----
