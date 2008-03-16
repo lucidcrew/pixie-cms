@@ -27,6 +27,10 @@ Look over the feature list below for the full nitty gritty of what Pixie is capa
 
     Ugly dynamic URLs are a thing of the past, Pixie supports clean, search engine friendly URLs.
 
+==== Cron ====
+
+    Automatically create backups of your database using Cron. This feature is still in its infancy and is being improved all the time. 
+
 ==== CSS template system ====
 
     Pixe uses CSS for its template system, think that is restrictive? look at CSS Zen Garden for inspiration and see how powerful CSS has become. For a quick site refresh take a look at the extra themes available on the Pixie site.
