@@ -18,10 +18,10 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
     Pixie itself has been designed to be simple. Pixie’s interface has been refined over a number of versions to be user friendly. On the visitor side... you will love the fact that all you need to know is CSS to customise your site. If that sounds too complicated you can choose from the ever increasing amount of free templates. 
 
-Look over the feature list below for the full nitty gritty of what Pixie is capable of:
-
 === The Complete Features list ===
 ----
+
+Look over the feature list below for the full nitty gritty of what Pixie is capable of:
 
 ==== Web Based ====
 
@@ -31,7 +31,7 @@ Look over the feature list below for the full nitty gritty of what Pixie is capa
 
     Let visitors subscribe to the blogs and news pages you create via RSS. Pixie also has RSS feeds available to the administrators for keeping an eye on your site.
 
-==== Modules, Themes, Plug ins and Blocks ====
+==== Modules, Themes, Plug-ins and Blocks ====
 
     Make Pixie do more with downloadable extras. Browse the ever increasing extras section on the Pixie website.
 
