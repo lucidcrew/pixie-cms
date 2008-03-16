@@ -41,23 +41,59 @@ Look over the feature list below for the full nitty gritty of what Pixie is capa
 
 ==== Free & Open Source ====
 
-    Pixie is free (as in cost) and free (as in what you can do with it). Pixie is released under GPL v3 which means you can:
+    Pixie is free (as in cost) and free (as in what you can do with it). Pixie is released under GPL v3 which means:
 
   * You can use Pixie free of charge.
   * You can redistribute it without any limitations.
   * You can make modifications and while they are used internally. If you start distribution of modified system you need to make modification publicly available under the terms of General Public License.
   * You can’t charge for the software itself even if it is modified. 
 
+==== jQuery ====
+
+    I used to hate programming Javascript until I met jQuery. We bundle the latest version of jQuery with Pixie so you can make use of it in your own site.
+
+==== Microformats ====
+
+    Microformats are excellent... etc...
+
 ==== Modules, Themes, Plug-ins and Blocks ====
 
     Make Pixie do more with downloadable extras. Browse the ever increasing extras section on the Pixie website.
 
+==== Multilingual ====
+
+    Pixie has support for different languages (although none have been translated yet...).
+
 ==== Portable ====
+
     Run Pixie from your local machine or memory pen and use it as a design development tool.
+
+==== Quick to develop for ====
+    So you want Pixie to do more? Then its time to program your own module. Pixie makes this easy by looking at the database tables for your module and automatically creating the admin interface. All you need to code is what he public see. Details are in the documentation. 
+
+==== Robots.txt ====
+
+    Pixie protects certain folders with a robots file, this should help prevent your files and images showing up in web searches and then subsequently being hot-linked.
 
 ==== RSS 2.0 ====
 
     Let visitors subscribe to the blogs and news pages you create via RSS. Pixie also has RSS feeds available to the administrators for keeping an eye on your site.
+
+==== Search Engine Friendly ====
+
+    Etc........
+
+==== Sitemap.xml ====
+
+    All the major search engines are now looking for a sitemap.xml file. Pixie supplies one as standard so you don’t have to worry about yet another standard.
+
+==== Small ====
+
+   Pixie is just a few megabytes in size, we always wanted to keep the size of the software small it could run quietly and efficiently on your server.
+
+==== Spam Protected ====
+    
+    We all hate spam... and so does Pixie. Pixes uses the excellent Bad Behaviour script to keep your site Spam free. 
 
 ==== System and referral logs ====
 
