@@ -1,7 +1,7 @@
 #summary Everything you need to know to get Pixie installed.
 #labels Featured,Phase-Deploy,installation,help
 
-Add your content here.
+This page details everything you will need to know to get Pixie installed onto your web server. Those of you familiar with self hosted scripts should find this a very simple process. We have tried our best to make the install process as simple as possible.
 
 === Requirements === 
 ----
@@ -10,19 +10,19 @@ I am not a big fan of requirements, they are restricting and a little bit compli
 
 ==== Server Requirements ====
 
-* A Web Server *
-Windows hosting is not best suited to pixie (it will work if its your only option), if you want all the features we suggest a decent linux account from: (list some hosts with referral links).
+  * A Web Server
+   Windows hosting is not best suited to pixie (it will work if its your only option), if you want all the features we suggest a decent linux account from: (list some hosts).
 
-* PHP *
-version 4.3.0 and above Pixie will work on previous version to this but you will lose the spell check features of TinyMCE, you will also need the PHP curl extension enabled to have the spell checker (blame Google!).
+  * PHP
+    version 4.3.0 and above Pixie will work on previous version to this but you will lose the spell check features of TinyMCE, you will also need the PHP curl extension enabled to have the spell checker (blame Google!).
 
-* MySQL *
-version 4.0 and above. You may well be able to use any version of MySQL but it has not yet been tested on older versions. 4.0 and anything after should be fine!
+  * MySQL
+    version 4.0 and above. You may well be able to use any version of MySQL but it has not yet been tested on older versions. 4.0 and anything after should be fine!
 
 ==== Browser Requirements ====
 
-* JavaScript *
-You will need to have a JavaScript enabled browser to use Pixie. Pixie is tested on IE7, IE6, Firefox (Mac & PC) and Safari (Mac & PC). Our favorite browsers are: Firefox and Safari.
+  * JavaScript
+    You will need to have a JavaScript enabled browser to use Pixie. Pixie is tested on IE7, IE6, Firefox (Mac & PC) and Safari (Mac & PC). Our favorite browsers are: Firefox and Safari.
 
 === Hosting & Uploading ===
 ----
