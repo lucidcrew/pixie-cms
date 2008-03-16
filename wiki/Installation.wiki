@@ -38,7 +38,7 @@ I am not a big fan of requirements, they are restricting and a little bit compli
 === Manual Installation (if something goes wrong) ===
 ----
 
-=== Still have questions? ===
+
 ----
 
 If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
