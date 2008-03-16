@@ -18,22 +18,62 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
     Pixie itself has been designed to be simple. Pixie’s interface has been refined over a number of versions to be user friendly. On the visitor side... you will love the fact that all you need to know is CSS to customise your site. If that sounds too complicated you can choose from the ever increasing amount of free templates. 
 
-=== The Complete Features list ===
+=== The Complete Features List ===
 ----
 
 Look over the feature list below for the full nitty gritty of what Pixie is capable of:
 
-==== Web Based ====
+==== Clean URLs ====
 
-    You can install Pixie on your own server so you have full control over your own site and data. Pixie will work through most major browsers (we recommend Firefox) giving you control over your site from anywhere in the world.
+    Ugly dynamic URLs are a thing of the past, Pixie supports clean, search engine friendly URLs.
+
+==== CSS template system ====
+
+    Pixe uses CSS for its template system, think that is restrictive? look at CSS Zen Garden for inspiration and see how powerful CSS has become. For a quick site refresh take a look at the extra themes available on the Pixie site.
+
+==== Database backups ====
+
+    Your site data is important so we figured it would be nice to back it up once in a while. Pixie offers support for this to help protect against any unplanned incidents.
+
+==== File manager with tag support ====
+
+    Upload your files into Pixie and tag them for easy sorting. 
+
+==== Free & Open Source ====
+
+    Pixie is free (as in cost) and free (as in what you can do with it). Pixie is released under GPL v3 which means you can:
+
+  * You can use Pixie free of charge.
+  * You can redistribute it without any limitations.
+  * You can make modifications and while they are used internally. If you start distribution of modified system you need to make modification publicly available under the terms of General Public License.
+  * You can’t charge for the software itself even if it is modified. 
+
+==== Modules, Themes, Plug-ins and Blocks ====
+
+    Make Pixie do more with downloadable extras. Browse the ever increasing extras section on the Pixie website.
+
+==== Portable ====
+    Run Pixie from your local machine or memory pen and use it as a design development tool.
 
 ==== RSS 2.0 ====
 
     Let visitors subscribe to the blogs and news pages you create via RSS. Pixie also has RSS feeds available to the administrators for keeping an eye on your site.
 
-==== Modules, Themes, Plug-ins and Blocks ====
+==== System and referral logs ====
 
-    Make Pixie do more with downloadable extras. Browse the ever increasing extras section on the Pixie website.
+    Keep track of Pixie and your latest visitors with Pixe’s built in stats system.
+
+==== User support with privileges ====
+
+    Need help managing your site? you can add more users and allow them to perform different tasks with privileges.
+
+==== Web Based ====
+
+    You can install Pixie on your own server so you have full control over your own site and data. Pixie will work through most major browsers (we recommend Firefox) giving you control over your site from anywhere in the world.
+
+==== XHTML compatible rich text editor ====
+    That sounds posh!... and it is. Pixie uses TinyMce to add a simple word processing interface so editing your text is simple and familiar. 
+
 
 === Still have questions? ===
 ----
