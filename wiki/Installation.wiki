@@ -46,6 +46,9 @@ All of these FTP clients are free to use.
 
 Now Pixie is uploaded to your web server the automated installer can take over (phew!). Visit your web address (e.g. www.mysite.com) and Pixie will now begin to install your site. It is a simple 3 step process that should take a couple of minutes. Make sure you have your database details ready (your host should supply you with them on request). If for any reason the installer fails you may need to [ManualInstallation manually install Pixie].
 
+
+
+
 ----
 
 If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
