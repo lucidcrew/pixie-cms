@@ -1,7 +1,15 @@
 #summary How to develop new blocks for Pixie.
 #labels Phase-Implementation,blocks,development,php
 
-Blocks are the little extra pieces of content that sit on your site. Example of blocks are
+Blocks are small chunks of content that sit beside your pages, at the moment you need to edit and create blocks manually. You will find your blocks in the blocks (admin/blocks/) folder, Pixie comes with a number of examples to get you started. Example blocks include:
+
+  * A [http://www.flickr.com Flickr] Badge
+  * A [http://www.digg.com Digg] badge
+  * An [http://en.wikipedia.org/wiki/RSS_(file_format) RSS feed]
+
+
+
+
 
 
 
