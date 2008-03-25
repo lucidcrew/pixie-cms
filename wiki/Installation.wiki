@@ -51,7 +51,7 @@ Now Pixie is uploaded to your web server the automated installer can take over (
 
 Installing Pixie manually is actually easier than it sounds, here is how you do it:
 
-  * Create your config.php file:
+==== Create your config.php file: ====
    In the admin folder of your Pixie download you will find a file called config.php. This file stores your database information. You will need to copy and paste the following code into the file replacing the information here with your own database information supplied by your web host.
 
 {{{
@@ -100,10 +100,10 @@ php_value post_max_size "100M"
 </IfModule>
 }}}
 
-  * Import the SQL.
+  * Import the SQL from manual.sql:
   Pixie requires some MySQL tables to be setup in order to run. In the install folder within Pixie (admin/install) you will find a file named: manual.sql. Use your favoruite database management program (such as [http://www.phpmyadmin.net/ phpMyAdmin]) to import this sql file into your database.
 
-  * Make your upload folders writeable.
+  * Make your upload folders writeable:
    In the admin folder of your Pixie download you will find a file called config.php. This file stores your datab
 
 ----
