@@ -29,24 +29,27 @@ I am not a big fan of requirements, they are restricting and a little bit compli
 
 ==== Web Hosting ====
 
-Web hosting is cheap and easy to come by these days. You may already have some with your Internet service provider (ISP). We will add a list of hosting partners for Pixie in the near future.
+Web hosting is cheap and easy to come by these days. You may already have some with your Internet service provider (ISP). We will add a list of hosting partners in the near future.
 
 ==== Uploading your files ====
 
 Once you have saved Pixie onto your computer you need to [http://en.wikipedia.org/wiki/ZIP_(file_format) unzip] (extract) it and upload it to your web server. Your web host company will have supplied you with your FTP details which you will need place into your favourite FTP client. We recommend:
 
-  * Windows
-  * Mac
-  * Linux 
+  * Windows - [http://www.download.com/Leech-FTP/3000-2160_4-10122207.html Leech FTP]
+  * Mac - [http://cyberduck.ch/ CyberDuck]
+  * Linux - [http://ftpcube.sourceforge.net/ FTPCube]
 
 All of these FTP clients are free to use.
 
 === The Pixie Installer ===
 ----
 
+Now Pixie is uploaded to your web server the automated installer can take over (phew!). Visit your web address (e.g. www.mysite.com) and Pixie will now begin to install your site. It is a simple 3 step process that should take a couple of minutes. Make sure you have your database details ready (your host should supply you with them on request). If for any reason the installer fails you may need to manually install Pixie. Details are below.
+
 === Manual Installation (if something goes wrong) ===
 ----
 
+Hopefully Pixie installed without a hitch but sometimes things will go wrong, here is how you get Pixie installed manually:
 
 ----
 
