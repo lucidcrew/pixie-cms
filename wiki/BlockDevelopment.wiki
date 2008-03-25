@@ -7,6 +7,28 @@ Blocks are small chunks of content that sit beside your pages, at the moment you
   * A [http://www.digg.com Digg] badge.
   * An [http://en.wikipedia.org/wiki/RSS_(file_format) RSS feed].
 
+We are currently looking at ways to make block handling much easier from within the Pixie interface. 
+
+=== Block development ===
+----
+
+Blocks can contain PHP, HTML, JavaScript and CSS. Think of them as tiny web pages that can re-used across your site, over and over again. To create your own block you will need to create a PHP file that starts with "block_", for this example lets make a block that contains a shopping list. The file I create is called "block_shopping_list.php".
+
+Lets take a look at the code, the comments are to help you understand the structure of blocks within Pixie.
+
+{{{
+<div id="block_demo" class="block">
+  <div class="block_header">
+    <h4>Demo Block</h4>
+  </div>
+  <div class="block_body">
+    <p>Blocks are small chunks of content that sit beside your pages, at the moment you need to edit the blocks manually,You will find your blocks in the admin/blocks folder, we have included some examples to get you started.</p>
+    <p>To choose the blocks on this page head into the "settings" section within Pixie, select "settings" on this page and choose your blocks.We hope to improve the way blocks work in future versions.</p>
+  </div>
+  <div class="block_footer">
+  </div>		
+</div>
+}}}
 
 
 
