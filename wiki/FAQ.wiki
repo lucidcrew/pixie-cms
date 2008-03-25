@@ -12,8 +12,11 @@ This document is a great place to start when looking for help with Pixie. The qu
 
 ==== What licence is Pixie released under? ====
 
+==== How much does it cost? ====
+
 ==== What is open source? ====
 
+==== What is a CMS (content management system)? ====
 
 
 ----
