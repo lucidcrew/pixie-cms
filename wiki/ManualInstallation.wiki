@@ -1,7 +1,7 @@
 #summary Manually installing Pixie.
 #labels installation,help
 
-Hopefully your installation went well, if it didn't you may need to install Pixie manually. Installing Pixie manually is actually easier than it sounds, here is how you do it:
+Installing Pixie manually is actually easier than it sounds, here is how you do it:
 
 === Manual Installation ===
 ----
