@@ -62,7 +62,10 @@ php_value post_max_size "100M"
    In order to upload files and create database backups from within Pixie you will need to make sure you have permission to write to the files directory (/files/) and all of its subdirectories. FTP programs allow you to set permissions for files and directories. This function is often called chmod or set permissions in the program menu.  
 
 ==== Try to login: ====
-   We have set the default Pixie username to: admin, with a password of: pixie123. If you are unable to login with these credentials you will need to create a new user for yourself. In your browser visit: www.mysite.com/admin/install/createuser.php. From here you will be able to create a new user for yourself and a temporary password. 
+   Visit www.mysite.com/admin to login to Pixie. We have set the default Pixie username to: admin, with a password of: pixie123. If you are unable to login with these credentials you will need to create a new user for yourself. In your browser visit: www.mysite.com/admin/install/createuser.php. From here you will be able to create a new user for yourself and a temporary password. 
+
+==== Change your site URL: ====
+   Now you are logged into Pixie you will need to tell it the web address of your site. In the "settings" tab click on "site" at the top of the page. From here you need to update the URL and any other information you wish to change about your site. 
 
 ==== Cleanup: ====
    Lastly you will need to delete the Pixie install directory (admin/install/). 
