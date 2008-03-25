@@ -12,11 +12,21 @@ We are currently looking at ways to make block handling much easier from within 
 === Block development ===
 ----
 
-Blocks can contain PHP, HTML, JavaScript and CSS. Think of them as tiny web pages that can re-used across your site, over and over again. To create your own block you will need to create a PHP file that starts with "block!_", for this example lets make a block that contains a shopping list. The file I create is called "block_shopping_list.php".
+Blocks can contain PHP, HTML, JavaScript and CSS. Think of them as tiny web pages that can re-used across your site, over and over again. To create your own block you will need to create a PHP file that starts with "block_", for this example lets make a block that contains a shopping list. The file I create is called "block_shopping_list.php".
 
 Lets take a look at the code, the comments are to help you understand the structure of blocks within Pixie.
 
 {{{
+
+<?php
+//*****************************************************************//
+// Pixie: The Small, Simple, Site Maker.                           //
+// ----------------------------------------------------------------//
+// Licence: GNU General Public License v3                   	   //
+// Title: Demo.                                                    //
+//*****************************************************************//
+?>
+		
 <div id="block_demo" class="block">
   <div class="block_header">
     <h4>Demo Block</h4>
@@ -28,6 +38,7 @@ Lets take a look at the code, the comments are to help you understand the struct
   <div class="block_footer">
   </div>		
 </div>
+
 }}}
 
 
