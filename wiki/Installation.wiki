@@ -79,7 +79,7 @@ $pixieconfig['table_prefix'] = '';
 
 {{{
 
-# These two lines allow you to upload larger files up to 100mb. 
+# These two lines allow you to upload larger files to Pixie (up to 100mb). 
 php_value upload_max_filesize "100M"
 php_value post_max_size "100M"
 
@@ -101,7 +101,7 @@ php_value post_max_size "100M"
 }}}
 
   * Import the SQL.
-   In the admin folder of your Pixie download you will find a file called config.php. This file stores your datab
+  Pixie requires some MySQL tables to be setup in order to run. In the install folder within Pixie (admin/install) you will find a file named: manual.sql. Use your favoruite database management program (such as [http://www.phpmyadmin.net/ phpMyAdmin]) to import this sql file into your database.
 
   * Make your upload folders writeable.
    In the admin folder of your Pixie download you will find a file called config.php. This file stores your datab
