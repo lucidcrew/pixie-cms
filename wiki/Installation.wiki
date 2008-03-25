@@ -14,7 +14,7 @@ I am not a big fan of requirements, they are restricting and a little bit compli
    Pixie has been developed in a Linux/Unix hosting environment and is best suited to these platforms. Pixie should run (not currently tested) on a Windows server but some features may not work as expected.
 
   * PHP
-    Version 4.3.0 and above. Pixie will work on previous version of PHP but you will lose the spell check features of TinyMCE.
+    Version 4.3.0 and above. Pixie will work on previous versions of PHP but you will lose the spell check features of [http://tinymce.moxiecode.com/ TinyMCE].
 
   * MySQL
     Version 4.0 and above. You may well be able to use an older version of MySQL but it has not yet been tested. 4.0 and anything after should be fine.
@@ -22,14 +22,20 @@ I am not a big fan of requirements, they are restricting and a little bit compli
 ==== Browser Requirements ====
 
   * !JavaScript
-    You will need to have a !JavaScript enabled browser to use Pixie. Pixie is tested on IE7, IE6, Firefox (Mac & PC) and Safari (Mac & PC). Our favorite browsers are: Firefox and Safari.
+    You will need to have a !JavaScript enabled browser to use Pixie. Pixie is tested on IE7, IE6, Firefox (Mac & PC) and Safari (Mac & PC). Our favourite browsers are: [http://www.getfirefox.com Firefox] and [http://www.apple.com/safari/ Safari].
 
 === Hosting & Uploading ===
 ----
 
 ==== Web Hosting ====
 
+
+
 ==== Uploading your files ====
+
+Once you have saved Pixie onto your computer you need to unzip (extract) it and upload it to your web server. Your host will have supplied you with your FTP details which you will need place into your favourite FTP client. We recommend:
+
+
 
 
 === The Pixie Installer ===
