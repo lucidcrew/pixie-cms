@@ -86,7 +86,11 @@ php_value post_max_size "100M"
 <IfModule mod_rewrite.c>
    
   RewriteEngine On
-  # The RewriteBase should be set to the folder of your installation: / = root, /mysite/ = a site installed in a folder called mysite, e.g. www.mysite.com/mysite/
+
+  # The RewriteBase should be set to the folder of your installation: 
+  # / = your site is in the root, e.g. www.mysite.com 
+  # /mysite = a site installed in a folder called mysite, e.g. www.mysite.com/mysite/
+  
   RewriteBase /
   
   RewriteCond %{REQUEST_FILENAME} !-f
