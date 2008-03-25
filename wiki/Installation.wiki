@@ -29,14 +29,17 @@ I am not a big fan of requirements, they are restricting and a little bit compli
 
 ==== Web Hosting ====
 
-
+Web hosting is cheap and easy to come by these days. You may already have some with your Internet service provider (ISP). We will add a list of hosting partners for Pixie in the near future.
 
 ==== Uploading your files ====
 
-Once you have saved Pixie onto your computer you need to unzip (extract) it and upload it to your web server. Your host will have supplied you with your FTP details which you will need place into your favourite FTP client. We recommend:
+Once you have saved Pixie onto your computer you need to [http://en.wikipedia.org/wiki/ZIP_(file_format) unzip] (extract) it and upload it to your web server. Your web host company will have supplied you with your FTP details which you will need place into your favourite FTP client. We recommend:
 
+  * Windows
+  * Mac
+  * Linux 
 
-
+All of these FTP clients are free to use.
 
 === The Pixie Installer ===
 ----
