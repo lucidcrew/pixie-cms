@@ -7,7 +7,7 @@ Blocks are small chunks of content that sit beside your pages, at the moment you
   * A [http://www.digg.com Digg] badge.
   * An [http://en.wikipedia.org/wiki/RSS_(file_format) RSS feed].
 
-We are currently looking at ways to make block handling much easier from within the Pixie interface. 
+We are currently looking at ways to make block handling much easier from within the Pixie interface. If you have any ideas on how we could do this please share them in the [http://groups.google.com/group/pixie-cms/ forums].
 
 === Block development ===
 ----
