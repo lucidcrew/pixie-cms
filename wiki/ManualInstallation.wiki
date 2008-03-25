@@ -30,7 +30,7 @@ $pixieconfig['table_prefix'] = '';
 }}} 
 
 ==== Create your .htaccess file:==== 
-   The .htaccess file is an invisible file that is used to create the Clean URLs that Pixie uses. This file normally only works on Linux hosting platforms (some Windows servers do now support it). In the root of your website you will need to create a new file named .htaccess. Copy the following code into it and edit where indicated:
+   The [http://en.wikipedia.org/wiki/Htaccess .htaccess] file is an invisible file that is used to create the Clean URLs that Pixie uses. This file normally only works on Linux hosting platforms (some Windows servers do now support it). In the root of your website you will need to create a new file named .htaccess. Copy the following code into it and edit where indicated:
 
 {{{
 
@@ -56,16 +56,16 @@ php_value post_max_size "100M"
 }}}
 
 ==== Import the SQL from manual.sql: ==== 
-  Pixie requires some MySQL tables to be setup in order to run. In the install folder within Pixie (admin/install/) you will find a file named: manual.sql. Use your favoruite database management program (such as [http://www.phpmyadmin.net/ phpMyAdmin]) to import this sql file into your database.
+  Pixie requires some MySQL tables to be setup in order to run. In the install folder within Pixie (admin/install/) you will find a file named: manual.sql. Use your favourite database management program (such as [http://www.phpmyadmin.net/ phpMyAdmin]) to import this sql file into your database.
 
 ==== Make your upload folders writeable: ====
-   In the admin folder of your Pixie download you will find a file called config.php. This file stores your database
+   In order to upload files and create database backups from within Pixie you will need to make sure you have permission to write to the files directory (/files/) and all of its subdirectories. FTP programs allow you to set permissions for files and directories. This function is often called chmod or set permissions in the program menu.  
 
 ==== Try to login: ====
-   We have set the default Pixie username to: admin, with a password of: pixie123. If you are unable to login with these you will need to create a new user for yourself. In your browser visit: www.mysite.com/admin/install/createuser.php. From here you will be able to create a new user for yourself and a temporary password. 
+   We have set the default Pixie username to: admin, with a password of: pixie123. If you are unable to login with these credentials you will need to create a new user for yourself. In your browser visit: www.mysite.com/admin/install/createuser.php. From here you will be able to create a new user for yourself and a temporary password. 
 
 ==== Cleanup: ====
-   Lastly you will need to delete the install directory (admin/install/). 
+   Lastly you will need to delete the Pixie install directory (admin/install/). 
 
 
 
