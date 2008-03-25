@@ -55,6 +55,8 @@ php_value post_max_size "100M"
 </IfModule>
 }}}
 
+  If your server does not support the .htaccess file simply skip this step and make sure you set "Clean URLs" to Off/No once you are logged into Pixie. 
+
 ==== Import the SQL from manual.sql: ==== 
   Pixie requires some MySQL tables to be setup in order to run. In the install folder within Pixie (admin/install/) you will find a file named: manual.sql. Use your favourite database management program (such as [http://www.phpmyadmin.net/ phpMyAdmin]) to import this sql file into your database.
 
@@ -69,8 +71,6 @@ php_value post_max_size "100M"
 
 ==== Cleanup: ====
    Lastly you will need to delete the Pixie install directory (admin/install/). 
-
-
 
 ----
 
