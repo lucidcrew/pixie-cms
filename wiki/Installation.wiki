@@ -49,7 +49,39 @@ Now Pixie is uploaded to your web server the automated installer can take over (
 === Manual Installation (if something goes wrong) ===
 ----
 
-Hopefully Pixie installed without a hitch but sometimes things will go wrong, here is how you get Pixie installed manually:
+Installing Pixie manually is actually easier than it sounds, here is how you do it:
+
+  * Create your config.php file.
+   In the admin folder of your Pixie download you will find a file called config.php. This file stores your database information. You will need to copy and paste the following code into the file replacing the information here with your own database information supplied by your web host.
+
+{{{
+<?php
+//*****************************************************************//
+// Pixie: The Small, Simple, Site Maker.                           //
+// ----------------------------------------------------------------//
+// Licence: GNU General Public License v3                   	   //
+// Title: Configuration settings.                                  //
+//*****************************************************************//
+
+// MySQL settings //
+$pixieconfig['db'] = 'my_database_name';
+$pixieconfig['user'] = 'my_database_username';
+$pixieconfig['pass'] = 'my_database_password';
+
+// These should be ok to leave as they are //
+$pixieconfig['host'] = 'localhost';
+$pixieconfig['table_prefix'] = '';
+?>
+}}} 
+
+  * Create your .htaccess file
+   In the admin folder of your Pixie download you will find a file called config.php. This file stores your datab
+
+  * Import the SQL.
+   In the admin folder of your Pixie download you will find a file called config.php. This file stores your datab
+
+  * Make your upload folders writeable.
+   In the admin folder of your Pixie download you will find a file called config.php. This file stores your datab
 
 ----
 
