@@ -17,7 +17,7 @@ Pixie uses code from many other open source projects on the web. Without these p
 
 ==== Design ====
 
-...and lets not for get the designers who have released beautiful themes under a creative commons (or similar) license:
+...and lets not forget the designers who have released beautiful themes under a creative commons (or similar) license:
 
   * 1
   * 2
