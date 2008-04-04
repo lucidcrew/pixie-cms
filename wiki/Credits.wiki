@@ -12,6 +12,7 @@ Pixie uses code from many other open source projects on the web. Without these p
   * [http://www.phpclasses.org/browse/package/2779.html MySQL Backup] - A nice lightweight and easy to use backup class by Vagharshak Tozalakyan.
   * [http://devquickref.com Sitemap] - A PHP class for generating Google sitemaps by Svetoslav Marinov.
   * [http://www.finalwebsites.com Easy PHP Upload] - An easy to use class for your file uploads.
+  * [http://tkap.org/paginator Paginator] - Class to help make pagination easier.
   * [http://www.wordpress.org Wordpress] - For a few handy functions and inspiration.
   * [http://textpattern.com Textpattern] - For the database interface class and inspiration.
   * [http://php.net/ PHP] - Does it need an introduction? One of the very few scripting languages built specifically for the web.
