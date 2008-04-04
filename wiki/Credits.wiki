@@ -22,9 +22,13 @@ Pixie uses code from many other open source projects on the web. Without these p
 
 ...and lets not forget the designers who have released beautiful themes under a [http://creativecommons.org creative commons] (or similar) license:
 
-  * 
-  * 
-  * 
+  * [http://ifelse.co.uk Ambiru] - Phy Ly
+  * [http://busfullofhippies.johnoxton.co.uk Buss Full of Hippies] - John Oxton
+  * [http://avalonstar.com Chaotic Soul] - Bryan Veloso
+  * [http://www.ndesign-studio.com/ iTheme] - Nick La
+  * Kubrick
+  * Simpla
+  * Stilbruch
 
 ----
 
