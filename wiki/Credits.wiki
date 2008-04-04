@@ -26,9 +26,9 @@ Pixie uses code from many other open source projects. Without these projects Pix
   * [http://busfullofhippies.johnoxton.co.uk Buss Full of Hippies] - John Oxton
   * [http://avalonstar.com Chaotic Soul] - Bryan Veloso
   * [http://www.ndesign-studio.com/ iTheme] - Nick La
-  * Kubrick
-  * Simpla
-  * Stilbruch
+  * [http://binarybonsai.com/wordpress/kubrick/ Kubrick] - Michael Heilemann
+  * [http://ifelse.co.uk/ Simpla] - Phu Ly
+  * [http://www.amypink.com Stilbruch] - Marcel Winatschek
 
 ----
 
