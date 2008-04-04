@@ -1,6 +1,11 @@
 #summary Useful Pixie links.
 #labels links,help
 
+Short but sweet (for now)...
+
+  * [http://www.getpixie.co.uk Pixie] - The Pixie homepage (blog, downloads etc).
+  * [http://groups.google.com/group/pixie-cms Pixie forums] - Pixie support forums.
+  * [http://www.toggle.uk.com toggle] - The people who created Pixie (us!). 
 
 ----
 
