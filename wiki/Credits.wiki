@@ -5,12 +5,18 @@ Pixie uses code from many other open source projects on the web. Without these p
 
 ==== Development ====
 
-  * 1
-  * 2
-  * 3
-  * 4
+  * [http://www.bad-behavior.ioerror.us Bad Behavior] - A fantastic anti-spam script.
+  * [http://tinymce.moxiecode.com/ TinyMCE by Moxiecode] - Cross-platform WYSIWYG editor.
+  * [http://jquery.com/ jQuery] - Simply the best JavaScript library!
+  * [http://www.phpclasses.org/browse/package/2779.html MySQL Backup] - A nice lightweight and easy to use backup class by Vagharshak Tozalakyan.
+  * [ Wordpress] - For a few handy functions and inspiration.
+  * [http://textpattern.com TextPattern] - For the database interface class and inspiration.
+  * [ PHP]
+  * [ MySQL]
 
 ==== Design ====
+
+...and lets not for get the designers who have released beautiful themes under a creative commons (or similar) license:
 
   * 1
   * 2
