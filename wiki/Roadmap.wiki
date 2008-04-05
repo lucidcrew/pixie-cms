@@ -1,4 +1,5 @@
 #summary Planned features for future versions of Pixie.
+#labels roadmap,development,design
 
 Add your content here.
 
