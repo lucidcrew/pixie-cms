@@ -12,7 +12,7 @@ We are currently looking at ways to make block handling much easier from within 
 === Block Development ===
 ----
 
-Blocks can contain PHP, HTML, !JavaScript and CSS. Think of them as tiny web pages that can re-used across your site, over and over again. To create your own block you will need  to create a PHP file that starts with *[[block_]]*, for the first example lets make a block that contains a shopping list. The file I create is called *block_shopping_list.php* which is placed into the blocks folder.
+Blocks can contain PHP, HTML, !JavaScript and CSS. Think of them as tiny web pages that can re-used across your site, over and over again. To create your own block you will need  to create a PHP file that starts with *[block_]*, for the first example lets make a block that contains a shopping list. The file I create is called *block_shopping_list.php* which is placed into the blocks folder.
 
 This block is very simple and is made only from HTML. Lets take a look at the code:
 
