@@ -12,7 +12,7 @@ We are currently looking at ways to make block handling much easier from within 
 === Block development ===
 ----
 
-Blocks can contain PHP, HTML, JavaScript and CSS. Think of them as tiny web pages that can re-used across your site, over and over again. To create your own block you will need to create a PHP file that starts with "block_----", for this example lets make a block that contains a shopping list. The file I create is called "block_shopping_list.php".
+Blocks can contain PHP, HTML, !JavaScript and CSS. Think of them as tiny web pages that can re-used across your site, over and over again. To create your own block you will need to create a PHP file that starts with "block!_", for the first example lets make a block that contains a shopping list. The file I create is called "block_shopping_list.php" which is placed into the blocks folder.
 
 This block is very simple and is made only from HTML. Lets take a look at the code (the comments are to help you understand the structure of blocks):
 
@@ -26,12 +26,18 @@ This block is very simple and is made only from HTML. Lets take a look at the co
 // Title: Demo.                                                    //
 //*****************************************************************//
 ?>
-		
+
+<!-- Each block needs a unique ID and the class "block" -->		
 <div id="block_demo" class="block">
+
+  <!-- A block is broken into three sections, block_header, block_body and block_footer -->
   <div class="block_header">
+    <!-- The block header contains the block title -->
     <h4>Demo Block</h4>
   </div>
+
   <div class="block_body">
+    <!-- The block body contains the content of the block -->
     <ul>
       <li>Eggs</li>
       <li>Ham</li>
@@ -39,14 +45,16 @@ This block is very simple and is made only from HTML. Lets take a look at the co
       <li>Chips</li>
     </ul>
   </div>
+
   <div class="block_footer">
-  </div>		
+    <!-- The footer is often left empty and used purely for style purposes --> 
+  </div>
+		
 </div>
 
 }}}
 
 
-TBC...
 
 ----
 
