@@ -6,9 +6,13 @@ Pixie was created with a vision that anyone should be able to create and maintai
 === Where are we now? ===
 ----
 
-The first release of Pixie still has some technical barriers, those of you who are unfamiliar with FTP and are unsure of what hosting is, may find setting up Pixie quite difficult. If that sounds like you, we have provided a [Installation step by step guide] of how to get Pixie installed. If you are still having trouble getting Pixie setup please ask for help in the [http://groups.google.com/group/pixie-cms/ forums] or contact [http://www.toggle.uk.com toggle] who offer an installation service, for a small fee.
+The first release of Pixie still has some technical barriers, those of you who are unfamiliar with FTP and are unsure of what hosting is, may find setting up Pixie quite difficult. If that sounds like you, we have provided a [Installation step by step guide] of how to get Pixie installed. If you are still having trouble getting Pixie setup please ask for help in the [http://groups.google.com/group/pixie-cms/ forums] or contact [http://www.toggle.uk.com toggle] who offer an installation service for a small fee.
 
- 
+Once Pixie is setup we are sure you will find it a pleasure to use (we do!). For tips and advice on using the interface we have created a PDF user guide.
+
+We are aware that Pixie has plenty of room for improvement, the settings area is quite primitive and [BlockDevelopment block] handling is far from perfect. As we continue to develop Pixie we will be looking to make improvements to the whole system, in both the underlying code (it certainly needs it) and the interface. At the same time we are very cautious of adding too much to the system, we want to keep Pixie simple and light.
+
+What plans do we have for the future?
 
 
 === Looking ahead ===
@@ -16,10 +20,16 @@ The first release of Pixie still has some technical barriers, those of you who a
 
 We have lots of plans for Pixie: features, interfaces and lots more great add-ons. The list below is some of the more important features and ideas we would like to implement over the coming years.
 
-  * zxxx
-  * asas
-  * sasas
+==== Services ====
 
+  * Pixie Pro - 
+  * Hosted Pixie -
+
+==== Features ====
+  
+  * A strong framework - The code that powers Pixie could do with improving, we will be looking at redeveloping the core at some point.
+  * A refined interface - We currently have around 8 new ideas for an interface, we will be working on refining this via community feedback on the [http://www.getpixie.co.uk Pixie blog].
+  * Block management - 
 
 ----
 
