@@ -26,17 +26,17 @@ We have lots of plans for Pixie: features, interfaces and lots more great add-on
 
 ==== Services ====
 
-  * Hosted Pixie - We will host Pixie for you... for free! A simple sign up form and your site will be ready to use. This helps remove the technical barrier of getting Pixie setup on your own web server. 
-  * Pixie Pro - For a small yearly fee you will get access to "Pixie Pro", an area on the Pixie site where you can download exclusive add-ons (themes, modules etc). The great thing about Pixie Pro is that if you donate your theme, add-on or extra to it, you will get free access to the goodies!
+  * *Hosted Pixie* - We will host Pixie for you... for free! A simple sign up form and your site will be ready to use. This helps remove the technical barrier of getting Pixie setup on your own web server. 
+  * *Pixie Pro* - For a small yearly fee you will get access to "Pixie Pro", an area on the Pixie site where you can download exclusive add-ons (themes, modules etc). The great thing about Pixie Pro is that if you donate your theme, add-on or extra to it, you will get free access to the goodies!
 
 ==== Features ====
   
-  * Core framework - The code that powers Pixie could do with improving, we will be looking at redeveloping the entire code base.
-  * A refined interface - We currently have 8 ideas for an improved interface, we will be working on refining this via community feedback on the [http://www.getpixie.co.uk blog].
-  * Block management - A way of handling, sorting and editing blocks.
-  * Multi-level navigation - One of the most requested features is support for more than one level of pages. 
-  * Templates - Require more than the standard layout? Optional layout templates for themes.
-  * Remote control - Control all of your websites (even on different servers) from one copy of Pixie.
+  * *Core framework* - The code that powers Pixie could do with improving, we will be looking at redeveloping the entire code base.
+  * *A refined interface* - We currently have 8 ideas for an improved interface, we will be working on refining this via community feedback on the [http://www.getpixie.co.uk blog].
+  * *Block management* - A way of handling, sorting and editing blocks.
+  * *Multi-level navigation* - One of the most requested features is support for more than one level of pages. 
+  * *Templates* - Require more than the standard layout? Optional layout templates for themes.
+  * *Remote control* - Control all of your websites (even on different servers) from one copy of Pixie.
 ----
 
 If you have questions or comments about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
