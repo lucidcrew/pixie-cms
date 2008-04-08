@@ -33,6 +33,7 @@ Pixie uses code from many other open source projects. Without these projects Pix
   * [http://binarybonsai.com/wordpress/kubrick/ Kubrick] - Michael Heilemann
   * [http://ifelse.co.uk/ Simpla] - Phu Ly
   * [http://www.amypink.com Stilbruch] - Marcel Winatschek
+  * [http://www.3-fold.co.uk 3fold] - Gemma Garner
 
 ----
 
