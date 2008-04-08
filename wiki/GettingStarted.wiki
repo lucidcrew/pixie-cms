@@ -3,6 +3,11 @@
 
 Pixie was created with a vision that anyone should be able to create and maintain a website and more importantly that it should be an easy and straightforward process... so how are we doing? 
 
+=== An beginners introduction to Pixie ===
+----
+
+
+
 === Where are we now? ===
 ----
 
@@ -28,10 +33,11 @@ We have lots of plans for Pixie: features, interfaces and lots more great add-on
 ==== Features ====
   
   * Core framework - The code that powers Pixie could do with improving, we will be looking at redeveloping the entire code base.
-  * A refined interface - We currently have around 8 new ideas for an improved interface, we will be working on refining this via community feedback on the [http://www.getpixie.co.uk Pixie blog].
+  * A refined interface - We currently have 8 ideas for an improved interface, we will be working on refining this via community feedback on the [http://www.getpixie.co.uk Pixie blog].
   * Block management - A way of handling, sorting and editing blocks.
-  * Multi-level pages - One of the most requested features is support for more than one level of pages. 
-
+  * Multi-level navigation - One of the most requested features is support for more than one level of pages. 
+  * Templates - Require more than the standard layout? Optional layout templates for themes.
+  * Remote control - Control all of your websites (even on different servers) from one copy of Pixie.
 ----
 
 If you have questions or comments about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
