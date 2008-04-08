@@ -22,7 +22,7 @@ What plans do we have for the future?
 === Looking ahead ===
 ----
 
-We have lots of plans for Pixie: features, interfaces and lots more great add-ons. The list below is some of the more important features and ideas we would like to implement over the coming years.
+We have lots of plans for Pixie: features, interfaces and lots more great add-ons. The list below is some of the more important features and ideas we would like to implement over the coming years:
 
 ==== Services ====
 
