@@ -1,24 +1,23 @@
 #summary Introduction to Pixie, how it works and plans for the future.
 #labels Featured,Phase-Deploy,welcome,introduction,beginners,help
 
-Pixie was created with a vision that anyone should be able to create and maintain a website and more importantly that it should be an easy and straightforward process... so how are we doing? 
-
-=== An beginners introduction to Pixie ===
+=== An introduction to Pixie (as it stands) ===
 ----
 
+Pixie is a downloadable application that you install on your own web server. Pixie will allow you to setup and maintain (add & edit content) your own website. Pixie sits quietly behind your site and is not visible to site visitors. You can login to Pixie via your web browser to work on your site anywhere in the world, the interface is simple and intuitive. If you want to try Pixie please visit the [http://demo.getpixie.co.uk demo site].  
 
+Pixie was created with a vision that anyone should be able to create and maintain a website... and more importantly that it should be an easy and straightforward process, so how are we doing? 
 
 === Where are we now? ===
 ----
 
-The first release of Pixie still has some technical barriers, those of you who are unfamiliar with FTP and are unsure of what hosting is, may find setting up Pixie quite difficult. If that sounds like you, we have provided a [Installation step by step guide] of how to get Pixie installed. If you are still having trouble getting Pixie setup please ask for help in the [http://groups.google.com/group/pixie-cms/ forums] or contact [http://www.toggle.uk.com toggle] who offer an installation service for a small fee.
+The first release of Pixie still has some technical barriers, those of you who are unfamiliar with FTP and are unsure of what hosting is, may find setting up Pixie quite difficult. If that sounds like you, we have provided a [Installation step by step guide] of how to get Pixie installed. If you are still having trouble getting Pixie setup, please ask for help in the [http://groups.google.com/group/pixie-cms/ forums] or contact [http://www.toggle.uk.com toggle] who offer an installation service for a small fee.
 
 Once Pixie is setup we are sure you will find it a pleasure to use (we do!). For tips and advice on using the interface we have created a PDF user guide.
 
 We are aware that Pixie has plenty of room for improvement, the settings area is quite primitive and [BlockDevelopment block] handling is far from perfect. As we continue to develop Pixie we will be looking to make improvements to the whole system, in both the underlying code (it certainly needs it) and the interface. At the same time we are very cautious of adding too much to the system, we want to keep Pixie simple and light.
 
 What plans do we have for the future?
-
 
 === Looking ahead ===
 ----
@@ -27,8 +26,8 @@ We have lots of plans for Pixie: features, interfaces and lots more great add-on
 
 ==== Services ====
 
-  * Hosted Pixie -
-  * Pixie Pro - 
+  * Hosted Pixie - We will host Pixie for you... for free! A simple sign up form and your site will be ready to use. This helps remove the technical barrier of getting Pixie setup on your own web server. 
+  * Pixie Pro - For a small yearly fee you will get access to "Pixie Pro", an area on the Pixie site where you can download exclusive add-ons (themes, modules etc). The great thing about Pixie Pro is that if you donate your theme, add-on or extra to it, you will get free access to the goodies for one year!
 
 ==== Features ====
   
