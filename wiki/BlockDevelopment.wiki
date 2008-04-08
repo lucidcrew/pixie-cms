@@ -81,7 +81,7 @@ Lets move on to a slightly more complex example. This time we will be using the 
     // Enter the URL of your RSS feed here:
     $feed = new SimplePie('http://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml');
     $feed->handle_content_type();
-
+    // Loop the RSS feed into a list
     foreach ($feed->get_items() as $item):
       $itemlink = $item->get_permalink();
       echo "<li><a href=\"".$item->get_permalink()."\">".$item->get_title()."</a></li>";
