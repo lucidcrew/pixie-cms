@@ -70,15 +70,15 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
 ==== Robots.txt ====
 
-    Pixie protects certain folders with a robots file, this should help prevent your files and images showing up in web searches and then subsequently being hot-linked.
+    Pixie protects certain folders with a robots file, this should help prevent your files and images showing up in web searches and then subsequently being hot-linked. It is one less thing to worry about.
 
 ==== RSS 2.0 ====
 
-    Let visitors subscribe to the blogs and news pages you create via RSS. Pixie also has RSS feeds available to the administrators for keeping an eye on your site.
+    Let visitors subscribe to the blogs and news pages you create via RSS. Pixie also has RSS feeds available for keeping an eye on your site (look for the subscribe button on the Pixie dashboard). You can also generate RSS feeds for your blogs comments using a [http://xoxotools.ning.com/hatom2rss.php hAtom to RSS] script. 
 
 ==== Search Engine Friendly ====
 
-    Etc........
+    Pixie and Google are "super best friends". We have built Pixie to ensure that search engines find it easy to crawl your sites pages and extract the content they need to.
 
 ==== Sitemap.xml ====
 
@@ -86,15 +86,15 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
 ==== Small ====
 
-   Pixie is just a few megabytes in size, we always wanted to keep the size of the software small it could run quietly and efficiently on your server.
+   Pixie is just a under 1 megabytes in size (all zipped up), we always wanted to keep the size of the software small it could run quietly and efficiently on your server.
 
 ==== Spam Protected ====
     
-    We all hate spam... and so does Pixie. Pixes uses the excellent Bad Behaviour script to keep your site Spam free. 
+    We all hate spam... and so does Pixie. Pixes uses the excellent [http://www.bad-behavior.ioerror.us/ Bad Behaviour] script to keep your site Spam free. 
 
 ==== System and referral logs ====
 
-    Keep track of Pixie and your latest visitors with Pixe’s built in stats system.
+    Keep track of Pixie and your latest visitors with Pixie’s built in stats system.
 
 ==== User support with privileges ====
 
@@ -102,11 +102,10 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
 ==== Web Based ====
 
-    You can install Pixie on your own server so you have full control over your own site and data. Pixie will work through most major browsers (we recommend Firefox) giving you control over your site from anywhere in the world.
+    You can install Pixie on your own server so you have full control over your own site and data. Pixie will work through most major browsers (we recommend [http://www.mozilla-europe.org/en/products/firefox/ Firefox]) giving you control over your site from anywhere in the world.
 
 ==== XHTML compatible rich text editor ====
-    That sounds posh!... and it is. Pixie uses TinyMce to add a simple word processing interface so editing your text is simple and familiar. 
-
+    That sounds posh!... and it is. Pixie uses [http://tinymce.moxiecode.com/ TinyMce] to add a simple word processing interface text areas... it makes editing your text simple and familiar. 
 
 ----
 
