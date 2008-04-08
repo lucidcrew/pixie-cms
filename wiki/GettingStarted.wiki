@@ -22,14 +22,15 @@ We have lots of plans for Pixie: features, interfaces and lots more great add-on
 
 ==== Services ====
 
-  * Pixie Pro - 
   * Hosted Pixie -
+  * Pixie Pro - 
 
 ==== Features ====
   
-  * A strong framework - The code that powers Pixie could do with improving, we will be looking at redeveloping the core at some point.
-  * A refined interface - We currently have around 8 new ideas for an interface, we will be working on refining this via community feedback on the [http://www.getpixie.co.uk Pixie blog].
-  * Block management - 
+  * Core framework - The code that powers Pixie could do with improving, we will be looking at redeveloping the entire code base.
+  * A refined interface - We currently have around 8 new ideas for an improved interface, we will be working on refining this via community feedback on the [http://www.getpixie.co.uk Pixie blog].
+  * Block management - A way of handling, sorting and editing blocks.
+  * Multi-level pages - One of the most requested features is support for more than one level of pages. 
 
 ----
 
