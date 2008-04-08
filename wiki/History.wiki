@@ -11,14 +11,14 @@ It is a good question because allot of great tools exist that tackle a similar g
 
 ==== Where Next? ====
 
-
 I have a fair few features I would like to see in future versions of Pixie but we all need to decide what features are important, if any. Pixie is not just about features or being better than everyone else. Pixie is about being small, simple and fun.
 
 Some plans for the future include:
 
-  * one
-  * two 
-  * three
+  * Hosted Pixie - We will host Pixie for you... for free! A simple sign up form and your site will be ready to use. This helps remove the technical barrier of getting Pixie setup on your own web server. 
+  * Pixie Pro - For a small yearly fee you will get access to "Pixie Pro", an area on the Pixie site where you can download exclusive add-ons (themes, modules etc). The great thing about Pixie Pro is that if you donate your theme, add-on or extra to it, you will get free access to the goodies!
+  * Core framework - The code that powers Pixie could do with improving, we will be looking at redeveloping the entire code base.
+
 
 ----
 If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
