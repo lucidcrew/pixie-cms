@@ -24,6 +24,8 @@ This document is a great place to start when looking for help with Pixie. The qu
 
 ==== What is open source? ====
 
+  * To learn more about open source software we suggest you visit the [http://opensource.org/docs/osd Open Source Initiative homepage].
+ 
 ==== What is a CMS (content management system)? ====
 
 
