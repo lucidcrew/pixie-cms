@@ -1,10 +1,15 @@
 #summary Introduction to Pixie, how it works and plans for the future.
 #labels Featured,Phase-Deploy,welcome,introduction,beginners,help
 
-Pixie was created with a vision that anyone should be able to create and maintain a website. 
+Pixie was created with a vision that anyone should be able to create and maintain a website and more importantly that it should be an easy and straightforward process... so how are we doing? 
 
 === Where are we now? ===
 ----
+
+The first release of Pixie still has some technical barriers, those of you who are unfamiliar with FTP and are unsure of what hosting is, may find setting up Pixie quite difficult. If that sounds like you, we have provided a [Installation step by step guide] of how to get Pixie installed. If you are still having trouble getting Pixie setup please ask for help in the [http://groups.google.com/group/pixie-cms/ forums] or contact [http://www.toggle.uk.com toggle] who offer an installation service, for a small fee.
+
+ 
+
 
 === Looking ahead ===
 ----
