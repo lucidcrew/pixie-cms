@@ -39,16 +39,11 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
 ==== Free & Open Source ====
 
-    Pixie is free (as in cost) and free (as in what you can do with it). Pixie is released under GPL v3 which means:
-
-  * You can use Pixie free of charge.
-  * You can redistribute it without any limitations.
-  * You can make modifications and while they are used internally. If you start distribution of modified system you need to make modification publicly available under the terms of General Public License.
-  * You can’t charge for the software itself even if it is modified. 
+    Pixie is free (as in cost) and free (as in what you can do with it). Pixie is released under [http://www.gnu.org/licenses/gpl.html GNU General Public License v3].
 
 ==== jQuery ====
 
-    I used to hate programming Javascript until I met jQuery. We bundle the latest version of jQuery with Pixie so you can make use of it in your own site.
+    I used to hate programming !JavaScript... until I met jQuery. We bundle the latest version of jQuery with Pixie so you can make use of it in your own site. Visit the [http://jquery.com jQuery site] for inspiration and documentation.
 
 ==== Microformats ====
 
