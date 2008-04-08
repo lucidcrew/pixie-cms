@@ -9,12 +9,12 @@ Blocks are small chunks of content that sit beside your pages, at the moment you
 
 We are currently looking at ways to make block handling much easier from within the Pixie interface. If you have any ideas on how we could do this please share them in the [http://groups.google.com/group/pixie-cms/ forums].
 
-=== Block development ===
+=== Block Development ===
 ----
 
-Blocks can contain PHP, HTML, !JavaScript and CSS. Think of them as tiny web pages that can re-used across your site, over and over again. To create your own block you will need  to create a PHP file that starts with "block\_", for the first example lets make a block that contains a shopping list. The file I create is called "block_shopping_list.php" which is placed into the blocks folder.
+Blocks can contain PHP, HTML, !JavaScript and CSS. Think of them as tiny web pages that can re-used across your site, over and over again. To create your own block you will need  to create a PHP file that starts with *block_xx*, for the first example lets make a block that contains a shopping list. The file I create is called *block_shopping_list.php* which is placed into the blocks folder.
 
-This block is very simple and is made only from HTML. Lets take a look at the code (the comments are to help you understand the structure of a block):
+This block is very simple and is made only from HTML. Lets take a look at the code:
 
 {{{
 
@@ -56,7 +56,7 @@ This block is very simple and is made only from HTML. Lets take a look at the co
 
 As you can see the structure of a block is very simple. Things to remember are giving the block a unique ID and making sure the block contains the three div sections: block_header, block_body and block_footer.
 
-Lets move on to a slightly more complex example. In this example we will be using the Simplepie library bundled within Pixie to create an RSS feed block.
+Lets move on to a slightly more complex example. This time we will be using the [http://simplepie.org/ SimplePie] library bundled within Pixie to create an block that contains an RSS feed from BBC news:
 
 {{{
 
@@ -78,6 +78,7 @@ Lets move on to a slightly more complex example. In this example we will be usin
   <div class="block_body">
     <ul>
     <?php
+
     $feed = new SimplePie('http://www.bbc');
     $feed->handle_content_type();
 
@@ -85,12 +86,15 @@ Lets move on to a slightly more complex example. In this example we will be usin
       $itemlink = $item->get_permalink();
       echo "<li><a href=\"".$item->get_permalink()."\">".$item->get_title()."</a></li>";
     endforeach;
+
     ?>
     </ul>
   </div>
 
   <div class="block_footer">
   </div>
+
+</div>
 
 }}}
 
