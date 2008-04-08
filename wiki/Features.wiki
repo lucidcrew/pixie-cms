@@ -25,13 +25,9 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
     Ugly dynamic URLs are a thing of the past, Pixie supports clean, search engine friendly URLs.
 
-==== Cron ====
+==== CSS themes ====
 
-    Automatically create backups of your database using Cron. This feature is still in its infancy and is being improved all the time. 
-
-==== CSS template system ====
-
-    Pixe uses CSS for its template system, think that is restrictive? look at CSS Zen Garden for inspiration and see how powerful CSS has become. For a quick site refresh take a look at the extra themes available on the Pixie site.
+    Pixie currently uses CSS for its templates, think that is restrictive? look at [http://www.csszengarden.com/ CSS Zen Garden] for inspiration and see how powerful CSS can be. For a quick site refresh why not download [http://www.getpixie.co.uk/downloads/ extra themes] available from the Pixie site.
 
 ==== Database backups ====
 
@@ -65,6 +61,10 @@ Pixie is not out to compete with any other site management tool, the main goal i
 ==== Multilingual ====
 
     Pixie has support for different languages (although none have been translated yet...).
+
+==== No limits ====
+
+    Pixie does not impose any limits on your site, you can have as many pages, files, posts and users as you require.
 
 ==== Portable ====
 
