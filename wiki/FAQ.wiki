@@ -16,9 +16,11 @@ This document is a great place to start when looking for help with Pixie. The qu
 
 ==== What licence is Pixie released under? ====
 
-  * Pixie is released under the GNU General Public License, version 3. 
+  * Pixie is released under the [http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3]. 
 
 ==== How much does it cost? ====
+  
+  * Pixie is free and always will be. We are considering ways we can monetise the project in the future without charging for Pixie itself. This will ensure we can afford the time it takes to develop the software. At the moment we are considering creating an area on the Pixie homepage called "Pixie Pro" which will give paying users (approx £10($20) a year) access to exclusive themes, modules and plug-ins. If you submit your own themes, modules and plug-ins into "Pixie Pro" you will be given a year free for every item submitted... sound good? We think so! 
 
 ==== What is open source? ====
 
