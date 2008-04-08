@@ -98,7 +98,7 @@ Lets move on to a slightly more complex example. This time we will be using the 
 
 }}}
 
-
+As you can see creating blocks is very simple. If you do create your own blocks please post the code back to the community via the [http://groups.google.com/group/pixie-cms/ Pixie forums]so we can see what they are being used for. As mentioned at the beginning of the article we are looking for better ways to handle blocks in Pixie. At the moment we are considering moving the blocks to a database where they can be saved as sets. Each set can then be applied to a page allowing for unique combinations of blocks and easy editing of them.
 
 ----
 
