@@ -1,7 +1,7 @@
 #summary The complete list of Pixie features
 #labels Featured,welcome,introduction,features
 
-Pixie is not out to compete with any other site management tool, the main goal is to keep Pixie so simple that even your Grandma could use it. Keeping Pixie simple does not stop it from having plenty of useful features, lets start with the top three:
+Pixie is not out to compete with any other site management tool, the main goal is to keep Pixie so simple that even your Grandma could use it. Keeping Pixie simple does not stop it from having plenty of useful features, lets start with our favourite three:
 
 === The Top Three ===
 ----
@@ -12,11 +12,11 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
 ==== Web Standards ====
 
-    Pixie uses the latest web standards so your site is accessible to all your visitors and is search engine friendly.  Pixie is especially fond of Microformats. It is not just the visitors that benefit though, we are working hard to make the administration area accessible too.
+    Pixie uses the latest web standards so your site is accessible to all your visitors and is search engine friendly.  Pixie is especially fond of [http://microformats.org/ Microformats]. It is not just the visitors that benefit though, we are working hard to make the administration area accessible too.
 
 ==== Design ====
 
-    Pixie itself has been designed to be simple. Pixie’s interface has been refined over a number of versions to be user friendly. On the visitor side... you will love the fact that all you need to know is CSS to customise your site. If that sounds too complicated you can choose from the ever increasing amount of free templates. 
+    Pixie itself has been designed to be simple. Pixie’s interface has been refined over a number of versions to be user friendly. On the visitor side... you will love the fact that all you need to know is CSS to customise your site. If that sounds too complicated you can choose from the ever increasing amount of [http://www.getpixie.co.uk/downloads/ free themes]. 
 
 === The Complete Features List ===
 ----
