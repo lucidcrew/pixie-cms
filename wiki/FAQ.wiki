@@ -12,7 +12,11 @@ This document is a great place to start when looking for help with Pixie. The qu
 
 ==== How do I use Pixie? ====
 
+  * If you find you are having trouble getting around the Pixie interface or you simply want a section explained then download our PDF user guide. The guide gives you step by step instructions on how to perform different tasks within Pixie.
+
 ==== What licence is Pixie released under? ====
+
+  * Pixie is released under the GNU General Public License, version 3. 
 
 ==== How much does it cost? ====
 
