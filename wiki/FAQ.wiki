@@ -28,6 +28,7 @@ This document is a great place to start when looking for help with Pixie. The qu
  
 ==== What is a CMS (content management system)? ====
 
+  * Content management system (CMS) is the terrible term used to describe a piece of software that allows editing, management and updating of a website. Most CMS systems are accessed via your browser making it convenient to change your site from anywhere in the world. Why are we not to keen on the term?... because its confusing to anyone who hasn't had that explained.   
 
 ----
 
