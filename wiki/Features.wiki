@@ -47,7 +47,7 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
 ==== Microformats ====
 
-    Microformats are excellent... etc...
+    From the Microformats website: Designed for humans first and machines second, microformats are a set of simple, open data formats built upon existing and widely adopted standards. [http://microformats.org/ Microformats] will change the way we use the web!  
 
 ==== Modules, Themes, Plug-ins and Blocks ====
 
