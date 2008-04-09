@@ -31,13 +31,13 @@ The template is broken into a number of files, each of which are explained below
   or remove any selectors in this file, just edit the values. 
 		
   * *layout.css* 
-  This file is where you place your page layouts.
+  This file is where you place your page layouts, we have added some examples styles for image replacement and a fixed footer. You will probably want to clear this file and start again.
 	
   * *dynamic.css* 
   This file is for all your blog/dynamic page css.
 	
   * *navigation.css*
-  This file is for your sites navigation style.
+  This file is for your sites navigation style. We felt it was best to keep navigation style separate as it can often be very complex.
 
   * *print.css*
   A basic print style has been supplied, place your own print 
@@ -60,14 +60,18 @@ The template is broken into a number of files, each of which are explained below
   The favicon for your theme.
 
   * *thumb.jpg*
-  A preview thumbnail if your theme.  
+  A preview thumbnail of your theme.  
 
   * */images/*
   The images folder is where you store your theme graphics and
   icons. We have supplied you a free icon pack called "bitsie"
   that you may use within your theme. "bitsie" has two
-  variations; light and dark and are released under the:
-  Creative Commons Attribution 2.0 UK: England & Wales Licence.
+  variations: light and dark and are released under the:
+  Creative Commons Attribution 2.0 Licence.
+
+Each CSS file is heavily commented, so you'll learn a lot by reading through them. Feel free to clear out the comments once your theme is finished. 
+
+If you need some inspiration for your themes, or want to see how other themes have been made then feel free to download and pick apart any of the themes on the Pixie site. We have kept the CSS easy to follow to make learning form it easier.  
 
 ----
 
