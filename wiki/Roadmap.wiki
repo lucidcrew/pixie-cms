@@ -61,3 +61,4 @@ A very rough outline for the development of new features.
 ==== Version 2 ====
   
   * Complete code re-write, considering using the [http://code.google.com/p/simple-php-framework/ Simple PHP Framework].
+  * Admin modules to public module layout.
