@@ -35,7 +35,7 @@ A very rough outline for the development of new features.
 ==== Version 1.4 ====
 
   * Improved dashboard with much better [http://www.alistapart.com/d/accessibledata/example-final.html statistics visualisation] and Digg spy style updates.
-  * Video play for uploaded videos. 
+  * Video player for uploaded videos. 
 
 ==== Version 1.5 ====
   
