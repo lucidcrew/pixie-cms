@@ -14,6 +14,7 @@ A very rough outline for the development of new features.
 
   * Quotes in Tags "" so you can have 2 words eg. "This tag".
   * TinyMCE compressor or possibly a new rich text editor.
+  * A Cron implementation for automating tasks.
 
 ==== Version 1.2 ====
   
@@ -43,6 +44,10 @@ A very rough outline for the development of new features.
 ==== Version 1.7 ====
 
   * Atom API for posting into Pixie.
+
+==== Version 1.8 ====
+  
+  * Blog via email.
 
 ==== Version 2 ====
   
