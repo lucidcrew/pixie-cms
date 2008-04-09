@@ -17,6 +17,7 @@ A very rough outline for the development of new features.
   * A Cron implementation for automating tasks.
   * Bring total amount of themes to 20+.
   * Subscribe to RSS of a certain user in multi user blogs (e.g. I want to see all Scott's posts).
+  * Table prefix during install to allow more than one site per database.
 
 ==== Version 1.2 ====
   
