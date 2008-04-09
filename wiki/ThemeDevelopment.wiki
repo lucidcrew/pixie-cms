@@ -10,7 +10,7 @@ You could call Pixie the CMS Zen Garden.
 === Starting your design ===
 ----
 
-A Graphic design tutorial is beyond the scope of this document, the main point I want to get across here is that you should visualise your site however you feel comfortable. Personally I build all my website designs in Photoshop. However you do it make sure you can easily save smaller slices of your design into web compatible image formats (.jpg, .gif and .png). 
+A Graphic design tutorial is beyond the scope of this document, the main point I want to get across here is that you should visualise your site however you feel comfortable. Personally I build all my website designs in Photoshop. Whatever applications you use, make sure you can easily save smaller slices of your design into web compatible image formats (.jpg, .gif and .png). 
 
 === CSS your theme ===
 ----
