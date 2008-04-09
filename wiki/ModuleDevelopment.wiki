@@ -13,12 +13,12 @@ A quick guide to making Pixie do more with Modules and Plugins. You will need kn
   Generally speaking a plugin will bring extra functionality to a module. For example you might need a secondary table for your events calendar that stores venues. This is what a plugin should  be use for. There are a few exceptions to this, the RSS plugin that ships with Pixie has been specifically built to allow you to edit which RSS feeds appear in the head of your html. These plugins require hacking of the Pixie core system.
 
 
-=== A bit of background ===
+=== URL Structure ===
 ----
 
-I thought it would be a good idea to let you know a little bit about how Pixie works. The first thing I need to mention is the URL structure, as this forms the basis of how pixie works.
+I need to mention is the URL structure, as this forms the basis of how Pixie works.
 
-Your site is installed at www.mysite.com... When is visit www.mysite.com/page/ (or www.mysite.com?s=page for those of you without clean URL support) Pixie maps the word "page" to a variable. In this case the variable is `$s`. Pixie supports upto four variables to from the url (www.mysite.com/1/2/3/4) and each one maps to a different variable name:
+Lets say your Pixie site is installed at www.mysite.com... When is visit www.mysite.com/page/ (or www.mysite.com?s=page for those of you without clean URL support) Pixie maps the word "page" to a variable. In this case the variable is `$s`. Pixie supports upto four variables to from the url (www.mysite.com/1/2/3/4) and each one maps to a different variable name:
 
 In this example: www.mysite.com/page/do/something/please/ the URL will be mapped to:
 
@@ -85,10 +85,16 @@ We are looking to add more data type handling as we develop Pixie (for instance 
 ==== Field Names ====
 
   * *email*
+  Any field with the name email will be validated as an email address when saved. In the table view within Pixie it will also be turned into a clickable mailto: link. 
+
   * *url*
+  URL will be validated as a URL when the entry is saved. The link will also be clickable in the table view of Pixie.
+
   * *file*
+  Any field that begins with the word file (e.g. file_1, file_download, file) will list all the files that have been uploaded to your site in a drop down list. The user will also have the option of uploading a new file. This is known as inline uploading.
+ 
   * *image*
-  * *audio*
+  * *audio* 
   * *video*
   * *document*
   * *tags*
