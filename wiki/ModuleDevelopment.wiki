@@ -139,18 +139,51 @@ Now you need to let Pixie know that your module exists, to do this we need to in
 
 INSERT INTO `pixie_core` (`page_id`, `page_type`, `page_name`, `page_display_name`, `page_description`, `page_blocks`, `page_content`, 
 `page_views`, `page_parent`, `privs`, `publish`, `public`, `in_navigation`, `page_order`, `searchable`, `last_modified`) VALUES 
-(5, 'module', 'links', 'Links', '<p>My links.</p>', '', '', 0, '', 2, 'yes', 'yes', 'yes', , 'yes', '2008-04-09 16:57:55'),
+(5, 'module', 'links', 'Links', '<p>My links.</p>', '', '', 0, '', 2, 'yes', 'yes', 'yes', , 'no', '2008-04-09 16:57:55'),
 
 }}}
 
+This is what some of the more important field within `pixie_core` are all about:
+
+  * *page_type*
+
+  * *page_name*
+
+  * *page_display_name*
+
+  * *page_description*
+
+  * *publish*
+
+  * *public*
+
+  * *in_navigation*
+
+  * *searchable*
+
+The fields I have not listed here are easily edited with Pixie and explained in the settings area if you want to know more. 
 
 === The links page example ===
 ----
+
+Now is a good time to jump straight into programming the module itself, rather than explain everything I have copied the heavily commented module below:
+
+
+{{{
+ code block
+}}}
 
 
 === Useful functions ===
 ----
 
+There are a few functions available to you from within Pixie, these are the most useful:
+
+  * *createURL($s,$m,$x,$p)* 
+
+  * *encode_email($email_address)*
+
+... etc.
 
 === What next? ===
 ----
