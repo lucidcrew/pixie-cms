@@ -39,7 +39,7 @@ A very rough outline for the development of new features.
   * Import from Textpattern, Wordpress, Moveabletype, blogger.
   * New interface design.
   * Optional template files for your themes.
-  * Multi-levels of pages/navigation. 
+  * Multi-levels of [http://www.bernardopadua.com/nestedSortables/test/nested_sortable/ pages/navigation]. 
 
 ==== Version 1.6 ====
 
