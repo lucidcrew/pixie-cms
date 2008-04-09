@@ -22,7 +22,8 @@ A very rough outline for the development of new features.
   
   * More install options with new modules (specifically for business sites/users).
   * Upload functionality to be given in/around [tinymce.moxiecode.com TinyMce].
-  * Upgraded [http://jqueryfordesigners.com/slider-gallery/ page carousel].  
+  * Upgraded [http://jqueryfordesigners.com/slider-gallery/ page carousel].
+  * Site search module/plugin.  
 
 ==== Version 1.3 ====
   
