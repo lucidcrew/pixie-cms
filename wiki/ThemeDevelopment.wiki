@@ -4,7 +4,7 @@
 Making themes for Pixie is easy, anyone with knowledge of
 CSS will be able to create a theme. Pixie was created with the same philosophy as the [http://www.csszengarden.com/ CSS Zen Garden]: 
 
-     A quote about the CSS zen Garden and how it works
+     The goal of the site is to showcase what is possible with CSS-based design. Style sheets contributed by graphic designers from around the world are used to change the visual presentation of a single HTML file, producing hundreds of different designs. Aside from reference to an external CSS file, the HTML markup itself never changes. All visual differences are the result of the CSS (and supporting imagery) - [http://en.wikipedia.org/wiki/CSS_Zen_Garden Wikipedia].
 
 You could call Pixie the "CMS Zen Garden". If CSS is not your thing then please contact [http://www.toggle.uk.com toggle] who will be happy to quote you for the design and development of your own unique theme. 
 
