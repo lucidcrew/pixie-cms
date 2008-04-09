@@ -114,7 +114,19 @@ We are looking to add more data type handling as we develop Pixie (for instance 
   * *title & post_slug*
   If your table has fields with both of these names Pixie will automatically create a slug of the title and save it into post_slug. For example: I have just created a new blog entry called "hello world", when I save this entry Pixie automatically populates the post_slug filed with "hello-world". The allows me to retrieve the post at a later date using a friendly slug. For an example look at the `pixie_dynamic_posts` table.
 
-Pixie will automatically try and convert your field names to be human friendly, for example: In our links page example the field `link_title` will be shown as "Link title" throughout Pixie. This encourages you to use sensible names in your database.
+Pixie will automatically try and convert your field names to be human friendly, for example: In our links page example the field `link_title` will be shown as "Link title" throughout Pixie. This encourages you to use sensible names in your database. Sometimes you will need a little more control that this and Pixie provides in through the language file. If I created the following two entries in my language file (admin/lang/en-gb.php):
+
+{{{
+
+// overwrite field name
+'form_link_title' => 'Please enter your link title:',
+
+// provide help within the form.
+'form_help_link_title' => 'This will be validated as a URL, please include http://',
+
+}}} 
+
+Pixie will overwrite the field `link_title` with the top line, and the second line will also appear in the form to give extra hints or help about what Pixie is expecting.
 
 === Creating the file ===
 ----
