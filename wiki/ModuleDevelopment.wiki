@@ -53,9 +53,9 @@ So lets have a look at the SQL for my links module:
 
 CREATE TABLE IF NOT EXISTS `pixie_module_links` (
   `links_id` int(4) NOT NULL auto_increment,
-  `link_title` varchar(80) collate utf8_unicode_ci NOT NULL default '',
+  `link_title` varchar(150) collate utf8_unicode_ci NOT NULL default '',
   `tags` varchar(200) collate utf8_unicode_ci NOT NULL default '',
-  `url` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+  `url` varchar(300) collate utf8_unicode_ci NOT NULL default '',
   PRIMARY KEY  (`links_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -66,10 +66,15 @@ My links module uses a very simple table that stores a link ID, a link title, ta
 
 To help make module development quicker Pixie looks for field names and automatically handles the different data types as well, lets take a look at what is available:
 
-==== Data types ====
+==== Data Types ====
+  
+  * *VARCHAR*
+  For any field set to VARCHAR Pixie will create a simple input text box, Pixie looks for the `length` flag and limits the text box to this many characters. In our links table above the `link_title` is limited to 150 characters. 
 
+  * *TIMESTAMP*
+  Pixie will 
 
-==== Field names ====
+==== Field Names ====
 
      
 
