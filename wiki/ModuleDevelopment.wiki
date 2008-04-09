@@ -114,7 +114,7 @@ We are looking to add more data type handling as we develop Pixie (for instance 
   * *title & post_slug*
   If your table has fields with both of these names Pixie will automatically create a slug of the title and save it into post_slug. For example: I have just created a new blog entry called "hello world", when I save this entry Pixie automatically populates the post_slug filed with "hello-world". The allows me to retrieve the post at a later date using a friendly slug. For an example look at the `pixie_dynamic_posts` table.
 
-Pixie will automatically try and convert your field names to be human friendly, for example: In our links page example the field `link_title` will be shown as "Link title" throughout Pixie. This encourages you to use sensible names in your database. Sometimes you will need a little more control that this and Pixie provides in through the language file. If I created the following two entries in my language file (admin/lang/en-gb.php):
+Pixie will automatically try and convert your field names to be human friendly. In our links page example, the field `link_title`, will be shown as "Link title" throughout Pixie. This encourages you to use sensible names in your database. Sometimes you will need a little more control than this and Pixie provides in through the language file. If I created the following two entries in my language file (admin/lang/en-gb.php):
 
 {{{
 
@@ -126,7 +126,7 @@ Pixie will automatically try and convert your field names to be human friendly, 
 
 }}} 
 
-Pixie will overwrite the field `link_title` with the top line, and the second line will also appear in the form to give extra hints or help about what Pixie is expecting.
+Pixie will overwrite the field `link_title` with the top line, and the second line will appear in the form to give extra hints or help about what the user should enter. This feature can be very handy for improving the usability of the form for your module. We do realise that this does cause some impracticalities; new modules may require the user to edit their language file which is further complicated when more languages are introduced. If you have any suggestions in improving this (maybe languages are moved to database?) then please [http://groups.google.com/group/pixie-cms/let us know]. 
 
 === Creating the file ===
 ----
