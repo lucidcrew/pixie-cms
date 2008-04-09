@@ -32,7 +32,8 @@ A very rough outline for the development of new features.
 
 ==== Version 1.4 ====
 
-  * Improved dashboard with much better statistics visualisation and Digg spy style updates. 
+  * Improved dashboard with much better statistics visualisation and Digg spy style updates.
+  * Video play for uploaded videos. 
 
 ==== Version 1.5 ====
   
@@ -53,6 +54,7 @@ A very rough outline for the development of new features.
 ==== Version 1.8 ====
   
   * Blog via email.
+  * Improvements to permissions and users. 
 
 ==== Version 2 ====
   
