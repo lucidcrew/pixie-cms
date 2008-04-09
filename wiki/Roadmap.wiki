@@ -59,6 +59,8 @@ A very rough outline for the development of new features.
   * Blog via email.
   * Improvements to permissions and users. 
 
+.....
+
 ==== Version 2 ====
   
   * Complete code re-write, considering using the [http://code.google.com/p/simple-php-framework/ Simple PHP Framework].
