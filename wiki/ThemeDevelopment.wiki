@@ -1,11 +1,12 @@
 #summary How to develop a theme for Pixie.
 #labels Phase-Design,Phase-Implementation,theme,development,style,css,design
 
-Pixie uses CSS for layout and theme-ing of websites. Pixie was created with the same philosophy as the [http://www.csszengarden.com/ CSS Zen Garden]: 
+Making themes for Pixie is easy, anyone with knowledge of
+CSS will be able to create a theme. Pixie was created with the same philosophy as the [http://www.csszengarden.com/ CSS Zen Garden]: 
 
      A quote about the CSS zen Garden and how it works
 
-You could call Pixie the CMS Zen Garden.
+You could call Pixie the "CMS Zen Garden".
 
 === Starting your design ===
 ----
@@ -19,6 +20,54 @@ To make life simple we have created a theme template which contains the files yo
 
 The template is broken into a number of files, each of which are explained below:   
 
+  * settings.php
+  This is your starting point for the template, it has plenty of
+  helpful comments to get you started. This file lets Pixie know
+  about your theme.
+
+  * core.css
+  The core css file resets the css and lays out new base styles 
+  for most html elements. As a rule you should not need to add 
+  or remove any selectors in this file, just edit the values. 
+		
+  * layout.css 
+  This file is where you place your page layouts.
+	
+  * dynamic.css 
+  This file is for all your blog/dynamic page css.
+	
+  * navigation.css
+  This file is for your sites navigation style.
+
+  * print.css
+  A basic print style has been supplied, place your own print 
+  style in this file.
+
+  * 404.css 
+  This file styles your custom 404 page.
+
+  * ie6.css/ie7.css 
+  These files are used to store IE6 and IE7 specific styles.
+  These two files are not required an can removed if not used
+  in your theme.
+
+  * handheld.css
+  This css file is used to create a stylesheet compatible with
+  mobile devices. This file is not required and can be removed
+  if it is not used as part of your theme.
+
+  * favicon.ico
+  The favicon for your theme.
+
+  * thumb.jpg
+  A preview thumbnail if your theme.  
+
+  * /images/
+  The images folder is where you store your theme graphics and
+  icons. We have supplied you a free icon pack called "bitsie"
+  that you may use within your theme. "bitsie" has two
+  variations; light and dark and are released under the:
+  Creative Commons Attribution 2.0 UK: England & Wales Licence.
 
 ----
 
