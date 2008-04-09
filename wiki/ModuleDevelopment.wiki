@@ -64,7 +64,14 @@ CREATE TABLE IF NOT EXISTS `pixie_module_links` (
 
 My links module uses a very simple table that stores a link ID, a link title, tags for the link and the URL itself. Any field set to `NOT NULL` will be required when the form is saved. Pixie will automatically check this flag and report an error when saving if the field is left empty. 
 
-To help make module development quicker Pixie looks for field names and automatically handles the different data types and names differently.    
+To help make module development quicker Pixie looks for field names and automatically handles the different data types as well, lets take a look at what is available:
+
+==== Data types ====
+
+
+==== Field names ====
+
+     
 
 === Creating the file ===
 ----
