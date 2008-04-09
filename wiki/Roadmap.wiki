@@ -63,3 +63,8 @@ A very rough outline for the development of new features.
   
   * Complete code re-write, considering using the [http://code.google.com/p/simple-php-framework/ Simple PHP Framework].
   * Admin modules to public module layout.
+
+==== Version 2.1 ====
+
+  * Control more than one Pixie? secure remote database control: XML RPC? SOAP?
+  * Weblog pinger & Trackbacks.
