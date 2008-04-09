@@ -71,7 +71,7 @@ The template is broken into a number of files, each of which are explained below
 
 Each CSS file is heavily commented, so you'll learn a lot by reading through them. Feel free to clear out the comments once your theme is finished. 
 
-_TIP: Pixie will always look for a CSS file with the name of the current page slug, lets say you have installed the links module. When a visitor visits http://www.mysite.com/links/ (http://www.mysite.com?s=links for those of you without clean URL support) Pixie will look for a CSS file called `links.css` in your current theme folder. If found Pixie will load this file into the rest of your CSS. This allows you to completely change the look of a certain page. This will work for any static, module or plugin page you have on your site._
+_Tip: Pixie will always look for a CSS file with the name of the current page slug, lets say you have installed the links module. When a visitor views the page www.mysite.com/links/ (www.mysite.com?s=links for those of you without clean URL support) Pixie will look for a CSS file called `links.css` in your current themes folder (/admin/themes/current_theme/). If found Pixie will load this file into the rest of your CSS. This allows you to completely change the look of a certain page. This will work for any static, module or plugin page you have on your site._
 
 If you need some inspiration for your themes, or want to see how other themes have been made then feel free to download and pick apart any of the themes on the [http://www.getpixie.co.uk/downloads/ Pixie site]. We have kept the CSS easy to follow to make learning form it easier.
 
