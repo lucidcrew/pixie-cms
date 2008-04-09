@@ -183,6 +183,8 @@ There are a few functions available to you from within Pixie, these are the most
 
   * *encode_email($email_address)*
 
+  * *safe_field* (and all other db functions)
+
 ... etc.
 
 === What next? ===
