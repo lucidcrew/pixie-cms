@@ -82,6 +82,10 @@ Where to put your file, what to call it and a template for getting started.
 ----
 
 
+=== Useful functions ===
+----
+
+
 === What next? ===
 ----
 
