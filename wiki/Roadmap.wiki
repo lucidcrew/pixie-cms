@@ -39,6 +39,10 @@ A very rough outline for the development of new features.
   * Page caching.
   * iPhone version based on [http://www.davidcann.com/iphone/ iPhone interface JavaScript library].
 
+==== Version 1.7 ====
+
+  * Atom API for posting into Pixie.
+
 ==== Version 2 ====
   
   * Complete code re-write, considering using the [http://code.google.com/p/simple-php-framework/ Simple PHP Framework].
