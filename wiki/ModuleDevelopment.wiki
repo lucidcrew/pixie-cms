@@ -94,11 +94,27 @@ We are looking to add more data type handling as we develop Pixie (for instance 
   Any field that begins with the word file (e.g. file_1, file_download, file) will list all the files that have been uploaded to your site in a drop down list. The user will also have the option of uploading a new file. This is known as inline uploading.
  
   * *image*
-  * *audio* 
+  This works that same as above except only images are listed in the drop down list. When selecting an image in the drop down form the user also gets an option to preview the image.
+
+  * *audio*
+  Any field that begins with audio (e.g. audio_file, audio) will create a drop down of all uploaded audio files. The user also has the option to upload a new file.
+
   * *video*
+  As above except with video files.
+
   * *document*
+  As above except with document files.
+
   * *tags*
+  The tags feature is quite rich within Pixie. Any field called tags will allow you to effortlessly create tag clouds, browse by tag within the Pixie interface and also provide recommended tags from previously saved entries. For an example look at any dynamic (blog/news) page.
+
   * *privs*
+  This field name will create a drop down list of the three Pixie privileges. 
+
+  * *title & post_slug*
+  If your table has fields with both of these names Pixie will automatically create a slug of the title and save it into post_slug. For example: I have just created a new blog entry called "hello world", when I save this entry Pixie automatically populates the post_slug filed with "hello-world". The allows me to retrieve the post at a later date using a friendly slug. For an example look at the `pixie_dynamic_posts` table.
+
+Pixie will automatically try and convert your field names to be human friendly, for example: In our links page example the field `link_title` will be shown as "Link title" throughout Pixie. This encourages you to use sensible names in your database.
 
 === Creating the file ===
 ----
