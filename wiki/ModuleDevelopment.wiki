@@ -1,7 +1,7 @@
 #summary How to develop a module or plugin for Pixie.
 #labels Phase-Implementation,module,development,plugins,php
 
-A quick guide to making Pixie do more with Modules and Plugins. You will need knowledge of PHP and MySQL to create your own theme, if you are not able to do this the please contact [http://www.toggle.uk.com toggle] who will be happy to quote you for bespoke module development.
+A quick guide to making Pixie do more with Modules and Plugins. You will need knowledge of PHP and MySQL to create your own module or plugin, if that sounds to tricky please contact [http://www.toggle.uk.com toggle], who will be happy to quote you for bespoke module development.
 
 === A Module, a Plugin... what is the difference? ===
 ----
