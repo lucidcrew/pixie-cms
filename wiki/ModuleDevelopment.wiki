@@ -77,9 +77,22 @@ To help make module development quicker Pixie looks for certain field names and 
   * *SET('yes', 'no')*
   Will be converted into two radio boxes, one for 'yes' and one for 'no'.
 
+  * *LONGTEXT*
+  This field will be converted into an [http://tinymce.moxiecode.com TinyMce] text area.
+
+We are looking to add more data type handling as we develop Pixie (for instance "bool" to be converted into a checkbox). If you would like to suggest more please [http://groups.google.com/group/pixie-cms/ get in touch].
+
 ==== Field Names ====
 
-     
+  * *email*
+  * *url*
+  * *file*
+  * *image*
+  * *audio*
+  * *video*
+  * *document*
+  * *tags*
+  * *privs*
 
 === Creating the file ===
 ----
