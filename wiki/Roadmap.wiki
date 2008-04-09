@@ -15,9 +15,12 @@ A very rough outline for the development of new features.
   * Quotes in Tags "" so you can have 2 words eg. "This tag".
   * TinyMCE compressor or possibly a new rich text editor.
   * A Cron implementation for automating tasks.
+  * Bring total amount of themes to 20+.
+  * Subscribe to RSS of a certain user in multi user blogs (e.g. I want to see all Scott's posts).
 
 ==== Version 1.2 ====
   
+  * More install options with new modules (specifically for business sites/users).
   * Upload functionality to be given in/around [tinymce.moxiecode.com TinyMce].
   * Upgraded [http://jqueryfordesigners.com/slider-gallery/ page carousel].  
 
