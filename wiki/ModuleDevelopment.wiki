@@ -6,12 +6,25 @@ A quick guide to making Pixie do more with Modules and Plugins.
 === A Module, a Plugin... what is the difference? ===
 ----
 
-
+Post based etc etc.
 
 === A bit of background ===
 ----
 
-Not being the strongest developer in the world I always look for the simplest route when coding. I thought it would be a good idea to let you know a little bit about how Pixie works and why it behaves as it does.
+I thought it would be a good idea to let you know a little bit about how Pixie works and why it behaves as it does. The first thing I need to mention is the URL structure as this forms the basis of how pixie works.
+
+Your site is installed at www.mysite.com... When is visit www.mysite.com/page/ (or www.mysite.com?s=page for those of you without clean URL support) Pixie maps the word "page" to a variable. In this case the variable is `$s`. Pixie supports upto four variables to from the url (www.mysite.com/1/2/3/4) and each one maps to a different variable name:
+
+In this example: www.mysite.com/page/do/something/please/ the URL will be mapped to:
+
+  * `$s` = "page".
+  * `$m` = "do".
+  * `$x` = "something".
+  * `$p` = "here".
+
+`$s, $m, $x and $p` are then available to us within our modules for manipulation. Pixie converts all URL's to lowercase and does not require the last "/" on the end of the URL to work.
+
+ 
 
 
 === Setting up your tables ===
@@ -24,6 +37,26 @@ The first part of developing your module is creating the database tables. Pixie 
   * *Table name*
   The name of your database table is important, it must always start with `pixie_module_` follow by the module name. For our links page example I create a table called `pixie_module_links`.
 
+Id name
+
+reserved database field names: url, email, file, image etc etc.
+
+
+Register your table in `pixie_core`. 
+
+=== Creating the file ===
+----
+Where to put your file, what to call it and a template for getting started.
+
+
+=== The links page example ===
+----
+
+
+=== What next? ===
+----
+
+This is only a very quick example of what is possible when extending Pixie. We will try and add more examples to this wiki soon. In the mean time why not download some of our other modules and plugins and pick them apart.  
 
 ----
 
