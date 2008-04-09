@@ -8,6 +8,23 @@ A quick guide to making Pixie do more with Modules and Plugins.
 
 
 
+=== A bit of background ===
+----
+
+Not being the strongest developer in the world I always look for the simplest route when coding. I thought it would be a good idea to let you know a little bit about how Pixie works and why it behaves as it does.
+
+
+=== Setting up your tables ===
+----
+
+Throughout this document we will be working on creating a very simple links module. 
+
+The first part of developing your module is creating the database tables. Pixie uses a number of conventions that you must be aware of when creating your table. Lets start with the table name:
+
+  * *Table name*
+  The name of your database table is important, it must always start with `pixie_module_` follow by the module name. For our links page example I create a table called `pixie_module_links`.
+
+
 ----
 
 If you have questions about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
