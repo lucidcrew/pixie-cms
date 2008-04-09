@@ -137,7 +137,8 @@ Now you need to let Pixie know that your module exists, to do this we need to in
 
 {{{
 
-INSERT INTO `pixie_core` (`page_id`, `page_type`, `page_name`, `page_display_name`, `page_description`, `page_blocks`, `page_content`, `page_views`, `page_parent`, `privs`, `publish`, `public`, `in_navigation`, `page_order`, `searchable`, `last_modified`) VALUES 
+INSERT INTO `pixie_core` (`page_id`, `page_type`, `page_name`, `page_display_name`, `page_description`, `page_blocks`, `page_content`, 
+`page_views`, `page_parent`, `privs`, `publish`, `public`, `in_navigation`, `page_order`, `searchable`, `last_modified`) VALUES 
 (5, 'module', 'links', 'Links', '<p>My links.</p>', '', '', 0, '', 2, 'yes', 'yes', 'yes', , 'yes', '2008-04-09 16:57:55'),
 
 }}}
