@@ -13,6 +13,7 @@ A very rough outline for the development of new features.
 ==== Version 1.1 ====
 
   * Quotes in Tags "" so you can have 2 words eg. "This tag".
+  * TinyMCE compressor or possibly a new rich text editor.
 
 ==== Version 1.2 ====
   
