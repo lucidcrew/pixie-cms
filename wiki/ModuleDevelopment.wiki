@@ -6,7 +6,11 @@ A quick guide to making Pixie do more with Modules and Plugins. You will need kn
 === A Module, a Plugin... what is the difference? ===
 ----
 
-Post based etc etc.
+*A Module*
+  A module is quite simply a page that brings extra functionality to Pixie and your website. This might be a product database, links page or events calendar. Modules are always post based page, this means you keep posting information to them e.g. Adding a new event, adding a new product.
+
+*A Plugin*
+  Generally speaking a plugin will bring extra functionality to a module. For example you might need a secondary table for your events calendar that stores venues. This is what a plugin should  be use for. There are a few exceptions to this, the RSS plugin that ships with Pixie has been specifically built to allow you to edit which RSS feeds appear in the head of your html. These plugins require hacking of the Pixie core system.  
 
 === A bit of background ===
 ----
