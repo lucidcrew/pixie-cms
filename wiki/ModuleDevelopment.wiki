@@ -42,7 +42,10 @@ Id name
 reserved database field names: url, email, file, image etc etc.
 
 
-Register your table in `pixie_core`. 
+Register your table in `pixie_core`.
+
+_Tip: You can also create a secondary table with for your module with `_settings` in its name: e.g. `pixie_module_links_settings`. Pixie will automatically look for this table when you are editing the settings of a page. If found pixie will create a form and allow the settings to be changed._ 
+  
 
 === Creating the file ===
 ----
