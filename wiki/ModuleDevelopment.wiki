@@ -45,7 +45,26 @@ _Tip: You can also create a secondary table with for your module with `_settings
 Next up is the ID field for your table, once again the naming is important:
 
   * *Table ID*
-  The name of your table id must match the name of your table, for our links module the id field is called `links_id`. Notice I am using the word "links" (plural) every time I declare it, it would not work if I called the ID `link_id`.  
+  The name of your table id must match the name of your table, for our links module the id field is called `links_id`. Notice I am using the word "links" (plural) every time I declare it, it would not work if I called the ID: `link_id`.
+
+So lets have a look at the SQL for my links module:
+
+{{{
+
+CREATE TABLE IF NOT EXISTS `pixie_module_links` (
+  `links_id` int(4) NOT NULL auto_increment,
+  `link_title` varchar(80) collate utf8_unicode_ci NOT NULL default '',
+  `tags` varchar(200) collate utf8_unicode_ci NOT NULL default '',
+  `url` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+  PRIMARY KEY  (`links_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+
+}}}
+
+My links module uses a very simple table that stores a link ID, a link title, tags for the link and the URL itself. Any field set to `NOT NULL` will be required when the form is saved. Pixie will automatically check this flag and report an error when saving if the field is left empty. 
+
+To help make module development quicker Pixie looks for field names and automatically handles the different data types and names differently.    
 
 === Creating the file ===
 ----
