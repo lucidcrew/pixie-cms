@@ -130,6 +130,10 @@ Pixie will overwrite the field `link_title` with the top line, and the second li
 
 === Creating the file ===
 ----
+
+So you have created your table and changed any nasty field names in your language file. Its now time to create your file and let Pixie know about it. All modules are stored in the modules folder (admin/modules/). Your file name for your module must match the name use in your tables, so I am going to create a file called `links.php`. You may find it useful to download our module template at this point.
+
+
 Where to put your file, what to call it and a template for getting started.
 
 
