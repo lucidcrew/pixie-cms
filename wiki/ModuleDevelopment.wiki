@@ -409,7 +409,7 @@ Browsing through the lib (admin/lib) folder you will find all the libraries and 
 === What next? ===
 ----
 
-This is only a very quick example of what is possible when extending Pixie. We will try and add more examples to this wiki soon. In the mean time why not download some of our other modules and plugins and pick them apart.  
+This is only a very quick example of how to extend Pixie. We will try and add more examples to this wiki soon. In the mean time why not download some of our other [http://www.getpixie.co.uk/downloads/ modules and plugins] to pick apart.  
 
 ----
 
