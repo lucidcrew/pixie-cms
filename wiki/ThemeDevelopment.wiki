@@ -11,7 +11,7 @@ You could call Pixie the "CMS Zen Garden". If CSS is not your thing then please 
 === Starting your design ===
 ----
 
-A Graphic design tutorial is beyond the scope of this document, the main point I want to get across here is that you should visualise your site however you feel comfortable. Personally I build all my website designs in Photoshop. Whatever applications you use, make sure you can easily save smaller slices of your design into web compatible image formats (.jpg, .gif and .png). 
+A Graphic design tutorial is beyond the scope of this document. The main point I want to get across here is that you should visualise your site however you feel comfortable. Personally I build all my website designs in Photoshop. Whatever applications you use, make sure you can easily save smaller slices of your design into web compatible image formats (.jpg, .gif and .png). 
 
 === CSS ===
 ----
@@ -48,7 +48,7 @@ The template is broken into a number of files, each of which are explained below
 
   * *ie6.css/ie7.css* 
   These files are used to store IE6 and IE7 specific styles.
-  These two files are not required an can removed if not used
+  These two files are not required and can be removed if not used
   in your theme.
 
   * *handheld.css*
@@ -71,9 +71,9 @@ The template is broken into a number of files, each of which are explained below
 
 Each CSS file is heavily commented, so you'll learn a lot by reading through them. Feel free to clear out the comments once your theme is finished. 
 
-_Tip: Pixie will always look for a CSS file with the name of the current page slug, lets say you have installed the links module. When a visitor views the page www.mysite.com/links/ (www.mysite.com?s=links for those of you without clean URL support) Pixie will look for a CSS file called `links.css` in your current themes folder (/admin/themes/current_theme/). If found Pixie will load this file into the rest of your CSS. This allows you to completely change the look of a certain page. This will work for any static, module or plugin page you have on your site._
+_Tip: Pixie will always look for a CSS file with the name of the current page slug. Lets say you have installed the links module. When a visitor views the page www.mysite.com/links/ (www.mysite.com?s=links for those of you without clean URL support) Pixie will look for a CSS file called `links.css` in your current themes folder (/admin/themes/current_theme/). If found Pixie will load this file into the rest of your CSS. This allows you to completely change the look of a certain page. This will work for any static, module or plugin page you have on your site.
 
-If you need some inspiration for your themes, or want to see how other themes have been made then feel free to download and pick apart any of the themes on the [http://www.getpixie.co.uk/downloads/ Pixie site]. We have kept the CSS easy to follow to make learning form it easier.
+If you need some inspiration for your themes - or want to see how other themes have been made - feel free to download and pick apart any of the themes on the [http://www.getpixie.co.uk/downloads/ Pixie site]. We have kept the CSS easy to follow to make learning from it easier.
 
 === Installation ===
 ----
