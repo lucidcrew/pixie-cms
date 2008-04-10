@@ -1,7 +1,7 @@
 #summary How to develop new blocks for Pixie.
 #labels Phase-Implementation,blocks,development,php
 
-Blocks are small chunks of content that sit beside your pages, at the moment you need to edit and create blocks manually. You will find your blocks in the blocks (admin/blocks/) folder. Pixie comes with a number of examples to get you started. Example blocks include:
+Blocks are small chunks of content that sit beside your pages. At the moment you need to edit and create blocks manually. You will find your blocks in the blocks (admin/blocks/) folder. Pixie comes with a number of examples to get you started. Example blocks include:
 
   * A [http://www.flickr.com Flickr] badge.
   * A [http://www.digg.com Digg] badge.
@@ -98,7 +98,7 @@ Lets move on to a slightly more complex example. This time we will be using the 
 
 }}}
 
-As you can see creating blocks is very simple. Feel free to pick apart the blocks that Pixie ships with to see how they work, this is often the best way to learn. If you do create your own blocks please post the code back to the community via the [http://groups.google.com/group/pixie-cms/ Pixie forums] so we can see what they are being used for. 
+As you can see creating blocks is very simple. Feel free to pick apart the blocks that Pixie ships with to see how they work as this is often the best way to learn and move forward. If you do create your own blocks please post the code back to the community via the [http://groups.google.com/group/pixie-cms/ Pixie forums] so we can see what they are being used for. 
 
 As mentioned at the beginning of the article we are looking for better ways to handle blocks in Pixie. At the moment we are considering moving the blocks to a database where they can be saved as sets. Each set can then be applied to a page allowing for unique combinations of blocks and easy editing of them via the Pixie interface.
 
