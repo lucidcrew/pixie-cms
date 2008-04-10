@@ -1,18 +1,18 @@
 #summary The complete list of Pixie features
 #labels Featured,welcome,introduction,features
 
-Pixie is not out to compete with any other site management tool, the main goal is to keep Pixie so simple that even your Grandma could use it. Keeping Pixie simple does not stop it from having plenty of useful features, lets start with our favourite three:
+Pixie is not out to compete with any other site management tool. Our main goal is to keep Pixie so simple that even your Grandma could use it. But keeping Pixie simple doesn't stop it from having plenty of powerful, useful features. So lets start with our favourite three:
 
 === The Top Three ===
 ----
 
 ==== The Installer ====
 
-    Most website management tools will install the same package for everyone. Pixie takes a new approach and allows you to select the type of site you are after. A blog?, Band? or Business? you choose what best suits you. As Pixie matures so will the list of possibilities...
+    Most website management tools will install the same package for everyone. Pixie takes a new approach and allows you to select the type of site you are after. A blog?, A site for your band? Maybe one to run your Business? We think it's your site - so you choose what best suits you. As Pixie matures so will the list of possibilities...
 
 ==== Web Standards ====
 
-    Pixie uses the latest web standards so your site is accessible to all your visitors and is search engine friendly.  Pixie is especially fond of [http://microformats.org/ Microformats]. It is not just the visitors that benefit though, we are working hard to make the administration area accessible too.
+    Pixie uses the latest web standards so whatever site you build, it's accessible to all your visitors and is search engine friendly.  Pixie is especially fond of [http://microformats.org/ Microformats]. It's not just your visitors who benefit though. We're working hard to make the site administration area easy and accessible too.
 
 ==== Design ====
 
@@ -27,11 +27,11 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
 ==== CSS themes ====
 
-    Pixie currently uses CSS for its templates, think that is restrictive? look at [http://www.csszengarden.com/ CSS Zen Garden] for inspiration and see how powerful CSS can be. For a quick site refresh why not download [http://www.getpixie.co.uk/downloads/ extra themes] available from the Pixie site.
+    Pixie currently uses CSS for its templates. So you think that's restrictive? Take a look at [http://www.csszengarden.com/ CSS Zen Garden] for inspiration to see just how powerful CSS can be. For a quick site refresh why not download [http://www.getpixie.co.uk/downloads/ extra themes] available from the Pixie site.
 
 ==== Database backups ====
 
-    Your site data is important so we figured it would be nice to back it up once in a while. Pixie offers support for this to help protect against any unplanned incidents.
+    Your site data is important, so we figured it would be a good idea to maybe back it up once in a while. Pixie offers support for this to help protect against any unplanned incidents.
 
 ==== File manager with tag support ====
 
@@ -39,7 +39,7 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
 ==== Free & Open Source ====
 
-    Pixie is free (as in cost) and free (as in what you can do with it). Pixie is released under [http://www.gnu.org/licenses/gpl.html GNU General Public License v3].
+    Pixie is free (as in: it costs you nothing ) and free (as in: you can do whatever you like with it). Pixie is released under [http://www.gnu.org/licenses/gpl.html GNU General Public License v3].
 
 ==== jQuery ====
 
@@ -59,7 +59,7 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
 ==== No limits ====
 
-    Pixie does not impose any limits on your site, you can have as many pages, files, posts and users as you require.
+    Pixie does not impose any limits on your site, you can have as many pages, files, posts and users as you require. It's only as big as your imagination.
 
 ==== Portable ====
 
@@ -78,7 +78,7 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
 ==== Search Engine Friendly ====
 
-    Pixie and Google are "super best friends". We have built Pixie to ensure that search engines find it easy to crawl your sites pages and extract the content they need to.
+    Pixie and Google are "super best friends". We have built Pixie to ensure that search engines find it easy to crawl your sites pages and extract the content they need to give it the best possible ranking.
 
 ==== Sitemap.xml ====
 
@@ -86,7 +86,7 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
 ==== Small ====
 
-   Pixie is just a under 1 megabytes in size (all zipped up), we always wanted to keep the size of the software small it could run quietly and efficiently on your server.
+   Pixie is just a under 1 megabytes in size (all zipped up). We always wanted to keep the size of the software small it could run quietly and efficiently on your server.
 
 ==== Spam Protected ====
     
@@ -98,7 +98,7 @@ Pixie is not out to compete with any other site management tool, the main goal i
 
 ==== User support with privileges ====
 
-    Need help managing your site? you can add more users and allow them to perform different tasks with privileges.
+    Need help managing your site? You can add more users, give them different privileges and allow them to perform different tasks.
 
 ==== Web Based ====
 
