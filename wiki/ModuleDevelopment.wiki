@@ -173,7 +173,8 @@ Now is a good time to jump straight into programming the module itself, rather t
  code block
 }}}
 
-
+_Tip: As a module is called into your page three times during a page build it is not possible to declare functions in the module itself. To get around this create a second file called with your module ending in `_functions.php`. For our links page I would create a file called: `links_functions.php` and place it in the modules folder (admin/modules). This will be loaded once and give you access to any functions you reuse._
+ 
 === Useful functions ===
 ----
 
