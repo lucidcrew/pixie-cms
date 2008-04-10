@@ -169,7 +169,7 @@ This is what some of the more important fields within `pixie_core` are all about
   Set to "yes" or "no". If set to "yes" the page will appear in your sites navigation.
 
   * *searchable*
-    Set to "yes" or "no". This features is still in development and will be used to determine if a page is searchable. Currently set this to "no" and ignore it.
+  Set to "yes" or "no". This features is still in development and will be used to determine if a page is searchable. Currently set this to "no" and ignore it.
 
 The fields I have not listed here are easily edited with Pixie and explained in the settings area of each page. 
 
@@ -392,10 +392,13 @@ _Tip: As a module is called into your page three times during a page build it is
 There are a few functions available to you from within Pixie, these are the most useful:
 
   * *createURL($s,$m,$x,$p)* 
+  Pixie supports two types of URL (clean or messy). This function will create an appropriate URL depending on how a site is setup. It is really important this function is used to reference an internal links around your site.
 
   * *encode_email($email_address)*
+  This function allows you to encode an email address to protect it against spam harvesters. Thanks to [http://www.wordpress.org Wordpress] for this one!
 
-  * *safe_field* (and all other db functions)
+  * *Database funtions* (lots to list)
+  Pixie uses the same database class as...
   
   * *slug functions*
 
