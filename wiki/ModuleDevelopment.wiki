@@ -7,20 +7,20 @@ A quick guide to making Pixie do more with Modules and Plugins. You will need kn
 ----
 
 *A Module*
-  A module is quite simply a page that brings extra functionality to Pixie and your website. This might be a product database, links page or events calendar. Modules are always post based page, this means you keep posting information to them e.g. Adding a new event, adding a new product.
+  A module is quite simply a page that brings extra functionality to Pixie and your website. This might be a product database, links page or events calendar. Modules are always post based pages, this means you keep posting information to them e.g. Adding a new event, adding a new product.
 
 *A Plugin*
-  Generally speaking a plugin will bring extra functionality to a module. For example you might need a secondary table for your events calendar that stores venues. This is what a plugin should  be use for. There are a few exceptions to this, the RSS plugin that ships with Pixie has been specifically built to allow you to edit which RSS feeds appear in the head of your html. These plugins require hacking of the Pixie core system.
+  Generally speaking a plugin will bring extra functionality to a module. For example you might need a secondary table for your events calendar that stores venues. This is what a plugin should  be used for. There are a few exceptions to this, the RSS plugin that ships with Pixie has been specifically built to allow you to edit which RSS feeds appear in the head of your html. These plugins require hacking of the Pixie core system.
 
 
 === URL Structure ===
 ----
 
-I need to mention is the URL structure, as this forms the basis of how Pixie works.
+I need to mention the URL structure, as this forms the basis of how Pixie works.
 
 Lets say your Pixie site is installed at www.mysite.com... When is visit www.mysite.com/page/ (or www.mysite.com?s=page for those of you without clean URL support) Pixie maps the word "page" to a variable. In this case the variable is `$s`. Pixie supports upto four variables to from the url (www.mysite.com/1/2/3/4) and each one maps to a different variable name:
 
-In this example: www.mysite.com/page/do/something/please/ the URL will be mapped to:
+In this example: www.mysite.com/page/do/something/here/ the URL will be mapped to:
 
   * `$s` = "page".
   * `$m` = "do".
@@ -40,12 +40,12 @@ The first part of developing your module is creating the database tables. Pixie 
   * *Table name*
   The name of your database table is important, it must always start with `pixie_module_` followed by the module name. For our links page example I create a table called `pixie_module_links`.
 
-_Tip: You can also create a secondary table with for your module with `_settings` in its name: e.g. `pixie_module_links_settings`. Pixie will automatically look for this table when you are editing the settings of a page. If found pixie will create a form and allow the settings to be changed._ 
+_Tip: You can also create a secondary table with for your module with `_settings` in its name: e.g. `pixie_module_links_settings`. Pixie will automatically look for this table when you are editing the settings of a page. If found pixie will create a form and allow the settings to be changed. 
 
 Next up is the ID field for your table, once again the naming is important:
 
   * *Table ID*
-  The name of your table id must match the name of your table, for our links module the id field is called `links_id`. Notice I am using the word "links" (plural) every time I declare it, it would not work if I called the ID: `link_id`.
+  The name of your table ID must match the name of your table, for our links module the ID field is called `links_id`. Notice I am using the word "links" (plural) every time I declare it, it would not work if I called the ID: `link_id`.
 
 So lets have a look at the SQL for my links module:
 
@@ -131,7 +131,7 @@ Pixie will overwrite the field `link_title` with the top line, and the second li
 === Creating the file ===
 ----
 
-So you have created your table and changed any nasty field names in your language file. Its now time to create your moudle file and let Pixie know about it. All modules are stored in the modules folder (admin/modules/). Your file name for your module must match the name used in your tables... I am going to create a file called `links.php`. You may find it useful to download our module template and rename it.
+So you have created your table and changed any nasty field names in your language file. Its now time to create your module file and let Pixie know about it. All modules are stored in the modules folder (admin/modules/). Your file name for your module must match the name used in your tables... I am going to create a file called `links.php`. You may find it useful to download our module template and rename it.
 
 Now you need to let Pixie know that your module exists, to do this we need to insert a new row (page) into the `pixie_core` table. The SQL for the links module looks like this:
 
