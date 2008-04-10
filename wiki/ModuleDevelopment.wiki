@@ -139,9 +139,11 @@ Now you need to let Pixie know that your module exists, to do this we need to in
 
 INSERT INTO `pixie_core` (`page_id`, `page_type`, `page_name`, `page_display_name`, `page_description`, `page_blocks`, `page_content`, 
 `page_views`, `page_parent`, `privs`, `publish`, `public`, `in_navigation`, `page_order`, `searchable`, `last_modified`) VALUES 
-(5, 'module', 'links', 'Links', '<p>My links.</p>', '', '', 0, '', 2, 'yes', 'yes', 'yes', , 'no', '2008-04-09 16:57:55'),
+(5, 'module', 'links', 'Links', '<p>My links.</p>', '', '', 0, '', 2, 'yes', 'yes', 'yes', , 'no', '2008-04-09 16:57:55')
 
 }}}
+
+_Tip: Pixie will automatically register the module for you once the PHP page is setup and placed in the correct folder. To add the module use the Pixie interface for adding new pages to the site. This saves you having to manually insert the SQL as demonstrated above._
 
 This is what some of the more important fields within `pixie_core` are all about:
 
