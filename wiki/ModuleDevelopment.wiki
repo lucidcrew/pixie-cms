@@ -399,7 +399,7 @@ There are a few functions available to you from within Pixie, these are the most
   * *encode_email($email_address)*
   This function allows you to encode an email address to protect it against spam harvesters. Thanks to [http://www.wordpress.org Wordpress] for this one!
 
-  * *Database funtions* (lots to list)
+  * *Database functions* (lots to list)
   Pixie uses the same database class as...
   
   * *slug functions*
