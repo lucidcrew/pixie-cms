@@ -168,7 +168,7 @@ The fields I have not listed here are easily edited with Pixie and explained in 
 === The links page example ===
 ----
 
-Now is a good time to jump straight into programming the module itself, rather than explain everything I have copied the heavily commented module below:
+Now is a good time to jump straight into programming the module itself, rather than explain everything I have copied the heavily commented links module below:
 
 
 {{{
