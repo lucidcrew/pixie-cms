@@ -143,7 +143,7 @@ INSERT INTO `pixie_core` (`page_id`, `page_type`, `page_name`, `page_display_nam
 
 }}}
 
-_Tip: Pixie will automatically register the module for you once the PHP page is setup and placed in the correct folder. To add the module use the Pixie interface for adding new pages to the site. This saves you having to manually insert the SQL as demonstrated above._
+_Tip: Pixie will automatically register the module for you once the PHP page is setup and placed in the correct folder. To add the module use the Pixie interface for adding new pages to your site. This saves you having to manually insert the SQL as demonstrated above._
 
 This is what some of the more important fields within `pixie_core` are all about:
 
