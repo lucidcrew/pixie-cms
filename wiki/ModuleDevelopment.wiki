@@ -384,14 +384,14 @@ switch ($do) {
 
 }}}
 
-You can download a copy of this module here.
+You can download a copy of this [http://pixie-cms.googlecode.com/files/module_links_v1.0.zip module here].
 
 _Tip: As a module is called into your page three times during a page build it is not possible to declare functions in the module itself. To get around this create a second file called with your module ending in `_functions.php`. For our links page I would create a file called: `links_functions.php` and place it in the modules folder (admin/modules). This will be loaded once and give you access to any functions you reuse._
  
 === Useful functions ===
 ----
 
-There are a few functions available to you from within Pixie, these are the most useful:
+There are quite a few functions available to you from within Pixie, these are some of the most useful:
 
   * *createURL($s,$m,$x,$p)* 
   Pixie supports two types of URL (clean or messy). This function will create an appropriate URL depending on how a site is setup. It is really important this function is used to reference an internal links around your site.
@@ -399,10 +399,14 @@ There are a few functions available to you from within Pixie, these are the most
   * *encode_email($email_address)*
   This function allows you to encode an email address to protect it against spam harvesters. Thanks to [http://www.wordpress.org Wordpress] for this one!
 
-  * *Database functions* (lots to list)
-  Pixie uses the same database class as...
+  * *Database functions* (to many to list)
+  Pixie uses the same database class as [http://textpattern.com/ Textpattern], the class allows for many different types of interaction with the database. Please refer to lib_db.php file in the lib (admin/lib) folder for more information.
   
-  * *slug functions*
+  * *make_slug($string)*
+  This function will convert any string into a friendly URL slug. For example the string "this is & title" would be converted to "this-is-title".
+
+  * *squash_slug($string)*
+  Will attempt to reverse the make slug function, converting "this-is-title" into "this is title".
 
 Browsing through the lib (admin/lib) folder you will find all the libraries and functions you have access to. We are always on the look out for great PHP libraries to add into the library so please send us [http://groups.google.com/group/pixie-cms/ any recommendations].  
 
