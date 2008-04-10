@@ -131,7 +131,7 @@ Pixie will overwrite the field `link_title` with the top line, and the second li
 === Creating the file ===
 ----
 
-So you have created your table and changed any nasty field names in your language file. Its now time to create your module file and let Pixie know about it. All modules are stored in the modules folder (admin/modules/). Your file name for your module must match the name used in your tables... I am going to create a file called `links.php`. You may find it useful to download our module template and rename it.
+So you have created your table and changed any nasty field names in your language file. Its now time to create your module file and let Pixie know about it. All modules are stored in the modules folder (admin/modules/). Your file name for your module must match the name used in your tables... I am going to create a file called `links.php`. You may find it useful to download our [http://pixie-cms.googlecode.com/files/module_template_v.1.0.zip module template] and rename it.
 
 Now you need to let Pixie know that your module exists, to do this we need to insert a new row (page) into the `pixie_core` table. The SQL for the links module looks like this:
 
