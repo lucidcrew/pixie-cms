@@ -20,7 +20,7 @@ This document is a great place to start when looking for help with Pixie. The qu
 
 ==== How much does it cost? ====
   
-  * Pixie is free and always will be. We are considering ways we can monetise the project in the future without charging for Pixie itself. This will ensure we can afford the time it takes to develop the software. At the moment we are considering creating an area on the Pixie homepage called "Pixie Pro" which will give paying users (approx £10($20) a year) access to exclusive themes, modules and plug-ins. If you submit your own themes, modules and plug-ins into "Pixie Pro" you will be given a year free for every item submitted... sound good? We think so! 
+  * Pixie is free and always will be. We are considering different ways we could monetise the project in future without charging for Pixie itself. This will ensure we can afford the time it takes to develop the software. One idea we are considering is creating an area on the Pixie homepage called "Pixie Pro" which will give subscribers approx £10($20) a year) access to exclusive themes, modules and plug-ins. We are also looking at possibly awarding subscriptions to users who submit their themes, modules and plug-ins into "Pixie Pro"... We're still working on the fine detail but does that sound good? We think so! 
 
 ==== What is open source? ====
 
