@@ -16,7 +16,7 @@ A Graphic design tutorial is beyond the scope of this document, the main point I
 === CSS ===
 ----
 
-To make life simple we have created a theme template which contains the files you need to get your theme started. The template can be downloaded here.
+To make life simple we have created a theme template which contains the files you need to get your theme started. The template can be [http://pixie-cms.googlecode.com/files/theme_template_v1.0.zip downloaded here].
 
 The template is broken into a number of files, each of which are explained below:   
 
