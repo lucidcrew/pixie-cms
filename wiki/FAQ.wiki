@@ -10,10 +10,6 @@ This document is a great place to start when looking for help with Pixie. The qu
 
   * A Web Server that supports PHP (version 4.3.0 and above), MySQL (version 4.0 and above) and a !JavaScript enabled web browser. More information is available on the [Installation] wiki page.
 
-==== How do I use Pixie? ====
-
-  * If you find you are having trouble getting around the Pixie interface or you simply want a section explained then download our PDF user guide. The guide gives you step by step instructions on how to perform different tasks within Pixie.
-
 ==== What licence is Pixie released under? ====
 
   * Pixie is released under the [http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3]. 
@@ -25,6 +21,10 @@ This document is a great place to start when looking for help with Pixie. The qu
 ==== What is open source? ====
 
   * To learn more about open source software we suggest you visit the [http://opensource.org/docs/osd Open Source Initiative homepage].
+
+==== How do I use Pixie? ====
+
+  * If you find you are having trouble getting around the Pixie interface or you simply want a section explained then download our [http://pixie-cms.googlecode.com/files/pixie_user_guide.pdf PDF user guide]. The guide gives you step by step instructions on how to perform different tasks within Pixie.
  
 ==== What is a CMS (content management system)? ====
 
