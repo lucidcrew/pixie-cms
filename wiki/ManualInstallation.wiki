@@ -33,11 +33,6 @@ $pixieconfig['table_prefix'] = '';
    The [http://en.wikipedia.org/wiki/Htaccess .htaccess] file is an invisible file that is used to create the Clean URLs that Pixie uses. This file normally only works on Linux hosting platforms (some Windows servers do now support it). In the root of your website you will need to create a new file named .htaccess. Copy the following code into it and edit where indicated:
 
 {{{
-
-# These two lines allow you to upload larger files to Pixie (up to 100mb). 
-php_value upload_max_filesize "100M"
-php_value post_max_size "100M"
-
 <IfModule mod_rewrite.c>
    
   RewriteEngine On
