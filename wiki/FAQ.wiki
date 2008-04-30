@@ -3,9 +3,6 @@
 
 This document is a great place to start when looking for help with Pixie. The questions are ordered by popularity to keep the most relevant questions near the top. If you have any questions that are not answered here please head to the [http://www.pixieapp.com/forums/ forums].
 
-=== Your Questions ===
-----
-
 ==== What do I need to run Pixie? ====
 
   * A Web Server that supports PHP (version 4.3.0 and above), MySQL (version 4.0 and above) and a !JavaScript enabled web browser. More information is available on the [Installation] wiki page.
