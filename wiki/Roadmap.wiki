@@ -3,9 +3,6 @@
 
 A very rough outline for the development of new features.
 
-=== Roadmap ===
-----
-
 ==== Version 1 ====
   
   * The first public release.
