@@ -33,6 +33,13 @@ Pixie uses code from many other open source projects. Without these projects Pix
   * [http://www.amypink.com Stilbruch] - Marcel Winatschek
   * [http://www.3-fold.co.uk 3fold] - Gemma Garner
 
+==== Translation ====
+
+... and those who have taken the time to translate Pixie:
+
+  * [http://www.designcriativo.com Vitor M. Costa] - Portuguese
+
+
 ----
 
 If you have questions or comments about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
