@@ -3,9 +3,6 @@
 
 Installing Pixie manually is actually easier than it sounds, here is how you do it:
 
-=== Manual Installation ===
-----
-
 ==== Create your config.php file: ====
    In the admin folder of your Pixie download you will find a file called config.php. This file stores your database information. You will need to copy and paste the following code into the file, replacing the information here with your own database information supplied by your web host.
 
