@@ -1,6 +1,10 @@
 #summary Translation of Pixie into new languages
 #labels language,development
 
-Pixie offers basic support for languages. We are currently looking for people to help translate the [http://pixie-cms.googlecode.com/files/language_en_v1.0.zip core English file] into other languages. The core file contains all the text strings from within Pixie. If you would like to help out please get in touch via the forums.
+Pixie offers basic support for languages. We are currently looking for people to help translate the [http://pixie-cms.googlecode.com/files/language_en_v1.0.zip core English file] into other languages. The core file contains all the text strings from within Pixie. If you would like to help out please get in touch via the [http://groups.google.com/group/pixie-cms/ forums].
 
-We are also open for discussion on ways in which language support can be improved. For example we would like to offer a multi-lingual installer and build in support for right to left languages. If you can help with these areas please get in touch.
+We are also open for discussion on ways in which language support can be improved. For example we would like to offer a multi-lingual installer and build in support for right to left languages. If you can help with these areas please get in [http://groups.google.com/group/pixie-cms/ touch].
+
+----
+
+If you have questions or comments about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
