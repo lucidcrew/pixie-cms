@@ -55,7 +55,7 @@ Pixie is not out to compete with any other site management tool. Our main goal i
 
 ==== Multilingual ====
 
-    Pixie has support for different languages (although none have been translated yet...).
+    Pixie has support for different languages.
 
 ==== No limits ====
 
