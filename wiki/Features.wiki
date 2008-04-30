@@ -86,7 +86,7 @@ Pixie is not out to compete with any other site management tool. Our main goal i
 
 ==== Small ====
 
-   Pixie is just a under 1 megabytes in size (all zipped up). We always wanted to keep the size of the software small it could run quietly and efficiently on your server.
+   Pixie is just a under 1 megabyte in size (all zipped up). We always wanted to keep the size of the software small so it could run quietly and efficiently on your server.
 
 ==== Spam Protected ====
     
