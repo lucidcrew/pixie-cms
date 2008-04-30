@@ -15,7 +15,7 @@ Pixie uses code from many other open source projects. Without these projects Pix
   * [http://www.phpclasses.org/browse/package/1239.html Paginator] - Class to help make pagination easier.
   * [http://www.wordpress.org Wordpress] - For a few handy functions and inspiration.
   * [http://textpattern.com Textpattern] - For the database interface class and inspiration.
-  * [http://php.net/ PHP] - Does it need an introduction? One of the very few scripting languages built specifically for the web.
+  * [http://php.net/ PHP] - Does it need an introduction? One of the few scripting languages built specifically for web.
   * [http://www.mysql.com MySQL] - The worlds most popular open source database.
   * [http://code.google.com Google Code] - For the excellent project hosting.
   * [http://code.google.com/p/swfobject/ SWFObject] - The simplest way to embed Flash content on your site. 
