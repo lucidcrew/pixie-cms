@@ -18,6 +18,7 @@ Pixie uses code from many other open source projects. Without these projects Pix
   * [http://php.net/ PHP] - Does it need an introduction? One of the very few scripting languages built specifically for the web.
   * [http://www.mysql.com MySQL] - The worlds most popular open source database.
   * [http://code.google.com Google Code] - For the excellent project hosting.
+  * [http://code.google.com/p/swfobject/ SWFObject] - The simplest way to embed Flash content on your site. 
 
 ==== Design ====
 
