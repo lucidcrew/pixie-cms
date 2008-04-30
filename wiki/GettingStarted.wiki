@@ -1,9 +1,6 @@
 #summary Introduction to Pixie, how it works and plans for the future.
 #labels Featured,Phase-Deploy,welcome,introduction,beginners,help
 
-=== An introduction to Pixie ===
-----
-
 Pixie is a downloadable application you install on your own web server that allows you to create, setup and maintain (adding and editing content) your own website. Pixie sits quietly behind your site and is not visible to site visitors. You can login to Pixie via your web browser to work on your site anywhere in the world, the interface is simple and intuitive. If you want to try Pixie please visit the [http://demo.getpixie.co.uk demo site].
 
 Pixie was created with a single vision: that anyone should be able to create and maintain a website... and - more importantly - that it should be an easy and straightforward process, so how are we doing? 
