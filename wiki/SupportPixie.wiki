@@ -1,4 +1,14 @@
-#summary Badges, buttons, donations and links... show your support for Pixie.
+#summary Badges, buttons and links... show your support for Pixie.
 #labels links,help
 
 ==== Vote for ~~Pedro~~ Pixie====
+We would really appreciate it if you vote/add Pixie on/to the following sites:
+
+   * [http://digg.com/tech_news/New_open_source_website_builder_CMS_Pixie Digg] 
+   * [http://del.icio.us/toggledesign?url=http%3A%2F%2Fwww.getpixie.co.uk%2F&title=Pixie%20-%20The%20Small%2C%20Simple%2C%20Site%20Maker%20-%20Home&v=3 Del.icio.us]
+   * [http://www.hotscripts.com/Detailed/79927.html Hot Scripts]
+   * [http://www.opensourcecms.com/index.php?option=com_content&task=view&id=503&Itemid=191 OpenSourceCms]
+
+
+==== Badges and Buttons ====
+
