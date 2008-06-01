@@ -2,7 +2,7 @@
 #labels links,help
 
 ==== Vote for ~~Pedro~~ Pixie====
-We would really appreciate it if you vote/add Pixie on/to the following sites:
+We would really appreciate it could vote for Pixie, or add Pixie to the following sites:
 
    * [http://digg.com/tech_news/New_open_source_website_builder_CMS_Pixie Digg] 
    * [http://del.icio.us/toggledesign?url=http%3A%2F%2Fwww.getpixie.co.uk%2F&title=Pixie%20-%20The%20Small%2C%20Simple%2C%20Site%20Maker%20-%20Home&v=3 Del.icio.us]
