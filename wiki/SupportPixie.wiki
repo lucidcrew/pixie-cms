@@ -9,5 +9,6 @@ We would really appreciate it if you vote/add Pixie on/to the following sites:
    * [http://www.hotscripts.com/Detailed/79927.html Hot Scripts]
    * [http://www.opensourcecms.com/index.php?option=com_content&task=view&id=503&Itemid=191 OpenSourceCms]
    * [http://www.cmsmatrix.org/matrix/cms-matrix?func=viewDetail;listingId=FzC66qLXzbRyRTIxQVWd7w cmsMatrix]
+   * [http://webscripts.softpedia.com/script/Development-Scripts-js/Pixie-44699.html Softpedia] 
 
 ==== Badges and Buttons ====
