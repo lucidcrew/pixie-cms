@@ -12,3 +12,4 @@ We would really appreciate it could vote for Pixie, or add Pixie to the followin
    * [http://webscripts.softpedia.com/script/Development-Scripts-js/Pixie-44699.html Softpedia] 
 
 ==== Badges and Buttons ====
+Show your support by embedding one of these badges on your Pixie powered site:
