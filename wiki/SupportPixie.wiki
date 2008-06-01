@@ -1,0 +1,4 @@
+#summary Badges, buttons, donations and links... show your support for Pixie.
+#labels links,help
+
+==== Vote for ~~Pedro~~ Pixie====
