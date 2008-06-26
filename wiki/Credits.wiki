@@ -39,6 +39,7 @@ Pixie uses code from many other open source projects. Without these projects Pix
 
   * [http://www.designcriativo.com Portuguese] - Vitor M. Costa
   * [http://www.holmquist.de Swedish] - Erik Holmquist
+  * Spanish - Carlos Elías 
 
 
 ----
