@@ -41,6 +41,7 @@ Pixie uses code from many other open source projects. Without these projects Pix
   * [http://www.holmquist.de Swedish] - Erik Holmquist
   * Spanish - Carlos Elías 
   * [http://www.q-design.it Italian] - René Querin
+  * [http://www.office-web.net French] - Luke 
 
 
 ----
