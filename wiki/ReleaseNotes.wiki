@@ -11,7 +11,7 @@
   * French language.
   * Italian language.
   * Spanish language.
-  * -
+  * wfw:comments element added to RSS feeds (made possible by [http://transformr.co.uk/ TransFormr] & [http://www.mircoformats.org Microformats]), this allows services such as feedburner to display how many comments have been made on a post.
 
 *Improved*
 
