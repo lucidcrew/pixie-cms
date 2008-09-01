@@ -1,1 +1,19 @@
-#summary Changes made in each release
+#summary Changes made in each release.
+
+==== Version 1 ====
+  
+  * The first public release.
+
+==== Version 1.01 ====
+
+*New*
+
+  * -
+  * -
+  * -
+  * -
+
+*Improved*
+
+  * Security fixes.
+  * -
