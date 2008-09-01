@@ -4,16 +4,17 @@
   
   * The first public release.
 
-==== Version 1.01 ====
+==== Version 1.01 (in progress) ====
 
 *New*
 
-  * -
-  * -
-  * -
+  * French language.
+  * Italian language.
+  * Spanish language.
   * -
 
 *Improved*
 
   * Security fixes.
-  * -
+  * Blog/Dynamic posts can now have longer titles (100 chars to 255).
+  * Clean URLs to be OFF by default during install to improve server compatibility.
