@@ -1,4 +1,5 @@
 #summary Changes made in each release.
+#labels development,roadmap
 
 ==== Version 1 ====
   
@@ -11,7 +12,7 @@
   * French language.
   * Italian language.
   * Spanish language.
-  * wfw:comments element added to RSS feeds (made possible by [http://transformr.co.uk/ TransFormr] & [http://www.mircoformats.org Microformats]), this allows services such as feedburner to display how many comments have been made on a post.
+  * RSS: wfw:comments element added to RSS feeds (made possible by [http://transformr.co.uk/ TransFormr] & [http://www.mircoformats.org Microformats]). This allows services such as [http://www.feedburner.com FeedBurner] to display how many comments have been made on a post.
 
 *Improved*
 
