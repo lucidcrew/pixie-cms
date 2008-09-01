@@ -19,3 +19,4 @@
   * Blog/Dynamic posts can now have longer titles (100 chars to 255).
   * Clean URLs to be OFF by default during install to improve server compatibility.
   * Firefox 3 display bugs.
+  * Bug where dynamic posts set in the future would appear in RSS feeds.
