@@ -19,6 +19,7 @@
   * Security fixes.
   * Blog/Dynamic posts can now have longer titles (100 chars to 255).
   * Clean URLs to be OFF by default during install to improve server compatibility.
-  * Firefox 3 display bugs.
+  * Firefox 3 CSS bugs.
+  * IE6 & IE7 CSS bugs.
   * Bug where dynamic posts set in the future would appear in RSS feeds.
   * [http://tinymce.moxiecode.com/ TinyMce] upgrade to 3.1.1
