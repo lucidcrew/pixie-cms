@@ -21,5 +21,6 @@
   * Clean URLs to be OFF by default during install to improve server compatibility.
   * Firefox 3 CSS bugs.
   * IE6 & IE7 CSS bugs.
+  * Small CSS tweak for Google Chrome browser.
   * Bug where dynamic posts set in the future would appear in RSS feeds.
   * [http://tinymce.moxiecode.com/ TinyMce] upgrade to 3.1.1
