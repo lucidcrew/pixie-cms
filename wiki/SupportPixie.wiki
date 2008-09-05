@@ -38,6 +38,12 @@ Show your support by embedding one of these badges on your Pixie powered site:
 
 Square banner (.jpg 320px x 320px)
 
+[http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/banner_468.jpg]
+
+[http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/banner_468_dust.jpg]
+
+Large banner (.jpg 468px x 60px)
+
 [http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/banner_125.gif]
 
 [http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/banner_125_dust.gif]
