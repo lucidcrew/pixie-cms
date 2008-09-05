@@ -16,13 +16,19 @@ The logo:
 
 [http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/logo_400.png]
 
+[http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/logo_white_400.png]
+
 Large logo (.png 398px x 135px)
 
 [http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/logo_200.png]
 
+[http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/logo_white_200.png]
+
 Medium logo (.png 198px x 66px)
 
 [http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/logo_100.png]
+
+[http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/logo_white_100.png]
 
 Small logo (.png 98px x 32px)
 
