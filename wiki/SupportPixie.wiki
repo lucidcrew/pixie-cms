@@ -34,6 +34,12 @@ Small logo (.png 98px x 32px)
 
 Show your support by embedding one of these badges on your Pixie powered site:
 
+[http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/banner_125.gif]
+
+[http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/banner_125_dust.gif]
+
+Medium banner (.gif 125px x 80px)
+
 [http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/banner_80.gif]
 
 [http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/banner_80_cms.gif]
