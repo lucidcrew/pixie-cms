@@ -12,15 +12,18 @@ We would really appreciate it could vote for Pixie, or add Pixie to the followin
    * [http://webscripts.softpedia.com/script/Development-Scripts-js/Pixie-44699.html Softpedia] 
 
 ==== Badges and Buttons ====
-
 The logo:
 
 [http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/logo_400.png]
 
-Large logo (398px x 135px)
+Large logo (.png 398px x 135px)
 
 [http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/logo_200.png]
 
-Medium logo (198px x 66px)
+Medium logo (.png 198px x 66px)
+
+[http://www.getpixie.co.uk/ http://www.getpixie.co.uk/google/logo_100.png]
+
+Small logo (.png 98px x 32px)
 
 Show your support by embedding one of these badges on your Pixie powered site:
