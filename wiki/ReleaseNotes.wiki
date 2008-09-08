@@ -27,3 +27,4 @@
   * [http://tinymce.moxiecode.com/ TinyMce] upgrade to 3.1.1
   * Bug where removing the comments plugin did not remove commenting options from a dynamic page.
   * Time & Timezone fixes.
+  * Bug where pipes (|) in content caused updates not to be saved.
