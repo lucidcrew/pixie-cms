@@ -8,7 +8,7 @@ Pixie was created with a single vision: that anyone should be able to create and
 === Where are we now? ===
 ----
 
-The first release of Pixie still isn't as easy as we would like. It still has some technical barriers. Those of you who are unfamiliar with FTP and are unsure of what hosting is, may find setting up Pixie quite difficult. If that sounds like you, we have provided a [Installation step by step guide] of how to get Pixie installed. If you are still having trouble getting Pixie setup, please ask for help in the [http://groups.google.com/group/pixie-cms/ forums] or contact [http://www.toggle.uk.com toggle] who offer an installation service for a small fee.
+The first release of Pixie still isn't as easy as we would like. It still has some technical barriers. Those of you who are unfamiliar with FTP and are unsure of what hosting is, may find setting up Pixie quite difficult. If that sounds like you, we have provided a [http://www.getpixie.co.uk/support/article/installation/ step by step guide] of how to get Pixie installed. If you are still having trouble getting Pixie setup, please ask for help in the [http://groups.google.com/group/pixie-cms/ forums] or contact [http://www.toggle.uk.com toggle] who offer an installation service for a small fee.
 
 Once Pixie is setup we are sure you will find it a pleasure to use (we do!). For tips and advice on using the interface we have created a [http://pixie-cms.googlecode.com/files/pixie_user_guide_v1.0.pdf PDF user guide].
 
