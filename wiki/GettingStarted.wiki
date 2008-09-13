@@ -12,7 +12,7 @@ The first release of Pixie still isn't as easy as we would like. It still has so
 
 Once Pixie is setup we are sure you will find it a pleasure to use (we do!). For tips and advice on using the interface we have created a [http://pixie-cms.googlecode.com/files/pixie_user_guide_v1.0.pdf PDF user guide].
 
-We are aware that Pixie has plenty of room for improvement, the settings area is quite primitive and [BlockDevelopment block] handling is far from perfect. As we continue to develop Pixie we will be looking to make improvements to the whole system, in both the underlying code (it certainly needs it) and the interface. At the same time we are very cautious of adding too much to the system, we want to keep Pixie simple and light.
+We are aware that Pixie has plenty of room for improvement, the settings area is quite primitive and [http://www.getpixie.co.uk/support/article/block-development/ block] handling is far from perfect. As we continue to develop Pixie we will be looking to make improvements to the whole system, in both the underlying code (it certainly needs it) and the interface. At the same time we are very cautious of adding too much to the system, we want to keep Pixie simple and light.
 
 What plans do we have for the future?
 
