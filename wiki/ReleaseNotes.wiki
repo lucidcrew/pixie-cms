@@ -29,3 +29,4 @@
   * Bug where removing the comments plugin did not remove commenting options from a dynamic page.
   * Time & Timezone fixes.
   * Bug where pipes (|) in content caused updates not to be saved.
+  * Comment line breaks converted into html <br/>.
