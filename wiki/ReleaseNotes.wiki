@@ -30,3 +30,4 @@
   * Time & Timezone fixes.
   * Bug where pipes (|) in content caused updates not to be saved.
   * Comment line breaks converted into html <br/>.
+  * Bug where draft posts in the blog can still be seen.
