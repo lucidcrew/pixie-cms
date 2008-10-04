@@ -32,3 +32,4 @@
   * Comment line breaks converted into html <br/>.
   * Bug where draft posts in a blog/dynamic page can still be seen.
   * Bug where tag cloud block would show tags for draft posts in blog/dynamic pages.
+  * Admin bar date is now set to user preference from within Pixie.
