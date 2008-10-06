@@ -28,7 +28,7 @@
   * [http://tinymce.moxiecode.com/ TinyMce] upgrade to 3.1.1
   * Bug where removing the comments plugin did not remove commenting options from a dynamic page.
   * Time & Timezone fixes.
-  * [http://code.google.com/p/pixie-cms/issues/detail?id=1 Issue 1] Bug where pipes (|) in content caused updates not to be saved.
+  * [http://code.google.com/p/pixie-cms/issues/detail?id=1 Issue 1] - Bug where pipes (|) in content caused updates not to be saved.
   * Comment line breaks converted into html <br/>.
   * Bug where draft posts in a blog/dynamic page can still be seen.
   * Bug where tag cloud block would show tags for draft posts in blog/dynamic pages.
@@ -36,4 +36,4 @@
   * [http://code.google.com/p/pixie-cms/issues/detail?id=2 Issue 2] - Bad SQL causes install to fail.
   * [http://code.google.com/p/pixie-cms/issues/detail?id=3 Issue 3] - Admin user not created during install.
   * [http://code.google.com/p/pixie-cms/issues/detail?id=4 Issue 4] - Posting a new blog entry doesn't work. MySQL error.
-  * [http://code.google.com/p/pixie-cms/issues/detail?id=5 Issue 5] Draft posts are displayed by the Recent Posts block and viewable by direct link.
+  * [http://code.google.com/p/pixie-cms/issues/detail?id=5 Issue 5] - Draft posts are displayed by the Recent Posts block and viewable by direct link.
