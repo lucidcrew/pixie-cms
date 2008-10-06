@@ -33,4 +33,5 @@
   * Bug where draft posts in a blog/dynamic page can still be seen.
   * Bug where tag cloud block would show tags for draft posts in blog/dynamic pages.
   * Admin bar date is now set to user preference from within Pixie.
-  * [http://code.google.com/p/pixie-cms/issues/detail?id=2 issue 2] - Bad SQL causes install to fail.
+  * [http://code.google.com/p/pixie-cms/issues/detail?id=2 Issue 2] - Bad SQL causes install to fail.
+  * [http://code.google.com/p/pixie-cms/issues/detail?id=3 Issue 3] - Admin user not created during install.
