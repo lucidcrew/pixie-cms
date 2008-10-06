@@ -35,3 +35,4 @@
   * Admin bar date is now set to user preference from within Pixie.
   * [http://code.google.com/p/pixie-cms/issues/detail?id=2 Issue 2] - Bad SQL causes install to fail.
   * [http://code.google.com/p/pixie-cms/issues/detail?id=3 Issue 3] - Admin user not created during install.
+  * [http://code.google.com/p/pixie-cms/issues/detail?id=4 Issue 4] - Posting a new blog entry doesn't work. MySQL error.
