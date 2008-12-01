@@ -13,6 +13,7 @@
   * Italian language.
   * Spanish language.
   * Polish language.
+  * Finnish language.
   * RSS: wfw:comments element added to RSS feeds (made possible by [http://transformr.co.uk/ TransFormr] & [http://www.mircoformats.org Microformats]). This allows services such as [http://www.feedburner.com FeedBurner] to display how many comments have been made on a post.
   * Once this version is launched the code will be moved into [http://code.google.com/p/pixie-cms/source/checkout SVN on Google Code] for the first time.
 
