@@ -7,9 +7,21 @@ To upgrade Pixie please follow these steps. We hope to streamline this process i
 First you will need to [http://www.getpixie.co.uk/downloads/ download] and extract the latest version of Pixie.
 
 ==== Replace certain files and folders ====
-Please take care when replacing files in this step, we recommend you take a backup of your current site before changing these files. All files and folders that are *bold* should be replaced and all files and folder that are _italic_ should not be replaced.
+Please take care when replacing files in this step, we recommend you take a backup of your current site before changing these files. All files and folders that are *bold* should be replaced and all files and folders that are _italic_ should not be replaced.
 
 {{{
 
+_.htaccess_
+
+_admin_
+  *admin*  
+  _blocks_
+    *block_name.php*
+
+_files_
+
+*index.php (replace with caution, you may have edited this file to create a custom layout)*
+
+ 
 
 }}} 
