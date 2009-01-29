@@ -6,8 +6,8 @@ To upgrade Pixie please follow these steps. We hope to streamline this process i
 ==== Download the latest release: ====
 First you will need to [http://www.getpixie.co.uk/downloads/ download] and extract the latest version of Pixie.
 
-=== Replace certain files and folders ===
-Please take care when replacing files in this step, we recommend you take a backup of your current site before changing these files. All files and folders that are bold and stared (*) should be replaced:
+==== Replace certain files and folders ====
+Please take care when replacing files in this step, we recommend you take a backup of your current site before changing these files. All files and folders that are *bold* should be replaced:
 
 {{{
 
