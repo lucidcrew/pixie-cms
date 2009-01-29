@@ -1,14 +1,15 @@
 #summary Upgrading your version of Pixie to the latest release.
 #labels Featured,help
 
-Installing Pixie manually is actually easier than it sounds, here is how you do it:
+To upgrade Pixie please follow these steps. We hope to streamline this process in future but for now please take great care when uploading and replacing files.
 
-==== Create your config.php file: ====
-   In the admin folder of your Pixie download you will find a file called config.php. This file stores your database information. You will need to copy and paste the following code into the file, replacing the information here with your own database information supplied by your web host.
+==== Download the latest release: ====
+First you will need to [http://www.getpixie.co.uk/downloads/ download] and extract the latest version of Pixie.
 
+=== Replace certain files and folders ===
+Please take care when replacing files in this step, we recommend you take a backup of your current site before changing these files. All files and folders that are bold and stared (*) should be replaced:
 
 {{{
 
 
 }}} 
-  * Automatic links to other wiki pages
