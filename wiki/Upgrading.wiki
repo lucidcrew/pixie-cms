@@ -21,6 +21,8 @@ admin(f)
   install(f)* (upload for next step)
   jscript(f)* (1 file you might want to protect in this folder is public.js.php if it has been modified)
   lang(f)*
+  lib(f)*
+
   modules(f)
     comments.php
     contact.php
@@ -30,9 +32,16 @@ admin(f)
     links.php
     rss.php
     static.php*
+
   themes(f)
 
 files(f)
+
 index.php* (replace with caution, you may have edited this file to create a custom layout)
 
+license.txt
+
+robots.txt
+
+sitemap.xml.php*
 }}}
