@@ -1,4 +1,5 @@
 #summary Upgrading your version of Pixie to the latest release.
+#labels Featured,help
 
 Installing Pixie manually is actually easier than it sounds, here is how you do it:
 
