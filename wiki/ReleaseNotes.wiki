@@ -28,7 +28,7 @@
   * Bug where dynamic posts set in the future would appear in RSS feeds.
   * [http://tinymce.moxiecode.com/ TinyMce] upgrade to 3.1.1
   * Bug where removing the comments plugin did not remove commenting options from a dynamic page.
-  * Time & Timezone fixes.
+  * Some Time & Timezone fixes - others are still outstanding.
   * [http://code.google.com/p/pixie-cms/issues/detail?id=1 Issue 1] - Bug where pipes (|) in content caused updates not to be saved.
   * Comment line breaks converted into html `<br/>`.
   * Bug where draft posts in a blog/dynamic page can still be seen.
