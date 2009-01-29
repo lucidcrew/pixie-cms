@@ -5,7 +5,7 @@
   
   * The first public release.
 
-==== Version 1.01 (in progress) ====
+==== Version 1.01 ====
 
 *New*
 
@@ -39,3 +39,5 @@
   * [http://code.google.com/p/pixie-cms/issues/detail?id=4 Issue 4] - Posting a new blog entry doesn't work. MySQL error.
   * [http://code.google.com/p/pixie-cms/issues/detail?id=5 Issue 5] - Draft posts are displayed by the Recent Posts block and viewable by direct link.
   * Bug where IP addresses were not being linked properly to [http://network-tools.com/ network-tools] from the dashboard.
+
+==== Version 1.1 (in progress) ====
