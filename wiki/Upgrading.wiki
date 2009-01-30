@@ -47,8 +47,7 @@ sitemap.xml.php*
 }}}
 
 ==== Upgrade the database ====
-The install folder that was just uploaded in the previous step contains an upgrade script for updating your MySQL tables. Visit www.yoursite.com/admin/install/upgrade.php. You should see a notice that your tables were successfully updated.
+The install folder that was just uploaded in the previous step contains an upgrade script for updating your MySQL tables. Visit www.yoursite.com/admin/install/upgrade.php. You should see a notice that your database was successfully updated.
 
 ==== Cleanup: ====
 Lastly you will need to delete the Pixie install directory (admin/install/) to secure your install.
-
