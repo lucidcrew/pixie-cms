@@ -1,0 +1,215 @@
+/******************************************************* // Bus Full of Hippies // *****************************************************/
+
+/* HTML / Body styles */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+html
+	{
+	min-width:770px;
+	}
+
+#pixie_body
+	{
+	overflow: hidden;
+	}
+
+body
+	{
+	background:#FFF url(images/body_back.jpg) 50% 0 no-repeat !important;
+	color: #666;
+	/* Using the !important method over all else because although there _is_ JavaScript to force IE to support PNG transparency
+it causes the links 'above' the background image to become unusable */
+	background:#FFF url(images/body_back.jpg) 50% 0 no-repeat !important;
+	background:#FFF url(images/ie_back.jpg) 50% 0 no-repeat;
+	}
+
+#placeholder
+	{
+	width: 770px;
+	margin: 74px auto 0 auto;
+/* recover from ie5 work around on the body*/
+	text-align:left;
+	position:relative;
+	}
+	
+#header
+	{
+	width: 250px;
+	overflow: hidden;
+	position: absolute;
+	left: 170px;
+	top: 30px;
+	}
+
+/* hide the skip to content link */
+
+#tools
+	{
+	position: absolute;
+	left: -9999px;
+	}
+	
+/* content */
+
+#content
+	{
+	width: 386px;
+	padding: 130px 30px 0px 30px;
+	float: left;
+	min-height: 430px;
+	background: transparent url(images/main_content.png) 0 0 no-repeat !important;
+	margin-bottom: 30px;
+	}
+
+/* footer */
+
+#footer
+	{
+	margin: 0 auto;
+	width: 770px;
+	}
+
+#credits_list
+	{
+	width: 770px;
+	font-size: 0.95em;
+	color: #c3cccf;
+	list-style-type: none;
+	margin-left: 30px;
+	}
+	
+#credits_list li
+	{
+	display: inline;
+	border-right: 1px solid #c3cccf;
+	padding-right: 5px;	
+	}
+
+#credits_list:hover a
+	{
+	color: #60761B;
+	}
+
+#credits_list a
+	{ 
+	color: #CCC;
+	}
+	
+#credits_list a:hover
+	{
+	color: #C84A26;
+	background: #F0F3B1;
+	}
+	
+#credits_list:hover 
+	{
+	color: #666;
+	}
+
+/* Block styles */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+#content_blocks
+	{
+	width: 310px;
+	min-height: 500px;
+	float: right;
+	background: transparent url(images/sub_content.png) 0 0 no-repeat !important;
+	padding: 40px 0px 100px 0px;
+	}
+	
+.block
+	{
+	width: 247px;
+	margin: 104px 0px -80px 25px;
+	}
+	
+.block a 
+	{
+	color: #8CAE26;
+	}
+	
+.block a:hover
+	{
+	color: #C84A26;
+	background: #F0F3B1;
+	}
+	
+.block h4
+	{
+	font-size: 1.1em;
+	margin:0.8em 0;
+	color:#59600E !important;
+	font-weight:bold;
+	text-decoration:none;
+	text-transform:capitalize;
+	}
+	
+.block p	
+	{
+	color: #b8b8b8;
+	}
+	
+/* flickr block */
+	
+.flickr_badge_image img
+	{
+	width: 66px;
+	height: 66px;
+	display: inline;
+	float: left;
+	margin: 0px 5px 5px 0px;
+	border: 3px solid #F0F3B1;
+	}
+	
+.flickr_badge_image img:hover
+	{
+	border: 3px solid #8A9F47;
+	}
+
+/* General styles */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+#site_title a
+	{
+	text-align: right;
+	z-index: 1;
+	}
+	
+#site_title a
+	{
+	text-decoration: none;
+	}
+	
+#site_title a:hover
+	{
+	background: none;
+	}
+
+/* Strapline */
+
+#site_strapline
+	{
+	font-size: 1.2em;
+	color: #b8b8b8;
+	top: -8px;
+	text-align: right;
+	z-index: 1;
+	}
+
+/* Extra Divs */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+/* Use these divs for extra display elements */
+
+#extradiv_1, #extradiv_2, #extradiv_3, #extradiv_4,
+#extradiv_a, #extradiv_b, #extradiv_c, #extradiv_d
+	{
+	display: none;
+	}
+
+/********************************************************** // End // ********************************************************/
