@@ -1,0 +1,200 @@
+/******************************************************* // itheme // *****************************************************/
+
+/* HTML / Body styles */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+html
+	{
+	background: #42afdc url(images/html-bg.gif) repeat-x;
+	}
+
+body
+	{
+	background: url(images/main-bg.jpg) no-repeat center top;
+	color: #474747;
+	padding: 0px;
+	margin: 0px;
+	}
+	
+/* hide the skip to content link */
+
+#tools
+	{
+	position:absolute;
+	left:-9999px;
+	}
+	
+#header
+	{
+	height: 90px;
+	padding: 40px 0px 0px 25px;
+	position: relative;
+	}
+	
+#footer
+	{
+	width: 770px;
+	margin: 0 auto;
+	clear: both;
+	padding: 0px 0px 0px 0px;
+	font-size: 87%;
+	color: #282828;
+	}
+	
+#credits
+	{
+	margin-top: 8px;
+	}
+	
+#credits li
+	{
+	list-style: none;
+	display: inline;
+	margin-right: 15px;
+	color: #fff;
+	padding: 0px 0px 10px 10px;
+	}
+	
+#footer a
+	{
+	color: #fff;
+	}
+	
+#footer a:hover
+	{
+	text-decoration: underline;
+	}
+	
+#content
+	{
+	padding: 25px 25px 15px 25px;
+	width: 495px;
+	background: #fff url(images/content-bottom-bg.gif) bottom no-repeat;
+	clear: both;
+	overflow: hidden;
+	float: left;
+	}
+
+/* Block styles */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+#content_blocks
+	{
+	float:left;
+	width: 210px;
+	color: #666666;
+	line-height: 160%;
+	margin-left: 15px;
+	position: relative;
+	top: -25px;
+	}
+	
+.block_header
+	{
+	position: relative;
+	padding: 7px 24px 7px 10px;
+	background: url(images/sidep-handle.gif) no-repeat 0 0;
+	}
+
+.block_body
+	{
+	margin: 0;
+	padding: 5px 10px 9px 10px;
+	background: url(images/sidep-middle.gif) no-repeat 0 100%;
+	overflow: hidden;
+	position: relative;
+	top: -20px;
+	}
+	
+.block h4
+	{
+	font-size: 1.3em;
+	position: relative;
+	top: -5px;
+	margin-bottom: 15px;
+	}
+	
+.block p
+	{
+	width: 190px;
+	overflow: hidden;
+	}
+	
+/* flickr block */
+
+.flickr_badge_image img
+	{
+	width: 52px;
+	height: 52px;
+	display: inline;
+	float: left;
+	margin: 0px 5px 5px 0px;
+	border: 3px solid #ccc;
+	}
+	
+.flickr_badge_image img:hover
+	{
+	border: 3px solid #6699cb;	
+	}
+
+/* General styles */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+#site_title, #site_title a
+	{
+	font-size: 1.6em;
+	color: #FFFFFF;
+	font-family: "Trebuchet MS", Arial, sans-serif;
+	margin-bottom: 0.1em;
+	text-decoration: none;
+	}
+	
+#site_title
+	{
+	position: absolute;
+	left: 0;
+
+	}
+	
+#site_title a:hover
+	{
+	color: #000;
+	}
+
+/* Strapline */
+
+#site_strapline
+	{
+	color: #000000;
+	font: 12px Arial, Helvetica, sans-serif;
+	border: 0;
+	position: absolute;
+	left: 0;
+	top: 70px;
+	}
+	
+/* Placeholder */
+
+#placeholder
+	{
+	width: 770px;
+	margin: 0px auto;
+	position: relative;
+	}
+
+/* Extra Divs */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+/* Use these divs for extra display elements */
+
+#extradiv_1, #extradiv_2, #extradiv_3, #extradiv_4,
+#extradiv_a, #extradiv_b, #extradiv_c, #extradiv_d
+	{
+	display: none;
+	}
+
+/********************************************************** // End // ********************************************************/

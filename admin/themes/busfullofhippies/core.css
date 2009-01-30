@@ -1,0 +1,620 @@
+/******************************************************* // Bus Full of Hippies // *****************************************************/
+
+/* Reset CSS */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, code,
+del, dfn, em, img, q, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td 
+	{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+	}
+
+/* Remove possible quote marks from <q>/<blockquote> */
+
+blockquote:before, blockquote:after, q:before, q:after 
+	{ 
+	content: ""; 
+	}
+	
+blockquote, q 
+	{ 
+	quotes: "" ""; 
+	}
+
+/* Image replacement */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+.replace
+	{
+	outline: none;
+	display: block; 
+	position:relative; 
+	/*\*/ 
+	overflow:hidden;
+	 /**/
+	} 
+
+.replace span
+	{ 
+	display:block; 
+	position:absolute; 
+	top:0px; 
+	left:0px; 
+	z-index:1; 
+	}
+
+/* Link styles */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+a img
+	{
+	border:none;
+	cursor: pointer;
+	outline: none;
+	}
+
+a:link, a:visited
+	{
+	cursor: pointer;
+	color: #60761b;
+	outline: none;
+	}
+
+a:hover
+	{
+	color: #C84A26;
+	background: #F0F3B1;
+	}
+
+a:active
+	{
+	cursor: pointer;
+	color: #60761b;
+	outline: none;
+	}
+
+/* Admin header for logged in pixie user & edit links */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+/* Default admin header */
+
+#admin_header
+	{
+	color: #ffffff;
+	background: url("images/bg_admin_header.gif") repeat-x;
+	width: auto;
+	padding: 5px 20px 10px 20px;
+	height: 35px;
+	text-align: left; 
+	color: #191919;
+	height: 35px;
+	overflow: hidden;
+	font-family: arial, sans-serif;
+	}
+
+#admin_header h1
+	{
+	font-family: arial, sans-serif;
+	font-size: 1.2em;
+	margin-bottom: 5px;
+	font-weight: bold;
+	padding: 5px 0 0 0;
+	}
+
+#admin_header_text
+	{
+	float: left;
+	width: 600px;
+	position: relative;
+	top: -7px;
+	}
+
+#admin_header_controls
+	{
+	float: right;
+	position: relative;
+	top: -15px;
+	}
+
+#admin_header_controls a
+	{
+	font-size: 1.1em;
+	color: #191919;
+	margin: 0em 1em 0.5em 0em;
+	text-decoration: none;
+	font-weight: bold;
+	}
+
+#admin_header_controls a:hover
+	{
+	text-decoration: none;
+	color: #139cd5;
+	background: none;
+	}
+	
+/* Edit links found within content */
+
+.post_edit
+	{
+	display: block;
+	list-style: none;
+	background: none;
+	}
+
+.post_edit a
+	{
+	color: #60761b;
+	text-decoration: none;
+	}
+
+.post_edit a:hover
+	{
+	color: #C84A26;
+	}
+	
+/* Typography */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+/* Body elements */
+
+body
+	{
+	/* adjust the font size (62.5% = 10px, 75% = 12px) */ 
+	font: normal 75% "Trebuchet MS", "Lucida Grande", "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
+	line-height: 1.5;
+	}
+
+p
+	{
+	margin: 0 0 1.5em;
+	}
+
+blockquote
+	{
+	margin: 1.5em; 
+	color: #969696; 
+	font-style: italic; 
+	}
+
+code
+	{
+	margin: 1.5em 0; 
+	white-space: pre;
+	font: 1em 'andale mono', 'monotype.com', 'lucida console', monospace; 
+	line-height: 1.5;
+	}
+
+abbr, acronym
+	{
+	border-bottom: 1px dotted #666;
+	}
+
+cite
+	{
+	font-style: italic;
+	}
+
+address
+	{
+	margin-top: 1.5em; 
+	font-style: italic;
+	}
+
+pre
+	{
+	margin: 1.5em 0; 
+	white-space: pre;
+	}
+
+strong
+	{
+	font-weight: bold;
+	}
+
+em 
+	{
+	font-style: italic;
+	}
+
+del
+	{
+	text-decoration: line-through;
+	color: #666;
+	}
+	
+/* Headings */
+
+h1, h2, h3, h4, h5, h6
+	{
+ 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+	font-weight: normal;
+	}
+
+h1
+	{
+	font-size: 2em; 
+	line-height: 1; 
+	}
+	
+h2 
+	{
+ 	font-size: 1.8em; 
+	}
+
+h3
+	{
+	font-size: 1.5em; 
+	line-height: 1; 
+	}
+
+h4
+	{
+	font-size: 1.2em; 
+	line-height: 1.25; 
+	}
+
+h5
+	{
+	font-size: 1em; 
+	margin-bottom: 1.5em; 
+	}
+
+h6
+	{
+	font-size: 1em; 
+	}
+	
+h2, h3, h4, h5 
+	{
+	margin:0.8em 0;
+	color:#59600E;
+	}
+
+/* List styles */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+ol
+	{
+	list-style-type: decimal; 
+	margin:0 1.5em 1.5em 1.5em;
+	list-style-position: inside; 
+	}
+
+ul
+	{
+	list-style-type: circle; 
+	margin:0 1.5em 1.5em 1.3em;
+	list-style-position: outside; 
+	}
+
+dl
+	{
+ 	margin: 0 0 1.5em 0;
+	font-weight: bold;
+	}
+
+dt
+	{
+	font-weight: bold;
+	}
+	
+dd
+	{
+	margin-left: 1.5em;
+	font-weight: normal;
+	margin-bottom: 10px;
+	border-bottom: 1px dotted #CCC;
+	}
+
+/* Tables */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+table   
+	{ 
+	margin-bottom: 1.4em; 
+	}
+	
+th      
+	{ 
+	border-bottom: 2px solid #ccc;
+	font-weight: bold; 
+	}
+	
+td
+	{ 
+	border-bottom: 1px solid #ddd; 
+	}
+	
+th,td   
+	{ 
+	padding: 4px 10px 4px 0; 
+	}
+
+thead
+	{
+	}
+	
+tbody
+	{
+	}
+	
+tfoot
+	{ 
+	font-style: italic; 
+	}
+	
+caption 
+	{ 
+	background: #e3f1ba; 
+	}
+
+/* Forms */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+	
+legend      
+	{ 
+	color: #59600e;
+	font-weight: normal; 
+	font-size:1.3em;
+	}
+
+select              
+	{
+	border:1px solid #bbb; 
+	width: 313px;
+	color: #666; 
+	display: block;
+	margin-top: 20px;
+	}
+	
+select:focus        
+	{ 
+	border:1px solid #999; 
+	color: #000;
+	}
+
+.form_item input, .form_text_area
+	{
+	width: 300px;
+	padding:5px;
+	color: #666;
+	border: 1px solid #8CAE26;
+	background: url(images/input_back.png);
+	}
+
+.form_item input:focus, .form_text_area:focus
+	{
+	border: 1px solid #60761b;
+	color: #000;
+	}
+
+.form_row_submit
+	{
+	clear: both;
+	padding: 10px 0 0 150px;
+	position: relative;
+	left: -152px;
+	}
+
+.form_label
+	{
+	float: left;
+	width: 150px;
+	}
+
+.form_required
+	{
+	color: #8CAE26;
+	}
+	
+.form_item
+	{
+	float: left;
+	}
+
+.form_row
+	{
+	clear: both;
+	padding-top: 10px;
+	}
+
+/* Form Errors */
+
+.form_highlight input, .form_highlight textarea
+	{
+	border: 1px solid #FBC2C4;
+	}
+	
+/* Success, error & notice boxes for messages and errors. */
+
+.error, .notice, .success    
+	{ 
+	padding: .9em; 
+	margin-bottom: 1em; 
+	border: 2px solid #ddd; 
+	}
+	
+.error      
+	{ 
+	background: #FBE3E4;
+	color: #D12F19;
+	border-color: #FBC2C4; 
+	}
+	
+.notice     
+	{ 
+	background: #FFF6BF; 
+	color: #817134; 
+	border-color: #FFD324; 
+	}
+	
+.success    
+	{ 
+	background: #E6EFC2; 
+	color: #529214; 
+	border-color: #C6D880; 
+	}
+	
+.error a    
+	{ 
+	color: #D12F19; 
+	}
+	
+.notice a   
+	{ 
+	color: #817134; 
+	}
+	
+.success a  
+	{ 
+	color: #529214; 
+	}
+
+/* Custom / RTE classes */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+.dotrule
+	{
+	height:1px; 
+	font-size:1px;
+	background:url(images/dot.gif) repeat-x; 
+	clear:both;
+	margin: 5px 0;
+	}
+
+.hrule
+	{
+	height: 1px; 
+	font-size: 1px;
+	height: 1px;
+	background: #c8de88;
+	clear: both;
+	margin: 5px 0;
+	}
+	
+.right
+	{
+	float:right;
+	}
+
+.left
+	{
+	float:left;
+	}
+
+.clear
+	{
+	clear: both;
+	}
+
+.small  
+	{ 
+	font-size: .8em; 
+	margin-bottom: 1.875em; 
+	line-height: 1.875em;
+	}
+	
+.large  
+	{ 
+	font-size: 1.2em; 
+	line-height: 2.5em; 
+	margin-bottom: 1.25em; 
+	}
+		
+.quiet  
+	{ 
+	color: #ccc; 
+	}
+		
+.hide   
+	{ 
+	display:none; 
+	}
+
+.highlight
+	{
+	background: #cfe493;
+	padding: 1px 2px;
+	font-weight: normal;
+	}
+
+/* Tag cloud styles */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+.tag_min
+	{
+	font-size: 0.9em;
+	}
+
+.tag_1
+	{
+	font-size: 1em;
+	}
+
+.tag_2
+	{
+	font-size: 1.2em;
+	}
+
+.tag_3
+	{
+	font-size: 1.3em;
+	}
+
+.tag_4
+	{
+	font-size: 1.4em;
+	}
+
+.tag_5
+	{
+	font-size: 1.5em;
+	}
+
+.tag_6
+	{
+	font-size: 1.6em;
+	}
+
+.tag_7
+	{
+	font-size: 1.7em;
+	}
+
+.tag_8
+	{
+	font-size: 1.8em;
+	}
+
+.tag_9
+	{
+	font-size: 1.9em;
+	}
+
+.tag_max
+	{
+	font-size: 2em;
+	}
+
+/********************************************************** // End // ********************************************************/
