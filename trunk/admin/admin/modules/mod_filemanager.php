@@ -87,6 +87,13 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
 				} else {
 					$sql = "file_name = '$file_name', file_extension = '$file_ext', file_type = '$file_type', tags = '$file_tags'";
 					$ok = safe_update("pixie_files", "$sql", "file_name = '$file_name'");
+					
+					// sometimes a file will be present on the server but not in the file manager, we need to check for this
+					$check = safe_field('file_extension','pixie_files',"file_name ='$file_name'");
+					if (!$check) {
+						$sql = "file_name = '$file_name', file_extension = '$file_ext', file_type = '$file_type', tags = '$file_tags'"; 
+						$ok = safe_insert("pixie_files", $sql);
+					}
 				}
 	
 				if (!$ok) {
