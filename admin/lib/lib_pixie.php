@@ -81,7 +81,7 @@
 		
 		if ($s == "404") {
 			$m = "";
-			$X = "";
+			$x = "";
 			$p = "";
 		}
 		
@@ -90,7 +90,7 @@
 			if (!$rss) {
 				$s = "404";
 				$m = "";
-				$X = "";
+				$x = "";
 				$p = "";
 			}
 		}
@@ -98,11 +98,24 @@
   	$page_type = check_type($s);
   	if ($page_type == "dynamic") {
   		$style = $page_type;
+  	} else if ($page_type == "static") {
+  	  	$style = $s;
+		$m = "";
+		$x = "";
+		$p = "";
   	} else if ($s == "404") {
   		$style = "404";
   	} else {
   		$style = $s;
   	}
+  
+	$s = sterilise(make_slug($s));
+	$m = sterilise(make_slug($m));
+	$x = sterilise(make_slug($x));
+	$p = sterilise(make_slug($p));
+  	
+  	//die($page_type);
+  	
   	$page_id = get_page_id($s);
 	$page_hits = safe_field('page_views','pixie_core',"page_name='$s'");
 	$page_display_name = safe_field('page_display_name','pixie_core',"page_name='$s'");

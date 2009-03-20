@@ -22,7 +22,8 @@
 //***********************************************************************//
 
 	error_reporting(0);															 		// turn off error reporting
-
+	
+	include "admin/lib/lib_misc.php";     										  		// loaded first for security
 	include "admin/lib/lib_logs.php"; pagetime("init");   						  		// runtime clock																																
 
 	extract($_REQUEST);                                                     	  		// access to form vars if register globals is off
@@ -33,7 +34,6 @@
 	include "admin/config.php";           										  		// load cofiguration
 
 	include "admin/lib/lib_db.php";       										  		// load libraries order is important
-	include "admin/lib/lib_misc.php";     										  		//
 	include "admin/lib/lib_validate.php"; 										  		// 
 	include "admin/lib/lib_date.php";											  		//
 	include "admin/lib/lib_paginator.php";										  		//
