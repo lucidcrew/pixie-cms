@@ -109,10 +109,10 @@
   		$style = $s;
   	}
   
-	$s = sterilise(make_slug($s));
-	$m = sterilise(make_slug($m));
-	$x = sterilise(make_slug($x));
-	$p = sterilise(make_slug($p));
+	$s = sterilise($s);
+	$m = sterilise($m);
+	$x = sterilise($x);
+	$p = sterilise($p);
   	
   	//die($page_type);
   	
