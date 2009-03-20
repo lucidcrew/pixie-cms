@@ -108,14 +108,7 @@
   	} else {
   		$style = $s;
   	}
-  
-	$s = sterilise($s);
-	$m = sterilise($m);
-	$x = sterilise($x);
-	$p = sterilise($p);
-  	
-  	//die($page_type);
-  	
+  	  	
   	$page_id = get_page_id($s);
 	$page_hits = safe_field('page_views','pixie_core',"page_name='$s'");
 	$page_display_name = safe_field('page_display_name','pixie_core',"page_name='$s'");
