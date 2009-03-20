@@ -44,6 +44,11 @@
 			$uname = "Visitor";
 		}
 		$ip = $_SERVER['REMOTE_ADDR'];
+
+		$uname = sterilise($uname, true);
+		$ip = sterilise($ip, true);
+		$referral = sterilise($referral, true); 
+
 		if (($referral) and (!strstr($referral, $domain))) {
 			safe_insert("pixie_log", 
 									"user_id = '$uname',  
