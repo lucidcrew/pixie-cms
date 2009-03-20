@@ -108,7 +108,20 @@
   	} else {
   		$style = $s;
   	}
-  	  	
+  
+  	$s = str_replace("-", "BREAK", $s);
+  	$m = str_replace("-", "BREAK", $m);
+  	$x = str_replace("-", "BREAK", $x);
+  	$p = str_replace("-", "BREAK", $p);
+	$s = preg_replace("/[^a-zA-Z0-9]/", "", $s);
+	$m = preg_replace("/[^a-zA-Z0-9]/", "", $m);
+	$x = preg_replace("/[^a-zA-Z0-9]/", "", $x);
+	$p = preg_replace("/[^a-zA-Z0-9]/", "", $p);
+	$s = str_replace("BREAK", "-", $s);
+	$m = str_replace("BREAK", "-", $m);
+	$x = str_replace("BREAK", "-", $x);
+	$p = str_replace("BREAK", "-", $p);
+
   	$page_id = get_page_id($s);
 	$page_hits = safe_field('page_views','pixie_core',"page_name='$s'");
 	$page_display_name = safe_field('page_display_name','pixie_core',"page_name='$s'");
