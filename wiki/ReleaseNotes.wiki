@@ -1,9 +1,14 @@
 #summary Changes made in each release.
 #labels development,roadmap
 
-==== Version 1 ====
+==== Version 1.1 (in progress) ====
+
+==== Version 1.02 ====
+
+*Improved*
   
-  * The first public release.
+  * Security fixes.
+  * Bug where adding new users sometimes gave them super-user privileges. 
 
 ==== Version 1.01 ====
 
@@ -40,4 +45,6 @@
   * [http://code.google.com/p/pixie-cms/issues/detail?id=5 Issue 5] - Draft posts are displayed by the Recent Posts block and viewable by direct link.
   * Bug where IP addresses were not being linked properly to [http://network-tools.com/ network-tools] from the dashboard.
 
-==== Version 1.1 (in progress) ====
+==== Version 1 ====
+  
+  * The first public release.
