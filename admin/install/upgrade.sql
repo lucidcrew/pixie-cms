@@ -8,3 +8,7 @@ ALTER TABLE `pixie_settings` CHANGE `site_url` `site_url` VARCHAR( 255 ) CHARACT
 
 -- set version number
 UPDATE `pixie_settings` SET `version` = '1.01' WHERE `pixie_settings`.`settings_id` = 1 LIMIT 1 ;
+
+-- v1.02
+-- set version number
+UPDATE `pixie_settings` SET `version` = '1.02' WHERE `pixie_settings`.`settings_id` = 1 LIMIT 1 ;
