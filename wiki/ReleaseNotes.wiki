@@ -3,6 +3,11 @@
 
 ==== Version 1.1 (in progress) ====
 
+*New*
+
+*Improved *
+  * Bug where adding new users sometimes fails due to biography being null. 
+
 ==== Version 1.02 ====
 
 *Improved*
