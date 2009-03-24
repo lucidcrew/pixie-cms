@@ -6,7 +6,7 @@
 *New*
 
 *Improved *
-  * Bug where adding new users sometimes fails due to biography being null. 
+  * Bug where adding new users sometimes fails (MYSQL 5.0.76-community running on 32bit Windows Vista) due to biography being null. 
 
 ==== Version 1.02 ====
 
