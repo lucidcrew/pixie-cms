@@ -238,6 +238,7 @@
 						  	`rich_text_editor` tinyint(1) NOT NULL default '0',
 						  	`system_message` tinytext collate utf8_unicode_ci NOT NULL,
 						  	`last_backup` varchar(120) collate utf8_unicode_ci NOT NULL default '',
+						  	`bb2_installed` SET('yes','no') collate utf8_unicode_ci NOT NULL DEFAULT 'no',
 						  	PRIMARY KEY  (`settings_id`)
 						) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;						
 						";
