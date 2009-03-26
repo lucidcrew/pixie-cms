@@ -7,6 +7,7 @@
 
 *Improved *
   * Bug where adding new users sometimes fails (MYSQL 5.0.76-community running on 32bit Windows Vista) due to biography being null. 
+  * Performance fix: stop index.php from trying to create the `pixie_bad_behavior` table on every page view.
 
 ==== Version 1.02 ====
 
