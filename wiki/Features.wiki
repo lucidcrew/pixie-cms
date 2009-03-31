@@ -16,7 +16,7 @@ Pixie is not out to compete with any other site management tool. Our main goal i
 
 ==== Design ====
 
-    Pixie itself has been designed to be simple. Pixie’s interface has been refined over a number of versions to be user friendly. On the visitor side... you will love the fact that all you need to know is CSS to customise your site. If that sounds too complicated you can choose from the ever increasing amount of [http://www.getpixie.co.uk/downloads/ free themes]. 
+    Pixie itself has been designed to be simple. Pixie’s interface has been refined over a number of versions to be user friendly. On the visitor side... you will love the fact that all you need to know is CSS to customise your site. If that sounds too complicated you can choose from the ever increasing amount of [http://www.getpixie.co.uk/downloads/tag/theme/ free themes]. 
 
 === The Complete Features List ===
 ----
@@ -27,7 +27,7 @@ Pixie is not out to compete with any other site management tool. Our main goal i
 
 ==== CSS themes ====
 
-    Pixie currently uses CSS for its templates. So you think that's restrictive? Take a look at [http://www.csszengarden.com/ CSS Zen Garden] for inspiration to see just how powerful CSS can be. For a quick site refresh why not download [http://www.getpixie.co.uk/downloads/ extra themes] available from the Pixie site.
+    Pixie currently uses CSS for its templates. So you think that's restrictive? Take a look at [http://www.csszengarden.com/ CSS Zen Garden] for inspiration to see just how powerful CSS can be. For a quick site refresh why not download [http://www.getpixie.co.uk/downloads/tag/theme/ extra themes] available from the Pixie site.
 
 ==== Database backups ====
 
@@ -51,7 +51,7 @@ Pixie is not out to compete with any other site management tool. Our main goal i
 
 ==== Modules, Themes, Plug-ins and Blocks ====
 
-    Make Pixie do more with downloadable extras. Browse the ever increasing extras section on the  [http://www.getpixie.co.uk/downloads Pixie website].
+    Make Pixie do more with downloadable extras. Browse the ever increasing extras section on the  [http://www.getpixie.co.uk/downloads/ Pixie website].
 
 ==== Multilingual ====
 
@@ -66,7 +66,7 @@ Pixie is not out to compete with any other site management tool. Our main goal i
     Run Pixie from your local machine or memory pen and use it as a design / development tool. I often make static sites using Pixie and just save the rendered HTML pages from the browser.
 
 ==== Quick to develop for ====
-    So you want Pixie to do more? Then its time to program your own module or plug-in. Pixie makes this easy by looking at the database tables for your module and automatically creating the admin interface for it. All you need to code is what he public see. Details are in the [ModuleDevelopment documentation]. 
+    So you want Pixie to do more? Then its time to program your own module or plug-in. Pixie makes this easy by looking at the database tables for your module and automatically creating the admin interface for it. All you need to code is what he public see. Details are in the [http://www.getpixie.co.uk/support/article/module-development/ documentation]. 
 
 ==== Robots.txt ====
 
