@@ -44,6 +44,7 @@ Pixie uses code from many other open source projects. Without these projects Pix
   * [http://www.office-web.net French] - Luke 
   * [http://wymiata.net/ Polish] - Adrian
   * [http://olento.net/ Finnish] - Joni Kärki
+  * [http://www.darklightdusk.nl Dutch] - Luuk Lamers
 
 
 ----
