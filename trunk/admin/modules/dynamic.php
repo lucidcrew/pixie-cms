@@ -259,6 +259,7 @@ switch ($do) {
 						</div>				
 					</div>\n\n";
 				$tag_list = "";
+				$class_list = "";
 				$i ++;
 			}
 		}
