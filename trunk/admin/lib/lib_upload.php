@@ -13,13 +13,13 @@
 //------------------------------------------------------------------ 
 class file_upload {
 
-  var $the_file;
+	var $the_file;
 	var $the_temp_file;
-  var $upload_dir;
+	var $upload_dir;
 	var $replace;
 	var $do_filename_check;
 	var $max_length_filename = 100;
-  var $extensions;
+	var $extensions;
 	var $ext_string;
 	var $language;
 	var $http_error;
@@ -81,7 +81,7 @@ class file_upload {
 				return false;
 			} else {
 				if ($this->do_filename_check == "y") {
-					if (preg_match("/^[a-z0-9_]*\.(.){1,5}$/i", $the_name)) {
+					if (preg_match("/^[^<>:\"\/\\|\?\*]*$/i", $the_name)) {
 						return true;
 					} else {
 						$this->message[] = $this->error_text(12);
