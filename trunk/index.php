@@ -31,9 +31,14 @@
 	if (!file_exists( "admin/config.php" ) || filesize("admin/config.php") < 10) {		// check for config
 	header( "Location: admin/install/" ); exit();} 					  		            // redirect to installer
 
-	include "admin/config.php";           										  		// load cofiguration
+	include "admin/config.php";           										  		// load configuration
 
-	include "admin/lib/lib_db.php";       										  		// load libraries order is important
+	include "admin/lib/lib_db.php";       										  		// load libraries order is important    										  		
+	
+	$prefs = get_prefs();           											  		// prefs as an array
+	extract($prefs);
+	putenv("TZ=$timezone"); 															// timezone fix
+	
 	include "admin/lib/lib_validate.php"; 										  		// 
 	include "admin/lib/lib_date.php";											  		//
 	include "admin/lib/lib_paginator.php";										  		//
@@ -45,9 +50,6 @@
 
 	users_online();																  		// current site visitors
 	bombShelter();                  											  		// check URL size
-  
-	$prefs = get_prefs();           											  		// prefs as an array
-	extract($prefs);
 	pixie();																	  		// let the magic begin 
 	referral(); 																 		// referral
 	include "admin/lang/".$language.".php";                                       		// get the language file
