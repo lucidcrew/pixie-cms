@@ -44,6 +44,9 @@ $DB = new DB;
 			$message = "MySQL Query: ".$q."<br/>MySQL Error:".mysql_error()."";
 		}
 		
+		// replace now() with PHP date
+		$q = str_replace("now()", "'".date(DATE_ATOM)."'", $q);
+		
 		$result = $method($q,$DB->link);
 
 		if(!$result) return false;
