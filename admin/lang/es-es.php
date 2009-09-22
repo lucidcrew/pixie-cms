@@ -283,7 +283,7 @@ $lang = array(
     
     
     
-    'form_site_copywright' => 'Copyright del sitio', //this is the first time do I found the word Copywright with a w, is this correct?  
+    'form_site_copyright' => 'Copyright del sitio', //this is the first time do I found the word Copywright with a w, is this correct?  
     'form_site_curl' => 'ÀURLs amigables?',
     'form_help_site_curl' => 'ÀLe gustaria que su web utilize URLs amigables? Una URL amigable se ve as’ www.yoursite.com/amigable/ cuando normalmente deberia verse www.yoursite.com/?s=clara. Esta funci—n s—lo sirve para servidores sobre Linux',
     'form_legend_pixie_settings' => 'Configure la forma en la que Pixie se comporta',

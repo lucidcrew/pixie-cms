@@ -278,7 +278,7 @@ $lang = array(
 	'form_site_keywords' => 'Mots Cl&eacute; du Site',
 	'form_help_site_keywords' => 'Choisissez une liste de mots-cl&eacute; s&eacute;par&eacute;s par des virgules. (par ex. les, r&egrave;gles, de, ce, site).',
 	'form_site_author' => 'Auteur du site',
-	'form_site_copywright' => 'Copyright du site',
+	'form_site_copyright' => 'Copyright du site',
 	'form_site_curl' => 'URLs  propres?',
 	'form_help_site_curl' => 'Voulez-vous utiliser les URLs propres ? Par exemple www.votresite.com/titrepropre/ au lieu de www.votresite.com?s=titrepropre. Cela fonctionne avec les h&eacute;bergements Linux uniquement.',
 	'form_legend_pixie_settings' => 'Ajustements compl&eacute;mentaires',
