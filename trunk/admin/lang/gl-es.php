@@ -279,7 +279,7 @@ $lang = array(
     'form_site_keywords' => 'Palabras clave do sitio',
     'form_help_site_keywords' => 'Escriba palabras clave separadas por coma. (ej: este, sitio, a, leva).',
     'form_site_author' => 'Autor da web',
-    'form_site_copywright' => 'Copyright do sitio', //this is the first time do I found the word Copywright with a w, is this correct?  
+    'form_site_copyright' => 'Copyright do sitio', //this is the first time do I found the word Copywright with a w, is this correct?  
     'form_site_curl' => 'URLs amigables?',
     'form_help_site_curl' => 'Gustarialle que a sua web use URLs amigables? Unha URL amigable vese asi www.oseusitio.com/amigable/ cuando do outro xeito deberiase de ver www.oseusitio.com/?s=clara. Esta funcion so serve para servidores sobre Linux',
     'form_legend_pixie_settings' => 'Configure o xeito no que se comporta Pixie',

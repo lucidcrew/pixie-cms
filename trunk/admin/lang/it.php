@@ -279,7 +279,7 @@ $lang = array(
 	'form_site_keywords' => 'Parole chiave',
 	'form_help_site_keywords' => 'Scrivi una lista di parole chiave, separate da virgole (esempio questo, sito, domina).',
 	'form_site_author' => 'Autore sito',
-	'form_site_copywright' => 'Copyright sito',
+	'form_site_copyright' => 'Copyright sito',
 	'form_site_curl' => 'URL puliti?',
 	'form_help_site_curl' => 'Desideri utilizzare URL puliti? Un URL pulito sarà scritto come www.tuosito.it/pulito/ invece che www.tuosito.it?s=pulito. Funziona solamente con hosting Linux.',
 	'form_legend_pixie_settings' => 'Modifica il comportamento di Pixie',

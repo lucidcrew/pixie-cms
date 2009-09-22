@@ -278,7 +278,7 @@ $lang = array(
 	'form_site_keywords' => 'Sivuston avainsanat',
 	'form_help_site_keywords' => 'Kirjoita sivustoasi kuvaavia avainsanoja pilkulla erotettuna. (esim. sivu, s&#228;&#228;nn&#246;t).',
 	'form_site_author' => 'Sivuston omistaja',
-	'form_site_copywright' => 'Sivuston tekij&#228;noikeudet',
+	'form_site_copyright' => 'Sivuston tekij&#228;noikeudet',
 	'form_site_curl' => 'K&#228;ytt&#228;j&#228;yst&#228;v&#228;lliset URL-osoitteet?',
 	'form_help_site_curl' => 'Haluatko k&#228;ytt&#228;&#228; sivustollasi k&#228;ytt&#228;j&#228;yst&#228;v&#228;llisi&#228; URL-osoitteita? K&#228;ytt&#228;j&#228;yst&#228;v&#228;llinen osoite on muotoa www.yoursite.com/osoite/ , kun osoite on muuten muotoa www.yoursite.com?s=osoite. Clean URLs work on Linux hosts only.',
 	'form_legend_pixie_settings' => 'Muokkaa Pixien toimintaa',
