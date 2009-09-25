@@ -76,10 +76,10 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 							</div>
 							<div class=\"form_row\">
 								<div class=\"form_label\"><label for=\"dst\">".$lang['form_pixie_dst']." <span class=\"form_required\">".$lang['form_required']."</span></label><span class=\"form_help\">".$lang['form_help_pixie_dst']."</span></div>
-								<div class=\"form_item_drop\"><select class=\"form_select\" name=\"dstime\" id=\"dst\">";
-								if ($dst == "yes") { echo "<option selected=\"selected\" value=\"yes\">Yes</option>"; } else { echo "<option value=\"yes\">Yes</option>"; }
-								if ($dst == "no") { echo "<option selected=\"selected\" value=\"no\">No</option>"; } else { echo "<option value=\"no\">No</option>"; }
-						echo "</select></div>
+								<div class=\"form_item_radio\">";
+								echo "Yes<input type=\"radio\"".($dst == "yes" ? " checked=\"checked\"" : "")." name=\"dstime\" class=\"form_radio\" value=\"yes\" />";
+								echo "No<input type=\"radio\"".($dst == "no" ? " checked=\"checked\"" : "")." name=\"dstime\" class=\"form_radio\" value=\"no\" />";
+						echo "</div>
 							</div>
 							<div class=\"form_row\">
 								<div class=\"form_label\"><label for=\"dateformat\">".$lang['form_pixie_date']." <span class=\"form_required\">".$lang['form_required']."</span></label><span class=\"form_help\">".$lang['form_help_pixie_date']."</span></div>
@@ -146,10 +146,10 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 							</div>
 							<div class=\"form_row\">
 								<div class=\"form_label\"><label for=\"rte\">".$lang['form_pixie_rte']." <span class=\"form_required\">".$lang['form_required']."</span></label><span class=\"form_help\">".$lang['form_help_pixie_rte']."</span></div>
-								<div class=\"form_item_drop\"><select class=\"form_select\" name=\"rte\" id=\"rte\">";
-								if ($rich_text_editor == "0") { echo "\t<option selected=\"selected\" value=\"0\">Off</option>"; } else { echo "\t<option value=\"0\">Off</option>"; }
-								if ($rich_text_editor == "1") { echo "\t<option selected=\"selected\" value=\"1\">On</option>"; } else { echo "\t<option value=\"1\">On</option>"; }
-							echo "	</select></div>
+								<div class=\"form_item_radio\">";
+								echo "On<input type=\"radio\"".($rich_text_editor == "1" ? " checked=\"checked\"" : "")." name=\"rte\" class=\"form_radio\" value=\"1\" />";
+								echo "Off<input type=\"radio\"".($rich_text_editor == "0" ? " checked=\"checked\"" : "")." name=\"rte\" class=\"form_radio\" value=\"0\" />";
+							echo "	</div>
 							</div>
 							<div class=\"form_row\">
 								<div class=\"form_label\"><label for=\"logs\">".$lang['form_pixie_logs']." <span class=\"form_required\">".$lang['form_required']."</span></label><span class=\"form_help\">".$lang['form_help_pixie_logs']."</span></div>
