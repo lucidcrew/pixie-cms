@@ -19,33 +19,49 @@ if (!empty($pixieconfig['table_prefix'])) {
 
 class DB {
 
-    function DB() {
-         global $pixieconfig;
-         $this->host = $pixieconfig['host'];
-         $this->db   = $pixieconfig['db'];
-         $this->user = $pixieconfig['user'];
-         $this->pass = $pixieconfig['pass'];
-         $this->link = mysql_connect($this->host, $this->user, $this->pass);
-         if (!$this->link) {
-         	$GLOBALS['connected'] = false;
-         } else $GLOBALS['connected'] = true;
-         mysql_select_db($this->db) or die(db_down());
-    }
-} 
+	function DB() {
+		global $pixieconfig;
+		$this->host = $pixieconfig['host'];
+		$this->db   = $pixieconfig['db'];
+		$this->user = $pixieconfig['user'];
+		$this->pass = $pixieconfig['pass'];
+		$this->link = mysql_connect($this->host, $this->user, $this->pass);
+		if (!$this->link) {
+			$GLOBALS['connected'] = false;
+		} else $GLOBALS['connected'] = true;
+		mysql_select_db($this->db) or die(db_down());
+	}
+}
 
 $DB = new DB;
 //------------------------------------------------------------------
 	function safe_query($q='',$debug='',$unbuf='')
 	{
-		global $DB,$pixieconfig,$message;
+		global $DB,$pixieconfig,$message,$dst,$tzHM;
 		$method = (!$unbuf) ? 'mysql_query' : 'mysql_unbuffered_query';
 		if (!$q) return false;
 		if ($debug) { 
 			$message = "MySQL Query: ".$q."<br/>MySQL Error:".mysql_error()."";
 		}
-		
-		// replace now() with PHP date
-		$q = str_replace("now()", "'".date(DATE_ATOM)."'", $q);
+		if(!isset($tzHM))
+		{
+			// get time zone
+			$tz = getenv("TZ");
+			// calculate hours from TZ variable - works only if time zone set as +3600, +7200 etc
+			if(is_numeric($tz))
+			{
+				$hours = ($tz/3600 % 3600);
+				$mins = ($tz % 3600 / 60);
+				// if daylight saving time
+				if($dst == "yes")
+				{
+					$hours++;
+				}
+				// if $hours < 0 then prepend -, otherwise prepend +
+				$tzHM = (($hours<0)?"-":"+")."$hours:$mins";
+				$method("SET time_zone='$tzHM';",$DB->link);
+			}
+		}
 		
 		$result = $method($q,$DB->link);
 
