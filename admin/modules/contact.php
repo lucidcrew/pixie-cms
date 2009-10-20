@@ -135,7 +135,12 @@ switch ($do) {
 								$rs = safe_rows_start("*", "pixie_users", "1 order by privs desc");
 								while ($a = nextRow($rs)) {
 									extract($a);
-									echo "<option value=\"$user_id\">$realname ($occupation)</option>";
+									if(strlen($occupation) > 0) {
+										echo "<option value=\"$user_id\">$realname ($occupation)</option>";
+									}
+									else {
+										echo "<option value=\"$user_id\">$realname</option>";
+									}
 								}
 								echo "	
 								</select></div>
