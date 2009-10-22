@@ -3,6 +3,8 @@
 
 This page details everything you will need to know to get Pixie installed onto your web server. Those of you familiar with self hosted scripts should find this a very simple process. We have tried our best to make the install process as simple as possible.
 
+If you are not comfortable we installing the Pixie on your own server we recommend you try one of our [http://www.arvixe.com/516-22-3-11.html hosted Pixie packages].
+
 === Requirements === 
 ----
 
@@ -29,7 +31,7 @@ I am not a big fan of requirements, they are restricting and a little bit compli
 
 ==== Web Hosting ====
 
-Web hosting is cheap and easy to come by these days. You may already have some with your Internet service provider (ISP). We will add a list of hosting partners in the near future.
+Web hosting is cheap and easy to come by these days. You may already have some with your Internet service provider (ISP). Our recommended hosting provider is [http://www.arvixe.com/516-22-3-11.html Arvixe] who provide a one click install of Pixie.
 
 ==== Uploading your files ====
 
