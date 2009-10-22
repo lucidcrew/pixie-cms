@@ -1,9 +1,7 @@
 #summary Manually installing Pixie.
 #labels installation,help
 
-If you are having trouble installing Pixie you may wish to try [http://www.arvixe.com/516-22-3-11.html hosted Pixie]. 
-
-Installing Pixie manually is actually easier than it sounds, here is how you do it:
+If you are having trouble installing Pixie you may wish to try [http://www.arvixe.com/516-22-3-11.html hosted Pixie]. Otherwise, installing Pixie manually is actually easier than it sounds, here is how you do it:
 
 ==== Create your config.php file: ====
    In the admin folder of your Pixie download you will find a file called config.php. This file stores your database information. You will need to copy and paste the following code into the file, replacing the information here with your own database information supplied by your web host.
