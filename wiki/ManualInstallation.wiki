@@ -1,6 +1,8 @@
 #summary Manually installing Pixie.
 #labels installation,help
 
+If you are having trouble installing Pixie you may wish to try [http://www.arvixe.com/516-22-3-11.html hosted Pixie]. 
+
 Installing Pixie manually is actually easier than it sounds, here is how you do it:
 
 ==== Create your config.php file: ====
