@@ -12,54 +12,53 @@ switch ($do) {
 	// The general information is used to show infromation about the module within Pixie. 
 	// Simply enter details of your module here:
 	case "info":
-	   // The name of your module
-	   $m_name = "Events";
-	   // A description of your module
-	   $m_description = "Events module with support for hCalendar microformat, archives and Google calendar links.";
-	   // Who is the module author?
-	   $m_author = "Scott Evans";
-	   // What is the URL of your homepage
-	   $m_url = "http://www.toggle.uk.com";
-	   // What version is this?
-	   $m_version = "1";
-	   // Can be set to module or plugin.
-	   $m_type = "module";
-	   // Is this a module that needs publishing to?
-	   $m_publish = "yes";
-	   
+		// The name of your module
+		$m_name = "Events";
+		// A description of your module
+		$m_description = "Events module with support for hCalendar microformat, archives and Google calendar links.";
+		// Who is the module author?
+		$m_author = "Scott Evans";
+		// What is the URL of your homepage
+		$m_url = "http://www.toggle.uk.com";
+		// What version is this?
+		$m_version = "1";
+		// Can be set to module or plugin.
+		$m_type = "module";
+		// Is this a module that needs publishing to?
+		$m_publish = "yes";
 	break;
 
 	// Install
 	// This section contains the SQL needed to create your modules tables
 	case "install":
 		// Create any required tables
-		$execute = "CREATE TABLE IF NOT EXISTS `pixie_module_events` (`events_id` int(5) NOT NULL auto_increment,`date` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,`title` varchar(100) collate utf8_unicode_ci NOT NULL default '',`description` longtext collate utf8_unicode_ci,`location` varchar(120) collate utf8_unicode_ci default NULL,`url` varchar(140) collate utf8_unicode_ci default NULL,`public` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',PRIMARY KEY  (`events_id`),UNIQUE KEY `id` (`events_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;";
-		$execute1 = "CREATE TABLE IF NOT EXISTS `pixie_module_events_settings` (`events_id` mediumint(1) NOT NULL auto_increment,`google_calendar_links` set('yes','no') collate utf8_unicode_ci NOT NULL default '',`number_of_events` varchar(3) collate utf8_unicode_ci NOT NULL default '10',PRIMARY KEY  (`events_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;";
-		$execute2 = "INSERT INTO `pixie_module_events_settings` (`events_id`, `google_calendar_links`, `number_of_events`) VALUES (1, 'yes', '10');";
+		$execute = "CREATE TABLE IF NOT EXISTS `".PFX."pixie_module_events` (`events_id` int(5) NOT NULL auto_increment,`date` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,`title` varchar(100) collate utf8_unicode_ci NOT NULL default '',`description` longtext collate utf8_unicode_ci,`location` varchar(120) collate utf8_unicode_ci default NULL,`url` varchar(140) collate utf8_unicode_ci default NULL,`public` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',PRIMARY KEY  (`events_id`),UNIQUE KEY `id` (`events_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;";
+		$execute1 = "CREATE TABLE IF NOT EXISTS `".PFX."pixie_module_events_settings` (`events_id` mediumint(1) NOT NULL auto_increment,`google_calendar_links` set('yes','no') collate utf8_unicode_ci NOT NULL default '',`number_of_events` varchar(3) collate utf8_unicode_ci NOT NULL default '10',PRIMARY KEY  (`events_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;";
+		$execute2 = "INSERT INTO `".PFX."pixie_module_events_settings` (`events_id`, `google_calendar_links`, `number_of_events`) VALUES (1, 'yes', '10');";
 		// you can execute upto 5 sql queries ($execute - $execute4) 
 	break;
 
-  	// The administration of the module (add, edit, delete)
-  	// This is where Pixie really saves you time, these few lines of code will create the entire admin interface
+	// The administration of the module (add, edit, delete)
+	// This is where Pixie really saves you time, these few lines of code will create the entire admin interface
 	case "admin":
-	   // The name of your module
-	   $module_name= "Events";
-	   // The name of the table																
-	   $table_name = "pixie_module_events";
-	   // The field to order by in table view														
-	   $order_by = "date";
-	   // Ascending (asc) or decending (desc)		  													
-	   $asc_desc = "desc";
-	   // Fields you want to exclude in your table view        														
-	   $view_exclude = array('events_id', 'description', 'cost', 'location', 'public', 'url');			
-	   // Fields you do not want people to be able to edit			
-	   $edit_exclude = array('events_id');
-	   // The number of items per page in the table view
-	   $items_per_page = "15";
-	   // Does this module support tags (yes or no)														
-	   $tags = "no";
-	   
-	   admin_module($module_name,$table_name,$order_by,$asc_desc,$view_exclude,$edit_exclude,$items_per_page, $tags);
+		// The name of your module
+		$module_name= "Events";
+		// The name of the table																
+		$table_name = "pixie_module_events";
+		// The field to order by in table view														
+		$order_by = "date";
+		// Ascending (asc) or decending (desc)		  													
+		$asc_desc = "desc";
+		// Fields you want to exclude in your table view        														
+		$view_exclude = array('events_id', 'description', 'cost', 'location', 'public', 'url');			
+		// Fields you do not want people to be able to edit			
+		$edit_exclude = array('events_id');
+		// The number of items per page in the table view
+		$items_per_page = "15";
+		// Does this module support tags (yes or no)														
+		$tags = "no";
+
+		admin_module($module_name,$table_name,$order_by,$asc_desc,$view_exclude,$edit_exclude,$items_per_page, $tags);
 
 	break;
  	 	
