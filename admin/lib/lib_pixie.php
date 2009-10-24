@@ -200,7 +200,7 @@
 				$privs = safe_field('privs','pixie_users',"user_name='$username'");	
 				$realname = safe_field('realname','pixie_users',"user_name='$username'");
 				$GLOBALS['pixie_user'] = $username;  
-				$user_count = mysql_num_rows(safe_query("select * from pixie_log_users_online"));
+				$user_count = mysql_num_rows(safe_query("select * from ".PFX."pixie_log_users_online"));
 				$user_count = $user_count - 1;
 
 				echo "

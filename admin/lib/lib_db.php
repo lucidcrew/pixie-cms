@@ -274,45 +274,45 @@ $DB = new DB;
 // Creates a drop down menu box from a db
 	function db_dropdown($table,$current,$name,$condition)
 	{ 
-	 global $edit, $go;
-	       
-   $rs = safe_query("SELECT * FROM $table WHERE $condition");
-	 $num = mysql_num_rows($rs);
-	 $i = 0;
-	 
-	 echo "\t\t\t\t\t\t\t\t<select class=\"form_select\" name=\"$name\" id=\"$name\">\n";
-	 if ((!$current) && ($go == "new")) {
-	 	echo "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"NULL\">-</option>\n";
-	 } else if (($current == "NULL") && ($edit)) {
-	 	echo "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"NULL\">-</option>\n";
-	 } else if ($edit) {
-	 	echo "\t\t\t\t\t\t\t\t\t<option value=\"NULL\">-</option>\n";	 	
-	 }
+		global $edit, $go;
 
-	 while ($i < $num){
-	 	$F = mysql_fetch_array($rs);
-	 	
-	 	for ($j=0; $j < mysql_num_fields($rs); $j++) {
-	 		if (last_word(mysql_field_name($rs,$j)) == "id") {
-	 			$id = simplify($F[$j]);
-	 		} else {
-	 			$fieldname = $F[1];
-	 		}
-	 	}
+		$rs = safe_query("select * from ".PFX."$table where $condition");
+		$num = mysql_num_rows($rs);
+		$i = 0;
 
-    if ($current == $id) {
-	 		print "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"$id\">$fieldname</option>\n";
-	 	} else {
-	 		print "\t\t\t\t\t\t\t\t\t<option value=\"$id\">$fieldname</option>\n";
-	 	} 	
-	 $i++;
-	 }
-	 echo "\t\t\t\t\t\t\t\t</select>";
+		echo "\t\t\t\t\t\t\t\t<select class=\"form_select\" name=\"$name\" id=\"$name\">\n";
+		if ((!$current) && ($go == "new")) {
+			echo "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"NULL\">-</option>\n";
+		} else if (($current == "NULL") && ($edit)) {
+			echo "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"NULL\">-</option>\n";
+		} else if ($edit) {
+			echo "\t\t\t\t\t\t\t\t\t<option value=\"NULL\">-</option>\n";	 	
+		}
+
+		while ($i < $num){
+			$F = mysql_fetch_array($rs);
+			
+			for ($j=0; $j < mysql_num_fields($rs); $j++) {
+				if (last_word(mysql_field_name($rs,$j)) == "id") {
+					$id = simplify($F[$j]);
+				} else {
+					$fieldname = $F[1];
+				}
+			}
+
+			if ($current == $id) {
+				print "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"$id\">$fieldname</option>\n";
+			} else {
+				print "\t\t\t\t\t\t\t\t\t<option value=\"$id\">$fieldname</option>\n";
+			} 	
+			$i++;
+		}
+		echo "\t\t\t\t\t\t\t\t</select>";
 	}
 //------------------------------------------------------------------
 	function table_exists($table_name)
 	{
-		$rs = safe_query("SELECT * FROM $table_name");
+		$rs = safe_query("select * from ".PFX."$table_name WHERE 1=0");
 		
 		if ($rs) {
 			return true;

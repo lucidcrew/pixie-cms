@@ -2,37 +2,37 @@
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
-// Licence: GNU General Public License v3                   	   //
-// Title: Contact	                                       		   //
+// Licence: GNU General Public License v3                          //
+// Title: Contact                                                  //
 //*****************************************************************//
 
 switch ($do) {
 
 	// General information:
 	case "info":
-	   $m_name = "Contact";
-	   $m_description = "A simple contact form for your website with hCard/vCard Microformats.";
-	   $m_author = "Scott Evans";
-	   $m_url = "http://www.toggle.uk.com";
-	   $m_version = "1.1";
-	   $m_type = "module";
-	   $m_publish = "no";
-	   
+		$m_name = "Contact";
+		$m_description = "A simple contact form for your website with hCard/vCard Microformats.";
+		$m_author = "Scott Evans";
+		$m_url = "http://www.toggle.uk.com";
+		$m_version = "1.1";
+		$m_type = "module";
+		$m_publish = "no";
+
 	break;
 
 	// Install
 	case "install":
-		$execute = "CREATE TABLE IF NOT EXISTS `pixie_module_contact_settings` (`contact_id` mediumint(1) NOT NULL auto_increment,`show_profile_information` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',`show_vcard_link` set('yes','no') collate utf8_unicode_ci NOT NULL default 'no',PRIMARY KEY  (`contact_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;";
-		$execute1 = "INSERT INTO `pixie_module_contact_settings` (`contact_id`, `show_profile_information`, `show_vcard_link`) VALUES (1, 'yes', 'yes');";
+		$execute = "CREATE TABLE IF NOT EXISTS `".PFX."pixie_module_contact_settings` (`contact_id` mediumint(1) NOT NULL auto_increment,`show_profile_information` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',`show_vcard_link` set('yes','no') collate utf8_unicode_ci NOT NULL default 'no',PRIMARY KEY  (`contact_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;";
+		$execute1 = "INSERT INTO `".PFX."pixie_module_contact_settings` (`contact_id`, `show_profile_information`, `show_vcard_link`) VALUES (1, 'yes', 'yes');";
 	break;
 
-  	// The administration of the module (add, edit, delete)
+	// The administration of the module (add, edit, delete)
 	case "admin":
 		
 		// nothing to see here
-	   	
+
 	break;
- 	
+
 	// Pre
 	case "pre":
 	
@@ -75,7 +75,7 @@ switch ($do) {
 			if ($error) {
 				unset($contact_sub);
 			}
-		 }
+		}
 		
 	break;
 	
@@ -84,7 +84,7 @@ switch ($do) {
 
 	break;
 
-  	// Show Module
+	// Show Module
 	default:
 		
 		// get the settings for this page
@@ -92,11 +92,11 @@ switch ($do) {
 
 		echo "<h3>Contact</h3>";
 			
-		 if ($show_profile_information == "yes") {
-		 $rs = safe_rows_start("*", "pixie_users", "1 order by privs desc");
-		 while ($a = nextRow($rs)) {
-			 extract($a);
-			 echo "
+		if ($show_profile_information == "yes") {
+		$rs = safe_rows_start("*", "pixie_users", "1 order by privs desc");
+		while ($a = nextRow($rs)) {
+			extract($a);
+			echo "
 					<div class=\"vcard\">
 						<a class=\"url fn\" href=\"$website\"><span class=\"given-name\">".firstword($realname)."</span><span class=\"family-name\"> ".lastword($realname)."</span></a>
 						<div class=\"org hide\">$occupation</div>
@@ -159,10 +159,10 @@ switch ($do) {
 							</div>
 						</fieldset>
 					</form>";
-		 } else {
+		} else {
 			echo "<p class=\"notice emailsent\">Thank you for your email.</p>";
-		 }
-		
+		}
+
 	break;
 }
 ?>
