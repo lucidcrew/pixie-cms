@@ -27,7 +27,7 @@ $pixieconfig['table_prefix'] = '';
 }}} 
 
 ==== Create your .htaccess file:==== 
-   The [http://en.wikipedia.org/wiki/Htaccess .htaccess] file is an invisible file that is used to create the Clean URLs that Pixie uses. This file normally only works on Linux hosting platforms (some Windows servers do now support it). In the root of your website you will need to create a new file named .htaccess. Copy the following code into it and edit where indicated:
+   The [http://en.wikipedia.org/wiki/Htaccess .htaccess] file is an invisible file that is used to create the Clean URLs that Pixie uses. This file normally only works on Linux hosting platforms (some Windows servers do now support it - [http://groups.google.com/group/pixie-cms/browse_thread/thread/18e08b648c6be31f?hl=en# more info]). In the root of your website you will need to create a new file named .htaccess. Copy the following code into it and edit where indicated:
 
 {{{
 <IfModule mod_rewrite.c>
