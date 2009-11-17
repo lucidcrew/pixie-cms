@@ -293,7 +293,7 @@
 	 	   				} else {
 	 	   					$everyoneclass = "selected=\"selected\"";
 	 	   				}
-	 	   				echo"\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">
+	 	   				echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">
 									<select class=\"form_select\" name=\"$Nams[$j]\" name=\"$Nams[$j]\">
 										<option value=\"2\" $adminclass>Administrators only</option>
 										<option value=\"1\" $everyoneclass>Administrators &amp; Clients</option>
@@ -1036,6 +1036,7 @@
 		if (!$error) {
 			if ($submit_new) {
 				$ok = safe_insert($table_name, $sql);
+				$idofsave = mysql_insert_id();
 				safe_optimize($table_name);
 				safe_repair($table_name);
 				
@@ -1043,7 +1044,6 @@
 				$message = $lang['unknown_error'];
 				logme($message,"no","error"); 
 			  } else {
-					$idofsave = mysql_insert_id();
 
 					if (($s == "settings") && ($page_type == "dynamic")) {
 						$sql = "`page_id` = '$idofsave', `posts_per_page` = '10', `rss` = 'yes'"; 
