@@ -53,13 +53,13 @@ $DB = new DB;
 				$hours = ($tz/3600 % 3600);
 				$mins = ($tz % 3600 / 60);
 				// if daylight saving time
-				if($dst == "yes")
+				if($dst == "yes" && date("I") != 0)
 				{
 					$hours++;
 				}
 				// if $hours < 0 then prepend -, otherwise prepend +
 				$tzHM = (($hours<0)?"-":"+")."$hours:$mins";
-				$method("SET time_zone='$tzHM';",$DB->link);
+				$method("SET SESSION time_zone='$tzHM';",$DB->link);
 			}
 		}
 		
