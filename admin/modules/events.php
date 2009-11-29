@@ -32,9 +32,9 @@ switch ($do) {
 	// This section contains the SQL needed to create your modules tables
 	case "install":
 		// Create any required tables
-		$execute = "CREATE TABLE IF NOT EXISTS `".PFX."pixie_module_events` (`events_id` int(5) NOT NULL auto_increment,`date` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,`title` varchar(100) collate utf8_unicode_ci NOT NULL default '',`description` longtext collate utf8_unicode_ci,`location` varchar(120) collate utf8_unicode_ci default NULL,`url` varchar(140) collate utf8_unicode_ci default NULL,`public` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',PRIMARY KEY  (`events_id`),UNIQUE KEY `id` (`events_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;";
-		$execute1 = "CREATE TABLE IF NOT EXISTS `".PFX."pixie_module_events_settings` (`events_id` mediumint(1) NOT NULL auto_increment,`google_calendar_links` set('yes','no') collate utf8_unicode_ci NOT NULL default '',`number_of_events` varchar(3) collate utf8_unicode_ci NOT NULL default '10',PRIMARY KEY  (`events_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;";
-		$execute2 = "INSERT INTO `".PFX."pixie_module_events_settings` (`events_id`, `google_calendar_links`, `number_of_events`) VALUES (1, 'yes', '10');";
+		$execute = "CREATE TABLE IF NOT EXISTS `pixie_module_events` (`events_id` int(5) NOT NULL auto_increment,`date` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,`title` varchar(100) collate utf8_unicode_ci NOT NULL default '',`description` longtext collate utf8_unicode_ci,`location` varchar(120) collate utf8_unicode_ci default NULL,`url` varchar(140) collate utf8_unicode_ci default NULL,`public` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',PRIMARY KEY  (`events_id`),UNIQUE KEY `id` (`events_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;";
+		$execute1 = "CREATE TABLE IF NOT EXISTS `pixie_module_events_settings` (`events_id` mediumint(1) NOT NULL auto_increment,`google_calendar_links` set('yes','no') collate utf8_unicode_ci NOT NULL default '',`number_of_events` varchar(3) collate utf8_unicode_ci NOT NULL default '10',PRIMARY KEY  (`events_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;";
+		$execute2 = "INSERT INTO `pixie_module_events_settings` (`events_id`, `google_calendar_links`, `number_of_events`) VALUES (1, 'yes', '10');";
 		// you can execute upto 5 sql queries ($execute - $execute4) 
 	break;
 

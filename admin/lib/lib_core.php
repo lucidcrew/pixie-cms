@@ -6,6 +6,18 @@
 // Title: lib_core.                                                //
 //*****************************************************************//
 
+// prepare for table prefix
+if (!empty($pixieconfig['table_prefix'])) {
+	define ("PFX",$pixieconfig['table_prefix']);
+} else define ("PFX",'');
+
+if (!function_exists(adjust_prefix)) {
+	function adjust_prefix($table){
+		if (stripos($table, PFX) === 0) return $table;
+		else return PFX.$table;
+	}
+}
+
 // ------------------------------------------------------------------
 // class for displaying contents of a db table
 	class ShowTable {
@@ -35,7 +47,7 @@
 		function DrawBody () {
 
 			global $date_format, $lang, $page_display_name;
-			
+						
 			echo "\t<table class=\"tbl $this->table\" summary=\"".$lang['results_from']." $this->table.\">\n\t\t\t\t\t\t\t<thead>\n\t\t\t\t\t\t\t\t<tr>\n"; 
 	
 			for ($j=0; $j < mysql_num_fields($this->Res); $j++) {
@@ -448,6 +460,8 @@
 	function admin_overview($table_name, $condition, $order_by, $asc_desc, $exclude=array(NULL), $view_number, $type)  {
 		global $page, $message, $s, $m, $x, $messageok, $search_submit, $field, $search_words, $tag, $lang;
 
+		$table_name = adjust_prefix($table_name);
+		
 		$searchwords = trim($search_words);
 		
 		if ($page) {
@@ -457,7 +471,7 @@
 		if ($search_submit) {
 			$searchwords = sterilise($searchwords, false);
 			//build search sql
-			$r2 = safe_query("show fields from ".PFX."$table_name");
+			$r2 = safe_query("show fields from $table_name");
 			for ($j=0;$j<mysql_num_rows($r2);$j++) {
 				if ($F=mysql_fetch_array($r2)) {
 					$an[$j]= $F['Field'];
@@ -486,14 +500,14 @@
 		if ($search_submit)	{
 			if ($m == "dynamic") {
 				$page_id = get_page_id($x);
-				$r1 = safe_query("select * from ".PFX."$table_name where page_id = '$page_id' and (".$search_sql.") order by $order_by $asc_desc");
+				$r1 = safe_query("select * from $table_name where page_id = '$page_id' and (".$search_sql.") order by $order_by $asc_desc");
 			} else {
-				$r1 = safe_query("select * from ".PFX."$table_name where ".$search_sql." order by $order_by $asc_desc");
+				$r1 = safe_query("select * from $table_name where ".$search_sql." order by $order_by $asc_desc");
 			}
 		} else if ($tag) {
-			$r1 = safe_query("select * from ".PFX."$table_name where tags REGEXP '[[:<:]]". $tag ."[[:>:]]' order by $order_by $asc_desc");
+			$r1 = safe_query("select * from $table_name where tags REGEXP '[[:<:]]". $tag ."[[:>:]]' order by $order_by $asc_desc");
 		} else {
-			$r1 = safe_query("select * from ".PFX."$table_name $condition order by $order_by $asc_desc");
+			$r1 = safe_query("select * from $table_name $condition order by $order_by $asc_desc");
 		}
 		
 		if ($r1) {  
@@ -507,28 +521,28 @@
 				if ($search_submit)	{
 					if ($m == "dynamic") {
 						$page_id = get_page_id($x);
-						$r = safe_query("select * from ".PFX."$table_name where page_id = '$page_id' and (".$search_sql.") order by $order_by $asc_desc");
+						$r = safe_query("select * from $table_name where page_id = '$page_id' and (".$search_sql.") order by $order_by $asc_desc");
 					} else {
-						$r = safe_query("select * from ".PFX."$table_name where ".$search_sql." order by $order_by $asc_desc");
+						$r = safe_query("select * from $table_name where ".$search_sql." order by $order_by $asc_desc");
 					}
 				} else if ($tag) {
-					$r = safe_query("select * from ".PFX."$table_name where tags REGEXP '[[:<:]]". $tag ."[[:>:]]' order by $order_by $asc_desc");
+					$r = safe_query("select * from $table_name where tags REGEXP '[[:<:]]". $tag ."[[:>:]]' order by $order_by $asc_desc");
 				} else {
-					$r = safe_query("select * from ".PFX."$table_name $condition order by $order_by $asc_desc limit $lo,$view_number");
+					$r = safe_query("select * from $table_name $condition order by $order_by $asc_desc limit $lo,$view_number");
 				}
 			} else {
 				$lo = ($page - 1) * $view_number;
 				if ($search_submit)	{
 					if ($m == "dynamic") {
 						$page_id = get_page_id($x);
-						$r = safe_query("select * from ".PFX."$table_name where page_id = '$page_id' and (".$search_sql.") order by $order_by $asc_desc");
+						$r = safe_query("select * from $table_name where page_id = '$page_id' and (".$search_sql.") order by $order_by $asc_desc");
 					} else {
-						$r = safe_query("select * from ".PFX."$table_name where ".$search_sql." order by $order_by $asc_desc");
+						$r = safe_query("select * from $table_name where ".$search_sql." order by $order_by $asc_desc");
 					}
 				} else if ($tag) {
-					$r = safe_query("select * from ".PFX."$table_name where tags REGEXP '[[:<:]]". $tag ."[[:>:]]' order by $order_by $asc_desc");				
+					$r = safe_query("select * from $table_name where tags REGEXP '[[:<:]]". $tag ."[[:>:]]' order by $order_by $asc_desc");				
 				} else {	
-					$r = safe_query("select * from ".PFX."$table_name $condition order by $order_by $asc_desc limit $lo,$view_number");
+					$r = safe_query("select * from $table_name $condition order by $order_by $asc_desc limit $lo,$view_number");
 				}
 			}
 
@@ -720,8 +734,9 @@
 // edit table entry
 	function admin_edit($table_name,$edit_id,$edit,$edit_exclude) {
 	  global $message, $m, $lang;
-	
-		$sql = "select * from ".PFX."$table_name where ".$edit_id."=".$edit."";
+	  
+	  	$table_name = adjust_prefix($table_name);
+		$sql = "select * from $table_name where ".$edit_id."=".$edit."";
 		$r2 = safe_query($sql);
 	
 		if ($r2) {
@@ -894,8 +909,8 @@
 				$unixtime = mktime($hour, $minute, 00, $timey[1], $timey[0], $timey[2]);
 			}
 
-     	$r2 = safe_query("show fields from ".PFX."$table_name");
-		$r3 = safe_query("select * from ".PFX."$table_name WHERE 1=0");
+     	$r2 = safe_query("show fields from $table_name");
+		$r3 = safe_query("select * from $table_name WHERE 1=0");
 		for ($j=0;$j<mysql_num_rows($r2);$j++) {
 		  	$flags = mysql_field_flags($r3, $j);
 		  	$af[$j] = $flags;
@@ -1032,7 +1047,7 @@
 		$sql = substr($sql,0,(strlen($sql)-1))."";
 
 		//echo $sql; //view the SQL for current form save
-		
+				
 		if (!$error) {
 			if ($submit_new) {
 				$ok = safe_insert($table_name, $sql);
