@@ -34,6 +34,13 @@ class DB {
 }
 
 $DB = new DB;
+
+//------------------------------------------------------------------
+	function adjust_prefix($table)
+	{
+		if (strstr($table, PFX)) return $table;
+		else return PFX.$table;
+	}
 //------------------------------------------------------------------
 	function safe_query($q='',$debug='',$unbuf='')
 	{
@@ -71,28 +78,33 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function safe_delete($table, $where, $debug='')
 	{
-		$q = "delete from ".PFX."$table where $where";
+		$table = adjust_prefix($table);
+		$q = "delete from $table where $where";
 		if ($r = safe_query($q,$debug)) {
 			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 //------------------------------------------------------------------
 	function safe_update($table, $set, $where, $debug='') 
 	{
-		$q = "update ".PFX."$table set $set where $where";
+		$table = adjust_prefix($table);
+		$q = "update $table set $set where $where";
 		if ($r = safe_query($q,$debug)) {
 			return true;
-		}
-		return false;
+		} else {
+			return false;
+		}		
 	}
 
 //------------------------------------------------------------------
 	function safe_insert($table,$set,$debug='') 
 	{
 		global $DB;
-		$q = "insert into ".PFX."$table set $set";
+		$table = adjust_prefix($table);
+		$q = "insert into $table set $set";
 		if ($r = safe_query($q,$debug)) {
 			$id = mysql_insert_id($DB->link);
 			return ($id === 0 ? true : $id);
@@ -103,17 +115,19 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function safe_alter($table, $alter, $debug='') 
 	{
-		$q = "alter table ".PFX."$table $alter";
+		$table = adjust_prefix($table);
+		$q = "alter table $table $alter";
 		if ($r = safe_query($q,$debug)) {
 			return true;
 		}
 		return false;
 	}
-
+	
 //------------------------------------------------------------------
 	function safe_optimize($table, $debug='') 
 	{
-		$q = "optimize table ".PFX."$table";
+		$table = adjust_prefix($table);
+		$q = "optimize table $table";
 		if ($r = safe_query($q,$debug)) {
 			return true;
 		}
@@ -123,7 +137,8 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function safe_repair($table, $debug='') 
 	{
-		$q = "repair table ".PFX."$table";
+		$table = adjust_prefix($table);
+		$q = "repair table $table";
 		if ($r = safe_query($q,$debug)) {
 			return true;
 		}
@@ -133,7 +148,8 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function safe_field($thing, $table, $where, $debug='') 
 	{
-		$q = "select $thing from ".PFX."$table where $where";
+		$table = adjust_prefix($table);
+		$q = "select $thing from $table where $where";
 		$r = safe_query($q,$debug);
 		if (@mysql_num_rows($r) > 0) {
 			return mysql_result($r,0);
@@ -144,7 +160,8 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function safe_column($thing, $table, $where, $debug='') 
 	{
-		$q = "select $thing from ".PFX."$table where $where";
+		$table = adjust_prefix($table);
+		$q = "select $thing from $table where $where";
 		$rs = getRows($q,$debug);
 		if ($rs) {
 			foreach($rs as $a) {
@@ -159,7 +176,8 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function safe_row($things, $table, $where, $debug='') 
 	{
-		$q = "select $things from ".PFX."$table where $where";
+		$table = adjust_prefix($table);
+		$q = "select $things from $table where $where";
 		$rs = getRow($q,$debug);
 		if ($rs) {
 			return $rs;
@@ -167,11 +185,11 @@ $DB = new DB;
 		return array();
 	}
 
-
 //------------------------------------------------------------------
 	function safe_rows($things, $table, $where, $debug='') 
 	{
-		$q = "select $things from ".PFX."$table where $where";
+		$table = adjust_prefix($table);
+		$q = "select $things from $table where $where";
 		$rs = getRows($q,$debug);
 		if ($rs) {
 			return $rs;
@@ -182,20 +200,23 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function safe_rows_start($things, $table, $where, $debug='') 
 	{
-		$q = "select $things from ".PFX."$table where $where";
+		$table = adjust_prefix($table);
+		$q = "select $things from $table where $where";
 		return startRows($q,$debug);
 	}
 
 //------------------------------------------------------------------
 	function safe_count($table, $where, $debug='') 
 	{
-		return getThing("select count(*) from ".PFX."$table where $where",$debug);
+		$table = adjust_prefix($table);
+		return getThing("select count(*) from $table where $where",$debug);
 	}
 
 //------------------------------------------------------------------
 	function fetch($col,$table,$key,$val,$debug='') 
 	{
-		$q = "select $col from ".PFX."$table where `$key` = '$val' limit 1";
+		$table = adjust_prefix($table);
+		$q = "select $col from $table where `$key` = '$val' limit 1";
 		if ($r = safe_query($q,$debug)) {
 			return (mysql_num_rows($r) > 0) ? mysql_result($r,0) : '';
 		}
@@ -259,7 +280,8 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function getCount($table,$where,$debug='') 
 	{
-		return getThing("select count(*) from ".PFX."$table where $where",$debug);
+		$table = adjust_prefix($table);
+		return getThing("select count(*) from $table where $where",$debug);
 	}
 //------------------------------------------------------------------
 	function get_prefs()
@@ -276,7 +298,8 @@ $DB = new DB;
 	{ 
 		global $edit, $go;
 
-		$rs = safe_query("select * from ".PFX."$table where $condition");
+	 	$table = adjust_prefix($table);
+		$rs = safe_query("select * from $table where $condition");
 		$num = mysql_num_rows($rs);
 		$i = 0;
 
@@ -312,7 +335,9 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function table_exists($table_name)
 	{
-		$rs = safe_query("select * from ".PFX."$table_name WHERE 1=0");
+
+		$table = adjust_prefix($table);
+		$rs = safe_query("select * from $table_name WHERE 1=0");
 		
 		if ($rs) {
 			return true;

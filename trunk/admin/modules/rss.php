@@ -25,7 +25,7 @@ switch ($do) {
 	// install
 	case "install":
 		// create any required tables
-		$execute = "CREATE TABLE IF NOT EXISTS `".PFX."pixie_module_rss` (`rss_id` tinyint(2) NOT NULL auto_increment,`feed_display_name` varchar(80) collate utf8_unicode_ci NOT NULL default '',`url` varchar(80) collate utf8_unicode_ci NOT NULL default '',PRIMARY KEY  (`rss_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;";
+		$execute = "CREATE TABLE IF NOT EXISTS `pixie_module_rss` (`rss_id` tinyint(2) NOT NULL auto_increment,`feed_display_name` varchar(80) collate utf8_unicode_ci NOT NULL default '',`url` varchar(80) collate utf8_unicode_ci NOT NULL default '',PRIMARY KEY  (`rss_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;";
 	break;
  
 	// pre (to be run before page load)
