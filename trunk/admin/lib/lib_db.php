@@ -38,7 +38,7 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function adjust_prefix($table)
 	{
-		if (strstr($table, PFX)) return $table;
+		if (stripos($table, PFX)) return $table;
 		else return PFX.$table;
 	}
 //------------------------------------------------------------------
