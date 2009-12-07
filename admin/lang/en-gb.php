@@ -351,6 +351,7 @@ $lang = array(
 	'comment_name_error' => 'Please provide your name.',
 	'comment_email_error' => 'Please provide a valid email address.',
 	'comment_web_error' => 'Please provide a valid web address.',
+	'comment_throttle_error' => 'Your posting comments too quickly, slow down.',
 	'comment_comment_error' => 'Please provide a comment.',	
 	'comment_save_log' => 'Commented on: ',
 	'tagged' => 'Tagged',
