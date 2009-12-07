@@ -814,7 +814,9 @@ if (!function_exists(adjust_prefix)) {
 				$table = "pixie_module_".$x;
 				$id = $x."_id";
 			}
-	
+			
+			$table = adjust_prefix($table);
+				
 			$getdetails = extract(safe_row("*","$table", "$id='$delete' limit 0,1"));
 			if ($getdetails) {
 				$del = safe_delete("$table", "$id='$delete'");
@@ -880,7 +882,7 @@ if (!function_exists(adjust_prefix)) {
 	if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
 		
 		if (($submit_new) || ($submit_edit)) {
-			$rs = safe_row("*",adjust_prefix("pixie_core"), "page_name = '$x' limit 0,1");
+			$rs = safe_row("*","pixie_core", "page_name = '$x' limit 0,1");
 			
 			if ($rs) {
 				extract($rs);
