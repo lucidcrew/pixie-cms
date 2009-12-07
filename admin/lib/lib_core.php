@@ -880,7 +880,7 @@ if (!function_exists(adjust_prefix)) {
 	if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
 		
 		if (($submit_new) || ($submit_edit)) {
-			$rs = safe_row("*","pixie_core", "page_name = '$x' limit 0,1");
+			$rs = safe_row("*",adjust_prefix("pixie_core"), "page_name = '$x' limit 0,1");
 			
 			if ($rs) {
 				extract($rs);
@@ -908,9 +908,9 @@ if (!function_exists(adjust_prefix)) {
 				$hour = substr($timey[3],0,2);
 				$unixtime = mktime($hour, $minute, 00, $timey[1], $timey[0], $timey[2]);
 			}
-
-     	$r2 = safe_query("show fields from $table_name");
-		$r3 = safe_query("select * from $table_name WHERE 1=0");
+		
+     	$r2 = safe_query("show fields from ".adjust_prefix($table_name));
+		$r3 = safe_query("select * from ".adjust_prefix($table_name)." WHERE 1=0");
 		for ($j=0;$j<mysql_num_rows($r2);$j++) {
 		  	$flags = mysql_field_flags($r3, $j);
 		  	$af[$j] = $flags;
