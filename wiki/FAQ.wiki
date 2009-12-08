@@ -5,7 +5,7 @@ This document is a great place to start when looking for help with Pixie. The qu
 
 ==== What do I need to run Pixie? ====
 
-  * A Web Server that supports PHP (version 4.3.0 and above), MySQL (version 4.0 and above) and a !JavaScript enabled web browser. More information is available on the [http://www.getpixie.co.uk/support/article/installation/ Installation] wiki page.
+  * A Web Server that supports PHP (version 4.3.0 and above), MySQL (version 4.1 and above) and a !JavaScript enabled web browser. More information is available on the [http://www.getpixie.co.uk/support/article/installation/ Installation] wiki page.
 
 ==== What licence is Pixie released under? ====
 
