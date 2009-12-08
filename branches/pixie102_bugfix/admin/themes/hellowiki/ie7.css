@@ -1,0 +1,53 @@
+/******************************************************* // Hello Wiki IE7 Styles // *****************************************************/
+
+/* IE7 specific styles */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/	
+	
+legend
+	{
+	text-indent: -4px;
+	padding-top: 0;
+	}
+	
+#content
+	{
+	margin-bottom: 20px;
+	}
+	
+/* dynamic */
+
+.section
+	{
+	width: 480px;
+	background: url(images/entry-bg.png) no-repeat;
+	padding: 15px 20px 0px 0px;
+	}
+	
+.post_1, .single
+	{
+	background: none;
+	}
+	
+/* pagination */
+
+#nav_pages, #nav_posts
+	{
+	margin-bottom: 30px;
+	}
+	
+/* comments */
+
+#comments
+	{
+	margin-bottom: 25px;
+	}
+	
+/* comments form */
+	
+.form_submit
+	{
+	margin-bottom: 30px;
+	}
+
+/********************************************************** // End // ********************************************************/

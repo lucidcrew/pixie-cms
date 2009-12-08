@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /files/
+Disallow: /admin/
+Sitemap: sitemap.xml.php
