@@ -57,18 +57,9 @@ switch ($do) {
 
   	case "permalink":
   		if ($comment_submit) {
-  				if ($web == "http://") {
-  					$web = "";
-  				}
-  				
-  				$howmanycomments = count(safe_rows("*","pixie_log","log_message like '%".$lang['comment_save_log']."%' and user_ip = '".$_SERVER["REMOTE_ADDR"]."' and log_time < now() and log_time > DATE_ADD(now(), INTERVAL -4 HOUR)"));
-				if ($howmanycomments >= 4) { 
-					if (!$lang['comment_throttle_error']) {
-						$lang['comment_throttle_error'] = 'Your posting comments too quickly, slow down.';
-					}
-					$error = $lang['comment_throttle_error'];
-				}
-  				
+  			if ($web == "http://") {
+  				$web = "";
+  			}
 				$comment = strip_tags($comment,"<strong><em><a>");
 				$comment = nl2br($comment); 
 				$comment = str_replace("<a", "<a rel=\"external nofollow\"", $comment); 
@@ -183,11 +174,11 @@ switch ($do) {
 			while ($a = nextRow($rs)) {
 			extract($a);
 			$logunix = returnUnixtimestamp($posted);
-			$date = safe_strftime($date_format, $logunix);
-			$microformat = safe_strftime("%Y-%m-%dT%T%z", $logunix);
-			$slug = $post_slug;
+	  		$date = safe_strftime($date_format, $logunix);
+	  		$microformat = safe_strftime("%Y-%m-%dT%T%z", $logunix);
+	  		$slug = $post_slug;
 
-			$fullname = safe_field('realname','pixie_users',"user_name='$author'");
+	  		$fullname = safe_field('realname','pixie_users',"user_name='$author'");
 
 			if (public_page_exists("profiles")) {
 				$mauthor = "<a href=\"".createURL("profiles", $author)."\" class=\"url fn\" title=\"".$lang['view']." $fullname's ".$lang['profile']."\">$fullname</a>";
@@ -215,21 +206,21 @@ switch ($do) {
 					$tag_list  = substr($tag_list ,0,(strlen($tag_list)-2))."";
 			}
 
-			$comms = safe_rows("*","pixie_module_comments", "post_id = '$post_id'");
-			$no_comms = count($comms);
-			$permalink = createURL($s, "permalink", $slug);
+	  		$comms = safe_rows("*","pixie_module_comments", "post_id = '$post_id'");
+	  		$no_comms = count($comms);
+	  		$permalink = createURL($s, "permalink", $slug);
 
-			$authorclass = strtolower($author);
-			$timeclass = safe_strftime("y%Y m%m d%d h%H", $logunix);
-
-			if (is_even($i+1)) {
+	  		$authorclass = strtolower($author);
+	  		$timeclass = safe_strftime("y%Y m%m d%d h%H", $logunix);
+	  	
+  			if (is_even($i+1)) {
 				$type = "post_even";
 			} else {
 				$type = "post_odd";
 			}
 
-			$num = $i+1;
-
+	  		$num = $i+1;
+	  	
 				echo"
 					<div class=\"section hentry author_$authorclass $class_list$timeclass $type post_".$num."\" id=\"post_$post_id\">
 						<h4 class=\"entry-title\"><a href=\"$permalink\" rel=\"bookmark\">$title</a></h4>
@@ -240,7 +231,7 @@ switch ($do) {
 						if (($comments == "yes") || ($no_comms)) {
 							echo "\n\t\t\t\t\t\t\t<li class=\"post_comments\"><a href=\"$permalink#comments\" title=\"".$lang['comments']."\">".$lang['comments']."</a> ($no_comms)</li>";
 						}
-						}
+						}					 	
 						if(isset($_COOKIE['pixie_login'])) {
 							list($username,$cookie_hash) = split(',',$_COOKIE['pixie_login']);
 							$nonce = safe_field('nonce','pixie_users',"user_name='$username'");
@@ -268,7 +259,6 @@ switch ($do) {
 						</div>				
 					</div>\n\n";
 				$tag_list = "";
-				$class_list = "";
 				$i ++;
 			}
 		}
@@ -351,22 +341,22 @@ switch ($do) {
 			extract($rs);
 			safe_update("pixie_dynamic_posts", "post_views  = $post_views + 1", "post_id = '$post_id'");
 			$logunix = returnUnixtimestamp($posted);
-			$date = safe_strftime($date_format, $logunix);
-			$timeunix = returnUnixtimestamp($last_modified);
-			$xdate = safe_strftime($date_format, $timeunix);
-			$microformat = safe_strftime("%Y-%m-%dT%T%z", $logunix);
-			$slug = $post_slug;
+	  	$date = safe_strftime($date_format, $logunix);
+	  	$timeunix = returnUnixtimestamp($last_modified);
+	  	$xdate = safe_strftime($date_format, $timeunix);
+		  $microformat = safe_strftime("%Y-%m-%dT%T%z", $logunix);
+	  	$slug = $post_slug;
 
-			$fullname = safe_field('realname','pixie_users',"user_name='$author'");
+	  	$fullname = safe_field('realname','pixie_users',"user_name='$author'");
 
-			if (public_page_exists("profiles")) {
-				$mauthor = "<a href=\"".createURL("profiles", $author)."\" class=\"url fn\" title=\"".$lang['view']." $fullname's ".$lang['profile']."\">$fullname</a>";
-			} else {
-				$mauthor = "<a href=\"$site_url\" class=\"url fn\" title=\"$site_url\">$fullname</a>";
-			}
+	  	if (public_page_exists("profiles")) {
+	  		$mauthor = "<a href=\"".createURL("profiles", $author)."\" class=\"url fn\" title=\"".$lang['view']." $fullname's ".$lang['profile']."\">$fullname</a>";
+	  	} else {
+	  		$mauthor = "<a href=\"$site_url\" class=\"url fn\" title=\"$site_url\">$fullname</a>";
+	  	}
 
-			if ($tags) {
-				$all_tags = strip_tags($tags);
+	  	if ($tags) {
+	  		$all_tags = strip_tags($tags);
 				$all_tags = str_replace("&quot;", "", $tags);
 				$tags_array_temp = explode(" ", $all_tags);
 
@@ -383,12 +373,12 @@ switch ($do) {
 					}
 				}
 				$tag_list  = substr($tag_list ,0,(strlen($tag_list)-2))."";
-			}
+	  	}
 
-			$permalink = createURL($s, "permalink", $slug);
+	  	$permalink = createURL($s, "permalink", $slug);
 
 			$authorclass = strtolower($author);
-			$timeclass = safe_strftime("y%Y m%m d%d h%H", $logunix);
+	  	$timeclass = safe_strftime("y%Y m%m d%d h%H", $logunix);
 
 			echo"
 					<div class=\"section hentry author_$authorclass $class_list$timeclass single\" id=\"post_$post_id\">
@@ -411,10 +401,10 @@ switch ($do) {
 						//<!--more-->
 						$post = get_extended ($content);
 					 	echo "\t\t\t\t\t\t\t".$post['main'];
-						if ($post['extended']) {
+					 if ($post['extended']) {
 					 		echo $post['extended'];
-						}
-						echo"
+					 }
+					 echo"
 						</div>		
 						<div class=\"post_credits\">
 						 	<span class=\"vcard author\">".$lang['by']." $mauthor</span>
@@ -464,8 +454,8 @@ switch ($do) {
 						$nonce = safe_field('nonce','pixie_users',"user_name='$username'");
 						
 						if (md5($username.$nonce) == $cookie_hash) {													
-							$realname = safe_field('realname','pixie_users',"user_name='$username'");
-							$umail = safe_field('email','pixie_users',"user_name='$username'");
+	      			$realname = safe_field('realname','pixie_users',"user_name='$username'");
+	      			$umail = safe_field('email','pixie_users',"user_name='$username'");
 						}
 					}
 					
@@ -602,7 +592,7 @@ switch ($do) {
 				}
 		} else {
 			extract(safe_row("*", "pixie_core", "page_name='404'"));
-			extract(safe_row("*", "pixie_static_posts", "page_id='$page_id'"));
+  		extract(safe_row("*", "pixie_static_posts", "page_id='$page_id'"));
 			echo "<div id=\"$s\">\n\t\t\t\t\t\t<h3>$page_display_name</h3>\n";	
 			eval('?>' . $page_content . '<?php ');
 			echo "\n\t\t\t\t\t</div>\n";
@@ -631,27 +621,28 @@ switch ($do) {
 			
 			$i = 0;
 			while ($i < $num){
+
 				$smonth = mktime(0, 0, 0, $this_month, 1, $this_year);
-				$start_month = safe_strftime("%Y-%m-%d", $smonth);
+				$start_month = safe_strftime("%Y-%m-%d %T", $smonth);
 				$last_day = date('t', $smonth);
 				$emonth = mktime(23, 59, 59, $this_month, $last_day, $this_year);
-				$end_month = safe_strftime("%Y-%m-%d %H:%M:%S", $emonth);
+				$end_month = safe_strftime("%Y-%m-%d %T", $emonth);
 
 				$search = safe_rows("*", "pixie_dynamic_posts", "page_id = '$id' and public = 'yes' and posted between '".$start_month."' and date '".$end_month."' order by posted desc");
 
 				if ($search) {
-					echo "\t\t\t\t\t\t\t<dt>".date('F', $smonth)." ".$this_year."</dt>\n";
+					print "\t\t\t\t\t\t\t<dt>".date('F', $smonth)." ".$this_year."</dt>\n";
 					$numy = count($search);
 					$j = 0;
 					while ($j < $numy){
 						$out = $search[$j];
-						$title = $out['title'];
-						$posty = $out['posted'];
-						$slug = $out['post_slug'];
-						$stamp = returnUnixtimestamp($posty);
-						$day = date("d", $stamp);
-						echo "\t\t\t\t\t\t\t<dd><span class=\"archive_subdate\">".$day.":</span> <a href=\"".createURL($s, "permalink", $slug)."\" title=\"".$lang['permalink_to'].": $title\">".$title."</a></dd>\n";
-						$j++;
+  					$title = $out['title'];
+  					$posty = $out['posted'];
+  					$slug = $out['post_slug'];
+  					$stamp = returnUnixtimestamp($posty);
+  					$day = date("d", $stamp);
+  					print "\t\t\t\t\t\t\t<dd><span class=\"archive_subdate\">".$day.":</span> <a href=\"".createURL($s, "permalink", $slug)."\" title=\"".$lang['permalink_to'].": $title\">".$title."</a></dd>\n";
+					$j++;
 					}
 					$this_month = $this_month-1;
 					if ($this_month == 0) {
@@ -665,7 +656,7 @@ switch ($do) {
 						$this_year = $this_year-1;
 					}
 				}
-				$i++;
+			$i++;
 			}
 		}
 		echo "\t\t\t\t\t\t</dl>\n\t\t\t\t\t</div>";

@@ -95,7 +95,7 @@ if ($user_new) {
 
 		$password = generate_password(6);
 		$nonce = md5( uniqid( rand(), true ) );
-		$sql = "user_name = '$uname', realname = '$realname', email = '$email', pass = password(lower('$password')), nonce = '$nonce', privs = '$privilege', link_1 = 'http://www.toggle.uk.com', link_2 = 'http://www.getpixie.co.uk', link_3 = 'http://www.iwouldlikeawebsite.com', biography=''"; 
+		$sql = "user_name = '$uname', realname = '$realname', email = '$email', pass = password(lower('$password')), nonce = '$nonce', privs = '$privilege', link_1 = 'http://www.toggle.uk.com', link_2 = 'http://www.getpixie.co.uk', link_3 = 'http://www.iwouldlikeawebsite.com'"; 
 		$ok = safe_insert($table_name, $sql);
 
 		if (!$ok) {

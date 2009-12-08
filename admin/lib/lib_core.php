@@ -6,70 +6,58 @@
 // Title: lib_core.                                                //
 //*****************************************************************//
 
-// prepare for table prefix
-if (!empty($pixieconfig['table_prefix'])) {
-	define ("PFX",$pixieconfig['table_prefix']);
-} else define ("PFX",'');
-
-if (!function_exists(adjust_prefix)) {
-	function adjust_prefix($table){
-		if (stripos($table, PFX) === 0) return $table;
-		else return PFX.$table;
-	}
-}
-
 // ------------------------------------------------------------------
 // class for displaying contents of a db table
 	class ShowTable {
 	
 		var $Res;
-		var $exclude = array();
-		var $table_name;
-		var $view_number;
-		var $lo;
-		var $finalmax;
-		var $whereami;
-		var $a_array = array();
-		var $edit;
-
+	 	var $exclude = array();       
+	 	var $table_name;
+	 	var $view_number;
+	 	var $lo;
+	 	var $finalmax;
+	 	var $whereami;
+	 	var $a_array = array();
+	 	var $edit;
+	 	
 		function ShowTable ($Res,$exclude,$table_name,$view_number,$lo,$finalmax,$whereami,$type,$s) {
-			$this->Res = $Res;
-			$this->exclude = $exclude;
-			$this->table = $table_name;
-			$this->limit = $view_number;
-			$this->num = $lo;
-			$this->finalmax = $finalmax;
-			$this->whereami = $whereami;
-			$this->page_type = $type;
-			$this->s = $s;
-		}
-
+	  	$this->Res = $Res;
+	    $this->exclude = $exclude;
+	    $this->table = $table_name;
+	    $this->limit = $view_number;
+	    $this->num = $lo;
+	    $this->finalmax = $finalmax;
+	    $this->whereami = $whereami;
+	    $this->page_type = $type;
+	    $this->s = $s;
+	 	}
+	
 		function DrawBody () {
 
 			global $date_format, $lang, $page_display_name;
-						
+			
 			echo "\t<table class=\"tbl $this->table\" summary=\"".$lang['results_from']." $this->table.\">\n\t\t\t\t\t\t\t<thead>\n\t\t\t\t\t\t\t\t<tr>\n"; 
 	
-			for ($j=0; $j < mysql_num_fields($this->Res); $j++) {
-				if (!in_array(mysql_field_name($this->Res,$j), $this->exclude)) {  
-				$arlen[$j]=mysql_field_len($this->Res,$j); $sum+=$arlen[$j];
-				}
-			}
+	  	for ($j=0; $j < mysql_num_fields($this->Res); $j++) {
+	  		if (!in_array(mysql_field_name($this->Res,$j), $this->exclude)) {  
+	      	$arlen[$j]=mysql_field_len($this->Res,$j); $sum+=$arlen[$j];
+	  		}
+	    }
 	    
-			for ($j=0; $j < mysql_num_fields($this->Res); $j++) {
-		
-				if (!in_array(mysql_field_name($this->Res,$j), $this->exclude)) {
-					$st3="class=\"tbl_heading\"";
-					$fieldname = simplify(mysql_field_name($this->Res,$j));
-					if ($lang['form_'.mysql_field_name($this->Res,$j)]) {
-						$fieldname = $lang['form_'.mysql_field_name($this->Res,$j)];
-					}
-					echo "\t\t\t\t\t\t\t\t\t<th $st3 id=\"".mysql_field_name($this->Res,$j)."\">$fieldname</th>\n";
-				}
-			}
+	  	for ($j=0; $j < mysql_num_fields($this->Res); $j++) {
+	
+		  	if (!in_array(mysql_field_name($this->Res,$j), $this->exclude)) {
+		  		$st3="class=\"tbl_heading\"";
+	      	$fieldname = simplify(mysql_field_name($this->Res,$j));
+	      	if ($lang['form_'.mysql_field_name($this->Res,$j)]) {
+	   				$fieldname = $lang['form_'.mysql_field_name($this->Res,$j)];
+	      	}
+	       	echo "\t\t\t\t\t\t\t\t\t<th $st3 id=\"".mysql_field_name($this->Res,$j)."\">$fieldname</th>\n";
+		  	}
+		  }
 	
 	  	echo "\t\t\t\t\t\t\t\t\t<th class=\"tbl_heading\" id=\"page_edit\"></th>\n\t\t\t\t\t\t\t\t\t<th class=\"tbl_heading\" id=\"page_delete\"></th>\n\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t</thead>\n";
-
+	  				  	
 	  	if ($this->finalmax) { 
 	  		$this->limit = $this->finalmax;
 	  	}
@@ -125,14 +113,15 @@ if (!function_exists(adjust_prefix)) {
 		var $table_name;
 	
 		function ShowBlank ($Nam,$Typ,$Len,$Flg,$Res,$Pkn,$edit_exclude,$table_name) {
-			$this->Nam = $Nam;
-			$this->Typ = $Typ;
-			$this->Len = $Len;
-			$this->Res = $Res;
-			$this->Flg = $Flg;
-			$this->Pkn = $Pkn;
-			$this->exclude = $edit_exclude;
-			$this->tablename = $table_name;
+	
+	  	$this->Nam = $Nam;
+	  	$this->Typ = $Typ;
+	  	$this->Len = $Len;
+	  	$this->Res = $Res;
+	  	$this->Flg = $Flg;
+	  	$this->Pkn = $Pkn;
+	  	$this->exclude = $edit_exclude;
+	  	$this->tablename = $table_name;
 		}
 		
 		function ShowBody () {
@@ -150,68 +139,69 @@ if (!function_exists(adjust_prefix)) {
 			
 			if(!$cancel) {
 			
-				$Nams = explode("|", substr($this->Nam,0,(strlen($this->Nam)-1)));
-				$Type = explode("|", substr($this->Typ,0,(strlen($this->Typ)-1)));
-				$Leng = explode("|", substr($this->Len,0,(strlen($this->Len)-1)));
-				$Flag = explode("|", substr($this->Flg,0,(strlen($this->Flg)-1)));
-				$Fild = explode("|", substr($this->Res,0,(strlen($this->Res)-1)));
-		
-				if (!$page) { $page = "1"; }
-
-				if ($s == "settings") {
-					if (strpos($this->tablename, "module")) {
-						$formtitle = $lang['advanced']." ".$lang['page_settings'];
-					} else if (strpos($this->tablename, "dynamic")) {
-						$formtitle = $lang['advanced']." ".$lang['page_settings'];
-					} else {
-						$formtitle = $lang['page_settings'];
-					}
-				} else {
-					if ($edit) {
-						if ($m == "static") {
-							$formtitle = $lang['edit']." $page_display_name ".$lang['settings_page'];
-						} else {
-							$formtitle = $lang['edit']." $page_display_name ".str_replace(".","",$lang['entry'])." (#$edit)";
-						}
-					} else {
-						$formtitle = $lang['new_entry']." $page_display_name ".str_replace(".","",$lang['entry']);
-					}
-				}
-
-				if ($s == "settings") {
-					$post = "?s=$s&amp;x=$x";
-				} else if ($m == "static") {
-					$post = "?s=$s&amp;m=$m&amp;x=$x&amp;edit=$edit&amp;page=$page";
-				} else {
-					$post = "?s=$s&amp;m=$m&amp;x=$x&amp;page=$page";
-				}
-				echo "<form action=\"$post\" method=\"post\" id=\"form_addedit\" class=\"form\">\n";
-				echo "\t\t\t\t\t\t<fieldset>\n\t\t\t\t\t\t<legend>$formtitle</legend>\n";
-				echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"table_name\" value=\"$this->tablename\" maxlength=\"80\" />\n";
-		
-				for ($j=0;$j<count($Nams);$j++) {	
-					// clears out the form as some of the fields populate
-					if (!$edit) { 
-					$Fild[$j] = "";
-				}
-
-				// if comments is disabled then hide the field
-				if (($Nams[$j] == "comments" ) && (!public_page_exists("comments"))) {
-					echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"no\" maxlength=\"".$Leng[$j]."\" />\n";
-					$j++;
-				}
-
-				if (!in_array($Nams[$j], $this->exclude)) { //fields populated and output depending on type etc.
+	 		$Nams = explode("|", substr($this->Nam,0,(strlen($this->Nam)-1)));
+	 		$Type = explode("|", substr($this->Typ,0,(strlen($this->Typ)-1)));
+	 		$Leng = explode("|", substr($this->Len,0,(strlen($this->Len)-1)));
+	 		$Flag = explode("|", substr($this->Flg,0,(strlen($this->Flg)-1)));
+	 		$Fild = explode("|", substr($this->Res,0,(strlen($this->Res)-1)));
 	
-					//$searchfor = "_".first_word($Nams[$j]);
-					
-					if ($Leng[$j]<40) {
-						$ln=$Leng[$j];
-					} else if ($Leng[$j]<=400) {
-						$ln=50;
-					}
+		 	if (!$page) { $page = "1"; }
 
-					$nullf = explode(" ",$Flag[$j]);
+		 	if ($s == "settings") {
+		 		if (strpos($this->tablename, "module")) {
+		 			$formtitle = $lang['advanced']." ".$lang['page_settings'];
+		 		} else if (strpos($this->tablename, "dynamic")) {
+		 			$formtitle = $lang['advanced']." ".$lang['page_settings'];
+		 		} else {
+		 			$formtitle = $lang['page_settings'];
+		 		}
+		 	} else {
+			 	if ($edit) {
+					if ($m == "static") {
+						$formtitle = $lang['edit']." $page_display_name ".$lang['settings_page'];
+					} else {
+						$formtitle = $lang['edit']." $page_display_name ".str_replace(".","",$lang['entry'])." (#$edit)";
+					}
+			 	} else {
+			 		$formtitle = $lang['new_entry']." $page_display_name ".str_replace(".","",$lang['entry']);
+			 	}
+		 	}
+
+			if ($s == "settings") {
+				$post = "?s=$s&amp;x=$x";
+			} else if ($m == "static") {
+				$post = "?s=$s&amp;m=$m&amp;x=$x&amp;edit=$edit&amp;page=$page";
+			} else {
+				$post = "?s=$s&amp;m=$m&amp;x=$x&amp;page=$page";
+			}
+	 		echo "<form action=\"$post\" method=\"post\" id=\"form_addedit\" class=\"form\">\n";
+	 		echo "\t\t\t\t\t\t<fieldset>\n\t\t\t\t\t\t<legend>$formtitle</legend>\n";
+		 	echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"table_name\" value=\"$this->tablename\" maxlength=\"80\" />\n";
+	
+	 		for ($j=0;$j<count($Nams);$j++) {	
+	 		   				
+	 				// clears out the form as some of the fields populate
+					if (!$edit) { 
+		      	$Fild[$j] = "";
+		      }
+
+			// if comments is disabled then hide the field
+			if (($Nams[$j] == "comments" ) && (!public_page_exists("comments"))) {
+		      	echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"no\" maxlength=\"".$Leng[$j]."\" />\n";
+				$j++;
+			}
+	 				
+	      	if (!in_array($Nams[$j], $this->exclude)) { //fields populated and output depending on type etc.
+	
+	      		//$searchfor = "_".first_word($Nams[$j]);
+	      		
+	      		if ($Leng[$j]<40) {
+	      			$ln=$Leng[$j];
+	      		} else if ($Leng[$j]<=400) {
+	      			$ln=50;
+	      		}
+
+						$nullf = explode(" ",$Flag[$j]);
 
 	   				if ($nullf[0] == "not_null") { // label required fields
 	   					if ($lang['form_'.$Nams[$j]]) {
@@ -234,7 +224,7 @@ if (!function_exists(adjust_prefix)) {
 	   					$form_help = "";
 	   				}
 
-					if ($GLOBALS['rich_text_editor'] == "1") {
+						if ($GLOBALS['rich_text_editor'] == "1") {
 	   					$containsphp = strpos(strtolower($Fild[$j]), "<?php");
 	   					if ($containsphp) {
 	   						$form_help .= " <span class=\"alert\">".$lang['form_php_warning']."</span>";
@@ -243,7 +233,7 @@ if (!function_exists(adjust_prefix)) {
 		  
 	   				echo "\t\t\t\t\t\t\t<div class=\"form_row\">\n\t\t\t\t\t\t\t\t<div class=\"form_label\"><label for=\"$Nams[$j]\">".$displayname."</label>$form_help</div>\n";    //$Type[$j] $Leng[$j] $Flag[$j] for field info
 	   				//echo "$Nams[$j] - $Type[$j] - $Leng[$j] - $Flag[$j]"; // see form field properties
-					if (($Type[$j] == "timestamp") && (!$edit)) {
+						if (($Type[$j] == "timestamp") && (!$edit)) {
 	   					echo"\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
 	   					date_dropdown($date);
 	   					echo"\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
@@ -275,26 +265,26 @@ if (!function_exists(adjust_prefix)) {
 	   					echo"\t\t\t\t\t\t\t\t<div class=\"form_item_drop image_preview\">\n";
 	   					db_dropdown("pixie_files", $Fild[$j], $Nams[$j], "file_type = 'Image' order by file_id desc");
 	   					echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('".$Nams[$j]."'); return false;\" title=\"".$lang['upload']."\">".strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
-					} else if (first_word($Nams[$j]) == "document") {
+						} else if (first_word($Nams[$j]) == "document") {
 	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
 	   					db_dropdown("pixie_files", $Fild[$j], $Nams[$j], "file_type = 'Other' order by file_id desc");
 	   					echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('".$Nams[$j]."'); return false;\" title=\"".$lang['upload']."\">".strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
-					} else if (first_word($Nams[$j]) == "video") {
+						} else if (first_word($Nams[$j]) == "video") {
 	   					echo"\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
 	   					db_dropdown("pixie_files", $Fild[$j], $Nams[$j], "file_type = 'Video' order by file_id desc");
 	   					echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('".$Nams[$j]."'); return false;\" title=\"".$lang['upload']."\">".strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
-					} else if (first_word($Nams[$j]) == "audio") {
+						} else if (first_word($Nams[$j]) == "audio") {
 	   					echo"\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
 	   					db_dropdown("pixie_files", $Fild[$j], $Nams[$j], "file_type = 'Audio' order by file_id desc");
 	   					echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('".$Nams[$j]."'); return false;\" title=\"".$lang['upload']."\">".strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
-					} else if (first_word($Nams[$j]) == "file") {
+						} else if (first_word($Nams[$j]) == "file") {
 	   					echo"\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
 	   					db_dropdown("pixie_files", $Fild[$j], $Nams[$j], "file_id >= '0' order by file_id desc");
 	   					echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('".$Nams[$j]."'); return false;\" title=\"".$lang['upload']."\">".strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 	   				} else if ($Nams[$j] == "tags") {
 	   					$tableid = "0";
-						$condition = $tableid." >= '0'"; 
-						form_tag($this->tablename,$condition);
+							$condition = $tableid." >= '0'"; 
+							form_tag($this->tablename,$condition);
 	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"$Fild[$j]\" size=\"$ln\" maxlength=\"".$Leng[$j]."\" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 	   				} else if ($Nams[$j] == "page_blocks") {
 	   					form_blocks();
@@ -305,7 +295,7 @@ if (!function_exists(adjust_prefix)) {
 	 	   				} else {
 	 	   					$everyoneclass = "selected=\"selected\"";
 	 	   				}
-	 	   				echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">
+	 	   				echo"\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">
 									<select class=\"form_select\" name=\"$Nams[$j]\" name=\"$Nams[$j]\">
 										<option value=\"2\" $adminclass>Administrators only</option>
 										<option value=\"1\" $everyoneclass>Administrators &amp; Clients</option>
@@ -315,56 +305,57 @@ if (!function_exists(adjust_prefix)) {
 	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"$Fild[$j]\" size=\"$ln\" maxlength=\"".$Leng[$j]."\" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 	   				} 
 
-					//other field types still to come: File uploads...?
+						//other field types still to come: File uploads...?
 	   				
 	 				//hidden fields populated
-				} else {
-					if ((($Nams[$j] == "page_id") && ($s == "publish") && ($m == "dynamic"))) {
-						$page_id = get_page_id($x);
-						echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"$page_id\" maxlength=\"".$Leng[$j]."\" />\n";
-					} else if (last_word($Nams[$j]) == "id") {
-						echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"$Fild[$j]\" maxlength=\"".$Leng[$j]."\" />\n";
-					} else if (($Nams[$j] == "author")) {
-						if ($edit) {
-							$output = $Fild[$j];
+		      } else {
+		      	if ((($Nams[$j] == "page_id") && ($s == "publish") && ($m == "dynamic"))) {
+		      		$page_id = get_page_id($x);
+		      		echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"$page_id\" maxlength=\"".$Leng[$j]."\" />\n";
+		      	} else if (last_word($Nams[$j]) == "id") {
+		      	 echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"$Fild[$j]\" maxlength=\"".$Leng[$j]."\" />\n";
+		      	} else if (($Nams[$j] == "author")) {
+		      		if ($edit) {
+		      			$output = $Fild[$j];
+		      		} else {
+		      			$output = $GLOBALS['pixie_user'];
+		      		}
+		      	 	echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"".$output."\" maxlength=\"".$Leng[$j]."\" />\n";
+		      	} else if ($Type[$j] == "timestamp"){
+		      		echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"".returnSQLtimestamp(time())."\" maxlength=\"".$Leng[$j]."\" />\n";
+		      	} else if ($Nams[$j] == "page_type") {
+		      		if ($type) {
+		      			$output = $type;
+		      		} else {
+		      			$output =  safe_field('page_type','pixie_core',"page_id='$edit'");
+		      		}
+		      		echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"".$output."\" maxlength=\"".$Leng[$j]."\" />\n";
+		      	} else if ($Nams[$j] == "publish" && !$edit) {
+		      		echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"yes\" maxlength=\"0\" />\n";
+		      	} else if ($Nams[$j] == "page_content") {
+		      		// do nothing
+		      	} else if ($Nams[$j] == "admin") {
+		      		// do nothing
 						} else {
-							$output = $GLOBALS['pixie_user'];
-						}
-						echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"".$output."\" maxlength=\"".$Leng[$j]."\" />\n";
-					} else if ($Type[$j] == "timestamp"){
-						echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"".returnSQLtimestamp(time())."\" maxlength=\"".$Leng[$j]."\" />\n";
-					} else if ($Nams[$j] == "page_type") {
-						if ($type) {
-							$output = $type;
-						} else {
-							$output =  safe_field('page_type','pixie_core',"page_id='$edit'");
-						}
-						echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"".$output."\" maxlength=\"".$Leng[$j]."\" />\n";
-					} else if ($Nams[$j] == "publish" && !$edit) {
-						echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"yes\" maxlength=\"0\" />\n";
-					} else if ($Nams[$j] == "page_content") {
-						// do nothing
-					} else if ($Nams[$j] == "admin") {
-						// do nothing
-							} else {
-						echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"$Fild[$j]\" maxlength=\"".$Leng[$j]."\" />\n";
-					}
-				}
-			}
+		      		echo "\t\t\t\t\t\t\t<input type=\"hidden\" class=\"form_text\" name=\"$Nams[$j]\" value=\"$Fild[$j]\" maxlength=\"".$Leng[$j]."\" />\n";
+		      	}
+		      }
+	 		}
 	 		
-			if ($edit) {
-				echo "\t\t\t\t\t\t\t<div class=\"form_row_button\">\n\t\t\t\t\t\t\t\t<input type=\"submit\" name=\"submit_edit\" class=\"form_submit\" value=\"".$lang['form_button_update']."\" />\n\t\t\t\t\t\t\t</div>\n";
-			} else if ($go == "new") {
-				// do a save draft and save button button?? - when everything can be saved as a draft and is autosaved using AJAX
-				} else {
-			  echo "\t\t\t\t\t\t\t<div class=\"form_row_button\" id=\"form_button\">\n\t\t\t\t\t\t\t\t<input type=\"submit\" name=\"submit_new\" class=\"form_submit\" value=\"".$lang['form_button_save']."\" />\n\t\t\t\t\t\t\t</div>\n";
-			}
-			if ($m != "static") {
-				echo "\t\t\t\t\t\t\t<div class=\"form_row_button\">\n\t\t\t\t\t\t\t\t<span class=\"form_button_cancel\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\" title=\"".$lang['form_button_cancel']."\">".$lang['form_button_cancel']."</a></span>\n\t\t\t\t\t\t\t</div>\n";
-			}
-			echo "\t\t\t\t\t\t\t<div class=\"safclear\"></div>\n\t\t\t\t\t\t</fieldset>\n";
-				echo "\t\t\t\t\t</form>";
-			}
+	    if ($edit) {
+		  	echo "\t\t\t\t\t\t\t<div class=\"form_row_button\">\n\t\t\t\t\t\t\t\t<input type=\"submit\" name=\"submit_edit\" class=\"form_submit\" value=\"".$lang['form_button_update']."\" />\n\t\t\t\t\t\t\t</div>\n";
+	    } else if ($go == "new") {
+	    	// do a save draft and save button button?? - when everything can be saved as a draft and is autosaved using AJAX
+			} else {
+	      echo "\t\t\t\t\t\t\t<div class=\"form_row_button\" id=\"form_button\">\n\t\t\t\t\t\t\t\t<input type=\"submit\" name=\"submit_new\" class=\"form_submit\" value=\"".$lang['form_button_save']."\" />\n\t\t\t\t\t\t\t</div>\n";
+	    }
+	    if ($m != "static") {
+		  	echo "\t\t\t\t\t\t\t<div class=\"form_row_button\">\n\t\t\t\t\t\t\t\t<span class=\"form_button_cancel\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\" title=\"".$lang['form_button_cancel']."\">".$lang['form_button_cancel']."</a></span>\n\t\t\t\t\t\t\t</div>\n";
+	    }
+	    echo "\t\t\t\t\t\t\t<div class=\"safclear\"></div>\n\t\t\t\t\t\t</fieldset>\n";
+	 		echo "\t\t\t\t\t</form>";
+		}
+	
 		}
 	} 
 // ------------------------------------------------------------------
@@ -458,10 +449,8 @@ if (!function_exists(adjust_prefix)) {
 // ------------------------------------------------------------------ 
 // view table overview
 	function admin_overview($table_name, $condition, $order_by, $asc_desc, $exclude=array(NULL), $view_number, $type)  {
-		global $page, $message, $s, $m, $x, $messageok, $search_submit, $field, $search_words, $tag, $lang;
+  	global $page, $message, $s, $m, $x, $messageok, $search_submit, $field, $search_words, $tag, $lang;
 
-		$table_name = adjust_prefix($table_name);
-		
 		$searchwords = trim($search_words);
 		
 		if ($page) {
@@ -471,29 +460,29 @@ if (!function_exists(adjust_prefix)) {
 		if ($search_submit) {
 			$searchwords = sterilise($searchwords, false);
 			//build search sql
-			$r2 = safe_query("show fields from $table_name");
-			for ($j=0;$j<mysql_num_rows($r2);$j++) {
-				if ($F=mysql_fetch_array($r2)) {
-					$an[$j]= $F['Field'];
-				}
-				if (last_word($an[$j]) != "id") {
-					if($an[$j] != "posted") {
-						if($an[$j] != "author") {
-							if($an[$j] != "comments") {
-								if($an[$j] != "public") {
-									if(first_word($an[$j]) != "last") {
-										if($an[$j] != "date") {
-											$search_sql .= $an[$j]." like '%" . $searchwords . "%' OR ";
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			$search_sql = substr($search_sql,0,(strlen($search_sql)-3))."";
-			//echo $search_sql;
+			$r2 = safe_query("SHOW fields FROM $table_name");
+     	for ($j=0;$j<mysql_num_rows($r2);$j++) {
+      	if ($F=mysql_fetch_array($r2)) {
+      		$an[$j]= $F['Field'];
+      	}
+      	if (last_word($an[$j]) != "id") {
+      		if($an[$j] != "posted") {
+      			if($an[$j] != "author") {
+      				if($an[$j] != "comments") {
+      					if($an[$j] != "public") {
+      						if(first_word($an[$j]) != "last") {
+      							if($an[$j] != "date") {
+      								$search_sql .= $an[$j]." like '%" . $searchwords . "%' OR ";
+      							}
+      						}
+      					}
+      				}
+      			}
+      		}
+      	}
+      }
+      $search_sql = substr($search_sql,0,(strlen($search_sql)-3))."";
+	    //print $search_sql;
 		}
 		
 		$tag = squash_slug($tag);
@@ -510,7 +499,7 @@ if (!function_exists(adjust_prefix)) {
 			$r1 = safe_query("select * from $table_name $condition order by $order_by $asc_desc");
 		}
 		
-		if ($r1) {  
+  	if ($r1) {  
 
  	 	 	$total = mysql_num_rows($r1);
 
@@ -630,12 +619,12 @@ if (!function_exists(adjust_prefix)) {
 			$num = count($rs);
 			$i = 0;
 			while ($i < $num){
-				$out = $rs[$i];
-				$page_display_name = $out['page_display_name'];
-				$page_name = $out['page_name'];
-				$page_type = $out['page_type'];
-				$page_id = $out['page_id'];		
-
+  			$out = $rs[$i];
+  			$page_display_name = $out['page_display_name'];
+  			$page_name = $out['page_name'];
+  			$page_type = $out['page_type'];
+  			$page_id = $out['page_id'];		
+  					  			
 				$m = $page_type;
 				$x = $page_name;
 
@@ -645,15 +634,16 @@ if (!function_exists(adjust_prefix)) {
 				} else {
 					$class ="";
 				}
-				if ($m == "dynamic") {
-					echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page innav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_dynamic.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
-				} else if ($m == "module") {
-				  echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page innav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_module.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
-				} else {
-				  echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page innav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x&amp;edit=$page_id\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_static.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
-				}
-				$cc++;
-				$i++;
+				
+	  		if ($m == "dynamic") {
+  				echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page innav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_dynamic.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
+	  		} else if ($m == "module") {
+	  		  echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page innav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_module.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
+	  		} else {
+	  		  echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page innav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x&amp;edit=$page_id\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_static.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
+	  		}
+	  	$cc++;
+  		$i++;
 			}
 		}
 
@@ -662,12 +652,12 @@ if (!function_exists(adjust_prefix)) {
 			$num = count($rs);
 			$i = 0;
 			while ($i < $num){
-				$out = $rs[$i];
-				$page_display_name = $out['page_display_name'];
-				$page_name = $out['page_name'];
-				$page_type = $out['page_type'];
-				$page_id = $out['page_id'];		
-
+  			$out = $rs[$i];
+  			$page_display_name = $out['page_display_name'];
+  			$page_name = $out['page_name'];
+  			$page_type = $out['page_type'];
+  			$page_id = $out['page_id'];		
+  					  			
 				$m = $page_type;
 				$x = $page_name;
 
@@ -678,16 +668,16 @@ if (!function_exists(adjust_prefix)) {
 					$class ="";
 				}
 				
-				if ($m == "dynamic") {
-					echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page outnav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_dynamic_white.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
-				} else if ($m == "module") {
-				  echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page outnav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_module_white.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
-				} else {
-				  echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page outnav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x&amp;edit=$page_id\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_static_white.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
-				}
-				
-				$cc++;
-				$i++;
+	  		if ($m == "dynamic") {
+  				echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page outnav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_dynamic_white.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
+	  		} else if ($m == "module") {
+	  		  echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page outnav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_module_white.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
+	  		} else {
+	  		  echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page outnav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x&amp;edit=$page_id\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_static_white.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
+	  		}
+	  		
+  		$cc++;
+  		$i++;
 			}
 		}
 
@@ -696,12 +686,12 @@ if (!function_exists(adjust_prefix)) {
 			$num = count($rs);
 			$i = 0;
 			while ($i < $num){
-				$out = $rs[$i];
-				$page_display_name = $out['page_display_name'];
-				$page_name = $out['page_name'];
-				$page_type = $out['page_type'];
-				$page_id = $out['page_id'];		
-
+  			$out = $rs[$i];
+  			$page_display_name = $out['page_display_name'];
+  			$page_name = $out['page_name'];
+  			$page_type = $out['page_type'];
+  			$page_id = $out['page_id'];		
+  					  			
 				$m = $page_type;
 				$x = $page_name;
 				
@@ -712,10 +702,10 @@ if (!function_exists(adjust_prefix)) {
 					$class ="";
 				}				
 
-				echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page plugin $class\"><a href=\"?s=$s&amp;m=module&amp;x=$x\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_plugin.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
-				
-				$cc++;
-				$i++;
+	  		echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page plugin $class\"><a href=\"?s=$s&amp;m=module&amp;x=$x\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_plugin.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
+	  		
+	  	$cc++;
+  		$i++;
 			}
 		}	
 		echo "\t\t\t\t</ul>\n";
@@ -734,31 +724,30 @@ if (!function_exists(adjust_prefix)) {
 // edit table entry
 	function admin_edit($table_name,$edit_id,$edit,$edit_exclude) {
 	  global $message, $m, $lang;
-	  
-	  	$table_name = adjust_prefix($table_name);
-		$sql = "select * from $table_name where ".$edit_id."=".$edit."";
+	
+		$sql = "SELECT * FROM ".$table_name." WHERE ".$edit_id."=".$edit."";
 		$r2 = safe_query($sql);
 	
 		if ($r2) {
-			if ($F=mysql_fetch_array($r2))  {
-				for ($j=0;$j<mysql_num_fields($r2);$j++) {
-					$an.=mysql_field_name($r2,$j)."|";
-					$at.=mysql_field_type($r2,$j)."|";
-					$al.=mysql_field_len($r2,$j)."|";
-					$af.=mysql_field_flags($r2,$j)."|";
-					$az.=$F[$j]."|";
-				}
+	  	if ($F=mysql_fetch_array($r2))  {
+	  	for ($j=0;$j<mysql_num_fields($r2);$j++) {
+	    	  $an.=mysql_field_name($r2,$j)."|";
+	      	$at.=mysql_field_type($r2,$j)."|";
+	      	$al.=mysql_field_len($r2,$j)."|";
+	      	$af.=mysql_field_flags($r2,$j)."|";
+	      	$az.=$F[$j]."|";
+	  	}
 
-				if ($m == "static") {
-					echo "\n\t\t\t\t<div class=\"admin_form form_static\">\n\n\t\t\t\t\t";
-				} else {
-					echo "\n\t\t\t\t<div class=\"admin_form\">\n\n\t\t\t\t\t";
-				}
-					
-				$Blank = new ShowBlank ($an,$at,$al,$af,$az,$nam,$edit_exclude,$table_name);
-				$Blank->ShowBody();
-		
-				echo "\n\t\t\t\t</div>";
+			if ($m == "static") {
+	 			echo "\n\t\t\t\t<div class=\"admin_form form_static\">\n\n\t\t\t\t\t";
+			} else {
+				echo "\n\t\t\t\t<div class=\"admin_form\">\n\n\t\t\t\t\t";
+			}
+				
+	 		$Blank = new ShowBlank ($an,$at,$al,$af,$az,$nam,$edit_exclude,$table_name);
+	 		$Blank->ShowBody();
+	
+	 		echo "\n\t\t\t\t</div>";
 	 		}
 		} else {
 			$message = $lang['form_build_fail'];
@@ -770,25 +759,27 @@ if (!function_exists(adjust_prefix)) {
 
 		$an = $at = $af = $az = $al = '';
 		
-		$r2 = safe_query("show fields from ".PFX."$table_name");	
-		$r3 = safe_query("select * from ".PFX."$table_name WHERE 1=0");
-		for ($j=0;$j<mysql_num_rows($r2);$j++) {  
-			$flags = mysql_field_flags($r3, $j);
-			$af.= $flags."|";
+		$r2 = safe_query("show fields from $table_name");	
+
+		for ($j=0;$j<mysql_num_rows($r2);$j++) {
+			
+		  $r3 = safe_query("select * from $table_name");
+		  $flags = mysql_field_flags($r3, $j);
+		  $af.= $flags."|";
 		  
-			if ($F=mysql_fetch_array($r2)) {
-				$an.= $F['Field']."|";
-				$at.= ereg_replace("([()0-9]+)","",$F['Type'])."|";
-			}
-			if (ereg ("([0-9]+)", $F['Type'], $str)) {
-				$al.=$str[0]."|";
-			} else {
-				$al.="|";
-				$az.= $F['Default']."|";
-			}
-			if ($F['Key']=="PRI") {
-				$nam=$F['Field'];
-			}
+	    if ($F=mysql_fetch_array($r2)) {
+		    $an.= $F['Field']."|";
+	    	$at.= ereg_replace("([()0-9]+)","",$F['Type'])."|";
+	    }
+	    if (ereg ("([0-9]+)", $F['Type'], $str)) {
+	    	$al.=$str[0]."|";
+	    } else {
+		    $al.="|";
+		    $az.= $F['Default']."|";
+	    }
+	    if ($F['Key']=="PRI") {
+	    	$nam=$F['Field'];
+	    }
 		}
 
 	  echo "\n\t\t\t\t<div id=\"admin_form\">\n\n\t\t\t\t\t";  
@@ -814,67 +805,67 @@ if (!function_exists(adjust_prefix)) {
 				$table = "pixie_module_".$x;
 				$id = $x."_id";
 			}
-			
-			$table = adjust_prefix($table);
-				
+	
 			$getdetails = extract(safe_row("*","$table", "$id='$delete' limit 0,1"));
 			if ($getdetails) {
-				$del = safe_delete("$table", "$id='$delete'");
+	  		$del = safe_delete("$table", "$id='$delete'");
 			}
 	
-			if ($del) {
-				if (($s == "settings") && ($m == "dynamic")) {
-					$page_display_name = safe_field('page_display_name','pixie_core',"page_id='$del'");
-					//do not delete the posts as one false click could destroy lots of data. Backup first?
-					//safe_delete("pixie_dynamic_posts", "page_id='$delete'"); 
-					safe_delete("pixie_dynamic_settings", "page_id='$delete'");
-				}
-		
-				if (($s == "settings") && ($m == "static")) {
-					$page_display_name = safe_field('page_display_name','pixie_core',"page_id='$del'");
-					safe_delete("pixie_static_posts", "page_id='$delete'");
-				}
-		
-				if (($s == "settings") && ($m == "module")) {
-					$table_mod = PFX."pixie_module_".$page_name;
-					$table_mod_settings = PFX."pixie_module_".$page_name."_settings";
-					
-					$sql = "DROP TABLE IF EXISTS $table_mod";
-					$sql1 = "DROP TABLE IF EXISTS $table_mod_settings";
-					
-					//do not drop the tables as one false click could destroy lots of data. Backup first?
-					//safe_query($sql);
-					//safe_query($sql1);
-					
-					//do not remove the file as we might want to reinstall at a later date
-					//file_delete("modules/".$page_name.".php");
-				}
-		
-				if ($table == PFX."pixie_core") {
-					$messageok = $lang['ok_delete_page']." ".$page_display_name." ".$lang['page'];
-					$icon = "site"; 
-					$alert = "yes";
-				} else {
-					$page_display_name = safe_field('page_display_name','pixie_core',"page_name='$x'");
-					$messageok = $lang['ok_delete_entry']." ".$page_display_name." ".$lang['page'];
-					$icon = "page";
-					$alert = "no";
-				}
+	  	if ($del) {
+	  		if (($s == "settings") && ($m == "dynamic")) {
+	  			$page_display_name = safe_field('page_display_name','pixie_core',"page_id='$del'");
+	  			//do not delete the posts as one false click could destroy lots of data. Backup first?
+		  		//safe_delete("pixie_dynamic_posts", "page_id='$delete'"); 
+		  		safe_delete("pixie_dynamic_settings", "page_id='$delete'");
+	  		}
+	
+	  		if (($s == "settings") && ($m == "static")) {
+		  		$page_display_name = safe_field('page_display_name','pixie_core',"page_id='$del'");
+		  		safe_delete("pixie_static_posts", "page_id='$delete'");
+	  		}
+	
+	  		if (($s == "settings") && ($m == "module")) {
+	  			$table_mod = "pixie_module_".$page_name;
+	  			$table_mod_settings = "pixie_module_".$page_name."_settings";
+	  			
+		  		$sql = "DROP TABlE IF EXISTS $table_mod";
+		  		$sql1 = "DROP TABlE IF EXISTS $table_mod_settings";
+		  		
+		  		//do not drop the tables as one false click could destroy lots of data. Backup first?
+		  		//safe_query($sql);
+		  		//safe_query($sql1);
+		  		
+		  		//do not remove the file as we might want to reinstall at a later date
+		  		//file_delete("modules/".$page_name.".php");
+	  		}
+	
+	  		if ($table == "pixie_core") {
+		  		$messageok = $lang['ok_delete_page']." ".$page_display_name." ".$lang['page'];
+		  		$icon = "site"; 
+		  		$alert = "yes";
+	  		} else {
+	  			$page_display_name = safe_field('page_display_name','pixie_core',"page_name='$x'");
+	   	  	$messageok = $lang['ok_delete_entry']." ".$page_display_name." ".$lang['page'];
+	   	  	$icon = "page";
+	   	  	$alert = "no";
+	  		}
+
 				logme($messageok,$alert,$icon);
-				safe_optimize("$table_name");
+	
+	   	  safe_optimize("$table_name");
 				safe_repair("$table_name");
-			} else {
-				if (!$message) {
-					if (($s == "settings") && ($delete == "1")) {
-						$message = $lang['failed_protected_page'];
-						$imp = "yes";
-					} else {
-						$message = $lang['failed_delete'];
-						$imp = "no";
-					}
-					logme($message,$imp,"error");
-				}
-			}
+	  	} else {
+	  		if (!$message) {
+	  			if (($s == "settings") && ($delete == "1")) {
+	  				$message = $lang['failed_protected_page'];
+	  				$imp = "yes";
+	  			} else {
+	  				$message = $lang['failed_delete'];
+	  				$imp = "no";
+	  			}
+	  			logme($message,$imp,"error");
+	  		}
+	    }
 		}
 	}
 // ------------------------------------------------------------------
@@ -882,8 +873,9 @@ if (!function_exists(adjust_prefix)) {
 	if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
 		
 		if (($submit_new) || ($submit_edit)) {
+
 			$rs = safe_row("*","pixie_core", "page_name = '$x' limit 0,1");
-			
+    
 			if ($rs) {
 				extract($rs);
 			}
@@ -910,10 +902,10 @@ if (!function_exists(adjust_prefix)) {
 				$hour = substr($timey[3],0,2);
 				$unixtime = mktime($hour, $minute, 00, $timey[1], $timey[0], $timey[2]);
 			}
-		
-     	$r2 = safe_query("show fields from ".adjust_prefix($table_name));
-		$r3 = safe_query("select * from ".adjust_prefix($table_name)." WHERE 1=0");
-		for ($j=0;$j<mysql_num_rows($r2);$j++) {
+
+     	$r2 = safe_query("SHOW fields FROM $table_name");
+      for ($j=0;$j<mysql_num_rows($r2);$j++) {
+      	$r3 = safe_query("select * from $table_name");
 		  	$flags = mysql_field_flags($r3, $j);
 		  	$af[$j] = $flags;
       	if ($F=mysql_fetch_array($r2)) {
@@ -921,211 +913,213 @@ if (!function_exists(adjust_prefix)) {
       		$at[$j]= ereg_replace("([()0-9]+)","",$F['Type']);
       	}
       	//echo $an[$j]."-".$at[$j]."-".$af[$j]."<br>"; //enable to see field properties 
+      	     
+      }
 
-	}
+      for ($j=0;$j<mysql_num_rows($r2);$j++) {
+      	$check = new Validator ();
+	      if ($at[$j] == "timestamp" && !array_key_exists("$an[$j]",$_POST)) {
+	      	$check->validateNumber($unixtime, "invalid time"." |");
+			$sql.= "".$an[$j]." = '".returnSQLtimestamp($unixtime)."',";
+	      } else if ((last_word($an[$j]) == "id") && (!$had_id)) {
+	      	$had_id = "1";
+	      	$editid = $_POST[$an[$j]];
+	      	$idme = $an[$j];
+	      } else if ($an[$j] == "page_content" && $s == "settings") {
+	      	//skip it to protect the php in the page_content field
+	      } else if ($an[$j] == "admin" && $s == "settings") {
+	      	//skip it to protect the php code in the admin field
+	      } else {     	
+	      	$value = $_POST[$an[$j]];
+	      	if ($an[$j] == "title") { $tit = $value; }
+	      	if ($at[$j] == "varchar") { $value = htmlentities($value,ENT_QUOTES,"UTF-8"); }
 
-    for ($j=0;$j<mysql_num_rows($r2);$j++) {
-			$check = new Validator ();
-			if ($at[$j] == "timestamp" && !array_key_exists("$an[$j]",$_POST)) {
-				$check->validateNumber($unixtime, "invalid time"." |");
-				$sql.= "".$an[$j]." = '".returnSQLtimestamp($unixtime)."',";
-			} else if ((last_word($an[$j]) == "id") && (!$had_id)) {
-				$had_id = "1";
-				$editid = $_POST[$an[$j]];
-				$idme = $an[$j];
-			} else if ($an[$j] == "page_content" && $s == "settings") {
-				//skip it to protect the php in the page_content field
-			} else if ($an[$j] == "admin" && $s == "settings") {
-				//skip it to protect the php code in the admin field
-			} else {     	
-				$value = $_POST[$an[$j]];
-				if ($an[$j] == "title") { $tit = $value; }
-				if ($at[$j] == "varchar") { $value = htmlentities($value,ENT_QUOTES,"UTF-8"); }
+	      	// check for posts with duplicate title/slug and increment
+	      	if ($an[$j] == "post_slug") {
+	      		if (!$value) {
+	      			$value = make_slug($tit);
+	      			$value = strtolower($value);
+	      			$searchforslug = safe_rows("*", $table_name, "post_slug REGEXP '[[:<:]]". $value ."[[:>:]]'");
+	      			if ($searchforslug) {
+	      				$addslug = count($searchforslug);
+	      				$value = $value."-".$addslug;
+	      			}
+	      		}
+	      	}
 
-				// check for posts with duplicate title/slug and increment
-				if ($an[$j] == "post_slug") {
-					if (!$value) {
-						$value = make_slug($tit);
-						$value = strtolower($value);
-						$searchforslug = safe_rows("*", $table_name, "post_slug REGEXP '[[:<:]]". $value ."[[:>:]]'");
-						if ($searchforslug) {
-							$addslug = count($searchforslug);
-							$value = $value."-".$addslug;
-						}
-					}
-				}
-
-				// check for pages with duplicate title/slug and increment
-				if ($an[$j] == "page_name") {
-					$oldvalue = safe_field('page_name',$table_name,"page_id='$editid'");
-					if ($value != $oldvalue) {
-						$searchforpage = safe_rows("*", $table_name, "page_name REGEXP '[[:<:]]". $value ."[[:>:]]'");
-						if ($searchforpage) {
-							$addpage = count($searchforpage);
-							$value = $value."-".$addpage;
-						}
-					}
-					// force the value to be lowercase and without spaces for slug
-					$value = strtolower(str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($value))));
-				}
+	      	// check for pages with duplicate title/slug and increment
+	      	if ($an[$j] == "page_name") {
+	      		$oldvalue = safe_field('page_name',$table_name,"page_id='$editid'");
+	      		if ($value != $oldvalue) {
+		      		$searchforpage = safe_rows("*", $table_name, "page_name REGEXP '[[:<:]]". $value ."[[:>:]]'");
+		      		if ($searchforpage) {
+		      			$addpage = count($searchforpage);
+		      			$value = $value."-".$addpage;
+		      		}
+	      		}
+	      		// force the value to be lowercase and without spaces for slug
+	      		$value = strtolower(str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($value))));
+	      	}
 	      	
-				// set a page_order, and navigation settings for a newly saved page
-				if ($an[$j] == "public") {
-					if ($value == "yes") {
-						$itspublic = "yes";
-					}
-				}
-				if ($an[$j] == "in_navigation") {
-					if ($value == "yes") {
-						$innavigation = "yes";
-					}
-				}
-				if ($an[$j] == "page_order") {	      		
-					if ($itspublic) {
-						if ($value != "0") {
-							if ($innavigation) {
-								if ($submit_new) {
-									$value = count(safe_rows("*", $table_name, "public='yes' and in_navigation='yes' order by post_order asc"))+1;
-								}
-							} else {
-								$value = "0";
-							}
-						} else {
-							if ($innavigation) {
-								$value = count(safe_rows("*", $table_name, "public='yes' and in_navigation='yes' order by post_order asc"))+1;
-							} else {
-								$value = $value;
-							}
-						}
-					} else {
-							$value = "0";
-					}
-				}
+	      	// set a page_order, and navigation settings for a newly saved page
+	      	if ($an[$j] == "public") {
+	      		if ($value == "yes") {
+	      			$itspublic = "yes";
+	      		}
+	      	}
+	      	if ($an[$j] == "in_navigation") {
+	      		if ($value == "yes") {
+	      			$innavigation = "yes";
+	      		}
+	      	}
+	      	if ($an[$j] == "page_order") {	      		
+	      		if ($itspublic) {
+		      		if ($value != "0") {
+		      			if ($innavigation) {
+		      				if ($submit_new) {
+		      					$value = count(safe_rows("*", $table_name, "public='yes' and in_navigation='yes' order by post_order asc"))+1;
+		      				}
+		      			} else {
+		      				$value = "0";
+		      			}
+		      		} else {
+		      			if ($innavigation) {
+		      				$value = count(safe_rows("*", $table_name, "public='yes' and in_navigation='yes' order by post_order asc"))+1;
+		      			} else {
+		      				$value = $value;
+		      			}
+		      		}
+	      		} else {
+		      			$value = "0";
+	      		}
+	      	}
 	      	
-				// validate and clean input
-				$value = str_replace("|","&#124;",$value);
-				$nullf = explode(" ",$af[$j]);	      	
-				if ($an[$j] == "tags") { $value = make_tag($value); }
-				if (get_magic_quotes_gpc()==0) { $value = addslashes ($value); }
-				if ($at[$j] == "varchar") { sterilise(strip_tags($value)); }
-				if (($an[$j] == "url") || ($an[$j] == "website")) {
-					if ($nullf[0] == "not_null") { 
-						$check->validateURL($value, $lang['url_error']." |" );
-					} else if ($value != "") { 
-						$check->validateURL($value, $lang['url_error']." |" );
-					}	
-				}
+	      	// validate and clean input
+	      	$value = str_replace("|","&#124;",$value);
+	      	$nullf = explode(" ",$af[$j]);	      	
+	      	if ($an[$j] == "tags") { $value = make_tag($value); }
+	      	if (get_magic_quotes_gpc()==0) { $value = addslashes ($value); }
+          	if ($at[$j] == "varchar") { sterilise(strip_tags($value)); }
+	      	if (($an[$j] == "url") || ($an[$j] == "website")) {
+	      		if ($nullf[0] == "not_null") { 
+	      			$check->validateURL($value, $lang['url_error']." |" );
+	      		} else if ($value != "") { 
+	 	      		$check->validateURL($value, $lang['url_error']." |" );
+	      		}	
+	      	}
 	     
-				if ($at[$j] == "longtext") {
-					// remove para from <!--more-->
-					if ($m == "dynamic") {
-						// hacky to try and clean the more
-						$value = str_replace("<p><!--more--></p>","<!--more-->",$value);
-						$value = str_replace("<p> <!--more--></p>","<!--more-->",$value);
-						$value = str_replace("<!--more--></p>","</p><!--more-->",$value);
-						$value = str_replace("<p><!--more-->","<!--more--><p>",$value);
-					}
-				} 
-				
-				if ($an[$j] == "email") {
-					if ($nullf[0] == "not_null") {
-						$check->validateEmail($value, $lang['email_error']." |");
-					} else if ($value != "") {
-						$check->validateEmail($value, $lang['email_error']." |");
-					}
-				}
-				if (($nullf[0] == "not_null") && ($value == "")) { $error .= ucwords($an[$j])." ".$lang['is_required']." |"; }
-				
-				// if empty int set to 0
-				if( $at[$j] == "int" ) $value = ($value?$value:0);
-				
-				$sql.= "`".$an[$j]."` = '".$value."',";
-
-				if ($check->foundErrors()) { $error .= $check->listErrors("x"); }
+		 	if ($at[$j] == "longtext") {
+		 		// remove para from <!--more-->
+		 		if ($m == "dynamic") {
+		 			// hacky to try and clean the more
+		 			$value = str_replace("<p><!--more--></p>","<!--more-->",$value);
+		 			$value = str_replace("<p> <!--more--></p>","<!--more-->",$value);
+		 			$value = str_replace("<!--more--></p>","</p><!--more-->",$value);
+		 			$value = str_replace("<p><!--more-->","<!--more--><p>",$value);
+		 		}
+		 	} 
+		 	
+	      	if ($an[$j] == "email") {
+	      		if ($nullf[0] == "not_null") {
+	      			$check->validateEmail($value, $lang['email_error']." |");
+	      		} else if ($value != "") {
+	      			$check->validateEmail($value, $lang['email_error']." |");
+	      		}
+	      	}
+	      	if (($nullf[0] == "not_null") && ($value == "")) { $error .= ucwords($an[$j])." ".$lang['is_required']." |"; }
 	      	
-			}
-		}
+	      	// if empty int set to 0
+	      	if( $at[$j] == "int" ) $value = ($value?$value:0);
+	      	
+	      	$sql.= "`".$an[$j]."` = '".$value."',";
+
+	      	if ($check->foundErrors()) { $error .= $check->listErrors("x"); }
+	      	
+	      }
+      }
       
-		$sql = substr($sql,0,(strlen($sql)-1))."";
+      $sql = substr($sql,0,(strlen($sql)-1))."";
 
-		//echo $sql; //view the SQL for current form save
-				
-		if (!$error) {
-			if ($submit_new) {
-				$ok = safe_insert($table_name, $sql);
-				$idofsave = mysql_insert_id();
-				safe_optimize($table_name);
-				safe_repair($table_name);
-				
-			  if (!$ok) {
-				$message = $lang['unknown_error'];
-				logme($message,"no","error"); 
-			  } else {
-
-					if (($s == "settings") && ($page_type == "dynamic")) {
-						$sql = "`page_id` = '$idofsave', `posts_per_page` = '10', `rss` = 'yes'"; 
-						safe_insert('pixie_dynamic_settings', $sql);
-					}
-
-					if ($table_name == "pixie_core") {
-						$output = safe_field('page_display_name','pixie_core',"page_id='$idofsave'");
-						$icon = "site";
-						$messageok = $lang['saved_new_page'].": $output.";
-					} else {
-						$ptitle = $title;
-						$output = $page_display_name;
-						$icon = "page";
-						if ($ptitle) {
-							$messageok = $lang['saved_new'].": $ptitle ".$lang['in_the']." $output ".$lang['page'];
-						} else {
-							$messageok = $lang['saved_new']." (#$idofsave) ".$lang['in_the']." $output ".$lang['page'];
-						}
-					}
+	    //echo $sql; //view the SQL for current form save
+		
+			if (!$error) {
+				if ($submit_new) {
+					$ok = safe_insert($table_name, $sql);
+					safe_optimize($table_name);
+					safe_repair($table_name);
 					
-					logme($messageok,"no",$icon); 
-				}
-			}
-			if ($submit_edit) {
-				$ok = safe_update("$table_name", "$sql", "`$idme` = '$editid'");
-				if (!$ok) {
-					$message = $lang['unknown_error'];
-				} else {
-				
-					if ($s == "settings") {
-						$output = $page_display_name;
-							$icon = "site";
-						if ($output) {
-							$messageok = $lang['saved_new_settings_for']." ".$output." ".$lang['page'];
-						} else {
-							$output = safe_field('page_display_name','pixie_core',"page_id='$page_id'");
-							$messageok = $lang['saved_new_settings_for']." ".$output." ".$lang['page'];
+				  if (!$ok) {
+				  	$message = $lang['unknown_error'];
+				  	logme($message,"no","error"); 
+				  } else {
+				  	$idofsave = mysql_insert_id();
+
+						if (($s == "settings") && ($page_type == "dynamic")) {
+							$sql = "`page_id` = '$idofsave', `posts_per_page` = '10', `rss` = 'yes'"; 
+							safe_insert('pixie_dynamic_settings', $sql);
 						}
-						page_order_reset();
-					}
+
+						if ($table_name == "pixie_core") {
+				  		$output = safe_field('page_display_name','pixie_core',"page_id='$idofsave'");
+				  		$icon = "site";
+				  		$messageok = $lang['saved_new_page'].": $output.";
+				  	} else {
+				  		$ptitle = $title;
+				  		$output = $page_display_name;
+				  		$icon = "page";
+				  		if ($ptitle) {
+				  			$messageok = $lang['saved_new'].": $ptitle ".$lang['in_the']." $output ".$lang['page'];
+				  		} else {
+				  			$messageok = $lang['saved_new']." (#$idofsave) ".$lang['in_the']." $output ".$lang['page'];
+				  		}
+				  	}
+						
+				  	logme($messageok,"no",$icon); 
+				  }
+				} 
+
+				if ($submit_edit) {
+					$ok = safe_update("`$table_name`", "$sql", "`$idme` = '$editid'");
+
+					if (!$ok) {
+				  	$message = $lang['unknown_error'];
+				  } else {
+				  	
+				  	if ($s == "settings") {
+				  		$output = $page_display_name;
+				 			$icon = "site";
+					  	if ($output) {
+					  		$messageok = $lang['saved_new_settings_for']." ".$output." ".$lang['page'];
+					  	} else {
+					  		$output = safe_field('page_display_name','pixie_core',"page_id='$page_id'");
+					  		$messageok = $lang['saved_new_settings_for']." ".$output." ".$lang['page'];
+					  	}
+					  	page_order_reset();
+				  	}
 
 
-					if ($s == "publish") {
-						$output = $title;
-						$icon = "page";
-						$pname = safe_field('page_display_name','pixie_core',"page_id='$page_id'");
-						if ($m == "static") {
-							$messageok = "Saved updates to the ".$pname." page.";
-						} else {
-							if ($output) {
-								$messageok = $lang['save_update_entry'].": ".$output." ".$lang['on_the']." ".$pname." ".$lang['page'];
-							} else {
-								$messageok = $lang['save_update_entry']." (#".$editid.") ".$lang['on_the']." ".$pname." ".$lang['page'];
-							}
-						}
-					}
-					logme($messageok,"no",$icon); 				  	
-				}
-			}					
+				    if ($s == "publish") {
+				    	$output = $title;
+				    	$icon = "page";
+				    	$pname = safe_field('page_display_name','pixie_core',"page_id='$page_id'");
+				    	if ($m == "static") {
+				    		$messageok = "Saved updates to the ".$pname." page.";
+				    	} else {
+						  	if ($output) {
+						  		$messageok = $lang['save_update_entry'].": ".$output." ".$lang['on_the']." ".$pname." ".$lang['page'];
+						  	} else {
+						  		$messageok = $lang['save_update_entry']." (#".$editid.") ".$lang['on_the']." ".$pname." ".$lang['page'];
+						  	}
+				    	}
+				    }
+					 	logme($messageok,"no",$icon); 				  	
+				  }
+				}					
 
-		} else {
-			$err = explode("|",$error);
-			$message = $err[0];
-		}	
+			} else {
+				$err = explode("|",$error);
+				$message = $err[0];
+			}	
 		}
 	}
 ?>

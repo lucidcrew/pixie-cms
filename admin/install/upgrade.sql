@@ -12,7 +12,3 @@ UPDATE `pixie_settings` SET `version` = '1.01' WHERE `pixie_settings`.`settings_
 -- v1.02
 -- set version number
 UPDATE `pixie_settings` SET `version` = '1.02' WHERE `pixie_settings`.`settings_id` = 1 LIMIT 1 ;
-
--- v1.03 - 1.1
--- add new setting for tracking bad behaviour install
-ALTER TABLE `pixie_settings` ADD COLUMN `bb2_installed` SET( 'yes', 'no' ) NOT NULL DEFAULT 'no' AFTER `last_backup` ;
