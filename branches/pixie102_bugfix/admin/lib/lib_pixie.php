@@ -208,7 +208,7 @@
 	      echo "
 	<div id=\"admin_header\">
 		<h1>Hello ".firstword($realname)."</h1>
-		<div id=\"admin_header_text\"><p>".safe_strftime($date_format, time()).". Currently your site has $user_count visitor(s) online.</p></div>
+		<div id=\"admin_header_text\"><p>".safe_strftime($date_format, time()+tz_offset()).". Currently your site has $user_count visitor(s) online.</p></div>
 		<div id=\"admin_header_controls\"><p><a href=\"".$site_url."admin/\" title=\"Goto Pixie\">Pixie</a><a href=\"".$site_url."admin/?s=logout\" title=\"Logout of pixie\">Logout</a></p></div>
 	</div>\n";
 			}
