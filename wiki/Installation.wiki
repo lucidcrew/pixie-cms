@@ -19,7 +19,7 @@ I am not a big fan of requirements, they are restricting and a little bit compli
     Version 4.3.0 and above. Pixie will work on previous versions of PHP but you will lose the spell check features of [http://tinymce.moxiecode.com/ TinyMCE].
 
   * MySQL
-    Version 4.0 and above. You may well be able to use an older version of MySQL but it has not yet been tested. 4.0 and anything after should be fine.
+    Version 4.1 and above.
 
 ==== Browser Requirements ====
 
