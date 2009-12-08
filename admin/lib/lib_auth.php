@@ -49,7 +49,7 @@
 		$password = sterilise($password, true);
 		$remember = sterilise($remember, true);
 	
-		$howmany = count(safe_rows("*","pixie_log","log_message = '".$lang['failed_login']."' and user_ip = '".$_SERVER["REMOTE_ADDR"]."' and log_time < now() and log_time > DATE_ADD(now(), INTERVAL -1 DAY)"));
+		$howmany = count(safe_rows("*","pixie_log","log_message = '".$lang['failed_login']."' and user_ip = '".$_SERVER["REMOTE_ADDR"]."' and log_time < utc_timestamp() and log_time > DATE_ADD(utc_timestamp(), INTERVAL -1 DAY)"));
 		
 		sleep(3);																																    // should halt dictionary attacks
 		

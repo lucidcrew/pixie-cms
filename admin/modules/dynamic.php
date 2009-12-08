@@ -115,13 +115,13 @@ switch ($do) {
   	case "page":
   		$start = $posts_per_page*($x-1);
   	  	$mtitle = "$page_display_name (".$lang['dynamic_page']." $x)";
-  		$rs = safe_rows_start("*", "pixie_dynamic_posts", "page_id = '$page_id' and public = 'yes' and posted < now() order by posted desc limit $start,$posts_per_page");
+  		$rs = safe_rows_start("*", "pixie_dynamic_posts", "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp() order by posted desc limit $start,$posts_per_page");
 	  	show_all($rs);
   	break;
 
   	case "popular":
   		$mtitle = "$page_display_name (".$lang['popular']." $posts_per_page ".$lang['posts'].")";
-  		$rs = safe_rows_start("*", "pixie_dynamic_posts", "page_id = '$page_id' and public = 'yes' and posted < now() order by post_views desc limit $posts_per_page");
+  		$rs = safe_rows_start("*", "pixie_dynamic_posts", "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp() order by post_views desc limit $posts_per_page");
 	  	show_all($rs);
   	break;
 
@@ -129,12 +129,12 @@ switch ($do) {
 		if ($p) {
 		  	$start = $posts_per_page*($p-1);
   			$mtitle = "$page_display_name (".$lang['tag'].": $x, ".$lang['dynamic_page']." $p)";
-	  		$rs = safe_rows_start("*", "pixie_dynamic_posts", "page_id = '$page_id' and public = 'yes' and posted < now() and tags REGEXP '[[:<:]]". $x ."[[:>:]]' order by posted desc limit $start, $posts_per_page");
+	  		$rs = safe_rows_start("*", "pixie_dynamic_posts", "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp() and tags REGEXP '[[:<:]]". $x ."[[:>:]]' order by posted desc limit $start, $posts_per_page");
 	  		show_all($rs);
 		} else {
 	  		$x = squash_slug($x);
   			$mtitle = "$page_display_name (".$lang['tag'].": $x)";
-	  		$rs = safe_rows_start("*", "pixie_dynamic_posts", "page_id = '$page_id' and public = 'yes' and posted < now() and tags REGEXP '[[:<:]]". $x ."[[:>:]]' order by posted desc limit $posts_per_page");
+	  		$rs = safe_rows_start("*", "pixie_dynamic_posts", "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp() and tags REGEXP '[[:<:]]". $x ."[[:>:]]' order by posted desc limit $posts_per_page");
 	  		show_all($rs);
 	  	}
   	break;
@@ -149,7 +149,7 @@ switch ($do) {
   	default:
   		$mtitle = "$page_display_name";
   		$id = get_page_id($s);
-  		$rs = safe_rows_start("*", "pixie_dynamic_posts", "page_id = '$id' and public = 'yes' and posted < now() order by posted desc limit $posts_per_page");
+  		$rs = safe_rows_start("*", "pixie_dynamic_posts", "page_id = '$id' and public = 'yes' and posted < utc_timestamp() order by posted desc limit $posts_per_page");
 	  	show_all($rs);
 		break;
 		}
@@ -269,7 +269,7 @@ switch ($do) {
 		if ((!$m) || ($m == "page")) {
 		   	
 			// how many posts do we have in total?
-			$totalposts = count(safe_rows("*", "pixie_dynamic_posts", "page_id = '$page_id' and public = 'yes' and posted < now()"));
+			$totalposts = count(safe_rows("*", "pixie_dynamic_posts", "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp()"));
 			
 			if ($m == "page") {
 				$currentnum = $posts_per_page*$x;
@@ -298,7 +298,7 @@ switch ($do) {
 		} else if ($m == "tag") {
 			
 			$p = squash_slug($p);
-			$totalposts = count(safe_rows("*", "pixie_dynamic_posts", "page_id = '$page_id' and public = 'yes' and posted < now() and tags REGEXP '[[:<:]]". $x ."[[:>:]]'"));
+			$totalposts = count(safe_rows("*", "pixie_dynamic_posts", "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp() and tags REGEXP '[[:<:]]". $x ."[[:>:]]'"));
 			
 			if ($p) {
 				$currentnum = $posts_per_page*$p;
@@ -421,7 +421,7 @@ switch ($do) {
 					$thisid = get_page_id($s);
 					
 					// what post is next?
-					$searchnext = safe_field("post_id","pixie_dynamic_posts", "page_id = '$thisid' and public = 'yes' and posted > '$posted' and posted < now() limit 0,1");
+					$searchnext = safe_field("post_id","pixie_dynamic_posts", "page_id = '$thisid' and public = 'yes' and posted > '$posted' and posted < utc_timestamp() limit 0,1");
 					
 					if ($searchnext) {
 						$ntitle = safe_field('title','pixie_dynamic_posts',"post_id ='$searchnext'");
@@ -430,7 +430,7 @@ switch ($do) {
 					}
 					
 					// what post is previous?
-					$searchprev = safe_field("post_id","pixie_dynamic_posts", "page_id = '$thisid' and public = 'yes' and posted < '$posted' and posted < now() order by posted desc limit 0,1");
+					$searchprev = safe_field("post_id","pixie_dynamic_posts", "page_id = '$thisid' and public = 'yes' and posted < '$posted' and posted < utc_timestamp() order by posted desc limit 0,1");
 					
 					if ($searchprev) {
 						$ptitle = safe_field('title','pixie_dynamic_posts',"post_id ='$searchprev'");
@@ -609,7 +609,7 @@ switch ($do) {
 		$this_year = $date_array['year'];
 		
 		$id = get_page_id($s);
-		$rs = safe_row("*", "pixie_dynamic_posts", "page_id = '$id' and public = 'yes' and posted < now() order by posted asc limit 0,1");
+		$rs = safe_row("*", "pixie_dynamic_posts", "page_id = '$id' and public = 'yes' and posted < utc_timestamp() order by posted asc limit 0,1");
 	
 		echo "<div id=\"archives\">\n\t\t\t\t\t\t<h3>$mtitle</h3>\n\t\t\t\t\t\t<dl class=\"list_archives\">\n";
 		
