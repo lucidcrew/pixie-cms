@@ -57,10 +57,9 @@ $(document).ready(function(){
 	$(".image_preview select").bind("change",preview);
 	
 	<?php
-	// disabled for now due to error
-	//if ($s == "publish") {
-	//	echo "$(\".table\").tablesorter();";
-	//}
+	if ($s == "publish") {
+		echo "$(\"table\").tablesorter();";
+	}
 	?>
     
 

@@ -44,11 +44,6 @@
 			$uname = "Visitor";
 		}
 		$ip = $_SERVER['REMOTE_ADDR'];
-
-		$uname = sterilise($uname, true);
-		$ip = sterilise($ip, true);
-		$referral = sterilise($referral, true); 
-
 		if (($referral) and (!strstr($referral, $domain))) {
 			safe_insert("pixie_log", 
 									"user_id = '$uname',  
@@ -89,7 +84,7 @@
 		safe_delete("pixie_log_users_online", "unix_timestamp() - last_visit >= $sessiontime * 60");
 
 		$ip = $_SERVER['REMOTE_ADDR'];
-		$query = "SELECT last_visit FROM ".PFX."pixie_log_users_online WHERE visitor = '$ip'";
+		$query = "SELECT last_visit FROM pixie_log_users_online WHERE visitor = '$ip'";
 		$online = safe_query($query);
 
 		if (mysql_num_rows($online) == "0") {

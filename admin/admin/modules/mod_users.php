@@ -48,7 +48,7 @@ if ($user_edit) {
 
 	if (!$error) {
 
-		$sql = "user_name = '$uname', realname = '$realname', email = '$email', privs = '$privilege'";
+		$sql = "user_name = '$uname', realname = '$realname', email = '$email', privs = '$privs'";
 		$ok = safe_update("pixie_users", "$sql", "user_id = '$user_id'");
 
 		if (!$ok) {
@@ -95,7 +95,7 @@ if ($user_new) {
 
 		$password = generate_password(6);
 		$nonce = md5( uniqid( rand(), true ) );
-		$sql = "user_name = '$uname', realname = '$realname', email = '$email', pass = password(lower('$password')), nonce = '$nonce', privs = '$privilege', link_1 = 'http://www.toggle.uk.com', link_2 = 'http://www.getpixie.co.uk', link_3 = 'http://www.iwouldlikeawebsite.com', biography=''"; 
+		$sql = "user_name = '$uname', realname = '$realname', email = '$email', pass = password(lower('$password')), nonce = '$nonce', privs = '$privs', link_1 = 'http://www.toggle.uk.com', link_2 = 'http://www.getpixie.co.uk', link_3 = 'http://www.iwouldlikeawebsite.com'"; 
 		$ok = safe_insert($table_name, $sql);
 
 		if (!$ok) {
@@ -161,8 +161,8 @@ visit: ".$site_url."admin to login.";
 								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"email\" value=\"$email\" size=\"50\" maxlength=\"80\" id=\"email\" /></div>
 							</div>
 							<div class=\"form_row\">
-								<div class=\"form_label\"><label for=\"privilege\">".$lang['form_user_permissions']." <span class=\"form_required\">".$lang['form_required']."</span><span class=\"form_help\">".$lang['form_help_user_permissions']."</span></label></div>
-								<div class=\"form_item_drop\"><select class=\"form_select\" name=\"privilege\" id=\"privilege\">";
+								<div class=\"form_label\"><label for=\"privs\">".$lang['form_user_permissions']." <span class=\"form_required\">".$lang['form_required']."</span><span class=\"form_help\">".$lang['form_help_user_permissions']."</span></label></div>
+								<div class=\"form_item_drop\"><select class=\"form_select\" name=\"privs\" id=\"privs\">";
 								
 							if ($privs == 3) {
 								 echo "<option selected=\"selected\" value=\"3\">Super User</option>";
@@ -219,7 +219,7 @@ visit: ".$site_url."admin to login.";
 							</div>
 							<div class=\"form_row_button\">
 								<span class=\"form_button_cancel\"><a href=\"?s=settings&amp;x=users\">".$lang['form_button_cancel']."</a></span>
-								<input type=\"hidden\" name=\"privilege\" value=\"".$_POST['privs']."\" />
+								<input type=\"hidden\" name=\"privs\" value=\"$privs\" />
 							</div>
 							<div class=\"safclear\"></div>
 						</fieldset>
