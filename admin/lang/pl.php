@@ -279,7 +279,7 @@ $lang = array(
 	'form_site_keywords' => 'Słowa kluczowe strony',
 	'form_help_site_keywords' => 'Wpisz listę słów kluczowych oddzielonych "przecinkami" . (np. ta, strona, wymiata).',
 	'form_site_author' => 'Autor strony',
-	'form_site_copyright' => 'Prawa strony',
+	'form_site_copywright' => 'Prawa strony',
 	'form_site_curl' => 'Proste adresy?',
 	'form_help_site_curl' => 'Czy chcesz aby strona używała prostych adresów? Np. www.wymiata.net/<b>proste</b>/ zamiast www.wymiata.net?s=proste. Proste adresy tzw. <b>curl</b> działają tylko na hostingu LINUX.',
 	'form_legend_pixie_settings' => 'Dostosuj ustawienia Pixie',

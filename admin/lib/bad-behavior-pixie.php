@@ -87,7 +87,7 @@ function bb2_write_settings($settings) {
 function bb2_install() {
 	$settings = bb2_read_settings();	
 	$ok = safe_query(bb2_table_structure($settings['log_table']));
-    if($ok) safe_query("UPDATE `".PFX."pixie_settings` SET `bb2_installed`='yes'");
+    if($ok) safe_query("UPDATE `pixie_settings` SET `bb2_installed`='yes'");
 }
 
 // Screener

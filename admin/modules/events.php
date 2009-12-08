@@ -12,20 +12,21 @@ switch ($do) {
 	// The general information is used to show infromation about the module within Pixie. 
 	// Simply enter details of your module here:
 	case "info":
-		// The name of your module
-		$m_name = "Events";
-		// A description of your module
-		$m_description = "Events module with support for hCalendar microformat, archives and Google calendar links.";
-		// Who is the module author?
-		$m_author = "Scott Evans";
-		// What is the URL of your homepage
-		$m_url = "http://www.toggle.uk.com";
-		// What version is this?
-		$m_version = "1";
-		// Can be set to module or plugin.
-		$m_type = "module";
-		// Is this a module that needs publishing to?
-		$m_publish = "yes";
+	   // The name of your module
+	   $m_name = "Events";
+	   // A description of your module
+	   $m_description = "Events module with support for hCalendar microformat, archives and Google calendar links.";
+	   // Who is the module author?
+	   $m_author = "Scott Evans";
+	   // What is the URL of your homepage
+	   $m_url = "http://www.toggle.uk.com";
+	   // What version is this?
+	   $m_version = "1";
+	   // Can be set to module or plugin.
+	   $m_type = "module";
+	   // Is this a module that needs publishing to?
+	   $m_publish = "yes";
+	   
 	break;
 
 	// Install
@@ -38,27 +39,27 @@ switch ($do) {
 		// you can execute upto 5 sql queries ($execute - $execute4) 
 	break;
 
-	// The administration of the module (add, edit, delete)
-	// This is where Pixie really saves you time, these few lines of code will create the entire admin interface
+  	// The administration of the module (add, edit, delete)
+  	// This is where Pixie really saves you time, these few lines of code will create the entire admin interface
 	case "admin":
-		// The name of your module
-		$module_name= "Events";
-		// The name of the table																
-		$table_name = "pixie_module_events";
-		// The field to order by in table view														
-		$order_by = "date";
-		// Ascending (asc) or decending (desc)		  													
-		$asc_desc = "desc";
-		// Fields you want to exclude in your table view        														
-		$view_exclude = array('events_id', 'description', 'cost', 'location', 'public', 'url');			
-		// Fields you do not want people to be able to edit			
-		$edit_exclude = array('events_id');
-		// The number of items per page in the table view
-		$items_per_page = "15";
-		// Does this module support tags (yes or no)														
-		$tags = "no";
-
-		admin_module($module_name,$table_name,$order_by,$asc_desc,$view_exclude,$edit_exclude,$items_per_page, $tags);
+	   // The name of your module
+	   $module_name= "Events";
+	   // The name of the table																
+	   $table_name = "pixie_module_events";
+	   // The field to order by in table view														
+	   $order_by = "date";
+	   // Ascending (asc) or decending (desc)		  													
+	   $asc_desc = "desc";
+	   // Fields you want to exclude in your table view        														
+	   $view_exclude = array('events_id', 'description', 'cost', 'location', 'public', 'url');			
+	   // Fields you do not want people to be able to edit			
+	   $edit_exclude = array('events_id');
+	   // The number of items per page in the table view
+	   $items_per_page = "15";
+	   // Does this module support tags (yes or no)														
+	   $tags = "no";
+	   
+	   admin_module($module_name,$table_name,$order_by,$asc_desc,$view_exclude,$edit_exclude,$items_per_page, $tags);
 
 	break;
  	 	

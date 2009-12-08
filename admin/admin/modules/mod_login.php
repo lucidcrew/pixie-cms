@@ -33,9 +33,7 @@ if ($login_forgotten) {
 				$subject = $lang['email_newpassword_subject'];				
 				$emessage = $lang['email_newpassword_message'].$password;
 				$user = safe_field('realname','pixie_users',"email='$email'");
-				$headers = "From: postmaster@{$_SERVER['HTTP_HOST']}" . "\r\n" .
-					'X-Mailer: PHP/' . phpversion();
-				mail($email, $subject, $emessage, $headers);
+				mail($email, $subject, $emessage);
 				$messageok = $lang['forgotten_ok'];
 				logme($lang['forgotten_log_ok'].$user.' ('.$email.').',"yes","user"); 
 				$m = "ok";

@@ -31,14 +31,9 @@
 	if (!file_exists( "admin/config.php" ) || filesize("admin/config.php") < 10) {		// check for config
 	header( "Location: admin/install/" ); exit();} 					  		            // redirect to installer
 
-	include "admin/config.php";           										  		// load configuration
+	include "admin/config.php";           										  		// load cofiguration
 
-	include "admin/lib/lib_db.php";       										  		// load libraries order is important    										  		
-	
-	$prefs = get_prefs();           											  		// prefs as an array
-	extract($prefs);
-	putenv("TZ=$timezone"); 															// timezone fix
-	
+	include "admin/lib/lib_db.php";       										  		// load libraries order is important
 	include "admin/lib/lib_validate.php"; 										  		// 
 	include "admin/lib/lib_date.php";											  		//
 	include "admin/lib/lib_paginator.php";										  		//
@@ -50,6 +45,9 @@
 
 	users_online();																  		// current site visitors
 	bombShelter();                  											  		// check URL size
+  
+	$prefs = get_prefs();           											  		// prefs as an array
+	extract($prefs);
 	pixie();																	  		// let the magic begin 
 	referral(); 																 		// referral
 	include "admin/lang/".$language.".php";                                       		// get the language file
@@ -70,11 +68,8 @@
 		$do = "pre";  
 		include('admin/modules/'.$s.'.php');											// load the module in pre mode
 	 }
-	 
-	if (file_exists('admin/themes/'.$site_theme.'/index.php')) {
-		include('admin/themes/'.$site_theme.'/index.php'); 
-	} else { 
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
@@ -246,6 +241,5 @@
 </html>
 <!-- page generated in: <?php pagetime("print"); ?> -->
 <?php 
-	}
 	} 
 ?>	

@@ -131,7 +131,6 @@ tinyMCE.init({
   +"em/i[class|dir<ltr?rtl|id|lang|onclick|ondblclick|onkeydown|onkeypress"
   +"|onkeyup|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|style"
   +"|title],"
-  +"embed[quality|type|pluginspage|width|height|src|align|style|allowFullScreen|allowScriptAccess]," 
   +"fieldset[class|dir<ltr?rtl|id|lang|onclick|ondblclick|onkeydown|onkeypress"
   +"|onkeyup|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|style"
   +"|title],"

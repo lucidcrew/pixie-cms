@@ -379,8 +379,6 @@
   			$file = $type."_db.sql";
   			$file_content = file($file);
    			foreach($file_content as $sql_line){
-   				// adjust for table prefix
-   				$sql_line = str_replace("pixie_", $pixieconfig['table_prefix']."pixie_", $sql_line);
       			safe_query($sql_line);
 			}
 			  			
@@ -432,15 +430,6 @@
 			
 			$err = explode("|",$error1);
 			$error = $err[0];
-
-			// upgrade sql
-			$file = "upgrade.sql";
-			$file_content = file($file);
-			foreach($file_content as $sql_line){
-				// adjust prefix
-				$sql_line = str_replace("pixie_", $pixieconfig['table_prefix']."pixie_", $sql_line);
-				safe_query($sql_line);
-			}
 			
 			// log the install
 			logme("Pixie was installed... remember to delete the install directory on your server.","yes","error");
@@ -783,10 +772,12 @@ visit: ".$site_url."admin to login.";
 					<div class="form_label"><label for="database">Database <span class="form_required">*</span></label></div>
 					<div class="form_item"><input type="text" class="form_text" name="database" value="<?php print $database;?>" size="40" maxlength="80" id="database" /></div>
 				</div>
+				<!-- Pixie not ready for this yet 
 				<div class="form_row">
-					<div class="form_label"><label for="prefix">Table Prefix <span class="form_optional">(optional)</span></label></div>
+					<div class="form_label"><label for="prefix">Table Prefix <span class="form_optional">(optional)</span></label><span class="form_help">Numbers &amp; letters only.</span></div>
 					<div class="form_item"><input type="text" class="form_text" name="prefix" value="<?php print $prefix;?>" size="40" maxlength="80" id="prefix" /></div>
 				</div>
+				-->
 				<div class="form_row_button" id="form_button">
 					<input type="hidden" name="step" value="2" />
 					<input type="submit" name="next" class="form_submit" value="Next &raquo;" />

@@ -70,28 +70,29 @@ switch ($do) {
 
 		$rs = safe_rows("*", "pixie_dynamic_settings", "rss = 'yes'");
 		$num = count($rs);
+	
 		if ($rs) {
 			$i = 0;
 			echo "\t\t\t\t\t<h4>Local Feeds</h4>
 						<ul id=\"local_feeds\">\n";
 				if (public_page_exists("rss")) {
 					$rs = safe_rows_start("*", "pixie_module_rss", "1 order by feed_display_name desc");
-					$num = count($rs);
-					if ($rs) {
-						while ($a = nextRow($rs)) {
+				$num = count($rs);
+				if ($rs) {
+					while ($a = nextRow($rs)) {
 							extract($a);
-							echo "\t\t\t\t\t\t<li><a href=\"$url\" title=\"$feed_display_name\" />$feed_display_name</a></li>\n";
-							$i++;
+						print "\t\t\t\t\t\t<li><a href=\"$url\" title=\"$feed_display_name\" />$feed_display_name</a></li>\n";
+					$i++;
 						}
-					}
+				}
 				} else {
 					while ($i < $num){
-						$out = $rs[$i];
-						$page_id = $out['page_id'];
-						$rs1 = safe_row("*", "pixie_core", "page_id = '$page_id' limit 0,1");
-						extract($rs1);
-						echo "\t\t\t\t\t\t<li><a href=\"".createURL($page_name, "rss")."\" title=\"$site_name - $page_display_name\" />$page_display_name</a></li>\n";
-						$i++;
+					$out = $rs[$i];
+					$page_id = $out['page_id'];
+					$rs1 = safe_row("*", "pixie_core", "page_id = '$page_id' limit 0,1");
+					extract($rs1);
+					print "\t\t\t\t\t\t<li><a href=\"".createURL($page_name, "rss")."\" title=\"$site_name - $page_display_name\" />$page_display_name</a></li>\n";
+				$i++;
 					}
 				}
 				echo "\t\t\t\t\t</ul>\n";

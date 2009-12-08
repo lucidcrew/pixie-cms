@@ -19,55 +19,29 @@ if (!empty($pixieconfig['table_prefix'])) {
 
 class DB {
 
-	function DB() {
-		global $pixieconfig;
-		$this->host = $pixieconfig['host'];
-		$this->db   = $pixieconfig['db'];
-		$this->user = $pixieconfig['user'];
-		$this->pass = $pixieconfig['pass'];
-		$this->link = mysql_connect($this->host, $this->user, $this->pass);
-		if (!$this->link) {
-			$GLOBALS['connected'] = false;
-		} else $GLOBALS['connected'] = true;
-		mysql_select_db($this->db) or die(db_down());
-	}
-}
+    function DB() {
+         global $pixieconfig;
+         $this->host = $pixieconfig['host'];
+         $this->db   = $pixieconfig['db'];
+         $this->user = $pixieconfig['user'];
+         $this->pass = $pixieconfig['pass'];
+         $this->link = mysql_connect($this->host, $this->user, $this->pass);
+         if (!$this->link) {
+         	$GLOBALS['connected'] = false;
+         } else $GLOBALS['connected'] = true;
+         mysql_select_db($this->db) or die(db_down());
+    }
+} 
 
 $DB = new DB;
-
-//------------------------------------------------------------------
-	function adjust_prefix($table)
-	{
-		if (stripos($table, PFX) === 0) return $table;
-		else return PFX.$table;
-	}
 //------------------------------------------------------------------
 	function safe_query($q='',$debug='',$unbuf='')
 	{
-		global $DB,$pixieconfig,$message,$dst,$tzHM;
+		global $DB,$pixieconfig,$message;
 		$method = (!$unbuf) ? 'mysql_query' : 'mysql_unbuffered_query';
 		if (!$q) return false;
 		if ($debug) { 
 			$message = "MySQL Query: ".$q."<br/>MySQL Error:".mysql_error()."";
-		}
-		if(!isset($tzHM))
-		{
-			// get time zone
-			$tz = getenv("TZ");
-			// calculate hours from TZ variable - works only if time zone set as +3600, +7200 etc
-			if(is_numeric($tz))
-			{
-				$hours = ($tz/3600 % 3600);
-				$mins = ($tz % 3600 / 60);
-				// if daylight saving time
-				if($dst == "yes" && date("I") != 0)
-				{
-					$hours++;
-				}
-				// if $hours < 0 then prepend -, otherwise prepend +
-				$tzHM = (($hours<0)?"-":"+")."$hours:$mins";
-				$method("SET SESSION time_zone='$tzHM';",$DB->link);
-			}
 		}
 		
 		$result = $method($q,$DB->link);
@@ -78,33 +52,28 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function safe_delete($table, $where, $debug='')
 	{
-		$table = adjust_prefix($table);
-		$q = "delete from $table where $where";
+		$q = "delete from ".PFX."$table where $where";
 		if ($r = safe_query($q,$debug)) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 //------------------------------------------------------------------
 	function safe_update($table, $set, $where, $debug='') 
 	{
-		$table = adjust_prefix($table);
-		$q = "update $table set $set where $where";
+		$q = "update ".PFX."$table set $set where $where";
 		if ($r = safe_query($q,$debug)) {
 			return true;
-		} else {
-			return false;
-		}		
+		}
+		return false;
 	}
 
 //------------------------------------------------------------------
 	function safe_insert($table,$set,$debug='') 
 	{
 		global $DB;
-		$table = adjust_prefix($table);
-		$q = "insert into $table set $set";
+		$q = "insert into ".PFX."$table set $set";
 		if ($r = safe_query($q,$debug)) {
 			$id = mysql_insert_id($DB->link);
 			return ($id === 0 ? true : $id);
@@ -115,19 +84,17 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function safe_alter($table, $alter, $debug='') 
 	{
-		$table = adjust_prefix($table);
-		$q = "alter table $table $alter";
+		$q = "alter table ".PFX."$table $alter";
 		if ($r = safe_query($q,$debug)) {
 			return true;
 		}
 		return false;
 	}
-	
+
 //------------------------------------------------------------------
 	function safe_optimize($table, $debug='') 
 	{
-		$table = adjust_prefix($table);
-		$q = "optimize table $table";
+		$q = "optimize table ".PFX."$table";
 		if ($r = safe_query($q,$debug)) {
 			return true;
 		}
@@ -137,8 +104,7 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function safe_repair($table, $debug='') 
 	{
-		$table = adjust_prefix($table);
-		$q = "repair table $table";
+		$q = "repair table ".PFX."$table";
 		if ($r = safe_query($q,$debug)) {
 			return true;
 		}
@@ -148,8 +114,7 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function safe_field($thing, $table, $where, $debug='') 
 	{
-		$table = adjust_prefix($table);
-		$q = "select $thing from $table where $where";
+		$q = "select $thing from ".PFX."$table where $where";
 		$r = safe_query($q,$debug);
 		if (@mysql_num_rows($r) > 0) {
 			return mysql_result($r,0);
@@ -160,8 +125,7 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function safe_column($thing, $table, $where, $debug='') 
 	{
-		$table = adjust_prefix($table);
-		$q = "select $thing from $table where $where";
+		$q = "select $thing from ".PFX."$table where $where";
 		$rs = getRows($q,$debug);
 		if ($rs) {
 			foreach($rs as $a) {
@@ -176,8 +140,7 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function safe_row($things, $table, $where, $debug='') 
 	{
-		$table = adjust_prefix($table);
-		$q = "select $things from $table where $where";
+		$q = "select $things from ".PFX."$table where $where";
 		$rs = getRow($q,$debug);
 		if ($rs) {
 			return $rs;
@@ -185,11 +148,11 @@ $DB = new DB;
 		return array();
 	}
 
+
 //------------------------------------------------------------------
 	function safe_rows($things, $table, $where, $debug='') 
 	{
-		$table = adjust_prefix($table);
-		$q = "select $things from $table where $where";
+		$q = "select $things from ".PFX."$table where $where";
 		$rs = getRows($q,$debug);
 		if ($rs) {
 			return $rs;
@@ -200,23 +163,20 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function safe_rows_start($things, $table, $where, $debug='') 
 	{
-		$table = adjust_prefix($table);
-		$q = "select $things from $table where $where";
+		$q = "select $things from ".PFX."$table where $where";
 		return startRows($q,$debug);
 	}
 
 //------------------------------------------------------------------
 	function safe_count($table, $where, $debug='') 
 	{
-		$table = adjust_prefix($table);
-		return getThing("select count(*) from $table where $where",$debug);
+		return getThing("select count(*) from ".PFX."$table where $where",$debug);
 	}
 
 //------------------------------------------------------------------
 	function fetch($col,$table,$key,$val,$debug='') 
 	{
-		$table = adjust_prefix($table);
-		$q = "select $col from $table where `$key` = '$val' limit 1";
+		$q = "select $col from ".PFX."$table where `$key` = '$val' limit 1";
 		if ($r = safe_query($q,$debug)) {
 			return (mysql_num_rows($r) > 0) ? mysql_result($r,0) : '';
 		}
@@ -280,8 +240,7 @@ $DB = new DB;
 //------------------------------------------------------------------
 	function getCount($table,$where,$debug='') 
 	{
-		$table = adjust_prefix($table);
-		return getThing("select count(*) from $table where $where",$debug);
+		return getThing("select count(*) from ".PFX."$table where $where",$debug);
 	}
 //------------------------------------------------------------------
 	function get_prefs()
@@ -296,48 +255,45 @@ $DB = new DB;
 // Creates a drop down menu box from a db
 	function db_dropdown($table,$current,$name,$condition)
 	{ 
-		global $edit, $go;
+	 global $edit, $go;
+	       
+   $rs = safe_query("SELECT * FROM $table WHERE $condition");
+	 $num = mysql_num_rows($rs);
+	 $i = 0;
+	 
+	 echo "\t\t\t\t\t\t\t\t<select class=\"form_select\" name=\"$name\" id=\"$name\">\n";
+	 if ((!$current) && ($go == "new")) {
+	 	echo "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"NULL\">-</option>\n";
+	 } else if (($current == "NULL") && ($edit)) {
+	 	echo "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"NULL\">-</option>\n";
+	 } else if ($edit) {
+	 	echo "\t\t\t\t\t\t\t\t\t<option value=\"NULL\">-</option>\n";	 	
+	 }
 
-	 	$table = adjust_prefix($table);
-		$rs = safe_query("select * from $table where $condition");
-		$num = mysql_num_rows($rs);
-		$i = 0;
+	 while ($i < $num){
+	 	$F = mysql_fetch_array($rs);
+	 	
+	 	for ($j=0; $j < mysql_num_fields($rs); $j++) {
+	 		if (last_word(mysql_field_name($rs,$j)) == "id") {
+	 			$id = simplify($F[$j]);
+	 		} else {
+	 			$fieldname = $F[1];
+	 		}
+	 	}
 
-		echo "\t\t\t\t\t\t\t\t<select class=\"form_select\" name=\"$name\" id=\"$name\">\n";
-		if ((!$current) && ($go == "new")) {
-			echo "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"NULL\">-</option>\n";
-		} else if (($current == "NULL") && ($edit)) {
-			echo "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"NULL\">-</option>\n";
-		} else if ($edit) {
-			echo "\t\t\t\t\t\t\t\t\t<option value=\"NULL\">-</option>\n";	 	
-		}
-
-		while ($i < $num){
-			$F = mysql_fetch_array($rs);
-			
-			for ($j=0; $j < mysql_num_fields($rs); $j++) {
-				if (last_word(mysql_field_name($rs,$j)) == "id") {
-					$id = simplify($F[$j]);
-				} else {
-					$fieldname = $F[1];
-				}
-			}
-
-			if ($current == $id) {
-				print "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"$id\">$fieldname</option>\n";
-			} else {
-				print "\t\t\t\t\t\t\t\t\t<option value=\"$id\">$fieldname</option>\n";
-			} 	
-			$i++;
-		}
-		echo "\t\t\t\t\t\t\t\t</select>";
+    if ($current == $id) {
+	 		print "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"$id\">$fieldname</option>\n";
+	 	} else {
+	 		print "\t\t\t\t\t\t\t\t\t<option value=\"$id\">$fieldname</option>\n";
+	 	} 	
+	 $i++;
+	 }
+	 echo "\t\t\t\t\t\t\t\t</select>";
 	}
 //------------------------------------------------------------------
 	function table_exists($table_name)
 	{
-
-		$table = adjust_prefix($table);
-		$rs = safe_query("select * from $table_name WHERE 1=0");
+		$rs = safe_query("SELECT * FROM $table_name");
 		
 		if ($rs) {
 			return true;

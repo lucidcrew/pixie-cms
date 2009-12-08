@@ -278,7 +278,7 @@ $lang = array(
 	'form_site_keywords' => 'Webbplatssškord',
 	'form_help_site_keywords' => 'Skriv en lista med sškord separerade med kommatecken. (t.ex. hŠr, webbplats, regler).',
 	'form_site_author' => 'Sidans Fšrfattare',
-	'form_site_copyright' => 'Sidans Copywright',
+	'form_site_copywright' => 'Sidans Copywright',
 	'form_site_curl' => 'Enkel webbadress?',
 	'form_help_site_curl' => 'Vill du att din webbplats fšr att anvŠnda enkel webbadress? En enkel URL ser ut www.yoursite.com/enkel/ som blir istŠllet www.yoursite.com?s=enkel. Enkel webbadress fungerar pŒ Linux server.',
 	'form_legend_pixie_settings' => 'Justera sŠtt Pixie beter sig',
