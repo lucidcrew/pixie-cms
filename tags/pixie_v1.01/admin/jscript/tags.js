@@ -1,0 +1,11 @@
+/*
+ * jQuery jTagging plugin
+ * Version 1.0.0  (10/01/2007)
+ *
+ * Copyright (c) 2007 Alcohol.Wang
+ * Dual licensed under the MIT and GPL licenses.
+ *
+ * http://www.alcoholwang.cn/jquery/jTagging.htm
+*/
+
+(function($){$.jTagging={version:"1.0.0",defaults:{normalStyle:{padding:"2px 1px 0 1px",textDecoration:"none",color:"#6665cb",backgroundColor:""},selectedStyle:{padding:"2px 1px 0 1px",textDecoration:"none",color:"#fff",backgroundColor:"#6665cb"},normalHoverStyle:{padding:"2px 1px 0 1px",textDecoration:"none",color:"#fff",backgroundColor:"#6665cb"}},arrayRemove:function(a,b){a=a||[];for(var o in a){a[o]=$.trim(a[o]);if(a[o]==b||a[o]==""){a.splice(o,1)}}},setClass:function(a,b,c){$(a).css(b);$(a).hover(function(){$(a).css(c)},function(){$(a).css(b)})}};$.fn.jTagging=function(f,g,h,l,m){g=g||",";h=h||$.jTagging.defaults.normalStyle;l=l||$.jTagging.defaults.selectedStyle;m=m||$.jTagging.defaults.normalHoverStyle;f=[f];return this.each(function(){var c=this.nodeName.toLowerCase();var d=this.type.toLowerCase();if(c!="input"||d!="text"&&c!="textarea"){throw"Element must be \"input:text\" or \"textarea\"";}var e=this;$.each(["keydown","keyup"],function(i,n){$(e).bind(n,function(){$.each(f,function(i,n){$.each(n,function(j,o){$("a",o).each(function(k){var a=$(e).val().split(g);$.jTagging.arrayRemove(a);if($(a).index($(this).text())>=0){$.jTagging.setClass(this,l,m)}else{$.jTagging.setClass(this,h,m)}})})})})});$.each(f,function(i,n){$.each(n,function(j,o){$("a",o).each(function(k){$(this).removeClass();$(this).attr("href","#");$(this).click(function(){var a=$(e).val().split(g);$.jTagging.arrayRemove(a);if($(a).index($(this).text())>=0){$.jTagging.arrayRemove(a,$(this).text());$(e).val(a.join(g));$.jTagging.setClass(this,h,m)}else{a.push($(this).text());$(e).val(a.join(g));$.jTagging.setClass(this,l,m)}this.blur();return false});var b=$(e).val().split(g);$.jTagging.arrayRemove(b);if($(b).index($(this).text())>=0){$.jTagging.setClass(this,l,m)}else{$.jTagging.setClass(this,h,m)}})})})})}})(jQuery);
