@@ -30,7 +30,18 @@ class DB {
          	$GLOBALS['connected'] = false;
          } else $GLOBALS['connected'] = true;
          mysql_select_db($this->db) or die(db_down());
+         $diff = $this->getTzdiff();
+         if ($diff >= 0)
+                $diff = '+'.$diff;
+         mysql_query("set time_zone = '"."$diff:00'");
     }
+
+    function getTzdiff() {
+         extract(getdate());
+         $serveroffset = gmmktime(0,0,0,$mon,$mday,$year) - mktime(0,0,0,$mon,$mday,$year);
+         return $serveroffset/3600;
+    }
+
 } 
 
 $DB = new DB;
