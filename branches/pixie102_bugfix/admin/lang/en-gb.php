@@ -278,7 +278,7 @@ $lang = array(
 	'form_site_keywords' => 'Site Keywords',
 	'form_help_site_keywords' => 'Write a list of keywords separated by commas. (e.g. this, site, rules).',
 	'form_site_author' => 'Site Author',
-	'form_site_copywright' => 'Site Copywright',
+	'form_site_copywright' => 'Site Copyright',
 	'form_site_curl' => 'Clean URLs?',
 	'form_help_site_curl' => 'Would you like your site to use clean URLs? A clean URL looks like www.yoursite.com/clean/ as apposed to www.yoursite.com?s=clean. Clean URLs work on Linux hosts only.',
 	'form_legend_pixie_settings' => 'Adjust the way Pixie behaves',

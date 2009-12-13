@@ -51,7 +51,7 @@
 	
 		$howmany = count(safe_rows("*","pixie_log","log_message = '".$lang['failed_login']."' and user_ip = '".$_SERVER["REMOTE_ADDR"]."' and log_time < utc_timestamp() and log_time > DATE_ADD(utc_timestamp(), INTERVAL -1 DAY)"));
 		
-		sleep(3);																																    // should halt dictionary attacks
+		sleep(1);																																    // should halt dictionary attacks
 		
 		// no more logins than 3 in 24 hours
 		if ($howmany > "3") {
