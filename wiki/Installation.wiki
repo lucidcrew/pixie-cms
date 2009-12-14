@@ -46,8 +46,11 @@ All of these FTP clients are free to use.
 === The Pixie Installer ===
 ----
 
-Now Pixie is uploaded to your web server the automated installer can take over (phew!). Visit your web address (e.g. www.mysite.com) and Pixie will now begin to install your site. It is a simple 3 step process that should take a couple of minutes. Make sure you have your database details ready (your host should supply you with them on request). If for any reason the installer fails you may need to [http://www.getpixie.co.uk/support/article/manual-installation/ manually install Pixie].
+Now Pixie is uploaded to your web server the automated installer can take over (phew!). Visit your web address (e.g. www.mysite.com) and Pixie will now begin to install your site. It is a simple 3 step process that should take a couple of minutes. Make sure you have your database details ready (your host should supply you with them on request).
 
+Notes:
+  # If you get the message _Pixie is unable to write to your config.php file_ , you should temporarily change permissions of _admin/config.php_ to 666 (change back after install to 644) On some hosting servers, this will be shown as `rw rw rw` and `rw r  r` respectively.
+  # If for any reason the installer fails you may need to [http://www.getpixie.co.uk/support/article/manual-installation/ manually install Pixie].
 
 
 
