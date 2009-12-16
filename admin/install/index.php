@@ -339,7 +339,7 @@
 					"site_name = '$sitename', 
 					 site_url = '$url',
 					 site_theme = 'hellowiki',
-					 version = '1.01',
+					 version = '1.03',
 					 language = '$langu',
 					 dst = 'no',
 					 timezone = '+0',
