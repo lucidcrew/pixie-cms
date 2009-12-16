@@ -6,7 +6,7 @@
 // Title: Installer.                                               //
 //*****************************************************************//
 
-	//error_reporting(0);	// turn off error reporting
+	error_reporting(0);	// turn off error reporting
 	extract($_REQUEST); // access to form vars if register globals is off
 			
 	switch($step) {
