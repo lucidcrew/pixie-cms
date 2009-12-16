@@ -57,9 +57,18 @@ switch ($do) {
 
   	case "permalink":
   		if ($comment_submit) {
-  			if ($web == "http://") {
-  				$web = "";
-  			}
+  				if ($web == "http://") {
+  					$web = "";
+  				}
+  				
+  				$howmanycomments = count(safe_rows("*","pixie_log","log_message like '%".$lang['comment_save_log']."%' and user_ip = '".$_SERVER["REMOTE_ADDR"]."' and log_time < now() and log_time > DATE_ADD(now(), INTERVAL -4 HOUR)"));
+				if ($howmanycomments >= 4) { 
+					if (!$lang['comment_throttle_error']) {
+						$lang['comment_throttle_error'] = 'Your posting comments too quickly, slow down.';
+					}
+					$error = $lang['comment_throttle_error'];
+				}
+  				
 				$comment = strip_tags($comment,"<strong><em><a>");
 				$comment = nl2br($comment); 
 				$comment = str_replace("<a", "<a rel=\"external nofollow\"", $comment); 
