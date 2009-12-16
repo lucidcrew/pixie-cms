@@ -55,9 +55,9 @@ define('SIMPLEPIE_VERSION', '1.1.1');
 
 /**
  * SimplePie Build
- * @todo Hardcode for release (there's no need to have to call SimplePie_Misc::parse_date() only every load of simplepie.inc)
+ * @todo Hardcode for release (there's no need to have to call SimplePie_Misc::parse_date() only every load of simplepie.inc) -  isa.worcs -> truncated to 20080315 as php4 couldn't handle it
  */
-define('SIMPLEPIE_BUILD', 20080315205903);
+define('SIMPLEPIE_BUILD', 20080315);
 //define('SIMPLEPIE_BUILD', gmdate('YmdHis', SimplePie_Misc::parse_date(substr('$Date: 2008-03-15 15:28:23 -0700 (Sat, 15 Mar 2008) $', 7, 25)) ? SimplePie_Misc::parse_date(substr('$Date: 2008-03-15 15:28:23 -0700 (Sat, 15 Mar 2008) $', 7, 25)) : filemtime(__FILE__)));
 
 /**
