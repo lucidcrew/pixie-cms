@@ -174,6 +174,7 @@
 // function for checking if its 404 time from public hit
 	function public_check_404($section)
 	{
+		$section = str_replace("<x>","", $section);
 		if ($section == "rss") {
 			$check = safe_row("*","pixie_core", "page_name = '$section' AND public = 'yes' limit 0,1");
 		} else {
