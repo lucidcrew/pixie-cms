@@ -61,7 +61,7 @@ switch ($do) {
   					$web = "";
   				}
   				
-  				$howmanycomments = count(safe_rows("*","pixie_log","log_message like '%".$lang['comment_save_log']."%' and user_ip = '".$_SERVER["REMOTE_ADDR"]."' and log_time < now() and log_time > DATE_ADD(now(), INTERVAL -4 HOUR)"));
+  				$howmanycomments = count(safe_rows("*","pixie_log","log_message like '%".$lang['comment_save_log']."%' and user_ip = '".$_SERVER["REMOTE_ADDR"]."' and log_time < utc_timestamp() and log_time > DATE_ADD(utc_timestamp(), INTERVAL -4 HOUR)"));
 				if ($howmanycomments >= 4) { 
 					if (!$lang['comment_throttle_error']) {
 						$lang['comment_throttle_error'] = 'Your posting comments too quickly, slow down.';
