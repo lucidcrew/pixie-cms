@@ -430,6 +430,15 @@
 			
 			$err = explode("|",$error1);
 			$error = $err[0];
+
+			// upgrade sql
+			$file = "upgrade.sql";
+			$file_content = file($file);
+			foreach($file_content as $sql_line){
+				// adjust prefix
+				$sql_line = str_replace("pixie_", $pixieconfig['table_prefix']."pixie_", $sql_line);
+				safe_query($sql_line);
+			}
 			
 			// log the install
 			logme("Pixie was installed... remember to delete the install directory on your server.","yes","error");
