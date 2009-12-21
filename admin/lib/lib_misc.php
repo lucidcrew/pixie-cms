@@ -374,7 +374,7 @@
     	if($fd) {
       	while (($part = @readdir($fd)) == true) {
         	if ($part != "." && $part != "..") {
-        	if ($part != "index.php") {
+        	if ($part != "index.php" && preg_match('/^block_.*\.php$/', $part)) {
         		$part = str_replace("block_", "", $part);
         		$part = str_replace(".php", "", $part);
           		$cloud .= "\t\t\t\t\t\t\t\t\t<a href=\"#\" title=\"Add block: $part\">$part</a>\n";
