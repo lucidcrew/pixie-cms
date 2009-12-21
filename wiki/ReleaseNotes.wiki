@@ -8,7 +8,7 @@
 
 *New*
 
-  * Security feature - enabled comment throttling that prevents more than 4 comments in a 4 hour time period.
+  * Security feature - comment throttling prevents more than 4 comments in a 4 hour time period.
 
 *Improved*
 
