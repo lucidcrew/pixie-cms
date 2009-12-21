@@ -151,7 +151,7 @@ switch ($do) {
   	case "tags":
   		$id = get_page_id($s);
   		echo "<h3>$page_display_name (".$lang['tags'].")</h3>\n\t\t\t\t\t<div class=\"tag_section\">\n";
-	  	public_tag_cloud('pixie_dynamic_posts', 'page_id = '.$id.'');
+	  	public_tag_cloud('pixie_dynamic_posts', 'page_id = '.$id.' and posted < utc_timestamp()');
 	  	echo "\t\t\t\t\t</div>\n";
   	break;
   	
