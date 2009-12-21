@@ -1,0 +1,121 @@
+/******************************************************* // Hello Wiki Dynamic pages // *****************************************************/
+
+/* Styles dynamic/blog pages */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+.section
+	{
+	width: 480px;
+	background: url(images/entry-bg.png) no-repeat;
+	margin-bottom: 30px;
+	padding: 15px 30px 0px 0px;
+	}
+	
+.post_1, .single
+	{
+	background: none;
+	}
+	
+.single
+	{
+	margin-bottom: 40px;
+	}
+	
+.section h4, .section h4 a
+	{
+	font-size: 1.3em;
+	}
+	
+.post_links li
+	{
+	display: inline;
+	position: relative;
+	left: -20px;
+	margin-right: 20px;
+	}
+	
+.published
+	{
+	border: none;
+	color: #adadad;
+	}
+	
+.post_credits span
+	{
+	display: block;
+	}
+	
+/* pagination */
+
+.link_next a
+	{
+	float: right;
+	border: 1px solid #ccc;
+	padding: 2px 4px;
+	}
+	
+.link_previous a
+	{
+	border: 1px solid #ccc;
+	padding: 4px 6px;
+	}
+	
+#nav_posts, #nav_pages
+	{
+	margin-bottom: 20px;
+	width: 490px;
+	height: 20px;
+	}
+	
+/* comments */
+	
+#comments
+	{
+	width: 488px;
+	padding: 15px 15px 0px 0px;
+	background: url(images/entry-bg.png) no-repeat;
+	}
+	
+.gr
+	{
+	float: right;
+	border: 2px solid #ccc;
+	}
+	
+.message_body
+	{
+	width: 430px;
+	}
+	
+.message_details
+	{
+	margin-bottom: 10px;
+	}
+	
+.comment
+	{
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 15px;
+	overflow: hidden;
+	}
+	
+#comments_title
+	{
+	font-size: 1.5em;
+	color: #314FA9;
+	}
+	
+.comment_admin
+	{
+	color: #314FA9;
+	}
+	
+/* comment form */
+	
+#commentform .notice
+	{
+	display: none;
+	}
+	
+/********************************************************** // End // ********************************************************/
