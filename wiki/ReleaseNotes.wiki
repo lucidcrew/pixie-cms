@@ -7,8 +7,8 @@
 
 *Improved*
 
-  * Timezone fixes
-  * Latest jQuery (1.3.2)
+  * Timezone fixes.
+  * Latest jQuery (1.3.2).
   * Support for custom index.php files in your themes.
   * Temporary fix for allowing "links" module to be used as the homepage.
   * No . files and .php only when scanning directories.
