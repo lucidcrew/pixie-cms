@@ -638,7 +638,7 @@ switch ($do) {
 				$emonth = mktime(23, 59, 59, $this_month, $last_day, $this_year);
 				$end_month = safe_strftime("%Y-%m-%d %T", $emonth);
 
-				$search = safe_rows("*", "pixie_dynamic_posts", "page_id = '$id' and public = 'yes' and posted between '".$start_month."' and date '".$end_month."' order by posted desc");
+				$search = safe_rows("*", "pixie_dynamic_posts", "page_id = '$id' and public = 'yes' and posted between '".$start_month."' and date '".$end_month."' and posted < utc_timestamp() order by posted desc");
 
 				if ($search) {
 					print "\t\t\t\t\t\t\t<dt>".date('F', $smonth)." ".$this_year."</dt>\n";
