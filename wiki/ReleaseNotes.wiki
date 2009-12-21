@@ -9,12 +9,12 @@
 *New*
 
   * Security feature - comment throttling prevents more than 4 comments in a 4 hour time period.
+  * Support for custom index.php files in themes.
 
 *Improved*
 
   * Timezone fixes.
   * Latest jQuery (1.3.2).
-  * Support for custom index.php files in your themes.
   * Temporary fix for allowing "links" module to be used as the homepage.
   * No . files and .php only when scanning directories.
   * Caching on any RSS blocks to improve page load times.
