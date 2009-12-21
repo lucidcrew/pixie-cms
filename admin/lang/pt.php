@@ -278,7 +278,7 @@ $lang = array(
 	'form_site_keywords' => 'Palavras-chave do site',
 	'form_help_site_keywords' => 'Escreva uma lista de palavras-chave separadas por vírgulas. (e.g. este, site, é meu).',
 	'form_site_author' => 'Autor do Site',
-	'form_site_copyright' => 'Site Copywright',
+	'form_site_copywright' => 'Site Copywright',
 	'form_site_curl' => 'URLs? Limpos',
 	'form_help_site_curl' => 'Gostaria que o seu site usasse URLs Limpos? Algo como por exemplo URL www.exemplo.com/limpo/ em contraste com a www.exemplo.com?s=limpo?',
 	'form_legend_pixie_settings' => 'Ajuste a forma como Pixie se comporta',

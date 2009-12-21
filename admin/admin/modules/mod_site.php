@@ -115,7 +115,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 								<div class=\"form_item\"><input type=\"text\" name=\"site_auth\" class=\"form_text\" value=\"$site_author\" size=\"40\" maxlength=\"80\" id=\"site_author\" /></div>
 							</div>
 							<div class=\"form_row\">
-								<div class=\"form_label\"><label for=\"site_copyright\">".$lang['form_site_copyright']." <span class=\"form_optional\">".$lang['form_optional']."</span></label></div>
+								<div class=\"form_label\"><label for=\"site_copyright\">".$lang['form_site_copywright']." <span class=\"form_optional\">".$lang['form_optional']."</span></label></div>
 								<div class=\"form_item\"><input type=\"text\" name=\"site_cright\" class=\"form_text\" value=\"$site_copyright\" size=\"40\" maxlength=\"80\" id=\"site_copyright\" /></div>
 							</div>
 							<div class=\"form_row\">

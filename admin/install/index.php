@@ -339,7 +339,7 @@
 					"site_name = '$sitename', 
 					 site_url = '$url',
 					 site_theme = 'hellowiki',
-					 version = '1.01',
+					 version = '1.03',
 					 language = '$langu',
 					 dst = 'no',
 					 timezone = '+0',
@@ -379,8 +379,6 @@
   			$file = $type."_db.sql";
   			$file_content = file($file);
    			foreach($file_content as $sql_line){
-   				// adjust for table prefix
-   				$sql_line = str_replace("pixie_", $pixieconfig['table_prefix']."pixie_", $sql_line);
       			safe_query($sql_line);
 			}
 			  			
@@ -663,6 +661,23 @@ visit: ".$site_url."admin to login.";
 		switch($step) {
 			case "4":
 				global $site_url;
+                                /** Checking Dir Permissions **/
+				$warn_flag = false;
+                                if ($handle = opendir('../../files')) {
+                                        while (false !== ($file = readdir($handle))) {
+						$path = "../../files/$file";
+                                                if ($file != "." && $file != "..") {
+							
+                                                        if (is_dir($path) && !(is_writable($path))) {
+							$warn_flag = true;
+                                                                echo "<font size='-1'>Directory files/$file is not writable.</font><br>\n";
+							}
+                                                }
+                                        }
+                                        closedir($handle);
+                                }
+				if ($warn_flag)
+					echo "<p><font color=red>Warning</font> The permissions of the directories above should be set to 777 (drwxrwxrwx) for uploads and caching to be enabled</p><hr>\n";
 		?>	
 		<p>Congratulations your site is now setup and ready to use, if you want more themes and modules
 		make sure you visit the <a href="http://www.getpixie.co.uk" title="Pixie">Pixie website</a>. Remember to delete the install directory within Pixie to secure your site.</p>
@@ -783,10 +798,12 @@ visit: ".$site_url."admin to login.";
 					<div class="form_label"><label for="database">Database <span class="form_required">*</span></label></div>
 					<div class="form_item"><input type="text" class="form_text" name="database" value="<?php print $database;?>" size="40" maxlength="80" id="database" /></div>
 				</div>
+				<!-- Pixie not ready for this yet 
 				<div class="form_row">
-					<div class="form_label"><label for="prefix">Table Prefix <span class="form_optional">(optional)</span></label></div>
+					<div class="form_label"><label for="prefix">Table Prefix <span class="form_optional">(optional)</span></label><span class="form_help">Numbers &amp; letters only.</span></div>
 					<div class="form_item"><input type="text" class="form_text" name="prefix" value="<?php print $prefix;?>" size="40" maxlength="80" id="prefix" /></div>
 				</div>
+				-->
 				<div class="form_row_button" id="form_button">
 					<input type="hidden" name="step" value="2" />
 					<input type="submit" name="next" class="form_submit" value="Next &raquo;" />

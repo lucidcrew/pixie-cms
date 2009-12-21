@@ -110,25 +110,19 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 					// lets install
 					$do = install;
 					include("modules/".$modplug.".php");
-					
 					if ($execute) {
-						$execute =  str_replace("pixie_", $pixieconfig['table_prefix']."pixie_", $execute);
 						safe_query($execute);
 					} 
 					if ($execute1) {
-						$execute1 =  str_replace("pixie_", $pixieconfig['table_prefix']."pixie_", $execute1);
 						safe_query($execute1);
 					}
 					if ($execute2) {
-						$execute2 =  str_replace("pixie_", $pixieconfig['table_prefix']."pixie_", $execute2);
 						safe_query($execute2);
 					} 
 					if ($execute3) {
-						$execute3 =  str_replace("pixie_", $pixieconfig['table_prefix']."pixie_", $execute3);
 						safe_query($execute3);
 					} 
 					if ($execute4) {
-						$execute4 =  str_replace("pixie_", $pixieconfig['table_prefix']."pixie_", $execute4);
 						safe_query($execute4);
 					}  
 					$do = info;
@@ -160,7 +154,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 								if($fd) {
 								while (($part = @readdir($fd)) == true) {
 									if ($part != "." && $part != "..") {
-									if ($part != "index.php") {
+									if ($part != "index.php" && preg_match('/^[A-Za-z].*\.php$/',$part)) {
 									if (last_word($part) != "functions.php") {	
 										$pname = str_replace(".php","",$part);
 										$rs = safe_row("*","pixie_core", "page_name = '$pname' order by page_name asc");
