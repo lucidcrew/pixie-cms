@@ -18,7 +18,7 @@ if ($type == "dynamic") {
 
 echo "\t\t\t\t\t<div id=\"block_tagcloud\" class=\"block\">\n\t\t\t\t\t\t<div class=\"block_header\">\n\t\t\t\t\t\t\t<h4>".$lang['tags'].":</h4>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"block_body\">\n";
 if ($type == "dynamic") {
-	public_tag_cloud($table, 'page_id = '.$id.'');
+	public_tag_cloud($table, 'page_id = '.$id.' and posted < utc_timestamp()');
 } else {
 	$condition = $s."_id >= '0'";
 	public_tag_cloud($table, $condition);
