@@ -18,8 +18,8 @@
   * Temporary fix for allowing "links" module to be used as the homepage.
   * No . files and .php only when scanning directories.
   * Caching on any RSS blocks to improve page load times.
-  * Performance fix: stop index.php from trying to create the `pixie_bad_behavior` table on every page view.
-  * Bug where adding new users sometimes fails (MYSQL 5.0.76-community running on 32bit Windows Vista) due to biography being null.
+  * Performance fix: stop creation of the `pixie_bad_behavior` table on every page load.
+  * Bug where adding new users sometimes fails due to biography being null.
   * Other minor bug fixes.
 
 ==== Version 1.02 ====
