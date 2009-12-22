@@ -37,7 +37,7 @@ admin(f)
 
 files(f)
 
-index.php* (replace with caution, you may have edited this file to create a custom layout)
+index.php*
 
 license.txt
 
