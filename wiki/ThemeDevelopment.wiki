@@ -69,6 +69,12 @@ The template is broken into a number of files, each of which are explained below
   variations: light and dark and are released under the:
   Creative Commons Attribution 2.0 Licence.
 
+  * *index.php* (optional)
+  As of Pixie 1.03 you can now define your own HTML layout in a
+  custom index.php file as part of your theme. This file will 
+  need to be based on the root index.php file found in your Pixie
+  download and contain code from <head> to </body>. 
+
 Each CSS file is heavily commented, so you'll learn a lot by reading through them. Feel free to clear out the comments once your theme is finished. 
 
 _Tip: Pixie will always look for a CSS file with the name of the current page slug. Lets say you have installed the links module. When a visitor views the page www.mysite.com/links/ (www.mysite.com?s=links for those of you without clean URL support) Pixie will look for a CSS file called `links.css` in your current themes folder (/admin/themes/current_theme/). If found Pixie will load this file into the rest of your CSS. This allows you to completely change the look of a certain page. This will work for any static, module or plugin page you have on your site.
