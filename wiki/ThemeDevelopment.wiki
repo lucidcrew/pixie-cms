@@ -46,12 +46,12 @@ The template is broken into a number of files, each of which are explained below
   * *404.css* 
   This file styles your custom 404 page.
 
-  * *ie6.css/ie7.css* 
+  * *ie6.css/ie7.css* (optional) 
   These files are used to store IE6 and IE7 specific styles.
   These two files are not required and can be removed if not used
   in your theme.
 
-  * *handheld.css*
+  * *handheld.css* (optional) 
   This css file is used to create a stylesheet compatible with
   mobile devices. This file is not required and can be removed
   if it is not used as part of your theme.
