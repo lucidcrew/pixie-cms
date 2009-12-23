@@ -13,6 +13,9 @@
 
 //------------------------------------------------------------------
 
+	if (version_compare(PHP_VERSION, '5.0.0', '<')) 
+		include 'lib_compat.php';
+
 if (!empty($pixieconfig['table_prefix'])) {
 	define ("PFX",$pixieconfig['table_prefix']);
 } else define ("PFX",'');
