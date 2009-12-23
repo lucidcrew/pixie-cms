@@ -244,13 +244,13 @@ if (!function_exists(adjust_prefix)) {
 	   				echo "\t\t\t\t\t\t\t<div class=\"form_row\">\n\t\t\t\t\t\t\t\t<div class=\"form_label\"><label for=\"$Nams[$j]\">".$displayname."</label>$form_help</div>\n";    //$Type[$j] $Leng[$j] $Flag[$j] for field info
 	   				//echo "$Nams[$j] - $Type[$j] - $Leng[$j] - $Flag[$j]"; // see form field properties
 					if (($Type[$j] == "timestamp") && (!$edit)) {
-	   					echo"\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
 	   					date_dropdown($date);
-	   					echo"\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	   					echo "\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 	   				} else if (($Type[$j] == "timestamp") && ($edit)) {
-	   					echo"\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
 		   				date_dropdown($Fild[$j]);
-	   					echo"\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	   					echo "\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 	   				//} else if ($Type[$j] == "blob") {
 	   				//	echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_nomce\">$Fild[$j]</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; 	   				
 	   				} else if ($Type[$j] == "longtext" || $Leng[$j]>800 || $Type[$j] == "blob") {
@@ -272,7 +272,7 @@ if (!function_exists(adjust_prefix)) {
 	   						     	No<input type=\"radio\" name=\"$Nams[$j]\" class=\"form_radio\" value=\"no\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 	   					}
 	   				} else if (first_word($Nams[$j]) == "image") {
-	   					echo"\t\t\t\t\t\t\t\t<div class=\"form_item_drop image_preview\">\n";
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop image_preview\">\n";
 	   					db_dropdown("pixie_files", $Fild[$j], $Nams[$j], "file_type = 'Image' order by file_id desc");
 	   					echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('".$Nams[$j]."'); return false;\" title=\"".$lang['upload']."\">".strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 					} else if (first_word($Nams[$j]) == "document") {
@@ -288,7 +288,7 @@ if (!function_exists(adjust_prefix)) {
 	   					db_dropdown("pixie_files", $Fild[$j], $Nams[$j], "file_type = 'Audio' order by file_id desc");
 	   					echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('".$Nams[$j]."'); return false;\" title=\"".$lang['upload']."\">".strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 					} else if (first_word($Nams[$j]) == "file") {
-	   					echo"\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
 	   					db_dropdown("pixie_files", $Fild[$j], $Nams[$j], "file_id >= '0' order by file_id desc");
 	   					echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('".$Nams[$j]."'); return false;\" title=\"".$lang['upload']."\">".strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 	   				} else if ($Nams[$j] == "tags") {

@@ -160,7 +160,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 								if($fd) {
 								while (($part = @readdir($fd)) == true) {
 									if ($part != "." && $part != "..") {
-									if ($part != "index.php") {
+									if ($part != "index.php" && preg_match('/^[A-Za-z].*\.php$/',$part)) {
 									if (last_word($part) != "functions.php") {	
 										$pname = str_replace(".php","",$part);
 										$rs = safe_row("*","pixie_core", "page_name = '$pname' order by page_name asc");

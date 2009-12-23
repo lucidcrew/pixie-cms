@@ -20,7 +20,7 @@
 							<?php
 							echo "\n";
 							// Enter the URL of your RSS feed here:
-							$feed = new SimplePie('http://digg.com/users/'.$digg_username.'/history.rss');
+							$feed = new SimplePie('http://digg.com/users/'.$digg_username.'/history.rss', 'files/cache', 900);
 							$feed->handle_content_type();
 							$i = 1;
 							foreach ($feed->get_items() as $item):

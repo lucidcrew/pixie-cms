@@ -29,12 +29,24 @@ class DB {
 		$this->user = $pixieconfig['user'];
 		$this->pass = $pixieconfig['pass'];
 		$this->link = mysql_connect($this->host, $this->user, $this->pass);
-		if (!$this->link) {
+		if (!$this->link)
 			$GLOBALS['connected'] = false;
-		} else $GLOBALS['connected'] = true;
+		else
+			$GLOBALS['connected'] = true;
 		mysql_select_db($this->db) or die(db_down());
+		$diff = $this->getTzdiff();
+		if ($diff >= 0)
+			$diff = '+'.$diff;
+		mysql_query("set time_zone = '"."$diff:00'");
 	}
-}
+
+	function getTzdiff() {
+		extract(getdate());
+		$serveroffset = gmmktime(0,0,0,$mon,$mday,$year) - mktime(0,0,0,$mon,$mday,$year);
+		return $serveroffset/3600;
+	}
+
+} 
 
 $DB = new DB;
 

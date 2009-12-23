@@ -45,8 +45,9 @@
 		}
 		$ip = $_SERVER['REMOTE_ADDR'];
 
-		$uname = sterilise($uname, true);
-		$ip = sterilise($ip, true);
+		$uname = sterilise_txt($uname, true);
+		if (!preg_match('/^[0-9\.]+$/', $ip))
+			$ip = sterilise($ip, true);
 		$referral = sterilise($referral, true); 
 
 		if (($referral) and (!strstr($referral, $domain))) {

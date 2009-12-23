@@ -151,7 +151,7 @@ switch ($do) {
   	case "tags":
   		$id = get_page_id($s);
   		echo "<h3>$page_display_name (".$lang['tags'].")</h3>\n\t\t\t\t\t<div class=\"tag_section\">\n";
-	  	public_tag_cloud('pixie_dynamic_posts', 'page_id = '.$id.'');
+	  	public_tag_cloud('pixie_dynamic_posts', 'page_id = '.$id.' and posted < now()');
 	  	echo "\t\t\t\t\t</div>\n";
   	break;
   	
@@ -637,7 +637,7 @@ switch ($do) {
 				$emonth = mktime(23, 59, 59, $this_month, $last_day, $this_year);
 				$end_month = safe_strftime("%Y-%m-%d %H:%M:%S", $emonth);
 
-				$search = safe_rows("*", "pixie_dynamic_posts", "page_id = '$id' and public = 'yes' and posted between '".$start_month."' and date '".$end_month."' order by posted desc");
+				$search = safe_rows("*", "pixie_dynamic_posts", "page_id = '$id' and public = 'yes' and posted between '".$start_month."' and date '".$end_month."' and posted < now() order by posted desc");
 
 				if ($search) {
 					echo "\t\t\t\t\t\t\t<dt>".date('F', $smonth)." ".$this_year."</dt>\n";

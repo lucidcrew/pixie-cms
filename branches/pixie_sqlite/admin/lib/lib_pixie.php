@@ -70,10 +70,10 @@
 		if (!$s) {
 			$last = $default_page{strlen($default_page)-1};
 			$default = explode("/",$default_page);
-			$s = sterilise($default['0']);
-			$m = sterilise($default['1']);
-			$x = sterilise($default['2']);
-			$p = sterilise($default['3']);
+			$s = sterilise_txt($default['0']);
+			$m = sterilise_txt($default['1']);
+			$x = sterilise_txt($default['2']);
+			$p = sterilise_txt($default['3']);
 		}
 		
 		$s = public_check_404($s);

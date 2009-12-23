@@ -374,7 +374,7 @@
     	if($fd) {
       	while (($part = @readdir($fd)) == true) {
         	if ($part != "." && $part != "..") {
-        	if ($part != "index.php") {
+        	if ($part != "index.php" && preg_match('/^block_.*\.php$/', $part)) {
         		$part = str_replace("block_", "", $part);
         		$part = str_replace(".php", "", $part);
           		$cloud .= "\t\t\t\t\t\t\t\t\t<a href=\"#\" title=\"Add block: $part\">$part</a>\n";
@@ -429,6 +429,13 @@
 	
 		return array('main' => $main, 'extended' => $extended);
 	}
+//-------------------------------------------------------------------
+// Don't call sterilise unless necessary
+        function sterilise_txt($txt, $is_sql = false) {
+           if (!preg_match('/^[a-zA-Z0-9\_]+$/', $txt))
+              return sterilise($txt, $is_sql);
+           return $txt;
+        }
 //-------------------------------------------------------------------
 // steralise user input, security against XSS etc
 	function sterilise($val, $is_sql = false) {

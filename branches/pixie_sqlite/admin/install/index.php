@@ -339,7 +339,7 @@
 					"site_name = '$sitename', 
 					 site_url = '$url',
 					 site_theme = 'hellowiki',
-					 version = '1.01',
+					 version = '1.03',
 					 language = '$langu',
 					 dst = 'no',
 					 timezone = '+0',
@@ -663,6 +663,23 @@ visit: ".$site_url."admin to login.";
 		switch($step) {
 			case "4":
 				global $site_url;
+                                /** Checking Dir Permissions **/
+				$warn_flag = false;
+                                if ($handle = opendir('../../files')) {
+                                        while (false !== ($file = readdir($handle))) {
+						$path = "../../files/$file";
+                                                if ($file != "." && $file != "..") {
+							
+                                                        if (is_dir($path) && !(is_writable($path))) {
+							$warn_flag = true;
+                                                                echo "<font size='-1'>Directory files/$file is not writable.</font><br>\n";
+							}
+                                                }
+                                        }
+                                        closedir($handle);
+                                }
+				if ($warn_flag)
+					echo "<p><font color=red>Warning</font> The permissions of the directories above should be set to 777 (drwxrwxrwx) for uploads and caching to be enabled</p><hr>\n";
 		?>	
 		<p>Congratulations your site is now setup and ready to use, if you want more themes and modules
 		make sure you visit the <a href="http://www.getpixie.co.uk" title="Pixie">Pixie website</a>. Remember to delete the install directory within Pixie to secure your site.</p>
