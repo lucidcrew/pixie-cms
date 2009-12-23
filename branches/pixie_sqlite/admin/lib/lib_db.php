@@ -34,23 +34,30 @@ class DB {
 		else
 			$GLOBALS['connected'] = true;
 		mysql_select_db($this->db) or die(db_down());
-		$diff = $this->getTzdiff();
-		if ($diff >= 0)
-			$diff = '+'.$diff;
-		mysql_query("set time_zone = '"."$diff:00'");
 	}
-
-	function getTzdiff() {
-		extract(getdate());
-		$serveroffset = gmmktime(0,0,0,$mon,$mday,$year) - mktime(0,0,0,$mon,$mday,$year);
-		return $serveroffset/3600;
-	}
-
 } 
 
 $DB = new DB;
 
 //------------------------------------------------------------------
+
+	function set_mysql_tz($tz) {
+		global $dst;
+		// calculate hours from TZ variable - works only if time zone set as +3600, +7200 etc
+		if(is_numeric($tz)) {
+			$hours = ($tz/3600 % 3600);
+			$mins = ($tz % 3600 / 60);
+			// if daylight saving time
+			if($dst == "yes" && date("I") != 0)
+				$hours++;
+				// if $hours < 0 then prepend -, otherwise prepend +
+				$tzHM = (($hours<0)?"-":"+")."$hours:$mins";
+				mysql_query("set time_zone='$tzHM';",$DB->link);
+		}
+	}
+
+//------------------------------------------------------------------
+
 	function adjust_prefix($table)
 	{
 		if (stripos($table, PFX) === 0) return $table;
@@ -65,26 +72,6 @@ $DB = new DB;
 		if ($debug) { 
 			$message = "MySQL Query: ".$q."<br/>MySQL Error:".mysql_error()."";
 		}
-		if(!isset($tzHM))
-		{
-			// get time zone
-			$tz = getenv("TZ");
-			// calculate hours from TZ variable - works only if time zone set as +3600, +7200 etc
-			if(is_numeric($tz))
-			{
-				$hours = ($tz/3600 % 3600);
-				$mins = ($tz % 3600 / 60);
-				// if daylight saving time
-				if($dst == "yes" && date("I") != 0)
-				{
-					$hours++;
-				}
-				// if $hours < 0 then prepend -, otherwise prepend +
-				$tzHM = (($hours<0)?"-":"+")."$hours:$mins";
-				$method("SET SESSION time_zone='$tzHM';",$DB->link);
-			}
-		}
-		
 		$result = $method($q,$DB->link);
 
 		if(!$result) return false;

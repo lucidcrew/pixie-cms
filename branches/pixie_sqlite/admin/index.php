@@ -38,6 +38,7 @@
 	$prefs = get_prefs();           										// prefs as an array
 	extract($prefs);                										// add prefs to globals
 	putenv("TZ=$timezone");													// timezone fix
+	set_mysql_tz($timezone);
 
 	include "lang/".$language.".php";                                       // get the language file
 	

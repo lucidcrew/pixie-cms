@@ -38,6 +38,7 @@
 	$prefs = get_prefs();           											  		// prefs as an array
 	extract($prefs);
 	putenv("TZ=$timezone"); 															// timezone fix
+	set_mysql_tz($timezone);
 	
 	include "admin/lib/lib_validate.php"; 										  		// 
 	include "admin/lib/lib_date.php";											  		//
