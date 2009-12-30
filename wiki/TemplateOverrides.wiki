@@ -60,4 +60,4 @@ You now have the flexibility to change any and all code inside the new index.php
 The options for site design and customisation are now wide open for you by incorporating this modification into your template. The only limits are your imagination and the level of the skills in your possession.
 To help you craft and style your own design, a great tool to try is [http://getfirebug.com/ Firebug]. It really helps you to pick out selectors by class, id, etc when you want to add some css style to elements fast.
 
-Have fun modding! :)
+You can learn more about Pixie's template system by reading about Pixie's ThemeDevelopment.
