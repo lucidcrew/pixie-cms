@@ -73,7 +73,7 @@ The template is broken into a number of files, each of which are explained below
   As of Pixie 1.03 you can now define your own HTML layout in a
   custom index.php file as part of your theme. This file will 
   need to be based on the root index.php file found in your Pixie
-  download and contain code from `<head>` to `</body>`. 
+  download and contain code from `<!DOCTYPE>` to `</html>`.
 
 Each CSS file is heavily commented, so you'll learn a lot by reading through them. Feel free to clear out the comments once your theme is finished. 
 
