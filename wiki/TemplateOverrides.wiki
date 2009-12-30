@@ -6,7 +6,7 @@
 == Overview ==
 
 Pixie now supports template overrides, which you can use to sculpt your template's design to your very own design.
-The feature provides exciting new ways for you (The theme designer,) To express your talent, explore new layout designs and to use them with your Pixie installation.
+The feature provides exciting new ways for you (The theme designer,) To express your talent, explore new layout designs and to use them within your Pixie installation.
 
 Sometimes projects become a little more involved than normal and solutions that go beyond using just css to manipulate a Pixie template need to be sought.
 The index.php override feature provides the ability to edit the html structure and also the php code of a Pixie template.
