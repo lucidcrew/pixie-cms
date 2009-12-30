@@ -14,7 +14,7 @@ Thus providing a new level of control for site designers.
 
 It is easy to use and to implement this feature onto your Pixie website but it is considered an *advanced feature* ideally suited for web developers who possess skills in xhtml and css.
 
-The single prerequisite for this feature to work is that your site must be running Pixie version 1.03 or greater. Versions older than 1.03 will not work.
+The single prerequisite for this feature to work is that your site must be running Pixie version 1.03 or greater. Versions older than 1.03 will not work without [http://groups.google.com/group/pixie-cms/browse_thread/thread/7d2eb13f535afda3 this] modification.
 
 *It is highly recommended that you keep your Pixie site up to date.*
 *Version updates contain bug fixes and new features that will help secure and improve your Pixie website.*
