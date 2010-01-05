@@ -74,7 +74,7 @@ The template is broken into a number of files, each of which are explained below
   custom index.php file as part of your theme. This file will 
   need to be based on the root index.php file found in your Pixie
   download and contain code from `<!DOCTYPE>` to `</html>`.
-  More information about index.php overrides can be found here : TemplateOverrides
+  More information about index.php overrides can be found here : {http://www.getpixie.co.uk/support/article/theme-development-template-overrides/ Template Overrides]
 
 Each CSS file is heavily commented, so you'll learn a lot by reading through them. Feel free to clear out the comments once your theme is finished. 
 
