@@ -1,5 +1,5 @@
 #summary How to use Pixie's template override feature
-#labels index.php,index.php,TemplateOverrides
+#labels theme,development,help
 
 === Overview ===
 ----
