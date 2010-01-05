@@ -51,22 +51,27 @@ switch ($do) {
 			if ($iam) { die(); }
 			
 			if ($uemail) {
-				if ($subject) {
-					if ($message) {
-						$message = sterilise($message);
-						$subject = sterilise($subject);
-						$uemail = sterilise($uemail);
-						$to = safe_field('email','pixie_users',"user_id = '$contact' limit 0,1");
-						$eol="\r\n";
-						$headers .= "From: $uemail <$uemail>".$eol;
-						$headers .= "Reply-To: $uemail <$uemail>".$eol;
-						$headers .= "Return-Path: $uemail <$uemail>".$eol;
-						mail($to, $subject, $message, $headers);
+				$domain = explode('@', $uemail);
+				if (preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#',$uemail) && checkdnsrr($domain[1])) {
+					if ($subject) {
+						if ($message) {
+							$message = sterilise($message);
+							$subject = sterilise($subject);
+							$uemail = sterilise($uemail);
+							$to = safe_field('email','pixie_users',"user_id = '$contact' limit 0,1");
+							$eol="\r\n";
+							$headers .= "From: $uemail <$uemail>".$eol;
+							$headers .= "Reply-To: $uemail <$uemail>".$eol;
+							$headers .= "Return-Path: $uemail <$uemail>".$eol;
+							mail($to, $subject, $message, $headers);
+						} else {
+							$error = "Please enter a message.";
+						}
 					} else {
-						$error = "Please enter a message.";
+						$error = "Please provide a subject.";
 					}
 				} else {
-					$error = "Please provide a subject.";
+					$error = "Please provide a valid email adress.";
 				}
 			} else {
 				$error = "Please provide your email address.";
