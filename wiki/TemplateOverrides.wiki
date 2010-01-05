@@ -1,10 +1,8 @@
+#summary How to use Pixie's template override feature
 #labels index.php,index.php,TemplateOverrides
-= How to use Pixie's template override feature. =
 
+=== Overview ===
 ----
-
-== Overview ==
-
 Pixie now supports template overrides, which you can use to sculpt your template's design to your very own design.
 The feature provides exciting new ways for you (The theme designer,) To express your talent, explore new layout designs and to use them within your Pixie installation.
 
@@ -20,11 +18,10 @@ The single prerequisite for this feature to work is that your site must be runni
 *Version updates contain bug fixes and new features that will help secure and improve your Pixie website.*
 
 
+
+=== Instructions ===
 ----
-
-== Instructions ==
-
-=== Creating and activating the override ===
+==== Creating and activating the override ====
 
 To create the override you are going to branch some content from Pixie's root index.php 
 file into a new file named index.php, inside the directory containing your template.
