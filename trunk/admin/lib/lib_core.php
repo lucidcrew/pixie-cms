@@ -258,10 +258,10 @@ if (!function_exists(adjust_prefix)) {
 	   						if (!$containsphp) {
 	   							echo "\t\t\t\t\t\t\t\t<div class=\"mceSwitch\" id=\"$Nams[$j]_mceSwitch\">\n\t\t\t\t\t\t\t\t\t<input type=\"button\" onclick=\"setTextareaToTinyMCE('$Nams[$j]');\" value=\"Editor\" class=\"mceEditorOn mceCurrent\" /><input type=\"button\" onclick=\"unsetTextareaToTinyMCE('$Nams[$j]');\" value=\"HTML\" class=\"mceEditorOff\" />\n\t\t\t\t\t\t\t\t\t<div class=\"form_item_textarea_mce\">\n\t\t\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" id=\"$Nams[$j]\" cols=\"50\" class=\"mceEditor\" rows=\"10\">".htmlentities($Fild[$j],ENT_QUOTES,"UTF-8")."</textarea>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
 	   						} else {
-	   							echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_nomce\">$Fild[$j]</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
+	   							echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_nomce\">".htmlspecialchars($Fild[$j])."</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
 	   						}
 	   					} else {
-	   						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_nomce\">$Fild[$j]</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
+	   						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_nomce\">".htmlspecialchars($Fild[$j])."</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
 	   					}
 	   				} else if ($Type[$j] == "set'yes','no'" || $Flag[$j] == "not_null set") {
 	   					if ($Fild[$j] == "no") {
