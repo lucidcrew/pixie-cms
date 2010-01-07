@@ -20,110 +20,126 @@ if (!function_exists(adjust_prefix)) {
 
 // ------------------------------------------------------------------
 // class for displaying contents of a db table
-	class ShowTable {
-	
-		var $Res;
-		var $exclude = array();
-		var $table_name;
-		var $view_number;
-		var $lo;
-		var $finalmax;
-		var $whereami;
-		var $a_array = array();
-		var $edit;
+class ShowTable {
 
-		function ShowTable ($Res,$exclude,$table_name,$view_number,$lo,$finalmax,$whereami,$type,$s) {
-			$this->Res = $Res;
-			$this->exclude = $exclude;
-			$this->table = $table_name;
-			$this->limit = $view_number;
-			$this->num = $lo;
-			$this->finalmax = $finalmax;
-			$this->whereami = $whereami;
-			$this->page_type = $type;
-			$this->s = $s;
+	var $Res;
+	var $exclude = array();
+	var $table_name;
+	var $view_number;
+	var $lo;
+	var $finalmax;
+	var $whereami;
+	var $a_array = array();
+	var $edit;
+
+	function ShowTable ($Res,$exclude,$table_name,$view_number,$lo,$finalmax,$whereami,$type,$s) {
+
+		$this->Res = $Res;
+		$this->exclude = $exclude;
+		$this->table = $table_name;
+		$this->limit = $view_number;
+		$this->num = $lo;
+		$this->finalmax = $finalmax;
+		$this->whereami = $whereami;
+		$this->page_type = $type;
+		$this->s = $s;
+	}
+
+	function DrawBody () {
+
+		global $date_format, $lang, $page_display_name;
+
+		echo "\t<table class=\"tbl $this->table\" summary=\"".$lang['results_from']." $this->table.\">
+							<thead>
+								<tr>";
+
+	  	for ($j=0; $j < mysql_num_fields($this->Res); $j++) {
+	  		if (!in_array(mysql_field_name($this->Res,$j), $this->exclude))
+				$arlen[$j]=mysql_field_len($this->Res,$j); $sum+=$arlen[$j];
 		}
 
-		function DrawBody () {
-
-			global $date_format, $lang, $page_display_name;
-						
-			echo "\t<table class=\"tbl $this->table\" summary=\"".$lang['results_from']." $this->table.\">\n\t\t\t\t\t\t\t<thead>\n\t\t\t\t\t\t\t\t<tr>\n"; 
-	
-			for ($j=0; $j < mysql_num_fields($this->Res); $j++) {
-				if (!in_array(mysql_field_name($this->Res,$j), $this->exclude)) {  
-				$arlen[$j]=mysql_field_len($this->Res,$j); $sum+=$arlen[$j];
-				}
+		for ($j=0; $j < mysql_num_fields($this->Res); $j++) {
+			if (!in_array(mysql_field_name($this->Res,$j), $this->exclude)) {
+				$st3="class=\"tbl_heading\"";
+				$fieldname = simplify(mysql_field_name($this->Res,$j));
+				if ($lang['form_'.mysql_field_name($this->Res,$j)])
+					$fieldname = $lang['form_'.mysql_field_name($this->Res,$j)];
+				echo "
+									<th $st3 id=\"".mysql_field_name($this->Res,$j)."\">$fieldname</th>";
 			}
-	    
+		}
+
+		echo "
+									<th class=\"tbl_heading\" id=\"page_edit\"></th>
+									<th class=\"tbl_heading\" id=\"page_delete\"></th>
+								</tr>
+							</thead>";
+
+		if ($this->finalmax)
+			$this->limit = $this->finalmax;
+
+		echo "
+							<tbody>";
+
+		while ($counter < $this->limit) {
+			$F = mysql_fetch_array($this->Res);
+			if (is_even($counter))
+				$trclass = "odd";
+			else
+				$trclass = "even";
+
+			echo"
+								<tr class=\"$trclass\">\n";
+
 			for ($j=0; $j < mysql_num_fields($this->Res); $j++) {
-		
 				if (!in_array(mysql_field_name($this->Res,$j), $this->exclude)) {
-					$st3="class=\"tbl_heading\"";
-					$fieldname = simplify(mysql_field_name($this->Res,$j));
-					if ($lang['form_'.mysql_field_name($this->Res,$j)]) {
-						$fieldname = $lang['form_'.mysql_field_name($this->Res,$j)];
+					if (mysql_field_type($this->Res,$j) == "timestamp") {
+						$logunix = returnUnixtimestamp($F[$j]);
+						$date = safe_strftime($date_format, $logunix);
+						echo "
+									<td class=\"tbl_row\" headers=\"".mysql_field_name($this->Res,$j)."\">".$date."</td>";
+					} else if (mysql_field_name($this->Res,$j) == "url") {
+						echo "
+									<td class=\"tbl_row\" headers=\"".mysql_field_name($this->Res,$j)."\"><a href=\"".$F[$j]."\">".$F[$j]."</a></td>";
+					} else if (mysql_field_name($this->Res,$j) == "email") {
+						echo "
+									<td class=\"tbl_row\" headers=\"".mysql_field_name($this->Res,$j)."\"><a href=\"mailto:".$F[$j]."\">".$F[$j]."</a></td>";
+					} else if ($F[$j] == "") {
+						echo "
+									<td class=\"tbl_row\" headers=\"".mysql_field_name($this->Res,$j)."\">No Content</td>";
+					} else {
+						echo "
+									<td class=\"tbl_row\" headers=\"".mysql_field_name($this->Res,$j)."\">".strip_tags($F[$j])."</td>";
 					}
-					echo "\t\t\t\t\t\t\t\t\t<th $st3 id=\"".mysql_field_name($this->Res,$j)."\">$fieldname</th>\n";
 				}
 			}
-	
-	  	echo "\t\t\t\t\t\t\t\t\t<th class=\"tbl_heading\" id=\"page_edit\"></th>\n\t\t\t\t\t\t\t\t\t<th class=\"tbl_heading\" id=\"page_delete\"></th>\n\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t</thead>\n";
 
-	  	if ($this->finalmax) { 
-	  		$this->limit = $this->finalmax;
-	  	}
-	
-		  echo "\t\t\t\t\t\t\t<tbody>\n";
-	 	  while ($counter < $this->limit) {		
-	  		$F = mysql_fetch_array($this->Res);
-	  		
-	  		if (is_even($counter)) {
-	  			$trclass = "odd";
-	  		} else {
-	  			$trclass = "even";
-	  		}	  	
-	  		
-	  		echo"\t\t\t\t\t\t\t\t<tr class=\"$trclass\">\n";
-	  		
-	    	for ($j=0; $j < mysql_num_fields($this->Res); $j++) {
-	    
-	    		if (!in_array(mysql_field_name($this->Res,$j), $this->exclude)) {
-		  		 	if (mysql_field_type($this->Res,$j) == "timestamp") {
-		  		 		$logunix = returnUnixtimestamp($F[$j]);
-		  		 		$date = safe_strftime($date_format, $logunix);
-		  		 		echo "\t\t\t\t\t\t\t\t\t<td class=\"tbl_row\" headers=\"".mysql_field_name($this->Res,$j)."\">".$date."</td>\n";
-		  		 	} else if (mysql_field_name($this->Res,$j) == "url") {
-		  		 		echo "\t\t\t\t\t\t\t\t\t<td class=\"tbl_row\" headers=\"".mysql_field_name($this->Res,$j)."\"><a href=\"".$F[$j]."\">".$F[$j]."</a></td>\n";
-		  		 	} else if (mysql_field_name($this->Res,$j) == "email") {
-		  		 		echo "\t\t\t\t\t\t\t\t\t<td class=\"tbl_row\" headers=\"".mysql_field_name($this->Res,$j)."\"><a href=\"mailto:".$F[$j]."\">".$F[$j]."</a></td>\n"; 
-		  		 	} else if ($F[$j] == "")	{
-		  		 		echo "<td class=\"tbl_row\" headers=\"".mysql_field_name($this->Res,$j)."\">No Content</td>\n";
-		  		 	} else {
-	      	 		echo "\t\t\t\t\t\t\t\t\t<td class=\"tbl_row\" headers=\"".mysql_field_name($this->Res,$j)."\">".strip_tags($F[$j])."</td>\n";
-		  		 	}
-	     		}
-	     	}
-	
-		    echo "\t\t\t\t\t\t\t\t\t<td class=\"tbl_row tbl_edit\" headers=\"page_edit\"><a href=\"$this->whereami&amp;edit=$F[0]\" title=\"".$lang['edit']."\">".$lang['edit']."</a></td>\n\t\t\t\t\t\t\t\t\t<td class=\"tbl_row tbl_delete\" headers=\"page_delete\"><a href=\"$this->whereami&amp;delete=$F[0]\" onclick=\"return confirm('".$lang['sure_delete_entry']." (#$F[0]) ".$lang['from_the']." $page_display_name ".$lang['settings_page']."?')\" title=\"".$lang['delete']."\">".$lang['delete']."</a></td>\n\t\t\t\t\t\t\t\t</tr>\n";
-	 		
-	   	$counter++;
-	   	}
-	   	echo "\t\t\t\t\t\t\t</tbody>\n\t\t\t\t\t\t</table>\n";
-	   	} 	   		
-	} 
+			echo "
+									<td class=\"tbl_row tbl_edit\" headers=\"page_edit\"><a href=\"$this->whereami&amp;edit=$F[0]\" title=\"".$lang['edit']."\">".$lang['edit']."</a></td>
+									<td class=\"tbl_row tbl_delete\" headers=\"page_delete\"><a href=\"$this->whereami&amp;delete=$F[0]\" onclick=\"return confirm('".$lang['sure_delete_entry']." (#$F[0]) ".$lang['from_the']." $page_display_name ".$lang['settings_page']."?')\" title=\"".$lang['delete']."\">".$lang['delete']."</a></td>
+								</tr>";
+
+			$counter++;
+		}
+
+		echo "
+							</tbody>
+						</table>\n";
+	}
+}
+
 // ------------------------------------------------------------------
 // class for add/edit new records in db table
 	class ShowBlank {
-	
-		var $Nam;                      
-	 	var $Typ;                      
-	 	var $Res;                      
+
+		var $Nam;
+	 	var $Typ;
+	 	var $Res;
 	 	var $Flg;
-	 	var $Pkn;                      
-		var $edit_exclude = array();				 
+	 	var $Pkn;
+		var $edit_exclude = array();
 		var $table_name;
-	
+
 		function ShowBlank ($Nam,$Typ,$Len,$Flg,$Res,$Pkn,$edit_exclude,$table_name) {
 			$this->Nam = $Nam;
 			$this->Typ = $Typ;
