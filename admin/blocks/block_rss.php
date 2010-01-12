@@ -22,6 +22,7 @@
 								echo "\t\t\t\t\t\t\t<li><a href=\"".$item->get_permalink()."\">".$item->get_title()."</a></li>\n";
 							endforeach;
 							echo "\n";
+							echo "<li style=\"display:none;\"></li>";	// Prevents invalid markup if the list is empty
 							?>
 						</ul>
 						</div>

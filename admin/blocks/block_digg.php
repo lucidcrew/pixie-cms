@@ -31,6 +31,7 @@
 								$i++;
 							endforeach;
 							echo "\n";
+							echo "<li style=\"display:none;\"></li>";	// Prevents invalid markup if the list is empty
 							?>
 						</ul>
 						</div>

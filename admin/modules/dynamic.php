@@ -292,15 +292,15 @@ switch ($do) {
 
 			if ($totalposts > $currentnum) {
 				// then we need to link onto the next page	
-				echo "\t\t\t\t\t\t<div id=\"page_next\" class=\"link_next\"><a href=\"".createURL($s, "page", $nextpage)."\" title=\"".$lang['next_page'].": $nextpage\">".$lang['next_page']." &raquo;</a></div>\n";
+				echo "\t\t\t\t\t\t<div id=\"page_next\" class=\"link_next\"><a class=\"link_next_a\" href=\"".createURL($s, "page", $nextpage)."\" title=\"".$lang['next_page'].": $nextpage\">".$lang['next_page']." &raquo;</a></div>\n";
 	
 			}
 			if ($m == "page") {
 				if ($x >= 2) {
 					if ($previouspage == 1) {
-						echo "\t\t\t\t\t\t<div id=\"page_previous\" class=\"link_previous\"><a href=\"".createURL($s)."\" title=\"".$lang['previous_page'].": $previouspage\">&laquo; ".$lang['previous_page']."</a></div>\n";
+						echo "\t\t\t\t\t\t<div id=\"page_previous\" class=\"link_previous\"><a class=\"link_prev_a\" href=\"".createURL($s)."\" title=\"".$lang['previous_page'].": $previouspage\">&laquo; ".$lang['previous_page']."</a></div>\n";
 					} else {
-						echo "\t\t\t\t\t\t<div id=\"page_previous\" class=\"link_previous\"><a href=\"".createURL($s, "page", $previouspage)."\" title=\"".$lang['previous_page'].": $previouspage\">&laquo; ".$lang['previous_page']."</a></div>\n";
+						echo "\t\t\t\t\t\t<div id=\"page_previous\" class=\"link_previous\"><a class=\"link_prev_a\" href=\"".createURL($s, "page", $previouspage)."\" title=\"".$lang['previous_page'].": $previouspage\">&laquo; ".$lang['previous_page']."</a></div>\n";
 					}
 				}
 			}
@@ -322,14 +322,14 @@ switch ($do) {
 			
 			if ($totalposts > $currentnum) {
 				// then we need to link onto the next page	
-				echo "\t\t\t\t\t\t<div id=\"page_next\" class=\"link_next\"><a href=\"".createURL($s, $m, $x, $nextpage)."\" title=\"".$lang['next_page'].": $nextpage\">".$lang['next_page']." &raquo;</a></div>\n";
+				echo "\t\t\t\t\t\t<div id=\"page_next\" class=\"link_next\"><a class=\"link_next_a\" href=\"".createURL($s, $m, $x, $nextpage)."\" title=\"".$lang['next_page'].": $nextpage\">".$lang['next_page']." &raquo;</a></div>\n";
 	
 			}
 			if ($p >= 2) {
 				if ($previouspage == 1) {
-					echo "\t\t\t\t\t\t<div id=\"page_previous\" class=\"link_previous\"><a href=\"".createURL($s, $m, $x)."\" title=\"".$lang['previous_page'].": $previouspage\">&laquo; ".$lang['previous_page']."</a></div>\n";
+					echo "\t\t\t\t\t\t<div id=\"page_previous\" class=\"link_previous\"><a class=\"link_prev_a\" href=\"".createURL($s, $m, $x)."\" title=\"".$lang['previous_page'].": $previouspage\">&laquo; ".$lang['previous_page']."</a></div>\n";
 				} else {
-					echo "\t\t\t\t\t\t<div id=\"page_previous\" class=\"link_previous\"><a href=\"".createURL($s, $m, $x, $previouspage)."\" title=\"".$lang['previous_page'].": $previouspage\">&laquo; ".$lang['previous_page']."</a></div>\n";
+					echo "\t\t\t\t\t\t<div id=\"page_previous\" class=\"link_previous\"><a class=\"link_prev_a\" href=\"".createURL($s, $m, $x, $previouspage)."\" title=\"".$lang['previous_page'].": $previouspage\">&laquo; ".$lang['previous_page']."</a></div>\n";
 				}
 			}
 			// pagination for tags pages needs to be different... coming soon
@@ -435,7 +435,7 @@ switch ($do) {
 					if ($searchnext) {
 						$ntitle = safe_field('title','pixie_dynamic_posts',"post_id ='$searchnext'");
 						$nslug = safe_field('post_slug','pixie_dynamic_posts',"post_id ='$searchnext'");
-						echo "\t\t\t\t\t\t<div id=\"post_next\" class=\"link_next\"><a href=\"".createURL($s, "permalink", $nslug)."\" title=\"".$lang['next_post'].": $ntitle\">".$lang['next_post']." &raquo;</a></div>\n";
+						echo "\t\t\t\t\t\t<div id=\"post_next\" class=\"link_next\"><a class=\"link_next_a\" href=\"".createURL($s, "permalink", $nslug)."\" title=\"".$lang['next_post'].": $ntitle\">".$lang['next_post']." &raquo;</a></div>\n";
 					}
 					
 					// what post is previous?
@@ -444,7 +444,7 @@ switch ($do) {
 					if ($searchprev) {
 						$ptitle = safe_field('title','pixie_dynamic_posts',"post_id ='$searchprev'");
 						$pslug = safe_field('post_slug','pixie_dynamic_posts',"post_id ='$searchprev'");
-						echo "\t\t\t\t\t\t<div id=\"post_previous\" class=\"link_previous\"><a href=\"".createURL($s, "permalink", $pslug)."\" title=\"".$lang['previous_post'].": $ptitle\">&laquo; ".$lang['previous_post']."</a></div>\n";
+						echo "\t\t\t\t\t\t<div id=\"post_previous\" class=\"link_previous\"><a class=\"link_prev_a\" href=\"".createURL($s, "permalink", $pslug)."\" title=\"".$lang['previous_post'].": $ptitle\">&laquo; ".$lang['previous_post']."</a></div>\n";
 					}
 					
 					echo "\t\t\t\t\t</div>\n";

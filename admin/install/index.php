@@ -338,8 +338,8 @@
 					"pixie_settings", 
 					"site_name = '$sitename', 
 					 site_url = '$url',
-					 site_theme = 'hellowiki',
-					 version = '1.01',
+					 site_theme = 'itheme',
+					 version = '1.04',
 					 language = '$langu',
 					 dst = 'no',
 					 timezone = '+0',
@@ -360,16 +360,136 @@
 					$clean = "/";
 				}
 				$data = 
-"<IfModule mod_rewrite.c>
-   
+"#
+# 	Apache-PHP-Pixie .htaccess
+#
+
+#	Pixie Powered (www.getpixie.co.uk)
+#	Licence: GNU General Public License v3                   		 
+#	Copyright (C) Scott Evans   
+
+#	This program is free software: you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation, either version 3 of the License, or
+#	(at your option) any later version.
+
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#	GNU General Public License for more details.
+
+#	You should have received a copy of the GNU General Public License
+#	along with this program. If not, see http://www.gnu.org/licenses/   
+
+#	www.getpixie.co.uk                          
+
+# Set the default handler.
+DirectoryIndex index.php
+
+# Start the rewrite rules
+<IfModule mod_rewrite.c>
+   Options +FollowSymLinks
   RewriteEngine On
-  RewriteBase $clean
-  
+
+  # If your site can be accessed both with and without the 'www.' prefix, you
+  # can use one of the following settings to redirect users to your preferred
+  # URL, either WITH or WITHOUT the 'www.' prefix.
+  # By default your users can usually access your site using http://www.yoursite.com
+  # or http://yoursite.com but it is highly advised that you use the
+  # actual domain http://yoursite.com by redirecting to it using this file
+  # because http://www.yoursite.com is simply a subdomain of http://yoursite.com
+  # the www. is pointless in most applications.
+  # Choose ONLY one option:
+
+  # To redirect all users to access the site WITH the 'www.' prefix,
+  # (http://example.com/... will be redirected to http://www.yoursite.com/...)
+  # adapt and uncomment the following two lines :
+  # RewriteCond %{HTTP_HOST} ^yoursite\.com$ [NC]
+  # RewriteRule ^(.*)$ http://www.yoursite.com/$1 [L,R=301]
+
+  # This next one is the one everyone is advised to select.
+
+  # To redirect all users to access the site WITHOUT the 'www.' prefix,
+  # (http://www.yoursite.com/... will be redirected to http://yoursite.com/...)
+  # uncomment and adapt the following two lines :
+  # RewriteCond %{HTTP_HOST} ^www\.yoursite\.com$ [NC]
+  # RewriteRule ^(.*)$ http://yoursite.com/$1 [L,R=301]
+
+  # Modify the RewriteBase if you are using pixie in a subdirectory or in a
+  # VirtualDocumentRoot and the rewrite rules are not working properly.
+  # For example if your site is at http://yoursite.com/pixie uncomment and
+  # modify the following line:
+  # RewriteBase /pixie
+
+  # If your site is running in a VirtualDocumentRoot at http://yoursite.com/,
+  # uncomment the following line:
+    RewriteBase $clean
+
+# Protect files and directories from prying eyes.
+<FilesMatch \"\.(engine|inc|info|install|module|profile|test|po|sh|.*sql|theme|tpl(\.php)?|xtmpl|svn-base)$|^(code-style\.pl|Entries.*|Repository|Root|Tag|Template|all-wcprops|entries|format)$\">
+  Order allow,deny
+</FilesMatch>
+
+# Don't show directory listings for URLs which map to a directory.
+Options -Indexes
+
+# Make Pixie handle any 404 errors.
+ErrorDocument 404 /index.php
+
+# Force simple error message for requests for non-existent favicon.ico.
+<Files favicon.ico>
+  # There is no end quote below, for compatibility with Apache 1.3.
+  ErrorDocument 404 \"The requested file favicon.ico was not found.
+</Files>
+
+########## Begin - Rewrite rules to block out some common exploits
+## If you experience problems on your site block out the operations listed below
+## This attempts to block the most common type of exploit `attempts.`
+
+## Deny access to extension xml files (comment out to de-activate)
+<Files ~ \"\.xml$\">
+Order allow,deny
+Deny from all
+Satisfy all
+</Files>
+## End of deny access to extension xml files
+
+# Block out any script trying to base64_encode junk to send via URL
+RewriteCond %{QUERY_STRING} base64_encode.*\(.*\) [OR]
+# Block out any script that includes a <script> tag in URL
+RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+# Block out any script trying to set a PHP GLOBALS variable via URL
+RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+# Block out any script trying to modify a _REQUEST variable via URL
+RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+# Send all blocked request to homepage with 403 Forbidden error!
+RewriteRule ^(.*)$ index.php [F,L]
+#
+########## End - Rewrite rules to block out some common exploits
+
+# Start Pixie's core mod rewrite rules
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^(.*) index.php?%{QUERY_STRING} [L]
+# End Pixie's core mod rewrite rules
 
-</IfModule>";
+# End the rewrite rules
+</IfModule>
+
+# Extra features
+
+# Requires mod_expires to be enabled.
+<IfModule mod_expires.c>
+  # Enable expirations.
+  ExpiresActive On
+
+  # Cache all files for 2 weeks after access (A).
+  ExpiresDefault A1209600
+
+  # Do not cache dynamically generated pages.
+  ExpiresByType text/html A1
+</IfModule>
+";
 				fwrite($fh, $data);
 				fclose($fh);
 				
@@ -512,7 +632,7 @@ visit: ".$site_url."admin to login.";
 	<!-- meta tags -->
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="elev3n, eleven, 11, 3l3v3n, el3v3n, binary, html, xhtml, css, php, xml, mysql, flash, actionscript, action, script, web standards, accessibility, scott, evans, scott evans, sunk, media, www.sunkmedia.co.uk, scripts, news, portfolio, shop, blog, web, design, print, identity, logo, designer, fonts, typography, england, uk, london, united kingdom, staines, middlesex, computers, mac, apple, osx, os x, windows, linux, itx, mini, pc, gadgets, itunes, mp3, technology" />
-	<meta name="description" content="elev3n.co.uk - web and print design portfolio for scott evans (uk)." />
+	<meta name="description" content="http://www.toggle.uk.com/ - web and print design portfolio for scott evans (uk)." />
 	<meta http-equiv="imagetoolbar" content="no" />
 	<meta name="robots" content="all" />
 	<meta name="revisit-after" content="7 days" />

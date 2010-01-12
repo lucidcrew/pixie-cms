@@ -18,7 +18,7 @@ if ($nested_nav == "yes") {
 					</li>
 <?php
 } else {
-	echo "\t\t\t\t\t<div id=\"block_dynamic_nav\" class=\"block\">\n\t\t\t\t\t\t<div class=\"block_header\">\n\t\t\t\t\t\t\t<h4>Sub Navigation:</h4>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"block_body\">\n";
+	echo "\t\t\t\t\t<div id=\"block_dynamic_nav\" class=\"block\">\n\t\t\t\t\t\t<div class=\"block_header\">\n\t\t\t\t\t\t\t<h4>Sub Navigation</h4>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"block_body\">\n";
 ?>
 							<ul id="sub_navigation_1">
 								<li><a href="<?php echo createURL($page_name, "archives");; ?>" title="<?php print $page_display_name.": ".$lang['archives'];?>"<?php if ($m == "archives") { print " class=\"sub_nav_current_1\"";}?>><?php print $lang['archives']; ?></a></li>
