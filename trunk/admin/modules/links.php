@@ -11,7 +11,7 @@
 switch ($do) {
 
 	// General information:
-	// The general information is used to show infromation about the module within Pixie. 
+	// The general information is used to show information about the module within Pixie. 
 	// Simply enter details of your module here:
 	case "info":
 		// The name of your module
@@ -144,6 +144,7 @@ switch ($do) {
 							echo "\t\t\t\t\t\t\t<li><a href=\"$url\" title=\"$link_title\">$link_title</a></li>\n";
 						$i++;
 					}
+					echo "<li style=\"display:none;\"></li>";	// Prevent invalid markup if the list is empty
 					echo "\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n";
 					echo "\t\t\t\t</div>\n";
 					}
@@ -161,7 +162,7 @@ switch ($do) {
 				// get all the tags from the links page using the all_tags function within Pixie
 				$tags_array = all_tags("pixie_module_links", "links_id >= '0'");
 				
-				// make sure we actually got soemthing
+				// make sure we actually got something
 				if (count($tags_array) != "0") {
 					// sort the tags in the array
 					sort($tags_array);
@@ -184,6 +185,7 @@ switch ($do) {
 								echo "\t\t\t\t\t\t\t<li><a href=\"$url\" title=\"$link_title\">$link_title</a></li>\n";
 								$i++;
 							}
+							echo "<li style=\"display:none;\"></li>";	// Prevent invalid markup if the list is empty
 							echo "\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n";
 						}
 					}

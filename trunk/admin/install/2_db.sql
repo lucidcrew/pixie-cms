@@ -1,7 +1,7 @@
 -- Everything setup
 
 -- create two pages
-INSERT INTO `pixie_core` (`page_id`, `page_type`, `page_name`, `page_display_name`, `page_description`, `page_blocks`, `page_content`, `page_views`, `page_parent`, `privs`, `publish`, `public`, `in_navigation`, `page_order`, `searchable`, `last_modified`) VALUES (3, 'dynamic', 'blog', 'My Blog', '<p>This s my Blog about stuff!</p>', 'demo rss', NULL, 0, '', 1, 'yes', 'yes', 'yes', 1, 'yes', '2008-03-25 10:53:10'), (4, 'static', 'about', 'About Me', '<p>This is a page all about me</p>', 'demo digg', NULL, 0, '', 1, 'yes', 'yes', 'yes', 1, 'yes', '2008-03-25 10:54:00');
+INSERT INTO `pixie_core` (`page_id`, `page_type`, `page_name`, `page_display_name`, `page_description`, `page_blocks`, `page_content`, `page_views`, `page_parent`, `privs`, `publish`, `public`, `in_navigation`, `page_order`, `searchable`, `last_modified`) VALUES (3, 'dynamic', 'blog', 'My Blog', '<p>This is my Blog about stuff!</p>', 'demo rss', NULL, 0, '', 1, 'yes', 'yes', 'yes', 1, 'yes', '2008-03-25 10:53:10'), (4, 'static', 'about', 'About Me', '<p>This is a page all about me</p>', 'demo digg', NULL, 0, '', 1, 'yes', 'yes', 'yes', 1, 'yes', '2008-03-25 10:54:00');
 
 -- setup blog settings
 INSERT INTO `pixie_dynamic_settings` (`settings_id`, `page_id`, `posts_per_page`, `rss`) VALUES (1, 3, 10, 'yes');

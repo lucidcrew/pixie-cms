@@ -101,11 +101,12 @@ body
 .block_body
 	{
 	margin: 0;
-	padding: 5px 10px 9px 10px;
+	padding: 5px 10px 10px 10px;
 	background: url(images/sidep-middle.gif) no-repeat 0 100%;
 	overflow: hidden;
 	position: relative;
 	top: -20px;
+	max-height: 1186px;
 	}
 	
 .block h4

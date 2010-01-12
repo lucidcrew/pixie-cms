@@ -225,12 +225,12 @@ th, tr, td
 
 .dotrule
 	{
-	border-bottom: 1px dashed color: #44a1d0;
+	border-bottom: 1px dashed; color: #44a1d0;
 	}
 
 .hrule
 	{
-	background: color: #44a1d0;
+	color: #44a1d0;
 	}
 	
 .right

@@ -94,6 +94,7 @@ switch ($do) {
 						$i++;
 					}
 				}
+				echo "<li style=\"display:none;\"></li>";	// Prevent invalid markup if the list is empty
 				echo "\t\t\t\t\t</ul>\n";
 			}
 		  echo "\t\t\t\t</div>\n";	break;
