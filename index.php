@@ -162,6 +162,8 @@
 
 </head>
 
+  <?php flush(); ?>
+
 <body id="pixie" class="pixie <?php $date_array = getdate(); print "y".$date_array['year']." "; print "m".$date_array['mon']." "; print "d".$date_array['mday']." "; print "h".$date_array['hours']." "; if ($s) { print "s_".$s." "; } if ($m) { print "m_".$m." "; } if ($x) { print "x_".$x." "; } if ($p) { print "p_".$p; } ?>">
 
 	<?php build_head(); ?>

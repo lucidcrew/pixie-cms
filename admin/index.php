@@ -149,6 +149,8 @@
 
 </head>
 
+  <?php flush(); ?>
+
 <body class="pixie <?php $s." "; $date_array = getdate(); print "y".$date_array['year']." "; print "m".$date_array['mon']." "; print "d".$date_array['mday']." "; print "h".$date_array['hours']." "; print $s; ?>">
 	<div id="message"></div>
 	<div id="pixie">
