@@ -18,7 +18,7 @@
 // You should have received a copy of the GNU General Public License     //
 // along with this program. If not, see http://www.gnu.org/licenses/     //                      
 // ----------------------------------------------------------------------//
-// Title: Admin Index			                                         //
+// Title: Admin Index			                                 //
 //***********************************************************************//
 
 	error_reporting(0);														// turn off error reporting
@@ -55,14 +55,19 @@
 
 	bombShelter();                  										// check URL size
 
+  	if (!file_exists( "settings.php" ) || filesize( "settings.php") < 10) {     // check for settings.php
+	$gzip_admin = "no";} 								// ensure no unset variables if file is missing
+  	if (file_exists( "settings.php" ) || filesize( "settings.php") < 10) {     // check for settings.php
+	include "settings.php";}
+
 	$s = check_404($s);                                                     // check section exists
 	
 	if ($do == "rss" && $user) {											// if this is a RSS page build feed
 		adminrss($s, $user);												//
 	} else {																//
-	
 ?>
-
+<?php if ($gzip_admin == "yes") { if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) if (extension_loaded('zlib')) ob_start('ob_gzhandler'); else ob_start(); ?>
+	<?php } /* Start gzip compression */ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
@@ -104,14 +109,20 @@
 	<meta name="generator" content="Pixie <?php print $version; ?> - Copyright (C) 2006 - <?php print date("Y");?>." /> 
 		
 	<!-- javascript -->
+	<?php /* Use jQuery from googleapis */ if ($jquery_google_apis_load == "yes") { ?>
+	<script type="text/javascript" src="<?php print $googleapis_jquery_load_location; ?>"></script>
+	<?php } else { ?>
 	<script type="text/javascript" src="jscript/jquery.js"></script>
+	<?php } /* End Use jQuery from googleapis */ ?>
 	<script type="text/javascript" src="jscript/interface.js"></script>
 	<script type="text/javascript" src="jscript/slider.js"></script>
 	<script type="text/javascript" src="jscript/thickbox.js"></script>
 	<script type="text/javascript" src="jscript/tablesorter.js"></script>
 	<script type="text/javascript" src="jscript/pixie.js.php?s=<?php print $s; ?>"></script>
+	<?php /* Add tinymce */ if ($tinymce_load !== "no") { ?>
 	<script type="text/javascript" src="jscript/tiny_mce/tiny_mce.js"></script>
 	<script type="text/javascript" src="jscript/tiny_mce/tiny_mce_setup.js.php?theme=<?php print $site_theme; ?>&amp;s=<?php print $x; ?>&amp;m=<?php print $m;?>"></script>
+	<?php } /* End add tinymce */ ?>
 	<script type="text/javascript" src="jscript/tags.js"></script>
 	<script type="text/javascript" src="jscript/ajaxfileupload.js"></script>
 	
@@ -224,6 +235,9 @@
 </body>
 </html>
 <!-- page generated in: <?php pagetime("print");?> -->
+	<?php if ($gzip_admin == "yes") { ?>
+	<?php if (extension_loaded('zlib')) ob_end_flush(); ?>
+	<?php } /* End gzip compression */ ?>
 <?php
 	}
 ?>

@@ -53,6 +53,11 @@
 	pixie();																	  		// let the magic begin 
 	referral(); 																 		// referral
 	include "admin/lang/".$language.".php";                                       		// get the language file
+	$gzip_theme_output = NULL;
+	$theme_jquery_google_apis = NULL;
+	$theme_jquery_google_apis_location = NULL;
+	$theme_swfobject_google_apis = NULL;
+	$theme_swfobject_google_apis_location = NULL;						// These variables are here to prevent an undefined variable for upgraders that don't have them defined in settings.php - remove them if it seems paranoid...
 	include "admin/themes/".$site_theme."/settings.php";                          		// load the current themes settings
 
 	if ($s == "404") { header("HTTP/1.0 404 Not Found"); }						  		// send correct header for 404 pages
@@ -75,6 +80,8 @@
 		include('admin/themes/'.$site_theme.'/index.php'); 
 	} else { 
 ?>
+<?php if ($gzip_theme_output == "yes") { if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) if (extension_loaded('zlib')) ob_start('ob_gzhandler'); else ob_start(); ?>
+	<?php } /* Start gzip compression */ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
@@ -116,12 +123,21 @@
 	<meta name="copyright" content="<?php print $site_copyright; ?>" />
 	<meta name="generator" content="Pixie <?php print $version; ?> - Copyright (C) 2006 - <?php print date("Y");?>." /> 
 	
+	<!-- javascript -->
+	<?php /* Chain stuff to load by condition, either yes or no */ if ($theme_swfobject_google_apis == "yes") { $theme_jquery_google_apis = "yes"; } if ($theme_jquery_google_apis == "yes") { $theme_swfobject_google_apis = "yes"; } if ($theme_jquery_google_apis == "yes") { $jquery = "yes"; } if ($theme_swfobject_google_apis == "yes") { $jquery = "yes"; } ?>
 	<?php if ($jquery == "yes") { ?>
-<!-- javascript -->
+	<?php /* Use jQuery from googleapis */ if ($theme_jquery_google_apis == "yes") { ?>
+	<script type="text/javascript" src="<?php print $theme_jquery_google_apis_location; ?>"></script>
+	<?php } else { ?>
 	<script type="text/javascript" src="<?php print $rel_path; ?>admin/jscript/jquery.js"></script>
+	<?php } /* End Use jQuery from googleapis */ ?>
+	<?php /* Use swfobject from googleapis */ if ($theme_swfobject_google_apis == "yes") { ?>
+	<script type="text/javascript" src="<?php print $theme_swfobject_google_apis_location; ?>"></script>
+	<?php } else { ?>
 	<script type="text/javascript" src="<?php print $rel_path; ?>admin/jscript/swfobject.js"></script>
+	<?php } /* End Use swfobject from googleapis */ ?>
 	<script type="text/javascript" src="<?php print $rel_path; ?>admin/jscript/public.js.php?s=<?php print $s; ?>"></script>
-	<?php } ?>
+	<?php } /* End jquery = yes */ ?>
 
 	<!-- bad behavior -->
 	<?php bb2_insert_head(); ?>
@@ -247,6 +263,9 @@
 </body>
 </html>
 <!-- page generated in: <?php pagetime("print"); ?> -->
+	<?php if ($gzip_theme_output == "yes") { ?>
+	<?php if (extension_loaded('zlib')) ob_end_flush(); ?>
+	<?php } /* End gzip compression */ ?>
 <?php 
 	}
 	} 
