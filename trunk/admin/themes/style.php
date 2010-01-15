@@ -6,16 +6,16 @@
 // Title: Style Import.                                            //
 //*****************************************************************//
 
-extract($_REQUEST);
+extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');
 // declare the output of the file as CSS
 header('Content-type: text/css');
 
 echo"
-@import url($theme/core.css);
-@import url($theme/layout.css);
-@import url($theme/navigation.css);
+@import url($pixie_theme/core.css);
+@import url($pixie_theme/layout.css);
+@import url($pixie_theme/navigation.css);
 ";
-$file = $theme."/".$s.".css";
+$file = $pixie_theme."/".$pixie_s.".css";
 if (file_exists($file)) {
 	echo "@import url($file);";
 }

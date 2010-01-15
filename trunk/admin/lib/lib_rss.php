@@ -13,6 +13,7 @@
 		global $site_url, $site_name;
 
 		if (public_page_exists("rss")) {
+			$i = 0;	/* Prevents insecure undefined variable $i */
 			$rs = safe_rows_start("*", "pixie_module_rss", "1 order by feed_display_name desc");
 			$num = count($rs);
 			if ($rs) {

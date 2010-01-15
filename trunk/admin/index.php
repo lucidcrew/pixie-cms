@@ -108,27 +108,16 @@
 	<meta name="copyright" content="<?php print $site_copyright; ?>" />
 	<meta name="generator" content="Pixie <?php print $version; ?> - Copyright (C) 2006 - <?php print date("Y");?>." /> 
 		
-	<!-- javascript -->
+	<!-- head javascript -->
 	<?php /* Use jQuery from googleapis */ if ($jquery_google_apis_load == "yes") { ?>
 	<script type="text/javascript" src="<?php print $googleapis_jquery_load_location; ?>"></script>
 	<?php } else { ?>
 	<script type="text/javascript" src="jscript/jquery.js"></script>
 	<?php } /* End Use jQuery from googleapis */ ?>
+	<!-- Important to have these two scripts in the head -->
 	<script type="text/javascript" src="jscript/interface.js"></script>
 	<script type="text/javascript" src="jscript/slider.js"></script>
-	<script type="text/javascript" src="jscript/thickbox.js"></script>
-	<script type="text/javascript" src="jscript/tablesorter.js"></script>
-	<script type="text/javascript" src="jscript/pixie.js.php?s=<?php print $s; ?>"></script>
-	<?php /* Add tinymce */ if ($tinymce_load !== "no") { ?>
-	<script type="text/javascript" src="jscript/tiny_mce/tiny_mce.js"></script>
-	<script type="text/javascript" src="jscript/tiny_mce/tiny_mce_setup.js.php?theme=<?php print $site_theme; ?>&amp;s=<?php print $x; ?>&amp;m=<?php print $m;?>"></script>
-	<?php } /* End add tinymce */ ?>
-	<script type="text/javascript" src="jscript/tags.js"></script>
-	<script type="text/javascript" src="jscript/ajaxfileupload.js"></script>
-	
-	<!-- bad behavior -->
-	<?php bb2_insert_head(); ?>
-	
+
 	<!-- css -->
 	<link rel="stylesheet" href="admin/theme/style.php?s=<?php print $s; ?>" type="text/css" media="screen" />
 	<link rel="stylesheet" href="admin/theme/cskin.css" type="text/css" media="screen" />
@@ -210,28 +199,44 @@
 				</ul>
 			</div>
 		</div>
-	</div>	
+	</div>
+
+    <!-- JavaScript includes are placed after the content at the very bottom of the page, just before the closing body tag. -->
+      <!-- This ensures that all content is loaded before manipulation of the DOM occurs. It also fixes a bug in opera where opera tries to load the carousel too early. -->
+	<!-- javascript -->
+	<script type="text/javascript" src="jscript/tags.js"></script>
+	<script type="text/javascript" src="jscript/tablesorter.js"></script>
+	<script type="text/javascript" src="jscript/ajaxfileupload.js"></script>
+	<script type="text/javascript" src="jscript/thickbox.js"></script>
+	<script type="text/javascript" src="jscript/pixie.js.php?s=<?php print $s; ?>"></script>
+	<?php /* Add tinymce */ if ($tinymce_load !== "no") { ?>
+	<script type="text/javascript" src="jscript/tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript" src="jscript/tiny_mce/tiny_mce_setup.js.php?theme=<?php print $site_theme; ?>&amp;s=<?php print $x; ?>&amp;m=<?php print $m;?>"></script>
+	<?php } /* End add tinymce */ ?>
+
 <?php
 		global $message;
 		if (($message) || ($messageok)) {
 			echo "
 	<script type=\"text/javascript\">
-		$(function(){";
+		jQuery(function(){";
  			if ($message) {
  				if($GLOBALS['system_message'] != $message) {
- 					echo "\n\t\t\t$.post(\"admin/modules/ajax_message.php\",{ message: \"$message\" }, function(data){ $(data).appendTo(\"div#message\"); $(\"#message\").hide(); $(\"#message\").fadeIn(\"slow\"); $(\"#message\").css({ padding: \"5px\" }); $(\"#message\").addClass(\"errormess\"); });";
+ 					echo "\n\t\t\tjQuery.post(\"admin/modules/ajax_message.php\",{ message: \"$message\" }, function(data){ jQuery(data).appendTo(\"div#message\"); jQuery(\"#message\").hide(); jQuery(\"#message\").fadeIn(\"slow\"); jQuery(\"#message\").css({ padding: \"5px\" }); jQuery(\"#message\").addClass(\"errormess\"); });";
  				} else {
- 					echo "\n\t\t\t$.post(\"admin/modules/ajax_message.php\",{ message: \"$message\", back: \"no\" }, function(data){ $(data).appendTo(\"div#message\"); $(\"#message\").hide(); $(\"#message\").fadeIn(\"slow\"); $(\"#message\").css({ padding: \"5px\" }); $(\"#message\").addClass(\"okmess\"); });";
+ 					echo "\n\t\t\tjQuery.post(\"admin/modules/ajax_message.php\",{ message: \"$message\", back: \"no\" }, function(data){ jQuery(data).appendTo(\"div#message\"); jQuery(\"#message\").hide(); jQuery(\"#message\").fadeIn(\"slow\"); jQuery(\"#message\").css({ padding: \"5px\" }); jQuery(\"#message\").addClass(\"okmess\"); });";
  				}
  	 		} else if ($messageok) {
  				safe_update("pixie_settings", "value = now()", "name = 'dbupdatetime'");
- 				echo "\n\t\t\t$.post(\"admin/modules/ajax_message.php\",{ messageok: \"$messageok\" }, function(data){ $(data).appendTo(\"div#message\"); $(\"#message\").hide(); $(\"#message\").fadeIn(\"slow\"); $(\"#message\").css({ padding: \"5px\" }); $(\"#message\").addClass(\"okmess\"); });";
+ 				echo "\n\t\t\tjQuery.post(\"admin/modules/ajax_message.php\",{ messageok: \"$messageok\" }, function(data){ jQuery(data).appendTo(\"div#message\"); jQuery(\"#message\").hide(); jQuery(\"#message\").fadeIn(\"slow\"); jQuery(\"#message\").css({ padding: \"5px\" }); jQuery(\"#message\").addClass(\"okmess\"); });";
  			}
 		echo"
 		}) 
 	</script>\n";
 		}
 ?>
+	<!-- bad behavior -->
+	<?php bb2_insert_head(); ?>
 </body>
 </html>
 <!-- page generated in: <?php pagetime("print");?> -->

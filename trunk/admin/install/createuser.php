@@ -1,20 +1,20 @@
 <?php
-extract($_REQUEST);
+extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');
 	include "../config.php";
 	include "../lib/lib_db.php";       																				// load libraries order is important
 	include "../lib/lib_misc.php";     																				//
 
-print ($do);
+print ($pixie_do);
 
 
-if ($user_new) {
+if ($pixie_user_new) {
 
 	$table_name = "pixie_users";
-	if (!$error) {
+	if (!$pixie_error) {
 
 		$password = generate_password(6);
 		$nonce = md5( uniqid( rand(), true ) );
-		$sql = "user_name = '$uname', realname = '$realname', email = '$email', pass = password(lower('$password')), nonce = '$nonce', privs = '$privs', biography =''"; 
+		$sql = "user_name = '$pixie_uname', realname = '$pixie_realname', email = '$pixie_email', pass = password(lower('$password')), nonce = '$nonce', privs = '$pixie_privs', biography =''"; 
 
 		$ok = safe_insert($table_name, $sql);
 
@@ -26,19 +26,19 @@ if ($user_new) {
 				$emessage = "
 Your account information for Pixie has been set to:
 
-username: $uname
+username: $pixie_uname
 password: $password
 
 ";
 			 
 			$subject = "Pixie account information";
-			mail($email, $subject, $emessage);
+			mail($pixie_email, $subject, $emessage);
 			
-			$messageok = "Saved new user $uname, a temp password has been created (<b>$password</b>).";
+			$messageok = "Saved new user $pixie_uname, a temp password has been created (<b>$password</b>).";
 		}
 		
 	} else {
-		$err = explode("|",$error);
+		$err = explode("|",$pixie_error);
 		$message = $err[0];
 	}
 } 

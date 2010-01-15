@@ -23,6 +23,8 @@
 
 	error_reporting(0);															 		// turn off error reporting
 	
+	$ptitle = NULL;	/* Prevents insecure undefined variable $ptitle */
+	$pinfo = NULL;	/* Prevents insecure undefined variable $pinfo */
 	include "admin/lib/lib_misc.php";     										  		// loaded first for security
 	include "admin/lib/lib_logs.php"; pagetime("init");   						  		// runtime clock																																
 
