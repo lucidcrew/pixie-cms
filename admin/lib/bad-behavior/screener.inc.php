@@ -14,32 +14,31 @@ function bb2_screener_javascript($settings, $package, $cookie_name, $cookie_valu
 
 	// FIXME: do something
 	$bb2_javascript = "<script type=\"text/javascript\">
-	<!--
-	function bb2_addLoadEvent(func) {
-		var oldonload = window.onload;
-		if (typeof window.onload != 'function') {
-			window.onload = func;
-		} else {
-			window.onload = function() {
-				oldonload();
-				func();
-			}
+<!--
+function bb2_addLoadEvent(func) {
+	var oldonload = window.onload;
+	if (typeof window.onload != 'function') {
+		window.onload = func;
+	} else {
+		window.onload = function() {
+			oldonload();
+			func();
 		}
 	}
-	
-	bb2_addLoadEvent(function() {
-		for ( i=0; i < document.forms.length; i++ ) {
-			if (document.forms[i].method == 'post') {
-				var myElement = document.createElement('input');
-				myElement.setAttribute('type', 'hidden');
-				myElement.name = '$cookie_name';
-				myElement.value = '$cookie_value';
-				document.forms[i].appendChild(myElement);
-			}
+}
+
+bb2_addLoadEvent(function() {
+	for ( i=0; i < document.forms.length; i++ ) {
+		if (document.forms[i].method == 'post') {
+			var myElement = document.createElement('input');
+			myElement.setAttribute('type', 'hidden');
+			myElement.name = '$cookie_name';
+			myElement.value = '$cookie_value';
+			document.forms[i].appendChild(myElement);
 		}
-	});
-	// -->
-	</script>
+	}
+});
+// --></script>
 		";
 }
 

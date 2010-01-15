@@ -7,7 +7,7 @@
 //*****************************************************************//
 
 header('Content-Type: text/javascript');
-extract($_REQUEST);
+extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');
 ?>
 
 tinyMCE.init({
@@ -16,7 +16,7 @@ tinyMCE.init({
 	width : "100%", 
 	theme : "advanced",
 	<?php
-	if ($m == "dynamic") {
+	if ($pixie_m == "dynamic") {
 	?>
 	theme_advanced_buttons1 : "bold,underline,italic,strikethrough,|,formatselect,styleselect,separator,bullist,numlist,|,justifyleft,justifycenter,justifyright,justifyfull,|,link,unlink,image,charmap,wp_more,|,spellchecker,|,removeformat,cleanup,undo,redo,|,fullscreen",
 	<?php 
@@ -50,7 +50,7 @@ tinyMCE.init({
 	entities : "38,amp,60,lt,62,gt",
 	external_image_list_url : "jscript/tiny_mce/imagelist.php",
 	theme_advanced_styles : "Dotted Rule=dotrule;Rule=hrule;Right=right;Left=left;Below=clear;Small=small;Large=large;Highlight=highlight;Faded Text=quiet;Hide=hide;Notice Message=notice;Success Message=success;Error Message=error",  // list of custom CSS styles for use in pixie
-	content_css : "themes/<?php print $theme; ?>/core.css", 					 
+	content_css : "themes/<?php print $pixie_theme; ?>/core.css", 					 
 	plugins : "autosave,spellchecker,safari,fullscreen,wordpress",
 	valid_elements : ""
 	+"a[accesskey|charset|class|coords|dir<ltr?rtl|href|hreflang|id|lang|name"

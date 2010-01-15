@@ -7,5 +7,5 @@
 //*****************************************************************//
 
 header('Content-Type: text/javascript');
-extract($_REQUEST);
+extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');
 ?>

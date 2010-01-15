@@ -110,6 +110,8 @@ function bb2_start($settings)
 		$headers_mixed[uc_all($h)] = $v;
 	}
 
+	// IPv6 - IPv4 compatibility mode hack
+	$_SERVER['REMOTE_ADDR'] = preg_replace("/^::ffff:/", "", $_SERVER['REMOTE_ADDR']);
 	// We use these frequently. Keep a copy close at hand.
 	$ip = $_SERVER['REMOTE_ADDR'];
 	$request_method = $_SERVER['REQUEST_METHOD'];
@@ -181,7 +183,7 @@ function bb2_start($settings)
 		} elseif (stripos($ua, "msnbot") !== FALSE || stripos($ua, "MS Search") !== FALSE) {
 			require_once(BB2_CORE . "/msnbot.inc.php");
 			bb2_test($settings, $package, bb2_msnbot($package));
-		} elseif (stripos($ua, "Googlebot") !== FALSE || stripos($ua, "Mediapartners-Google") !== FALSE) {
+		} elseif (stripos($ua, "Googlebot") !== FALSE || stripos($ua, "Mediapartners-Google") !== FALSE || stripos($ua, "Google Wireless") !== FALSE) {
 			require_once(BB2_CORE . "/google.inc.php");
 			bb2_test($settings, $package, bb2_google($package));
 		} elseif (stripos($ua, "Mozilla") !== FALSE && stripos($ua, "Mozilla") == 0) {

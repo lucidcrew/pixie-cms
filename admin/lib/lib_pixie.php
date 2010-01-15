@@ -193,7 +193,7 @@
 		global $site_url, $date_format;
 			
 		if(isset($_COOKIE['pixie_login'])) {	
-			list($username,$cookie_hash) = split(',',$_COOKIE['pixie_login']);
+			list($username,$cookie_hash) = explode(',',$_COOKIE['pixie_login']);
 			$nonce = safe_field('nonce','pixie_users',"user_name='$username'");
 
 			if (md5($username.$nonce) == $cookie_hash) {

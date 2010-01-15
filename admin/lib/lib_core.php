@@ -629,15 +629,6 @@ class ShowTable {
 					echo "\t\t\t\t<div class=\"helper\"><h3>".$lang['help']."</h3><p>".$lang['helper_nopages404']." ".$lang['helper_nopagesuser']."</p></div>\n";
 				}
 		} else {
-		echo "
-				<script type=\"text/javascript\">
-				$(document).ready(function(){
-				  jQuery('#mycarousel').jcarousel({
-				    scroll : 1,
-				    itemFirstInCallback: {onAfterAnimation: mycarousel_itemFirstInCallback}
-				  });
-				});
-				</script>\n\n";
 			
 		echo "\t\t\t\t<ul id=\"mycarousel\" class=\"jcarousel-skin-tango\">\n";
 		
@@ -736,15 +727,16 @@ class ShowTable {
 		}	
 		echo "\t\t\t\t</ul>\n";
 		}
-		// move carousel to current page
-		echo "
-				<script type=\"text/javascript\">
-				function mycarousel_itemFirstInCallback(carousel, item, idx, state)
-				{
-		    			if (state == 'init') carousel.scroll($scroll, false);
-			 	}; 
-	  			</script>
-	  ";
+
+		echo "<script type=\"text/javascript\">
+// Init the carousel after the dom output has been created
+jQuery(function(){jQuery('#mycarousel').jcarousel({scroll:1,itemFirstInCallback:{onAfterAnimation:mycarousel_itemFirstInCallback}}).fadeIn(\"slow\");});
+// Move the carousel to the current page
+function mycarousel_itemFirstInCallback(carousel,item,idx,state)
+{if(state=='init')carousel.scroll($scroll,false);};
+jQuery(document).ready(function(){jQuery(\".current a\").fadeOut(\"slow\").fadeIn(\"fast\");});
+</script>\n\n";
+
 	}
 // ------------------------------------------------------------------
 // edit table entry
