@@ -237,6 +237,8 @@
 ?>
 	<!-- bad behavior -->
 	<?php bb2_insert_head(); ?>
+	<!-- If javascript is disabled show more of the carousel -->
+	<noscript><style type="text/css">.jcarousel-skin-tango{max-height: 100%;}</style></noscript>
 </body>
 </html>
 <!-- page generated in: <?php pagetime("print");?> -->

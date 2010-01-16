@@ -729,12 +729,25 @@ class ShowTable {
 		}
 
 		echo "<script type=\"text/javascript\">
-// Init the carousel after the dom output has been created
-jQuery(function(){jQuery('#mycarousel').jcarousel({scroll:1,itemFirstInCallback:{onAfterAnimation:mycarousel_itemFirstInCallback}}).fadeIn(\"slow\");});
+jQuery(function(){jQuery(document).ready(function(){jQuery('#mycarousel').jcarousel({animation:'500',wrap:'both',scroll:5,itemFirstInCallback:{onAfterAnimation:mycarousel_itemFirstInCallback}});});
 // Move the carousel to the current page
 function mycarousel_itemFirstInCallback(carousel,item,idx,state)
 {if(state=='init')carousel.scroll($scroll,false);};
-jQuery(document).ready(function(){jQuery(\".current a\").fadeOut(\"slow\").fadeIn(\"fast\");});
+var \$currentLi = jQuery(\".current a\").parent();
+jQuery(document).ready(function(){jQuery(\"#mycarousel li\").not(\$currentLi).css(\"opacity\", \"1\");jQuery(\$currentLi).fadeIn().css(\"opacity\", \"0.9\");jQuery(\".current a\").fadeOut(500).fadeIn(1000);});
+
+
+jQuery(\"#mycarousel li\").hover(
+      function () {
+        jQuery(this).css(\"opacity\", \"0.9\");
+      }, 
+      function () {
+        jQuery(this).css(\"opacity\", \"1\");
+      }
+    );
+
+
+});
 </script>\n\n";
 
 	}
