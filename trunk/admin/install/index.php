@@ -6,15 +6,29 @@
 // Title: Installer.                                               //
 //*****************************************************************//
 
+	$debug = "no";	// Set this to yes to debug and see all the global vars coming into the file
 	error_reporting(0);	// turn off error reporting
+
+	if ($debug == "yes") {
+	error_reporting(E_ALL);
+	$show_vars = get_defined_vars();
+	echo '<pre class="showvars">The _REQUEST array contains : ';
+	print_r($show_vars["_REQUEST"]);
+	echo '</pre>';
+	}
+
+	$pixie_prefix = NULL; // Prevent undefined variable if a prefix is not supplied
+
 	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie'); // access to form vars if register globals is off
-			
+
 	switch($pixie_step) {
 		
 		// step 2
 		// create the config file, chmod the correct directories and install basic db stucture 
 		case "2":
-			
+
+			if ($pixie_prefix == "pixie_") { $pixie_prefix = "pixie__"; }		// Prevent pixie_ being used as the prefix, causes bug
+
 			$conn = mysql_connect($pixie_host, $pixie_username, $pixie_password);
 			
 			if (!$conn) {
@@ -22,7 +36,7 @@
 			} else {
 				$checkdb = mysql_select_db($pixie_database);
 				if (!$checkdb) {
-					$error = "Pixie could not connect to your database, make sure you have created a database with the name: $database.";
+					$error = "Pixie could not connect to your database, make sure you have created a database with the name: $pixie_database.";
 				} else {
 					
 					// write data to config file
@@ -299,9 +313,9 @@
 			}
 							
 			if (!$error) {
-				$step = "2";
+				$pixie_step = "2";
 			} else {
-				$step = "1";
+				$pixie_step = "1";
 			}
 		
 		break;
@@ -316,7 +330,9 @@
 			include "../lib/lib_validate.php"; 		// 
 			include "../lib/lib_core.php";          //
 			include "../lib/lib_backup.php";	    //
-	
+
+			$pixie_sitename = htmlentities($pixie_sitename);	// Hopefully prevents a bug where a ' in a string like : dave's site, errors out the admin interface
+
 			$check = new Validator ();
 			if (!$pixie_sitename) { $error .= $lang['site_name_error']." |"; $scream[] = "name"; }
 			if (!$pixie_url) { $error .= $lang['site_url_error']." |"; $scream[] = "url"; }
@@ -511,9 +527,9 @@ RewriteRule ^(.*)$ index.php [F,L]
 			chmod("../../files/sqlbackups/", 0777);
 
 			if (!$error) {
-				$step = "3";
+				$pixie_step = "3";
 			} else {
-				$step = "2";
+				$pixie_step = "2";
 			}
 		
 		break;
@@ -526,7 +542,7 @@ RewriteRule ^(.*)$ index.php [F,L]
 			
 			$prefs = get_prefs();           		// prefs as an array
 			extract($prefs);                		// add prefs to globals
-			include "../lang/".$pixie_langu.".php";       // get the language file
+			include "../lang/".$language.".php";       // get the language file
 			include "../lib/lib_misc.php";     		//			
 			include "../lib/lib_date.php";			//
 			include "../lib/lib_validate.php"; 		// 
@@ -536,11 +552,18 @@ RewriteRule ^(.*)$ index.php [F,L]
 
 			$check = new Validator ();
 
+	if ($debug == "yes") {
+	$show_vars = get_defined_vars();
+	echo '<pre class="showvars">The prefs array contains : ';
+	print_r($show_vars["prefs"]);
+	echo '</pre>';
+	}
+
 			if ($pixie_username == "") { $error1 .= $lang['user_name_missing']." |"; $scream[] = "uname"; }
 			$pixie_username = str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($pixie_username)));
 			if ($pixie_name == "") { $error1 .= $lang['user_realname_missing']." |"; $scream[] = "realname"; }
 			if ($pixie_password == "") { $error1 .= $lang['user_password_missing']." |"; $scream[] = "realname"; }
-			if (!$check->validateEmail($pixie_email,$pixie_lang['user_email_error']." |")) { $scream[] = "email"; }
+			if (!$check->validateEmail($pixie_email,$lang['user_email_error']." |")) { $scream[] = "email"; }
 			if ($check->foundErrors()) { $error1 .= $check->listErrors("x"); }
 			
 			$nonce = md5( uniqid( rand(), true ) );
@@ -577,9 +600,9 @@ visit: ".$site_url."admin to login.";
 				$subject = "Pixie";
 				mail($pixie_email, $subject, $emessage);
 				
-				$step = "4";
+				$pixie_step = "4";
 			} else {
-				$step = "3";
+				$pixie_step = "3";
 			}
 		break;
 		
@@ -636,7 +659,7 @@ visit: ".$site_url."admin to login.";
 	<meta name="revisit-after" content="7 days" />
 	<meta name="author" content="Scott Evans" />
   	<meta name="copyright" content="Scott Evans" />
-  
+
 	<!-- CSS -->
 	<link rel="stylesheet" href="../admin/theme/style.php" type="text/css" media="screen"  />
 	<style type="text/css">
@@ -646,15 +669,16 @@ visit: ".$site_url."admin to login.";
 			background: #191919;
 			}
 		
-		#bg
+		#bg-wrap
 			{
 			background: #191919 url(background.jpg) 7px 0px no-repeat;
 			width: 790px;
 			min-height: 670px;
 			margin: 0 auto;
 			padding-top: 100px;
+			display: none;
 			}
-			
+
 		#placeholder
 			{
 			border: 5px solid #e1e1e1;
@@ -706,8 +730,11 @@ visit: ".$site_url."admin to login.";
 			float: left;
 			font-size: 0.7em;
 			padding-left: 5px;
+			padding-right: 5px;
 			position: relative;
 			top: 2px;
+			width: 60%;
+			text-align: left;
 			}
 		
 		.form_item_drop
@@ -751,6 +778,56 @@ visit: ".$site_url."admin to login.";
 			border-color: #C6D880; 
 			}
 
+		.showvars    
+			{ 
+			background-color:#000000;
+			color:#529214;
+			}
+
+		.center    
+			{ 
+			text-align:center;
+			}
+
+		.divcentertext    
+			{ 
+			font-size: 0.9em;
+			text-align:center;
+			}
+
+		.divcentertext2   
+			{ 
+			font-size: 0.8em;
+			text-align:center;
+			}
+
+		#pixieicon    
+			{ 
+			border:5px solid #e1e1e1;
+			}
+
+		input, select    
+			{ 
+			margin-top: 0.4em;
+			}
+
+		.form_submit
+			{
+			background-color:transparent;
+			background-image:url(button.png);
+			background-position:center bottom;
+			background-repeat:no-repeat;
+			border:0;
+			color:#ffffff;
+			height:30px;
+			width:70px;
+			}
+
+			.form_submit:hover {
+			background-position:center top;
+			color:#ffffff;
+			}
+
 	</style>
 
 	<!-- site icons-->
@@ -760,6 +837,7 @@ visit: ".$site_url."admin to login.";
 </head>
 
 <body>
+	<div id="bg-wrap">
 	<div id="bg">
 	<?php
 	if ($error) {
@@ -781,27 +859,34 @@ visit: ".$site_url."admin to login.";
 		switch($pixie_step) {
 			case "4":
 				global $site_url;
-		?>	
-		<p>Congratulations your site is now setup and ready to use, if you want more themes and modules
-		make sure you visit the <a href="http://www.getpixie.co.uk" title="Pixie">Pixie website</a>. Remember to delete the install directory within Pixie to secure your site.</p>
-		
-		<p>Now <a href="<?php print $site_url."admin/"; ?>" title="Login to Pixie">login and start adding content</a> to your site...</p>
+		?>
+		<div class="center"><br /><b>Congratulations!</b></div><br />
+		<div class="center"><img id="pixieicon" src="<?php print $site_url . "files/images/apple_touch_icon.jpg"; ?>" alt="Pixie Logo jpg" /></div>
+		<div class="divcentertext2"><br />Your new <b>Pixie</b> web site is now setup and ready to use.</div>
+		<p>If you would like to add any <b>themes</b> or <b>modules</b>, be sure to visit the <a href="http://www.getpixie.co.uk" title="Pixie">Pixie website</a> to browse the collection. Please remember to delete the install directory within Pixie to secure your site.</p>
+		<div class="divcentertext2">What would you like to do <b>next</b>?
+		<br /><br /><a href="<?php print $site_url; ?>" title="Visit the homepage">Visit your new homepage</a> or<br />
+		<a href="<?php print $site_url."admin/"; ?>" title="Login to Pixie">Login and start adding content</a> to your site...<br /></div>
+		<p>If you need <b>help</b> with Pixie, you can join the <a href="http://groups.google.com/group/pixie-cms" title="Pixie Forums">Pixie Forums</a> and start a discussion. <b>Everyone</b> is welcome.<br />
+		<br />If you would like to help <b>develop</b> Pixie, you can visit Pixie's <a href="http://code.google.com/p/pixie-cms/" title="Help develop Pixie">Google code project page</a> to get started.</p>
+		<div class="divcentertext2"><br /><b>Thank you for installing Pixie!</b></div><br />
+
 		<?php
 			break;
 			case "3":
 		?>
 		
-		<p>Nearly finished! Last step is to create the "Super User" account for Pixie:</p>
+		<p class="toptext">Nearly finished!<br />Last step is to create the "Super User" account for Pixie:</p>
 	
 		<form action="index.php" method="post" id="form_user" class="form">
 			<fieldset>
 			<legend>Super User information</legend>
 				<div class="form_row">
-					<div class="form_label"><label for="username">Username <span class="form_required">*</span></label><span class="form_help">Used to login to Pixie</span></div>
+					<div class="form_label"><label for="username">Username <span class="form_required">*</span></label><span class="form_help">A login username</span></div>
 					<div class="form_item"><input type="text" class="form_text" name="username" value="<?php print $pixie_username ?>" size="40" maxlength="80" id="username" /></div>
 				</div>
 				<div class="form_row">
-					<div class="form_label"><label for="name">Your Name <span class="form_required">*</span></label><span class="form_help">Displayed to visitors to your site</span></div>
+					<div class="form_label"><label for="name">Your Name <span class="form_required">*</span></label><span class="form_help">Your real name</span></div>
 					<div class="form_item"><input type="text" class="form_text" name="name" value="<?php print $pixie_name ?>" size="40" maxlength="80" id="name" /></div>
 				</div>
 				<div class="form_row">
@@ -814,7 +899,7 @@ visit: ".$site_url."admin to login.";
 				</div>
 				<div class="form_row_button" id="form_button">
 					<input type="hidden" name="step" value="4" />
-					<input type="submit" name="next" class="form_submit" value="Finish &raquo;" />
+					<input type="submit" name="next" class="form_submit" value="Finish" />
 				</div>
 				<div class="safclear"></div>
 			</fieldset>	
@@ -828,13 +913,13 @@ visit: ".$site_url."admin to login.";
 			$url1 = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 			$url1 = str_replace("admin/install/index.php","",$url1);
 		?>
-		<p>Now Pixie needs some details about your site (you will have access to more settings once Pixie is installed):</p>
+		<p class="toptext">Now Pixie needs some details about your site (you will have access to more settings once Pixie is installed):</p>
 		
 		<form action="index.php" method="post" id="form_site" class="form">
 			<fieldset>
 			<legend>Site information</legend>
 				<div class="form_row">
-					<div class="form_label"><label for="langu">Language <span class="form_required">*</span></label><span class="form_help">Select the language you wish to use.</span></div>
+					<div class="form_label"><label for="langu">Language <span class="form_required">*</span></label><span class="form_help">Please select a language</span></div>
 					<div class="form_item_drop">
 						<select class="form_select" name="langu" id="langu">
 							<option selected="selected" value="en-gb">English</option>
@@ -853,7 +938,7 @@ visit: ".$site_url."admin to login.";
 					<div class="form_item"><input type="text" class="form_text" name="url" value="<?php if ($pixie_url) { print $pixie_url; } else { print $url1; }?>" size="40" maxlength="80" id="url" /></div>
 				</div>
 				<div class="form_row ">
-					<div class="form_label"><label for="site_name">Site Name <span class="form_required">*</span></label><span class="form_help">What would you like your site to be called?</span></div>
+					<div class="form_label"><label for="site_name">Site Name <span class="form_required">*</span></label><span class="form_help">What's it called?</span></div>
 					<div class="form_item"><input type="text" class="form_text" name="sitename" value="<?php if ($pixie_sitename) { print $pixie_sitename; } else { print "My Pixie Site"; } ?>" size="40" maxlength="80" id="site_name" /></div>
 				</div>
 				<div class="form_row">
@@ -866,7 +951,7 @@ visit: ".$site_url."admin to login.";
 						</select>
 					</div>
 				</div>
-				<p class="help">Please note you can completely edit your choice once Pixie is installed, the site types are to save your time when setting up different websites.<br />As Pixie matures so will the list of possibilites.<br /><a href="http://code.google.com/p/pixie-cms/" title="Pixie on Google code">Help us develop</a> Pixie!</p> 
+				<p class="help">Please note you can completely edit your choice once Pixie is installed, the site types are to save your time when setting up different websites.<br /><br />As Pixie matures so will the list of possibilites.<br /><a href="http://code.google.com/p/pixie-cms/" title="Pixie on Google code">Help us develop</a> Pixie!</p> 
 				<div class="form_row_button" id="form_button">
 					<input type="hidden" name="step" value="3" />
 					<input type="submit" name="next" class="form_submit" value="Next &raquo;" />
@@ -880,7 +965,7 @@ visit: ".$site_url."admin to login.";
 			
 			default:
 		?>
-		<p>Welcome to the <a href="http://www.getpixie.co.uk" alt="Get Pixie!">Pixie</a> installer, just a few steps to go until you have your own Pixie powered website. Firstly we need your database details:</p>
+		<p class="toptext">Welcome to the <a href="http://www.getpixie.co.uk" alt="Get Pixie!">Pixie</a> installer, just a few steps to go until you have your own Pixie powered website. Firstly we need your database details:</p>
 		
 		<form action="index.php" method="post" id="form_db" class="form">
 			<fieldset>
@@ -912,13 +997,59 @@ visit: ".$site_url."admin to login.";
 				<div class="safclear"></div>
 			</fieldset>	
  		</form>
+
  		<?php
  			break;
  		}
  		?>
- 		
+
+	      </div>
 	</div>
-	</div>
+  </div>
+
+	<?php if ($debug == "yes") {
+	/* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>';
+	} ?>
+
+	<!-- If javascript is disabled -->
+	<noscript><style type="text/css">#bg-wrap{display:block;}</style></noscript>
+	<!-- javascript -->
+	<script type="text/javascript" src="../jscript/jquery.js"></script>
+	<script type="text/javascript">
+    var $j = jQuery.noConflict();
+
+    $j(function() { 
+$j.fn.wait = function(time, type) {
+        time = time || 3333;
+        type = type || "fx";
+        return this.queue(type, function() {
+            var self = this;
+            setTimeout(function() {
+                $j(self).dequeue();
+            }, time);
+        });
+    return false; 
+    };
+
+$j('#bg-wrap').fadeIn("slow");
+$j(document).ready(function(){
+$j(function(form) {
+function loadPage() {
+    $j('.error').show().wait().slideDown("slow").slideUp(function() { 
+$j('#placeholder p.toptext').prepend("Please click <a class=\"error-show\" href=\"javascript:void(0);\">here</a> to see the error message again.<br/><br/>");
+      $j('.error-show').click(function (event) { 
+      event.preventDefault();
+$j('.error').slideDown("slow");
+      });
+      });
+    return true; 
+    };
+	loadPage();
+});
+});
+
+   });
+	</script>
 </body>
 </html>
 	

@@ -3,8 +3,7 @@
  * and has the classname "jcarousel-container".
  */
 .jcarousel-container {
-    position: relative;
-    padding: 20px 0 27px 0;
+    position: absolute;
 }
 
 .jcarousel-clip {
@@ -87,7 +86,7 @@
  */
 .jcarousel-skin-tango .jcarousel-next-horizontal {
     position: absolute;
-    top: 43px;
+    top: 31px;
     right: 5px;
     width: 32px;
     height: 32px;
@@ -112,7 +111,7 @@
 
 .jcarousel-skin-tango .jcarousel-prev-horizontal {
     position: absolute;
-    top: 43px;
+    top: 31px;
     left: 5px;
     width: 32px;
     height: 32px;
@@ -134,3 +133,25 @@
     cursor: default;
     background-position: -96px 0;
 }
+
+#mycarousel
+	{
+	clear: both;
+	}
+
+#mycarousel li
+	{
+	float: left;
+	list-style: none;
+	margin-right: 10px;
+	position: relative;
+	}
+
+.jcarousel-skin-tango
+	{
+	padding: 20px 0 27px 0;
+	overflow: hidden;
+	min-height: 100px;
+	max-height: 100px;
+	margin-bottom: 9px;
+	}
