@@ -18,6 +18,9 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 			//if (!$check->validateURL($url, $lang['site_url_error']." |")) { $scream[] = "url"; }
 			if ($check->foundErrors()) { $error .= $check->listErrors("x"); }
 
+			$sitename = addslashes($sitename);	// Helps prevents a bug where a ' in a string like : dave's site, errors out the admin interface
+			$sitename = htmlentities($sitename);	// Helps prevents a bug where a ' in a string like : dave's site, errors out the admin interface
+
 			$table_name = "pixie_settings";
 			$site_url_last = $url{strlen($url)-1};
 			

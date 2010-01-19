@@ -6,18 +6,76 @@
 // Title: Installer.                                               //
 //*****************************************************************//
 
-	$debug = "no";	// Set this to yes to debug and see all the global vars coming into the file
-	error_reporting(0);	// turn off error reporting
+	$debug = 'no';	// Set this to yes to debug and see all the global vars coming into the file
+			// To find error messages, search the page for php_errormsg if you turn this debug feature on
 
-	if ($debug == "yes") {
-	error_reporting(E_ALL);
+	error_reporting(0);	// Turns off error reporting
+
+	if ($debug == 'yes') {
+	error_reporting(E_ALL & ~E_DEPRECATED);
 	$show_vars = get_defined_vars();
-	echo '<pre class="showvars">The _REQUEST array contains : ';
-	print_r($show_vars["_REQUEST"]);
-	echo '</pre>';
+	echo '<p><pre class="showvars">The _REQUEST array contains : ';
+	htmlspecialchars(print_r($show_vars["_REQUEST"]));
+	echo '</pre></p>';
 	}
 
-	$pixie_prefix = NULL; // Prevent undefined variable if a prefix is not supplied
+	// Variables that needs to be defined
+
+	$pixie_version = '1.04';		// You can define the version number for Pixie releases here
+	$pixie_user = 'Pixie Installer';		// The name on the first log
+	$pixie_server_timezone = 'Europe/London';		// Hosted server timezone
+
+	$pixie_prefix = NULL; // Prevent undefined variables. If undefined - Initialise them!
+	$pixie_database = NULL;
+	$pixie_password = NULL;
+	$pixie_username = NULL;
+	$pixie_host = NULL;
+	$pixie_step = '0';
+	$pixie_sitename = NULL;
+	$pixie_email = NULL;
+	$pixie_name = NULL;
+	$pixie_dropolddata = 'No';
+	$pixie_reinstall = 'No';
+	$error = NULL;
+	$error1 = NULL;
+	$step = NULL;
+	$urlstart = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+	$urlstart = str_replace("admin/install/index.php","",$urlstart);
+	$pixie_url = $urlstart;
+	$pixie_user_privs = 'NULL'; // This defines an undefined constant or index?
+
+	// Experimental features need switches, put those switches here
+
+	// Google translate the installer. Needs method to remember language across pages
+	// The translator only displays if your browser does not have language en set
+	$google_translate = 'No';	// We can use google translate to translate the interface if set to Yes //	http://translate.google.com/translate_tools	// Needs page language setting on each page to auto translate the interface, todo..
+
+	// This prevents the default php server timezone error message when the phpdate function is called
+	// php uses this setting in scripts to get the correct server time. Not user local time.
+	// It must be set to not bog php down with errors.
+
+
+    if (strnatcmp(phpversion(),'5.1.0') >= 0) 
+    { 
+        	date_default_timezone_set("$pixie_server_timezone");	# equal or newer 
+    } 
+    else 
+    { 
+        $error = 'WARNING! Your current PHP version: ' . phpversion() . ' is not the current stable version of php. Please consult your server Administrator about upgrading php for security reasons.';	# not sufficiant 
+    if (strnatcmp(phpversion(),'5.0.0') >= 0) 
+    { 
+	$error = 'WARNING! Your current PHP version: ' . phpversion() . ' is depreciated and unsupported. Please consult your server Administrator about upgrading php for security reasons.';
+    }
+
+    }
+
+	// Here we check to make sure that the GET/POST/COOKIE and SESSION variables have not been poisioned
+	// by an intruder before they are extracted
+
+	if (isset($_REQUEST['_GET'])) { exit('Pixie Installer -index.php - An attempt to modify get data was made.'); }
+	if (isset($_REQUEST['_POST'])) { exit('Pixie Installer -index.php - An attempt to modify post data was made.'); }
+	if (isset($_REQUEST['_COOKIE'])) { exit('Pixie Installer -index.php - An attempt to modify cookie data was made.'); }
+	if (isset($_REQUEST['_SESSION'])) { exit('Pixie Installer -index.php - An attempt to modify session data was made.'); }
 
 	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie'); // access to form vars if register globals is off
 
@@ -25,23 +83,80 @@
 		
 		// step 2
 		// create the config file, chmod the correct directories and install basic db stucture 
-		case "2":
+		case '2':
 
-			if ($pixie_prefix == "pixie_") { $pixie_prefix = "pixie__"; }		// Prevent pixie_ being used as the prefix, causes bug
+			if ($pixie_prefix == 'pixie_') { $pixie_prefix = 'pixie__'; }		// Prevent pixie_ being used as the prefix, causes bug
+
+			if ($pixie_dropolddata == 'Yes') {
+			if ($pixie_reinstall == 'Yes') {
+			$pixie_step = '1';
+			$error = 'Please choose either fresh start or re-install. You cannot select both.';
+			break;
+			      }
+			}
+
+			if ($pixie_reinstall == 'Yes') {
+			include '../config.php';           		// load configuration
+			$pixie_database  =  $pixieconfig['db'];
+			$pixie_username  =  $pixieconfig['user'];
+			$pixie_password  =  $pixieconfig['pass'];
+			$pixie_host  =  $pixieconfig['host'];
+			$pixie_prefix  =  $pixieconfig['table_prefix'];
+			$pixie_server_timezone  =  $pixieconfig['server_timezone'];
+			}
 
 			$conn = mysql_connect($pixie_host, $pixie_username, $pixie_password);
 			
 			if (!$conn) {
-				$error = "Pixie could not connect to your database, check your details below.";
+				if ($pixie_dropolddata == 'Yes') { $pixie_step = '1'; 	$error = 'Pixie could not connect to your database, check your details below.'; break; }
+				$error = 'Pixie could not connect to your database, check your details below.';
+
 			} else {
 				$checkdb = mysql_select_db($pixie_database);
 				if (!$checkdb) {
-					$error = "Pixie could not connect to your database, make sure you have created a database with the name: $pixie_database.";
+
+				if ($_REQUEST['database'] == NULL) { $have_you_even_provided_a_database_name = '<br />Please provide the correct name of your database.'; } else { $have_you_even_provided_a_database_name = "<br />Make sure you have created a database with the name <b><u>$pixie_database</u></b>"; }
+					$error = "Pixie could not connect to your database! $have_you_even_provided_a_database_name";
+
 				} else {
 					
+					if ($pixie_dropolddata == 'Yes') { chmod('../config.php', 0777); $do_the_drop = 'Yes'; } // chmod doesn't work here but it might for you!
+					if ($pixie_reinstall == 'Yes') { chmod('../config.php', 0777); $do_the_drop = 'Yes'; } // chmod doesn't work here but it might for you!
+
+							  if ($do_the_drop == 'Yes') {
+					    /* This could be a function. It drops all tables from a database */
+					    /* Do not add this to lib_db because it is a security risk! */
+							  /* query all tables */
+							  $sql = "SHOW TABLES FROM $pixie_database";
+							  if($result = mysql_query($sql)){
+							  /* add table name to array */
+							  while($row = mysql_fetch_row($result)){
+							  $found_tables[]=$row[0];
+							}
+						      }
+						else{
+			$pixie_step = '1';
+			$error = 'Error, could not the list tables. MySQL Error: ' . mysql_error();
+			break;
+					    }
+							  /* loop through and drop each table */
+							  foreach($found_tables as $table_name){
+							  $sql = "DROP TABLE $pixie_database.$table_name";
+							  if($result = mysql_query($sql)){
+							  // We could echo a sucess message here if we wanted
+							}
+						  else{
+			$pixie_step = '1';
+			$error = 'Error deleting $table_name. MySQL Error: ' . mysql_error() . "";
+			break;
+					      }
+					    }
+
+											     }
+
 					// write data to config file
-					if (is_writable("../config.php")) {
-						$fh = fopen("../config.php", "w");
+					if (is_writable('../config.php')) {
+						$fh = fopen('../config.php', 'w');
 						$data = 
 						"<?php
 //*****************************************************************//
@@ -57,17 +172,22 @@
 \$pixieconfig['pass'] = '$pixie_password';
 \$pixieconfig['host'] = '$pixie_host';
 \$pixieconfig['table_prefix'] = '$pixie_prefix';
+
+// Timezone //
+// This timezone setting is the server time zone //
+// and not your local time zone. //
+\$pixieconfig['server_timezone'] = '$pixie_server_timezone';
 ?>";
 						fwrite($fh, $data);
 						fclose($fh);
 						
 						// chmod config.php so that the database details don't get exposed by accident
-						chmod("../config.php", 0640);
+						chmod('../config.php', 0640);
 
 						// load in the required libraries
 						
-						include "../config.php";
-						include "../lib/lib_db.php";
+						include '../config.php';
+						include '../lib/lib_db.php';
 						
 						// install the base layer sql
 						
@@ -300,47 +420,63 @@
 						";
 						
 						$ok = safe_query($sql12);	
-						
+
+						$already_there_test = "
+							SELECT settings_id FROM ".$pixie_prefix."pixie_settings;
+						";
+
+						$ok = safe_query($already_there_test);
+
 						if (!$ok) {
-							$error = "Core database schema could not be created.";
-						}
+							  $error = 'Core database schema could not be created.';
+							  }
 						
 					} else {
-						$error = "Pixie is unable to write to your config.php file, you may need to manually change the file using a text editor and FTP or change the permissions of the file.<br/> <a href=\"http://code.google.com/p/pixie-cms/w/list\" title=\"Pixie Wiki\">View the help files for more information</a>.";
+
+					if (filesize('../config.php') < 5) {	// check for config
+					$error = "Pixie is unable to write to your config.php file, you may need to manually change the file using a text editor and FTP or change the permissions of the file.<br/> <a href=\"http://code.google.com/p/pixie-cms/w/list\" title=\"Pixie Wiki\">View the help files for more information</a>.";
+					}
+						
 					}
 					
 				} 
 			}
-							
+
+		if ($pixie_dropolddata == 'Yes') {
+		$pixie_step = '2';
+		} else {
+
 			if (!$error) {
-				$pixie_step = "2";
+				$pixie_step = '2';
 			} else {
-				$pixie_step = "1";
+				$pixie_step = '1';
 			}
+		}
 		
 		break;
 		
-		case "3":	
+		case '3':	
 		
-			include "../config.php";           		// load cofiguration
-			include "../lib/lib_db.php";       		// load libraries order is important
-			include "../lang/".$pixie_langu.".php";       // get the language file
-			include "../lib/lib_misc.php";     		//			
-			include "../lib/lib_date.php";			//
-			include "../lib/lib_validate.php"; 		// 
-			include "../lib/lib_core.php";          //
-			include "../lib/lib_backup.php";	    //
+			include '../config.php';           		// load configuration
+			include '../lib/lib_db.php';       		// load libraries order is important
+			include '../lang/'.$pixie_langu.'.php';       // get the language file
+			include '../lib/lib_misc.php';     		//			
+			include '../lib/lib_date.php';			//
+			include '../lib/lib_validate.php'; 		// 
+			include '../lib/lib_core.php';          //
+			include '../lib/lib_backup.php';	    //
 
-			$pixie_sitename = htmlentities($pixie_sitename);	// Hopefully prevents a bug where a ' in a string like : dave's site, errors out the admin interface
+			$pixie_sitename = addslashes($pixie_sitename);	// Helps prevents a bug where a ' in a string like : dave's site, errors out the admin interface
+			$pixie_sitename = htmlentities($pixie_sitename);	// Helps prevents a bug where a ' in a string like : dave's site, errors out the admin interface
 
 			$check = new Validator ();
-			if (!$pixie_sitename) { $error .= $lang['site_name_error']." |"; $scream[] = "name"; }
-			if (!$pixie_url) { $error .= $lang['site_url_error']." |"; $scream[] = "url"; }
+			if (!$pixie_sitename) { $error .= $lang['site_name_error']." |"; $scream[] = 'name'; }
+			if (!$pixie_url) { $error .= $lang['site_url_error']." |"; $scream[] = 'url'; }
 			// we turn off url validation so localhost is accepted
 			//if (!$check->validateURL($url, $lang['site_url_error']." |")) { $scream[] = "url"; }
 			if ($check->foundErrors()) { $error .= $check->listErrors("x"); }
 
-			$table_name = "pixie_settings";
+			$table_name = 'pixie_settings';
 			$site_url_last = $pixie_url{strlen($pixie_url)-1};
 			
   			$err = explode("|",$error);
@@ -358,7 +494,7 @@
 					"site_name = '$pixie_sitename', 
 					 site_url = '$pixie_url',
 					 site_theme = 'itheme',
-					 version = '1.04',
+					 version = '$pixie_version',
 					 language = '$pixie_langu',
 					 dst = 'no',
 					 timezone = '+0',
@@ -373,7 +509,7 @@
 				);
 				
 				// create .htaccess for clean URLs
-				$fh = fopen("../../.htaccess", "w");
+				$fh = fopen('../../.htaccess', 'w');
 				$clean = str_replace("/admin/install/index.php","",$_SERVER["REQUEST_URI"]);
 				if (!$clean) {
 					$clean = "/";
@@ -402,12 +538,14 @@
 
 #	www.getpixie.co.uk                          
 
+# 	This file was automatically created for you by the Pixie Installer.
+
 # Set the default handler.
 DirectoryIndex index.php
 
 # Start the rewrite rules
 <IfModule mod_rewrite.c>
-   Options +FollowSymLinks
+  Options +FollowSymLinks
   RewriteEngine On
 
   # If your site can be accessed both with and without the 'www.' prefix, you
@@ -469,6 +607,14 @@ Satisfy all
 </Files>
 ## End of deny access to extension xml files
 
+## Deny access to htaccess and htpasswd files (comment out to de-activate)
+<Files ~ \"\.ht$\">
+order allow,deny
+deny from all
+Satisfy all
+</Files>
+## End of deny access to extension htaccess and htpasswd files files
+
 # Block out any script trying to base64_encode junk to send via URL
 RewriteCond %{QUERY_STRING} base64_encode.*\(.*\) [OR]
 # Block out any script that includes a <script> tag in URL
@@ -506,117 +652,193 @@ RewriteRule ^(.*)$ index.php [F,L]
 </IfModule>";
 				fwrite($fh, $data);
 				fclose($fh);
-				
+				chmod('../../.htaccess', 0640); // chmod the .htaccess file
   			}
   			
   			// load external sql
-  			$file = $pixie_type."_db.sql";
+  			$file = $pixie_type.'_db.sql';
   			$file_content = file($file);
    			foreach($file_content as $sql_line){
    				// adjust for table prefix
-   				$sql_line = str_replace("pixie_", $pixieconfig['table_prefix']."pixie_", $sql_line);
+   				$sql_line = str_replace('pixie_', $pixieconfig['table_prefix'].'pixie_', $sql_line);
       			safe_query($sql_line);
 			}
 			  			
   			// chmod the files folder
-  			chmod("../../files/", 0777);
-			chmod("../../files/audio/", 0777);
-			chmod("../../files/cache/", 0777);
-			chmod("../../files/images/", 0777);
-			chmod("../../files/other/", 0777);
-			chmod("../../files/sqlbackups/", 0777);
+  			chmod('../../files/', 0777);
+			chmod('../../files/audio/', 0777);
+			chmod('../../files/cache/', 0777);
+			chmod('../../files/images/', 0777);
+			chmod('../../files/other/', 0777);
+			chmod('../../files/sqlbackups/', 0777);
 
 			if (!$error) {
-				$pixie_step = "3";
+				$pixie_step = '3';
 			} else {
-				$pixie_step = "2";
+				$pixie_step = '2';
 			}
 		
 		break;
 		
 		// step 4 - finish 
-		case "4":
+		case '4':
 		
-			include "../config.php";           		// load configuration
-			include "../lib/lib_db.php";       		// load libraries order is important
+			include '../config.php';           		// load configuration
+			include '../lib/lib_db.php';       		// load libraries order is important
 			
 			$prefs = get_prefs();           		// prefs as an array
 			extract($prefs);                		// add prefs to globals
-			include "../lang/".$language.".php";       // get the language file
-			include "../lib/lib_misc.php";     		//			
-			include "../lib/lib_date.php";			//
-			include "../lib/lib_validate.php"; 		// 
-			include "../lib/lib_core.php";          //
-			include "../lib/lib_backup.php";	    //
-			include "../lib/lib_logs.php";          //
+			include '../lang/'.$language.'.php';       // get the language file
+			include '../lib/lib_misc.php';     		//			
+			include '../lib/lib_date.php';			//
+			include '../lib/lib_validate.php'; 		// 
+			include '../lib/lib_core.php';          //
+			include '../lib/lib_backup.php';	    //
+			include '../lib/lib_logs.php';          //
 
-			$check = new Validator ();
-
-	if ($debug == "yes") {
+	if ($debug == 'yes') {
 	$show_vars = get_defined_vars();
-	echo '<pre class="showvars">The prefs array contains : ';
-	print_r($show_vars["prefs"]);
-	echo '</pre>';
+	echo '<p><pre class="showvars">The prefs array contains : ';
+	htmlspecialchars(print_r($show_vars["prefs"]));
+	echo '</pre></p>';
 	}
 
-			if ($pixie_username == "") { $error1 .= $lang['user_name_missing']." |"; $scream[] = "uname"; }
-			$pixie_username = str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($pixie_username)));
-			if ($pixie_name == "") { $error1 .= $lang['user_realname_missing']." |"; $scream[] = "realname"; }
-			if ($pixie_password == "") { $error1 .= $lang['user_password_missing']." |"; $scream[] = "realname"; }
-			if (!$check->validateEmail($pixie_email,$lang['user_email_error']." |")) { $scream[] = "email"; }
+			$check = new Validator ();
+			$check_result_number = 0;
+			// Boy, this needed cleaning up...
+
+			if ($pixie_name == "") { $error1 .= $lang['user_realname_missing']." |"; $scream[] = 'realname';
 			if ($check->foundErrors()) { $error1 .= $check->listErrors("x"); }
-			
-			$nonce = md5( uniqid( rand(), true ) );
-			$sql = "user_name = '$pixie_username', realname = '$pixie_name', email = '$pixie_email', pass = password(lower('$pixie_password')), nonce = '$nonce', privs = '3', link_1 = 'http://www.toggle.uk.com', link_2 = 'http://www.getpixie.co.uk', link_3 = 'http://www.iwouldlikeawebsite.com', website='$site_url', `biography`=''"; 
-			$ok = safe_insert("pixie_users", $sql);
-			$ok = safe_update("pixie_settings", "site_author = '$pixie_name', site_copyright = '$pixie_name'", "settings_id ='1'");		
-			
 			$err = explode("|",$error1);
 			$error = $err[0];
+						}
+
+			if (!$error) {	
+			$check_result_number = $check_result_number + 1;
+					}
+
+			$pixie_username = str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($pixie_username))); // This ensures no spaces in the username
+
+			if ($pixie_username == "") { $error1 .= $lang['user_name_missing']." |"; $scream[] = 'uname';
+			if ($check->foundErrors()) { $error1 .= $check->listErrors("x"); }
+			$err = explode("|",$error1);
+			$error = $err[0];
+						}
+
+			if (!$error) {
+			$check_result_number = $check_result_number + 1;
+					}
+
+			if (!$check->validateEmail($pixie_email,$lang['user_email_error']." |")) { $scream[] = 'email';
+			if ($pixie_email == "") { $error1 .= $lang['user_email_error']." |"; $scream[] = 'email';
+			if ($check->foundErrors()) { $error1 .= $check->listErrors("x"); }
+			$err = explode("|",$error1);
+			$error = $err[0];
+												  }
+
+						}
+
+			if (!$error) {
+			$check_result_number = $check_result_number + 1;
+					}
+
+			if ($pixie_password == "") { $error1 .= $lang['user_password_missing']." |"; $scream[] = 'realname';
+			if ($check->foundErrors()) { $error1 .= $check->listErrors("x"); }
+			$err = explode("|",$error1);
+			$error = $err[0];
+						}
+
+			if (!$error) {
+			$check_result_number = $check_result_number + 1;
+					}
+
+
+			// We have four results to check, so if they were all done, do this :
+			if ($check_result_number == 4) {
+
+			$sql = "realname = '$pixie_name'"; 
+			safe_insert('pixie_users', $sql);
+			safe_update('pixie_settings', "site_author = '$pixie_name', site_copyright = '$pixie_name'", "settings_id ='1'");	
+			$sql = "user_name = '$pixie_username'"; 
+			safe_update('pixie_users', $sql, "user_id ='1'");
+			$sql = "email = '$pixie_email'"; 
+			safe_update('pixie_users', $sql, "user_id ='1'");
+			$nonce = md5( uniqid( rand(), true ) ); // Could we use sha1 instead? sha1( uniqid( rand(), true ) );	// http://www.php.net/manual/en/function.sha1.php
+			$sql = "pass = password(lower('$pixie_password')), nonce = '$nonce', privs = '3', link_1 = 'http://www.toggle.uk.com', link_2 = 'http://www.getpixie.co.uk', link_3 = 'http://www.iwouldlikeawebsite.com', website='$site_url', `biography`=''"; 
+			safe_update('pixie_users', $sql, "user_id ='1'");
 
 			// upgrade sql
-			$file = "upgrade.sql";
+			$file = 'upgrade.sql';
 			$file_content = file($file);
 			foreach($file_content as $sql_line){
 				// adjust prefix
-				$sql_line = str_replace("pixie_", $pixieconfig['table_prefix']."pixie_", $sql_line);
+				$sql_line = str_replace('pixie_', $pixieconfig['table_prefix'].'pixie_', $sql_line);
 				safe_query($sql_line);
-			}
-			
+							    }
+
+			$newmessage = 'No';
 			// log the install
-			logme("Pixie was installed... remember to delete the install directory on your server.","yes","error");
-			
-			if (!$error) {
-				
+			if ($pixie_dropolddata == 'Yes') { logme('Mmmm... Minty... Pixie was installed a freshhh... remember to delete the install directory on your server.','yes','error'); $newmessage = 'Yes'; }
+			if ($pixie_reinstall == 'Yes') { logme('Pixie was re-installed... you should manually delete the directory named install, which is located inside the admin directory.','yes','error'); $newmessage = 'Yes'; }
+			if ($newmessage == 'No') { 
+			logme('Pixie was installed... remember to delete the install directory on your server.','yes','error');
+			}
+
+	if (strnatcmp(phpversion(),'5.1.0') >= 0) { 
+	logme('Welcome to Pixie ' . $pixie_version . ' running on PHP ' . phpversion() . ' be sure to visit <a href ="http://www.getpixie.co.uk/">www.getpixie.co.uk</a> to check for updates.','no','site');
+						  } else { 
+        logme('WARNING! Your current PHP version : ' . phpversion() . ' is not the current stable version of php. Please consult your server Administrator about upgrading php for security reasons.','yes','error');
+	if (strnatcmp(phpversion(),'5.0.0') >= 0) { 
+	logme('WARNING! Your current PHP version : ' . phpversion() . ' is depreciated and unsupported. Please consult your server Administrator about upgrading php for security reasons.','yes','error');
+						  }
+						  }
+
 				// needs to be added to language file
 				$emessage = "	
-Congratulations, Pixie is now installed. Here are your login details:
+Hi ".$pixie_name.",
+Congratulations! Pixie is now installed. Here are your login details:
 
-username: $pixie_username
-password: $pixie_password
+Username: ".$pixie_username."
+Password: ".$pixie_password."
 
-visit: ".$site_url."admin to login.";
-			 
-				$subject = "Pixie";
+You can visit: ".$pixie_url." to view your site
+or ".$pixie_url."admin to login.
+
+Thank You for installing Pixie.
+We hope you enjoy it!
+
+www.getpixie.co.uk
+";
+
+				$subject = "Hi ".$pixie_name.", Pixie was successfully installed.";
 				mail($pixie_email, $subject, $emessage);
-				
-				$pixie_step = "4";
+						  }
+
+
+
+
+			if (!$error) {
+				$pixie_step = '4';
 			} else {
-				$pixie_step = "3";
+				$pixie_step = '3';
 			}
 		break;
 		
 		default:
-		
-			if (filesize("../config.php") > 30) {		   // check for config
-			header( "Location: ../../admin/" ); exit();}   // redirect to pixie if its found
-			
+
+		if ($debug == 'yes') { if ($pixie_step == '0') { $pixie_step = '1'; } }
+
+		if ($pixie_step !== '1') {	// Always return back to the installer if requested
+			if (filesize('../config.php') > 30) {		   // check for config
+			header( 'Location: ../../admin/' ); exit();}   // redirect to pixie if its found
+			}
+
 		break;
 	
 	}
 	
 	if (!$pixie_step) {
-		$pixie_step = "1";
+		$pixie_step = '1';
 	}
 
 
@@ -630,7 +852,7 @@ visit: ".$site_url."admin to login.";
 	<!-- 
 	Pixie Powered (www.getpixie.co.uk)
 	Licence: GNU General Public License v3                   		 
-	Copyright (C) <?php print date("Y");?>, Scott Evans   
+	Copyright (C) <?php print date('Y');?>, Scott Evans   
 	                             
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -662,173 +884,225 @@ visit: ".$site_url."admin to login.";
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="../admin/theme/style.php" type="text/css" media="screen"  />
-	<style type="text/css">
-		body, html
-			{
-			height: auto;
-			background: #191919;
-			}
-		
-		#bg-wrap
-			{
-			background: #191919 url(background.jpg) 7px 0px no-repeat;
-			width: 790px;
-			min-height: 670px;
-			margin: 0 auto;
-			padding-top: 100px;
-			display: none;
-			}
+<style type="text/css">
+body,html {
+height:auto;
+background:#191919;
+}
 
-		#placeholder
-			{
-			border: 5px solid #e1e1e1;
-			clear: left;
-			padding: 15px 30px 20px 30px;
-			margin: 0 auto;
-			background-color: #fff;
-			width: 400px;
-			line-height: 15pt;
-			min-height: 480px;
-			}
-		
-		#logo
-			{
-			margin: 0 auto;
-			width:470px;
-			display: block;
-			}
-		
-		p
-			{
-			font-size: 0.8em;
-			padding: 15px 0;
-			}
-		
-		legend
-			{
-			color: #109bd4;
-			}
-		
-		.form_text
-			{
-			width: 322px;
-			}
+#bg-wrap {
+background:#191919 url(background.jpg) 7px 0 no-repeat;
+width:790px;
+min-height:670px;
+padding-top:100px;
+display:none;
+margin:0 auto;
+}
 
-		.form_item_drop select
-			{
-			width: 333px;
-			padding: 2px;
-			}
-		
-		label
-			{
-			float: left;
-			}
-			
-		.form_help
-			{
-			float: left;
-			font-size: 0.7em;
-			padding-left: 5px;
-			padding-right: 5px;
-			position: relative;
-			top: 2px;
-			width: 60%;
-			text-align: left;
-			}
-		
-		.form_item_drop
-			{
-			clear: both;
-			}
-		
-		.help
-			{
-			margin: 0;
-			padding: 0;
-			color: #898989;
-			}
+#placeholder {
+border:5px solid #e1e1e1;
+clear:left;
+background-color:#fff;
+width:400px;
+line-height:15pt;
+min-height:480px;
+margin:0 auto;
+padding:15px 30px 20px;
+}
 
-		.error, .notice, .success    
-			{ 
-			padding: 15px; 
-			border: 2px solid #ddd; 
-			width: 436px;
-			margin: 0 auto;
-			}
-			
-		.error      
-			{ 
-			background: #FBE3E4;
-			color: #D12F19;
-			border-color: #FBC2C4; 
-			}
-			
-		.notice     
-			{ 
-			background: #FFF6BF; 
-			color: #817134; 
-			border-color: #FFD324; 
-			}
-			
-		.success    
-			{ 
-			background: #E6EFC2; 
-			color: #529214; 
-			border-color: #C6D880; 
-			}
+p {
+font-size:.8em;
+padding:15px 0;
+}
 
-		.showvars    
-			{ 
-			background-color:#000000;
-			color:#529214;
-			}
+legend {
+color:#109bd4;
+}
 
-		.center    
-			{ 
-			text-align:center;
-			}
+.form_text {
+width:320px;
+}
 
-		.divcentertext    
-			{ 
-			font-size: 0.9em;
-			text-align:center;
-			}
+.form_item_drop select {
+width:335px;
+padding:2px;
+}
 
-		.divcentertext2   
-			{ 
-			font-size: 0.8em;
-			text-align:center;
-			}
+label {
+float:left;
+}
 
-		#pixieicon    
-			{ 
-			border:5px solid #e1e1e1;
-			}
+.form_help {
+float:left;
+font-size:.7em;
+padding-left:5px;
+padding-right:5px;
+position:relative;
+top:2px;
+width:60%;
+text-align:left;
+}
 
-		input, select    
-			{ 
-			margin-top: 0.4em;
-			}
+.form_item_drop {
+clear:both;
+}
 
-		.form_submit
-			{
-			background-color:transparent;
-			background-image:url(button.png);
-			background-position:center bottom;
-			background-repeat:no-repeat;
-			border:0;
-			color:#ffffff;
-			height:30px;
-			width:70px;
-			}
+.help {
+color:#898989;
+margin:0;
+padding:0;
+}
 
-			.form_submit:hover {
-			background-position:center top;
-			color:#ffffff;
-			}
+.error,.notice,.success {
+border:2px solid #ddd;
+width:436px;
+margin:0 auto;
+padding:15px;
+}
 
-	</style>
+.error {
+background:#FBE3E4;
+color:#D12F19;
+border-color:#FBC2C4;
+}
+
+.notice {
+background:#FFF6BF;
+color:#817134;
+border-color:#FFD324;
+}
+
+.success {
+background:#E6EFC2;
+color:#529214;
+border-color:#C6D880;
+}
+
+.showvars {
+background-color:#000;
+color:#0B9BD4;
+}
+
+.divcentertext {
+font-size:.9em;
+text-align:center;
+}
+
+.divcentertext2 {
+font-size:.8em;
+text-align:center;
+}
+
+#pixieicon {
+border:5px solid #e1e1e1;
+}
+
+input,select {
+margin-top:.4em;
+}
+
+.form_submit, .form_submit_b {
+background-color:transparent;
+background-image:url(button.png);
+background-position:center bottom;
+background-repeat:no-repeat;
+border:0;
+color:#fff;
+height:30px;
+width:70px;
+}
+
+.form_submit:hover, .form_submit_b:hover {
+background-position:center top;
+color:#fff;
+}
+
+.extra {
+border:1px solid #E4E4E4;
+margin-top:42px;
+padding-left:24px;
+padding-right:24px;
+padding-bottom:48px;
+display:none;
+}
+
+.small-heading {
+font-size:14px;
+color:#109BD4;
+}
+
+.divider {
+border-top:1px solid #E4E4E4;
+padding-bottom:18px;
+width:252px;
+margin-left:12px;
+}
+
+#switch {
+text-align:right;
+}
+
+.switch-span {
+margin-top:12px;
+}
+
+.extra .form_help {
+width:100%;
+clear:both;
+padding-bottom:12px;
+}
+
+.extra select {
+padding:2px;
+}
+
+.extra input {
+width:285px;
+}
+
+.extra select {
+width:295px;
+}
+
+.center,.advanced-heading {
+text-align:center;
+}
+
+.form_submit_b {
+font-size: 4px;
+display: none;
+}
+
+#restart {
+height: 20px;
+width: 100%;
+padding-bottom: 20px;
+}
+
+#logo-holder {
+width: 470px;
+height: 50px;
+display:block;
+margin:0 auto;
+background-color:transparent;
+background-image:url(banner.gif);
+background-position:center top;
+background-repeat:no-repeat;
+border:0;
+z-index: 100;
+}
+
+#logo {
+width:470px;
+height: 50px;
+}
+
+#google_translate_element {
+text-align: center;
+padding-top: 2em;
+}
+
+</style>
 
 	<!-- site icons-->
 	<link rel="Shortcut Icon" type="image/x-icon" href="../favicon.ico" />
@@ -844,10 +1118,10 @@ visit: ".$site_url."admin to login.";
 		print "<p class=\"error\">$error</p>";
 	}
 	?>
-	<img src="banner.gif" alt="Pixie logo" id="logo">
+	<div id="logo-holder"><img src="banner.gif" alt="Pixie logo" id="logo"></div>
 	<div id="placeholder">
 		<?php
-		if ($pixie_step == "4") {
+		if ($pixie_step == '4') {
 		?>
 		<h3>Finished...</h3>	
 		<?php
@@ -857,23 +1131,25 @@ visit: ".$site_url."admin to login.";
 		<?php
 		}		 
 		switch($pixie_step) {
-			case "4":
+			case '4':
 				global $site_url;
 		?>
 		<div class="center"><br /><b>Congratulations!</b></div><br />
-		<div class="center"><img id="pixieicon" src="<?php print $site_url . "files/images/apple_touch_icon.jpg"; ?>" alt="Pixie Logo jpg" /></div>
+		<div class="center"><img id="pixieicon" src="<?php print $site_url . 'files/images/apple_touch_icon.jpg'; ?>" alt="Pixie Logo jpg" /></div>
 		<div class="divcentertext2"><br />Your new <b>Pixie</b> web site is now setup and ready to use.</div>
 		<p>If you would like to add any <b>themes</b> or <b>modules</b>, be sure to visit the <a href="http://www.getpixie.co.uk" title="Pixie">Pixie website</a> to browse the collection. Please remember to delete the install directory within Pixie to secure your site.</p>
 		<div class="divcentertext2">What would you like to do <b>next</b>?
 		<br /><br /><a href="<?php print $site_url; ?>" title="Visit the homepage">Visit your new homepage</a> or<br />
-		<a href="<?php print $site_url."admin/"; ?>" title="Login to Pixie">Login and start adding content</a> to your site...<br /></div>
+		<a href="<?php print $site_url.'admin/'; ?>" title="Login to Pixie">Login and start adding content</a> to your site...<br /></div>
 		<p>If you need <b>help</b> with Pixie, you can join the <a href="http://groups.google.com/group/pixie-cms" title="Pixie Forums">Pixie Forums</a> and start a discussion. <b>Everyone</b> is welcome.<br />
 		<br />If you would like to help <b>develop</b> Pixie, you can visit Pixie's <a href="http://code.google.com/p/pixie-cms/" title="Help develop Pixie">Google code project page</a> to get started.</p>
 		<div class="divcentertext2"><br /><b>Thank you for installing Pixie!</b></div><br />
-
+		<?php if ($debug == 'yes') { ?>
+		<div class="center" id="restart"><form action="index.php" method="post" id="restart-form" class="form"><input type="hidden" name="step" value="1" /><input type="submit" name="next" class="form_submit_b" value="Re-Install" /></form></div>
+		<?php } ?>
 		<?php
 			break;
-			case "3":
+			case '3':
 		?>
 		
 		<p class="toptext">Nearly finished!<br />Last step is to create the "Super User" account for Pixie:</p>
@@ -882,13 +1158,14 @@ visit: ".$site_url."admin to login.";
 			<fieldset>
 			<legend>Super User information</legend>
 				<div class="form_row">
-					<div class="form_label"><label for="username">Username <span class="form_required">*</span></label><span class="form_help">A login username</span></div>
-					<div class="form_item"><input type="text" class="form_text" name="username" value="<?php print $pixie_username ?>" size="40" maxlength="80" id="username" /></div>
-				</div>
-				<div class="form_row">
 					<div class="form_label"><label for="name">Your Name <span class="form_required">*</span></label><span class="form_help">Your real name</span></div>
 					<div class="form_item"><input type="text" class="form_text" name="name" value="<?php print $pixie_name ?>" size="40" maxlength="80" id="name" /></div>
 				</div>
+				<div class="form_row">
+					<div class="form_label"><label for="username">Username <span class="form_required">*</span></label><span class="form_help">A login username</span></div>
+					<div class="form_item"><input type="text" class="form_text" name="username" value="<?php print $pixie_username ?>" size="40" maxlength="80" id="username" /></div>
+				</div>
+	
 				<div class="form_row">
 					<div class="form_label"><label for="email">Email <span class="form_required">*</span></label><span class="form_help">Your email address</span></div>
 					<div class="form_item"><input type="text" class="form_text" name="email" value="<?php print $pixie_email ?>" size="40" maxlength="80" id="email" /></div>
@@ -911,7 +1188,7 @@ visit: ".$site_url."admin to login.";
 			case "2":
 			
 			$url1 = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-			$url1 = str_replace("admin/install/index.php","",$url1);
+			$url1 = str_replace('admin/install/index.php',"",$url1);
 		?>
 		<p class="toptext">Now Pixie needs some details about your site (you will have access to more settings once Pixie is installed):</p>
 		
@@ -939,7 +1216,7 @@ visit: ".$site_url."admin to login.";
 				</div>
 				<div class="form_row ">
 					<div class="form_label"><label for="site_name">Site Name <span class="form_required">*</span></label><span class="form_help">What's it called?</span></div>
-					<div class="form_item"><input type="text" class="form_text" name="sitename" value="<?php if ($pixie_sitename) { print $pixie_sitename; } else { print "My Pixie Site"; } ?>" size="40" maxlength="80" id="site_name" /></div>
+					<div class="form_item"><input type="text" class="form_text" name="sitename" value="<?php if ($pixie_sitename) { print $pixie_sitename; } else { print 'My Pixie Site'; } ?>" size="40" maxlength="80" id="site_name" /></div>
 				</div>
 				<div class="form_row">
 					<div class="form_label"><label for="type">Site type <span class="form_required">*</span></label><span class="form_help">What type of site are you after?</span></div>
@@ -964,7 +1241,145 @@ visit: ".$site_url."admin to login.";
 			break;
 			
 			default:
+
 		?>
+
+<?php
+
+// List of timezones to use to set pixie's timezone with
+
+$zonelist = array('Pacific/Midway',
+		'Pacific/Samoa',
+		'Pacific/Honolulu',
+		'America/Anchorage',
+		'America/Los_Angeles',
+		'America/Tijuana',
+		'America/Denver',
+		'America/Chihuahua',
+		'America/Mazatlan',
+		'America/Phoenix',
+		'America/Regina',
+		'America/Tegucigalpa',
+		'America/Chicago',
+		'America/Mexico_City',
+		'America/Monterrey',
+		'America/New_York',
+		'America/Bogota',
+		'America/Lima',
+		'America/Rio_Branco',
+		'America/Indiana/Indianapolis',
+		'America/Caracas',
+		'America/Halifax',
+		'America/Manaus',
+		'America/Santiago',
+		'America/La_Paz',
+		'America/St_Johns',
+		'America/Argentina/Buenos_Aires',
+		'America/Sao_Paulo',
+		'America/Godthab',
+		'America/Montevideo',
+		'Atlantic/South_Georgia',
+		'Atlantic/Azores',
+		'Atlantic/Cape_Verde',
+		'Europe/Dublin',
+		'Europe/Lisbon',
+		'Africa/Monrovia',
+		'Atlantic/Reykjavik',
+		'Africa/Casablanca',
+		'Europe/Belgrade',
+		'Europe/Bratislava',
+		'Europe/Budapest',
+		'Europe/Ljubljana',
+		'Europe/Prague',
+		'Europe/Sarajevo',
+		'Europe/Skopje',
+		'Europe/Warsaw',
+		'Europe/Zagreb',
+		'Europe/Brussels',
+		'Europe/Copenhagen',
+		'Europe/Madrid',
+		'Europe/Paris',
+		'Africa/Algiers',
+		'Europe/Amsterdam',
+		'Europe/Berlin',
+		'Europe/Rome',
+		'Europe/Stockholm',
+		'Europe/Vienna',
+		'Europe/Minsk',
+		'Africa/Cairo',
+		'Europe/Helsinki',
+		'Europe/Riga',
+		'Europe/Sofia',
+		'Europe/Tallinn',
+		'Europe/Vilnius',
+		'Europe/Athens',
+		'Europe/Bucharest',
+		'Europe/Istanbul',
+		'Asia/Jerusalem',
+		'Asia/Amman',
+		'Asia/Beirut',
+		'Africa/Windhoek',
+		'Africa/Harare',
+		'Asia/Kuwait',
+		'Asia/Riyadh',
+		'Asia/Baghdad',
+		'Africa/Nairobi',
+		'Asia/Tbilisi',
+		'Europe/Moscow',
+		'Europe/Volgograd',
+		'Asia/Tehran',
+		'Asia/Muscat',
+		'Asia/Baku',
+		'Asia/Yerevan',
+		'Asia/Yekaterinburg',
+		'Asia/Karachi',
+		'Asia/Tashkent',
+		'Asia/Kolkata',
+		'Asia/Colombo',
+		'Asia/Katmandu',
+		'Asia/Dhaka',
+		'Asia/Almaty',
+		'Asia/Novosibirsk',
+		'Asia/Rangoon',
+		'Asia/Krasnoyarsk',
+		'Asia/Bangkok',
+		'Asia/Jakarta',
+		'Asia/Brunei',
+		'Asia/Chongqing',
+		'Asia/Hong_Kong',
+		'Asia/Urumqi',
+		'Asia/Irkutsk',
+		'Asia/Ulaanbaatar',
+		'Asia/Kuala_Lumpur',
+		'Asia/Singapore',
+		'Asia/Taipei',
+		'Australia/Perth',
+		'Asia/Seoul',
+		'Asia/Tokyo',
+		'Asia/Yakutsk',
+		'Australia/Darwin',
+		'Australia/Adelaide',
+		'Australia/Canberra',
+		'Australia/Melbourne',
+		'Australia/Sydney',
+		'Australia/Brisbane',
+		'Australia/Hobart',
+		'Asia/Vladivostok',
+		'Pacific/Guam',
+		'Pacific/Port_Moresby',
+		'Asia/Magadan',
+		'Pacific/Fiji',
+		'Asia/Kamchatka',
+		'Pacific/Auckland',
+		'Pacific/Tongatapu');
+
+		// Add more here if you want to...
+
+		// Sort by area/city name.
+		sort( $zonelist );
+
+?>
+
 		<p class="toptext">Welcome to the <a href="http://www.getpixie.co.uk" alt="Get Pixie!">Pixie</a> installer, just a few steps to go until you have your own Pixie powered website. Firstly we need your database details:</p>
 		
 		<form action="index.php" method="post" id="form_db" class="form">
@@ -972,24 +1387,63 @@ visit: ".$site_url."admin to login.";
 			<legend>Database information</legend>		
 				<div class="form_row ">
 					<div class="form_label"><label for="host">Host <span class="form_required">*</span></label><span class="form_help">Usually ok as "localhost"</span></div>
-					<div class="form_item"><input type="text" class="form_text" name="host" value="<?php if ($pixie_host) { print $pixie_host; } else { print "localhost"; }?>" size="40" maxlength="80" id="host" /></div>
+					<div class="form_item"><input type="text" class="form_text" name="host" value="<?php if ($pixie_host) { print $pixie_host; } else { print 'localhost'; }?>" size="40" maxlength="80" id="host" /></div>
 				</div>
 				<div class="form_row">
 					<div class="form_label"><label for="username">Database Username <span class="form_required">*</span></label></div>
-					<div class="form_item"><input type="text" class="form_text" name="username" value="<?php print $pixie_username;?>" size="40" maxlength="80" id="username" /></div>
+					<div class="form_item"><input type="text" class="form_text" name="username" value="<?php print $pixie_username; ?>" size="40" maxlength="80" id="username" /></div>
 				</div>
 				<div class="form_row">
 					<div class="form_label"><label for="password">Database Password <span class="form_required">*</span></label></div>
-					<div class="form_item"><input type="password" class="form_text" name="password" value="<?php print $pixie_password;?>" size="40" maxlength="80" id="password" /></div>
+					<div class="form_item"><input type="password" class="form_text" name="password" value="<?php print $pixie_password; ?>" size="40" maxlength="80" id="password" /></div>
 				</div>
 				<div class="form_row">
 					<div class="form_label"><label for="database">Database Name <span class="form_required">*</span></label></div>
-					<div class="form_item"><input type="text" class="form_text" name="database" value="<?php print $pixie_database;?>" size="40" maxlength="80" id="database" /></div>
+					<div class="form_item"><input type="text" class="form_text" name="database" value="<?php print $pixie_database; ?>" size="40" maxlength="80" id="database" /></div>
 				</div>
+		<div id="switch"></div>
+			<div class="extra"><p class="advanced-heading"><span class="small-heading">Optional Extra Settings</span></p><div class="divider"></div>
+				<div class="form_row">
+					<div class="form_label"><label for="server_timezone">Timezone </label></div>
+					<div class="form_item_drop">
+						<select class="form_select" name="server_timezone" id="server_timezoneselect">
+							<option selected="selected" value="<?php print $pixie_server_timezone; ?>"><?php print $pixie_server_timezone; ?></option>
+							<?php foreach($zonelist as $tzselect){
+							// Output all the timezones
+							Echo "<option value=\"$tzselect\">$tzselect</option>";
+							} ?>
+						</select><span class="form_help">The time zone as set on the host server</span>
+					</div>
+				</div>			
 				<div class="form_row">
 					<div class="form_label"><label for="prefix">Database Table Prefix <span class="form_optional">(optional)</span></label></div>
-					<div class="form_item"><input type="text" class="form_text" name="prefix" value="<?php print $pixie_prefix;?>" size="40" maxlength="80" id="prefix" /><span class="form_help">Example : pixie_</span></div>
+					<div class="form_item"><input type="text" class="form_text" name="prefix" value="<?php print $pixie_prefix; ?>" size="40" maxlength="80" id="prefix" /><span class="form_help">Example : pixie_</span></div>
 				</div>
+
+		<?php if ($debug == 'yes') { ?>
+
+				<div class="form_row">
+					<div class="form_label"><label for="dropolddata">Fresh start </label></div>
+					<div class="form_item_drop">
+						<select class="form_select" name="dropolddata" id="dropolddataselect">
+							<option selected="selected" value="<?php print $pixie_dropolddata; ?>"><?php print $pixie_dropolddata; ?></option>
+							<option value="Yes">Yes</option>
+						</select><span class="form_help">Remove the existing data and configuration?</span>
+					</div>
+				</div>
+				<div class="form_row">
+					<div class="form_label"><label for="reinstall">Re-install </label></div>
+					<div class="form_item_drop">
+						<select class="form_select" name="reinstall" id="reinstallselect">
+							<option selected="selected" value="<?php print $pixie_reinstall; ?>"><?php print $pixie_reinstall; ?></option>
+							<option value="Yes">Yes</option>
+						</select><span class="form_help">Remove the data but recycle the configuration?</span>
+					</div>
+				</div>
+
+				     <?php } ?>
+
+			</div>
 				<div class="form_row_button" id="form_button">
 					<input type="hidden" name="step" value="2" />
 					<input type="submit" name="next" class="form_submit" value="Next &raquo;" />
@@ -997,30 +1451,51 @@ visit: ".$site_url."admin to login.";
 				<div class="safclear"></div>
 			</fieldset>	
  		</form>
-
  		<?php
  			break;
  		}
  		?>
-
+			<?php if ($google_translate == 'Yes') { // The translate element only shows up if the visiting browser is not set to lang en ?>
+			      <!-- Google Translate Element -->
+			      <div id="google_translate_element" style="display:none"></div>
+			<?php } // If display:none is removed from the above line, the translator will always show ?>
 	      </div>
 	</div>
   </div>
 
-	<?php if ($debug == "yes") {
+	<?php if ($debug == 'yes') {
 	/* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>';
+	phpinfo();
 	} ?>
 
 	<!-- If javascript is disabled -->
-	<noscript><style type="text/css">#bg-wrap{display:block;}</style></noscript>
+	<noscript><style type="text/css">#bg-wrap{display:block;}.extra{display:block;}</style></noscript>
 	<!-- javascript -->
 	<script type="text/javascript" src="../jscript/jquery.js"></script>
 	<script type="text/javascript">
     var $j = jQuery.noConflict();
 
+    // Pixie external links jquery functions
+    // If you click on a link in the the installer, you won't have to click back afterwards now :)
+
+    $j(function() { 
+    $j('a').filter(function() {
+    //Compare the anchor tag's host name with location's host name
+    return this.hostname && this.hostname !== location.hostname;
+    });
+
+    //Set the _target attribute to blank
+    $j('a').filter(function() {
+    //Compare the anchor tag's host name with location's host name
+    return this.hostname && this.hostname !== location.hostname;
+    }).attr('target', '_blank').attr('title', 'Opens in a new window');
+
+    return false; 
+    });
+
     $j(function() { 
 $j.fn.wait = function(time, type) {
-        time = time || 3333;
+        time = time || 5000;
         type = type || "fx";
         return this.queue(type, function() {
             var self = this;
@@ -1031,25 +1506,64 @@ $j.fn.wait = function(time, type) {
     return false; 
     };
 
-$j('#bg-wrap').fadeIn("slow");
+$j('#bg-wrap').fadeIn('slow');
+
 $j(document).ready(function(){
 $j(function(form) {
 function loadPage() {
-    $j('.error').show().wait().slideDown("slow").slideUp(function() { 
-$j('#placeholder p.toptext').prepend("Please click <a class=\"error-show\" href=\"javascript:void(0);\">here</a> to see the error message again.<br/><br/>");
+$j('.extra').append("<p class=\"return-switch-span\">Click here to <a class=\"return-switch-link\" href=\"javascript:void(0);\">hide these settings</a></p>");
+$j('#switch').prepend("<p class=\"switch-span\">Click here for <a class=\"switch-link\" href=\"javascript:void(0);\">extra settings</a></p>");
+      $j('.switch-link').click(function (event) { 
+      event.preventDefault();
+$j('.extra').fadeIn('slow');
+$j('html, body').animate({ scrollTop: 500 }, 0);
+$j('.switch-span').fadeOut(0);
+      });
+$j('.return-switch-link').click(function (event) { 
+      event.preventDefault();
+$j('.extra').fadeOut('slow');
+$j('.switch-span').fadeIn('slow');
+      });
+    $j('.error').show().wait().slideDown('slow').slideUp(function() { 
+$j('#placeholder p.toptext').prepend("<div class=\"error-text\">Please click here to see the <a class=\"error-show\" href=\"javascript:void(0);\">error message</a> again.<br/><br/></div>");
+$j('.error-text').fadeOut(450).fadeIn(450);
       $j('.error-show').click(function (event) { 
       event.preventDefault();
-$j('.error').slideDown("slow");
+$j('.error').slideDown();
+$j('.error-text').fadeOut(1000).replaceWith("<div class=\"error-text\">Please correct the error and then try again.<br/><br/></div>").fadeIn(2500);
       });
       });
     return true; 
     };
 	loadPage();
+
+<?php if ($debug == 'yes') { ?>
+
+$j('#restart').hover(
+      function () {
+        $j('.form_submit_b').fadeIn('slow');
+      }, 
+      function () {
+        $j('.form_submit_b').fadeOut('slow');
+      }
+    );
+
+		      <?php } ?>
+
 });
+
 });
 
    });
 	</script>
+<?php if ($google_translate == 'Yes') { ?>
+<script>
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en'
+  }, 'google_translate_element');
+}
+</script><script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<?php } ?>
 </body>
 </html>
-	

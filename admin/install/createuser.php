@@ -1,20 +1,44 @@
 <?php
-extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');
+
+	$debug = 'no';	// Set this to yes to debug and see all the global vars coming into the file
+
+	// Here we check to make sure that the GET/POST/COOKIE and SESSION variables have not been poisioned
+	// by an intruder before they are extracted
+
+	if (isset($_REQUEST['_GET'])) { exit('Pixie Installer - createuser.php - An attempt to modify get data was made.'); }
+	if (isset($_REQUEST['_POST'])) { exit('Pixie Installer - createuser.php - An attempt to modify post data was made.'); }
+	if (isset($_REQUEST['_COOKIE'])) { exit('Pixie Installer - createuser.php - An attempt to modify cookie data was made.'); }
+	if (isset($_REQUEST['_SESSION'])) { exit('Pixie Installer - createuser.php - An attempt to modify session data was made.'); }
+
+	extract($_REQUEST);
+
 	include "../config.php";
 	include "../lib/lib_db.php";       																				// load libraries order is important
 	include "../lib/lib_misc.php";     																				//
 
-print ($pixie_do);
+	if (strnatcmp(phpversion(),'5.1.0') >= 0) 
+	{ 
+	date_default_timezone_set("$server_timezone");		/* !New built in php function. Tell php what the server timezone is so that we can use php's rewritten time and date functions with the correct time and without error messages  */	# equal or newer 
+	}
 
+	print ($do);
 
-if ($pixie_user_new) {
+	if ($debug == 'yes') {
+	error_reporting(E_ALL & ~E_DEPRECATED);
+	$show_vars = get_defined_vars();
+	echo '<p><pre class="showvars">The _REQUEST array contains : ';
+	htmlspecialchars(print_r($show_vars["_REQUEST"]));
+	echo '</pre></p>';
+	}
+
+if ($user_new) {
 
 	$table_name = "pixie_users";
-	if (!$pixie_error) {
+	if (!$error) {
 
 		$password = generate_password(6);
 		$nonce = md5( uniqid( rand(), true ) );
-		$sql = "user_name = '$pixie_uname', realname = '$pixie_realname', email = '$pixie_email', pass = password(lower('$password')), nonce = '$nonce', privs = '$pixie_privs', biography =''"; 
+		$sql = "user_name = '$uname', realname = '$realname', email = '$email', pass = password(lower('$password')), nonce = '$nonce', privs = '$privs', biography =''"; 
 
 		$ok = safe_insert($table_name, $sql);
 
@@ -26,19 +50,19 @@ if ($pixie_user_new) {
 				$emessage = "
 Your account information for Pixie has been set to:
 
-username: $pixie_uname
+username: $uname
 password: $password
 
 ";
 			 
 			$subject = "Pixie account information";
-			mail($pixie_email, $subject, $emessage);
+			mail($email, $subject, $emessage);
 			
-			$messageok = "Saved new user $pixie_uname, a temp password has been created (<b>$password</b>).";
+			$messageok = "Saved new user $uname, a temp password has been created (<b>$password</b>).";
 		}
 		
 	} else {
-		$err = explode("|",$pixie_error);
+		$err = explode("|",$error);
 		$message = $err[0];
 	}
 } 
@@ -252,4 +276,8 @@ password: $password
 				</form>
  			</div>
  		</div>
+  <?php if ($debug == 'yes') {
+  /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>';
+  phpinfo();
+  } ?>
 </body> 	

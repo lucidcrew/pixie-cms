@@ -23,48 +23,81 @@
 
 	error_reporting(0);														// turn off error reporting
 
-	include "lib/lib_logs.php"; pagetime("init");   						// runtime clock
+	// Set $debug to yes to debug and see all the global vars coming into the file
+	// To find error messages, search the page for php_errormsg if you turn this debug feature on
+	$debug = 'no';
 
-	extract($_REQUEST);                                                     // access to form vars if register globals is off
+	$server_timezone = 'Europe/London';		/* We set this first incase of upgrade without timezone being set in config.php upgraders should manually set it. */
 
-  	if (!file_exists( "config.php" ) || filesize( "config.php") < 10) {     // check for config
-	header( "Location: install/" ); exit();} 								// redirect to installer
+	if ($debug == 'yes') {
+	error_reporting(E_ALL & ~E_DEPRECATED);
+	$show_vars = get_defined_vars();
+	echo '<p><pre class="showvars">The _REQUEST array contains : ';
+	htmlspecialchars(print_r($show_vars["_REQUEST"]));
+	echo '</pre></p>';
+	}
+
+	include "lib/lib_logs.php"; pagetime("init");		// runtime clock
+
+	// Here we check to make sure that the GET/POST/COOKIE and SESSION variables have not been poisioned
+	// by an intruder before they are extracted
+
+	if (isset($_REQUEST['_GET'])) { exit('Pixie Admin - index.php - An attempt to modify get data was made.'); }
+	if (isset($_REQUEST['_POST'])) { exit('Pixie Admin - index.php - An attempt to modify post data was made.'); }
+	if (isset($_REQUEST['_COOKIE'])) { exit('Pixie Admin - index.php - An attempt to modify cookie data was made.'); }
+	if (isset($_REQUEST['_SESSION'])) { exit('Pixie Admin - index.php - An attempt to modify session data was made.'); }
+
+	extract($_REQUEST);		// access to form vars if register globals is off // note : NOT setting a prefix yet, not looked at it yet
+
+  	if (!file_exists( "config.php" ) || filesize( "config.php") < 10) {		// check for config
+	header( "Location: install/" ); exit();}		// redirect to installer
 	
-	include "config.php";           										// load cofiguration
+	include "config.php";		// load cofiguration
 
-	include "lib/lib_db.php";       										// load libraries order is important
-	include "lib/lib_misc.php";     										//
+	include "lib/lib_db.php";		// load libraries order is important
+	include "lib/lib_misc.php";		//
 	
-	$prefs = get_prefs();           										// prefs as an array
-	extract($prefs);                										// add prefs to globals
-	putenv("TZ=$timezone");													// timezone fix
+	$prefs = get_prefs();		// prefs as an array
+	extract($prefs);		// add prefs to globals
 
-	include "lang/".$language.".php";                                       // get the language file
+	if ($debug == 'yes') {
+	$show_vars = get_defined_vars();
+	echo '<p><pre class="showvars">The prefs array contains : ';
+	htmlspecialchars(print_r($show_vars["prefs"]));
+	echo '</pre></p>';
+	}
+
+	putenv("TZ=$timezone");		// timezone fix (php5.1.0 or newer will set it's server timezone using function date_default_timezone_set!)
+
+	if (strnatcmp(phpversion(),'5.1.0') >= 0) 
+	{ 
+	date_default_timezone_set("$server_timezone");	/* !New built in php function. Tell php what the server timezone is so that we can use php's rewritten time and date functions with the correct time and without error messages  */	# equal or newer 
+	}
+
+	include "lang/".$language.".php";	// get the language file
 	
-	include "lib/lib_date.php";												//
-	include "lib/lib_auth.php";												// check user is logged in
-	include "lib/lib_validate.php"; 										// 
-	include "lib/lib_core.php";                                             //
-	include "lib/lib_paginator.php";										//
-	include "lib/lib_upload.php";											//
-	include "lib/lib_rss.php";												//
-	include "lib/lib_tags.php";												//
-	include "lib/bad-behavior-pixie.php";                              		// no spam please
-	include "lib/lib_backup.php";	                                        //
-	include "lib/lib_simplepie.php";                                 		// because pie should be simple
+	include "lib/lib_date.php";		//
+	include "lib/lib_auth.php";		// check user is logged in
+	include "lib/lib_validate.php";		// 
+	include "lib/lib_core.php";		//
+	include "lib/lib_paginator.php";	//
+	include "lib/lib_upload.php";		//
+	include "lib/lib_rss.php";		//
+	include "lib/lib_tags.php";		//
+	include "lib/bad-behavior-pixie.php";   // no spam please
+	include "lib/lib_backup.php";	        //
+	include "lib/lib_simplepie.php";        // because pie should be simple
 
 	bombShelter();                  										// check URL size
 
-  	if (!file_exists( "settings.php" ) || filesize( "settings.php") < 10) {     // check for settings.php
-	$gzip_admin = "no";} 								// ensure no unset variables if file is missing
-  	if (file_exists( "settings.php" ) || filesize( "settings.php") < 10) {     // check for settings.php
+  	if (!file_exists( "settings.php" ) || filesize( "settings.php") < 10) {		// check for settings.php
+	$gzip_admin = "no";}		// ensure no unset variables if file is missing
+  	if (file_exists( "settings.php" ) || filesize( "settings.php") < 10) {		// check for settings.php
 	include "settings.php";}
 
-	$s = check_404($s);                                                     // check section exists
+	$s = check_404($s);		// check section exists
 	
-	if ($do == "rss" && $user) {											// if this is a RSS page build feed
-		adminrss($s, $user);												//
-	} else {																//
+	if ($do == "rss" && $user) { adminrss($s, $user); } else {																//
 ?>
 <?php if ($gzip_admin == "yes") { if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) if (extension_loaded('zlib')) ob_start('ob_gzhandler'); else ob_start(); ?>
 	<?php } /* Start gzip compression */ ?>
@@ -205,14 +238,14 @@
       <!-- This ensures that all content is loaded before manipulation of the DOM occurs. It also fixes a bug in opera where opera tries to load the carousel too early. -->
 	<!-- javascript -->
 	<script type="text/javascript" src="jscript/tags.js"></script>
-	<script type="text/javascript" src="jscript/tablesorter.js"></script>
 	<script type="text/javascript" src="jscript/ajaxfileupload.js"></script>
 	<script type="text/javascript" src="jscript/thickbox.js"></script>
-	<script type="text/javascript" src="jscript/pixie.js.php?s=<?php print $s; ?>"></script>
 	<?php /* Add tinymce */ if ($tinymce_load !== "no") { ?>
 	<script type="text/javascript" src="jscript/tiny_mce/tiny_mce.js"></script>
 	<script type="text/javascript" src="jscript/tiny_mce/tiny_mce_setup.js.php?theme=<?php print $site_theme; ?>&amp;s=<?php print $x; ?>&amp;m=<?php print $m;?>"></script>
 	<?php } /* End add tinymce */ ?>
+
+	<script type="text/javascript" src="jscript/pixie.js.php?s=<?php print $s; ?>"></script>
 
 <?php
 		global $message;
@@ -239,6 +272,10 @@
 	<?php bb2_insert_head(); ?>
 	<!-- If javascript is disabled show more of the carousel -->
 	<noscript><style type="text/css">.jcarousel-skin-tango{max-height: 100%;}</style></noscript>
+  <?php if ($debug == 'yes') {
+  /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>';
+  phpinfo();
+  } ?>
 </body>
 </html>
 <!-- page generated in: <?php pagetime("print");?> -->

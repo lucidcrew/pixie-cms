@@ -21,14 +21,41 @@
 // Title: Index			                                                 //
 //***********************************************************************//
 
-	error_reporting(0);															 		// turn off error reporting
+	$debug = 'no';	// Set this to yes to debug and see all the global vars coming into the file
+			// To find error messages, search the page for php_errormsg if you turn this debug feature on
+
+	error_reporting(0);	// Turns off error reporting
+
+	if ($debug == 'yes') {
+	error_reporting(E_ALL & ~E_DEPRECATED);
+	$show_vars = get_defined_vars();
+	echo '<p><pre class="showvars">The _REQUEST array contains : ';
+	htmlspecialchars(print_r($show_vars["_REQUEST"]));
+	echo '</pre></p>';
+	}
 	
 	$ptitle = NULL;	/* Prevents insecure undefined variable $ptitle */
 	$pinfo = NULL;	/* Prevents insecure undefined variable $pinfo */
+	$server_timezone = 'Europe/London';		/* We set this first incase of upgrade without timezone being set in config.php upgraders should manually set it. */
+	// These variables are here to prevent an undefined variable for upgraders that don't have them defined in settings.php - remove them if it seems paranoid...
+	$gzip_theme_output = NULL;
+	$theme_jquery_google_apis = NULL;
+	$theme_jquery_google_apis_location = NULL;
+	$theme_swfobject_google_apis = NULL;
+	$theme_swfobject_google_apis_location = NULL;
+
 	include "admin/lib/lib_misc.php";     										  		// loaded first for security
 	include "admin/lib/lib_logs.php"; pagetime("init");   						  		// runtime clock																																
 
-	extract($_REQUEST);                                                     	  		// access to form vars if register globals is off
+	// Here we check to make sure that the GET/POST/COOKIE and SESSION variables have not been poisioned
+	// by an intruder before they are extracted
+
+	if (isset($_REQUEST['_GET'])) { exit('Pixie - index.php - An attempt to modify get data was made.'); }
+	if (isset($_REQUEST['_POST'])) { exit('Pixie - index.php - An attempt to modify post data was made.'); }
+	if (isset($_REQUEST['_COOKIE'])) { exit('Pixie - index.php - An attempt to modify cookie data was made.'); }
+	if (isset($_REQUEST['_SESSION'])) { exit('Pixie - index.php - An attempt to modify session data was made.'); }
+
+	extract($_REQUEST);	// access to form vars if register globals is off // note : NOT setting a prefix yet, not looked at it yet
 
 	if (!file_exists( "admin/config.php" ) || filesize("admin/config.php") < 10) {		// check for config
 	header( "Location: admin/install/" ); exit();} 					  		            // redirect to installer
@@ -39,8 +66,21 @@
 	
 	$prefs = get_prefs();           											  		// prefs as an array
 	extract($prefs);
+
+	if ($debug == 'yes') {
+	$show_vars = get_defined_vars();
+	echo '<p><pre class="showvars">The prefs array contains : ';
+	htmlspecialchars(print_r($show_vars["prefs"]));
+	echo '</pre></p>';
+	}
+
 	putenv("TZ=$timezone"); 															// timezone fix
-	
+
+    if (strnatcmp(phpversion(),'5.1.0') >= 0) 
+    { 
+	date_default_timezone_set("$server_timezone");		/* !New built in php function. Tell php what the server timezone is so that we can use php's rewritten time and date functions with the correct time and without error messages  */	# equal or newer 
+    }
+
 	include "admin/lib/lib_validate.php"; 										  		// 
 	include "admin/lib/lib_date.php";											  		//
 	include "admin/lib/lib_paginator.php";										  		//
@@ -55,31 +95,25 @@
 	pixie();																	  		// let the magic begin 
 	referral(); 																 		// referral
 	include "admin/lang/".$language.".php";                                       		// get the language file
-	$gzip_theme_output = NULL;
-	$theme_jquery_google_apis = NULL;
-	$theme_jquery_google_apis_location = NULL;
-	$theme_swfobject_google_apis = NULL;
-	$theme_swfobject_google_apis_location = NULL;						// These variables are here to prevent an undefined variable for upgraders that don't have them defined in settings.php - remove them if it seems paranoid...
+
 	include "admin/themes/".$site_theme."/settings.php";                          		// load the current themes settings
 
 	if ($s == "404") { header("HTTP/1.0 404 Not Found"); }						  		// send correct header for 404 pages
 	
-	if ($m == "rss") {															  		// if this is a RSS page build feed
-		rss($s, $page_display_name, $page_id);									  		//
-	} else {																	  		//
+	if ($m == "rss") { rss($s, $page_display_name, $page_id); } else {																	  		//
 	
 	$page_description = safe_field('page_description','pixie_core',"page_name='$s'");	// load this pages description
 	
 	if ($page_type == "module") {
-		if (file_exists('admin/modules/'.$s.'_functions.php')) {						// try to load this modules functions
-			include('admin/modules/'.$s.'_functions.php');
-		}
+
+		if (file_exists('admin/modules/'.$s.'_functions.php')) { include('admin/modules/'.$s.'_functions.php'); }
+
 		$do = "pre";  
 		include('admin/modules/'.$s.'.php');											// load the module in pre mode
 	 }
 	 
-	if (file_exists('admin/themes/'.$site_theme.'/index.php')) {
-		include('admin/themes/'.$site_theme.'/index.php'); 
+	if (file_exists('admin/themes/'.$site_theme.'/index.php')) { include('admin/themes/'.$site_theme.'/index.php');
+ 
 	} else { 
 ?>
 <?php if ($gzip_theme_output == "yes") { if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) if (extension_loaded('zlib')) ob_start('ob_gzhandler'); else ob_start(); ?>
@@ -261,7 +295,12 @@
 		<div id="extradiv_d"><span></span></div>
 
 	</div>
-	
+
+  <?php if ($debug == 'yes') {
+  /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>';
+  phpinfo();
+  } ?>
+
 </body>
 </html>
 <!-- page generated in: <?php pagetime("print"); ?> -->
