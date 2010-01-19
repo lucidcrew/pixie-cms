@@ -11,6 +11,38 @@
 // Desc: 	 A easy to use class for your (multiple) file uploads
 
 //------------------------------------------------------------------ 
+
+// This new Pixie function is used by both uploaders to inform the user their max upload file size php setting
+// The failing of a too large file still needs to be logged. Someone please do it. Currently it just fails silently with no error message.
+/**
+ * Convert a shorthand byte value from a PHP configuration directive to an integer value
+ * @param    string   $value
+ * @return   int
+ */
+function convertBytes( $value ) {
+    if ( is_numeric( $value ) ) {
+        return $value;
+    } else {
+        $value_length = strlen( $value );
+        $qty = substr( $value, 0, $value_length - 1 );
+        $unit = strtolower( substr( $value, $value_length - 1 ) );
+        switch ( $unit ) {
+            case 'k':
+                $qty *= 1024;
+                break;
+            case 'm':
+                $qty *= 1048576;
+                break;
+            case 'g':
+                $qty *= 1073741824;
+                break;
+        }
+        return $qty;
+    }
+}
+
+// End function convertBytes
+
 class file_upload {
 
 	var $the_file;

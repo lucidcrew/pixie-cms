@@ -6,6 +6,8 @@
 // Title: File Manager.                                            //
 //*****************************************************************//
 
+include '../../lib/lib_upload.php';		// We need function convertBytes here
+
 if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
 
 	if ($del) { 
@@ -16,11 +18,11 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
 			$file_ext = substr(strrchr($del, "."), 1);
 			$file_ext = strtolower($file_ext);
 			
-			if (($file_ext == "jpg") || ($file_ext == "gif") || ($file_ext == "png")) {
+			if (($file_ext == 'jpg') || ($file_ext == 'gif') || ($file_ext == 'png') || ($file_ext == 'svg')) {
 				$dir = "../files/images/";
-			} else if (($file_ext == "mov") || ($file_ext == "flv") || ($file_ext == "avi") || ($file_ext == "m4v") || ($file_ext == "mp4")) {
+			} else if (($file_ext == 'mov') || ($file_ext == 'flv') || ($file_ext == 'avi') || ($file_ext == 'm4v') || ($file_ext == 'mp4') || ($file_ext == 'mkv')|| ($file_ext == 'ogv')) {
 				$dir = "../files/video/";	
-			} else if ($file_ext == "mp3") {
+			} else if (($file_ext == 'mp3') || ($file_ext == 'flac') || ($file_ext == 'ogg') || ($file_ext == 'wav') || ($file_ext == 'pls') || ($file_ext == 'm4a') || ($file_ext == 'xspf')) {
 				$dir = "../files/audio/";	
 			} else {
 				$dir = "../files/other/";
@@ -55,13 +57,13 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
 			$file_ext = substr(strrchr($file_name, "."), 1);
 			$file_ext = strtolower($file_ext);
 			
-			if (($file_ext == "jpg") || ($file_ext == "gif") || ($file_ext == "png")) {
+			if (($file_ext == 'jpg') || ($file_ext == 'gif') || ($file_ext == 'png') || ($file_ext == 'svg')) {
 				$dir = "../files/images/";
 				$file_type = "Image";
-			} else if (($file_ext == "mov") || ($file_ext == "flv") || ($file_ext == "avi") || ($file_ext == "m4v") || ($file_ext == "mp4")) {
+			} else if (($file_ext == 'mov') || ($file_ext == 'flv') || ($file_ext == 'avi') || ($file_ext == 'm4v') || ($file_ext == 'mp4') || ($file_ext == 'mkv')|| ($file_ext == 'ogv')) {
 				$dir = "../files/video/";
 				$file_type = "Video";
-			} else if ($file_ext == "mp3") {
+			} else if (($file_ext == 'mp3') || ($file_ext == 'flac') || ($file_ext == 'ogg') || ($file_ext == 'wav') || ($file_ext == 'pls') || ($file_ext == 'm4a') || ($file_ext == 'xspf')) {
 				$dir = "../files/audio/";
 				$file_type = "Audio";
 			} else {
@@ -70,7 +72,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
 			}
 
 			$multi_upload->upload_dir = $dir; 
-			$multi_upload->extensions = array(".png", ".jpg", ".gif", ".zip", ".mp3", ".pdf", ".exe", ".rar", ".swf", ".vcf", ".css", ".dmg", "php", ".doc", ".xls", ".xml", ".eps", ".rtf", ".iso", ".psd", ".txt", ".ppt",".mov",".flv",".avi",".m4v",".mp4");
+			$multi_upload->extensions = array('.png', '.jpg', '.gif', '.zip', '.mp3', '.pdf', '.exe', '.rar', '.swf', '.vcf', '.css', '.dmg', '.php', '.doc', '.xls', '.xml', '.eps', '.rtf', '.iso', '.psd', '.txt', '.ppt', '.mov', '.flv', '.avi', '.m4v', '.mp4', '.gz', '.bz2', '.tar', '.7z', '.svg', '.svgz', '.lzma', '.sig', '.sign', '.js', '.rb', '.ttf', '.html', '.phtml', '.flac', '.ogg', '.wav', '.mkv', '.pls', '.m4a', '.xspf', '.ogv');
 			$multi_upload->message[] = $multi_upload->extra_text(4);
 			$multi_upload->do_filename_check = "y";
 			$multi_upload->tmp_names_array = $_FILES['upload']['tmp_name'];
@@ -112,7 +114,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
 		}
 	}
 
-	echo"<div id=\"blocks\">
+	echo "<div id=\"blocks\">
 					<div class=\"admin_block\" id=\"admin_block_filemanager\">
 						<h3>".$lang['upload']."</h3>
 						<form action=\"?s=$s&amp;x=$x\" method=\"post\" id=\"upload_form\" enctype=\"multipart/form-data\">
@@ -120,8 +122,9 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
 						<legend>".$lang['upload']."</legend>
 							<div class=\"form_row\">
 								<div class=\"form_label\"><label for=\"upload\">".$lang['form_upload_file']." <span class=\"form_required\">".$lang['form_required']."</span></label><span class=\"form_help\">".$lang['form_help_upload_file']." ".$lang['file_manager_info']."</span></div>
-								<div class=\"form_item_file\"><input type=\"file\" class=\"form_text\" name=\"upload[]\" id=\"upload\" size=\"18\" /></div>
-							</div>
+							<div class=\"form_item_file\"><input type=\"file\" class=\"form_text\" name=\"upload[]\" id=\"upload\" size=\"18\" /></div>";
+							echo '<div class=\form_label\><span><small>Your host server will accept uploads for the maximum file size of : ' . convertBytes( ini_get( 'upload_max_filesize' ) ) / 1048576 . 'MB.</small></span></div>';
+						echo "</div>
 							<div class=\"form_row\">
 								<div class=\"form_label\"><label for=\"file_tags\">".$lang['tags']." <span class=\"form_required\">".$lang['form_required']."</span></label><span class=\"form_help\">".$lang['form_help_upload_tags']."</span></div>
 								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" id=\"file_tags\" name=\"file_tags\" size=\"18\" /></div>
@@ -137,7 +140,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
 						</fieldset>
 						</form>
 					</div>";
-					
+
 					$type = "module";
 					admin_block_tag_cloud("pixie_files", "file_id >= 0");
 					

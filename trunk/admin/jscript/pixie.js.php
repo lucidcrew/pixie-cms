@@ -6,14 +6,24 @@
 // Title: Pixie JavaScript                                         //
 //*****************************************************************//
 
-header('Content-Type: text/javascript');
-error_reporting(0);
-extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');
-include "../config.php";           																			
-include "../lib/lib_db.php";       																			
-include "../lib/lib_misc.php";     																			
-include "../lib/lib_auth.php";	
+	header('Content-Type: text/javascript');
 
+	error_reporting(0);		// I still don't think that this is a good idea, we should be able to debug
+
+	// Here we check to make sure that the GET/POST/COOKIE and SESSION variables have not been poisioned
+	// by an intruder before they are extracted
+
+	if (isset($_REQUEST['_GET'])) { exit('Pixie Admin - index.php - An attempt to modify get data was made.'); }
+	if (isset($_REQUEST['_POST'])) { exit('Pixie Admin - index.php - An attempt to modify post data was made.'); }
+	if (isset($_REQUEST['_COOKIE'])) { exit('Pixie Admin - index.php - An attempt to modify cookie data was made.'); }
+	if (isset($_REQUEST['_SESSION'])) { exit('Pixie Admin - index.php - An attempt to modify session data was made.'); }
+
+	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');
+
+	include '../config.php';
+	include '../lib/lib_db.php';
+	include '../lib/lib_misc.php';
+	include '../lib/lib_auth.php';
 ?>
 jQuery(document).ready(function(){
 	
@@ -22,7 +32,7 @@ jQuery(document).ready(function(){
 	var tagnormhover = { padding : "1px 4px 1px 4px" };
 	
 	if (!jQuery.browser.msie) {
-// Should use jQuery.support instead of jQuery.browser
+	// Should use jQuery.support instead of jQuery.browser
 		jQuery("#tags").jTagging(jQuery("#form_tags_list"), " ", tagnorm, tagselect, tagnormhover);
 		jQuery("#page_blocks").jTagging(jQuery("#form_block_list"), " ", tagnorm, tagselect, tagnormhover);
 	}
@@ -56,15 +66,37 @@ jQuery(document).ready(function(){
 	jQuery(".more_upload").show();
 	
 	jQuery(".image_preview select").bind("change",preview);
-	
-	<?php
-	/* Disabled for now due to error */
-//	$tablesorter_init = <<<'EOD'
-//      jQuery('.table').tablesorter();
-//	EOD;
 
-//	if ($pixie_s == "publish") { print $tablesorter_init; }
-	?>
+	<?php if ($pixie_s == 'publish') {
+
+	/* The tablesorter is back!!! */
+
+	$tablesorter_init = "
+	jQuery(function() { 
+	jQuery.getScript('jscript/tablesorter.js', function(){
+	// call the tablesorter plugin 
+	jQuery(\"table\").tablesorter({ 
+        // enable debug mode 
+        debug: false 
+	}); 
+
+	});
+
+	jQuery(document).ready(function() { 
+	jQuery('.tbl_heading').hover(function(index) {
+	jQuery(this).css('cursor','pointer'); }, function() {
+	jQuery(this).css('cursor','auto');
+	});
+	});
+
+	});
+
+
+	";
+
+	echo $tablesorter_init;
+
+	} ?>
 
 });
 
