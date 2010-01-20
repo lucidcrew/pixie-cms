@@ -1,26 +1,19 @@
 <?php
-
+error_reporting(0);	// Turns off error reporting
+if (!file_exists('../config.php') || filesize('../config.php') < 10) {		// check for config
+require '../lib/lib_db.php'; db_down(); exit();
+}
+	require '../lib/lib_misc.php';     																				//
 	$debug = 'no';	// Set this to yes to debug and see all the global vars coming into the file
+	$server_timezone = 'Europe/London';
 
-	// Here we check to make sure that the GET/POST/COOKIE and SESSION variables have not been poisioned
-	// by an intruder before they are extracted
-
-	if (isset($_REQUEST['_GET'])) { exit('Pixie Installer - createuser.php - An attempt to modify get data was made.'); }
-	if (isset($_REQUEST['_POST'])) { exit('Pixie Installer - createuser.php - An attempt to modify post data was made.'); }
-	if (isset($_REQUEST['_COOKIE'])) { exit('Pixie Installer - createuser.php - An attempt to modify cookie data was made.'); }
-	if (isset($_REQUEST['_SESSION'])) { exit('Pixie Installer - createuser.php - An attempt to modify session data was made.'); }
+	globalSec('Pixie Installer createuser.php', 1);
 
 	extract($_REQUEST);
+	require '../config.php';
+	include '../lib/lib_db.php';       																				// load libraries order is important
 
-	include "../config.php";
-	include "../lib/lib_db.php";       																				// load libraries order is important
-	include "../lib/lib_misc.php";     																				//
-
-	if (strnatcmp(phpversion(),'5.1.0') >= 0) 
-	{ 
-	date_default_timezone_set("$server_timezone");		/* !New built in php function. Tell php what the server timezone is so that we can use php's rewritten time and date functions with the correct time and without error messages  */	# equal or newer 
-	}
-
+	if (strnatcmp(phpversion(),'5.1.0') >= 0) { date_default_timezone_set("$server_timezone"); }	/* New! Built in php function. Tell php what the server timezone is so that we can use php's rewritten time and date functions with the correct time and without error messages  */
 	print ($do);
 
 	if ($debug == 'yes') {
@@ -33,7 +26,7 @@
 
 if ($user_new) {
 
-	$table_name = "pixie_users";
+	$table_name = 'pixie_users';
 	if (!$error) {
 
 		$password = generate_password(6);
@@ -55,7 +48,7 @@ password: $password
 
 ";
 			 
-			$subject = "Pixie account information";
+			$subject = 'Pixie account information';
 			mail($email, $subject, $emessage);
 			
 			$messageok = "Saved new user $uname, a temp password has been created (<b>$password</b>).";
@@ -77,7 +70,7 @@ password: $password
 	<!-- 
 	Pixie Powered (www.getpixie.co.uk)
 	Licence: GNU General Public License v3                   		 
-	Copyright (C) <?php print date("Y");?>, Scott Evans   
+	Copyright (C) <?php print date('Y');?>, Scott Evans   
 	                             
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by

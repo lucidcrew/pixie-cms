@@ -5,7 +5,77 @@
 // Licence: GNU General Public License v3                   	   //
 // Title: lib_misc.                                                //
 //*****************************************************************//
+// -- PLEASE DO NOT PUT ANY MORE DATABASE FUNCTIONS IN THIS FILE! ---
+// ------ Functions that use the database go in lib_db.php ----------
+//
+// THE EXISTING FUNCTIONS IN THIS FILE THAT USE THE DATABASE SHOULD
+// BE MIGRATED TO lib_db.php.
+//
+// ------------------------------------------------------------------
+// Create the nuke proof suit.
+// When I'm on road; I always rock a nuke proof suit...
+// http://www.youtube.com/watch?v=gv521YkDrwg
+// ------------------------------------------------------------------
+	function nukeProofSuit()                                          
+	{
+$nuke_proof_suit = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
+		\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
+<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">
+<head>
+	<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />
+	<title>Pixie (www.getpixie.co.uk) - Security Warning</title>
+	<style type=\"text/css\">
+		body
+			{
+			font-family: Arial, 'Lucida Grande', Verdana, Sans-Serif;
+			color: #333;
+			}
+		
+		a, a:visited
+			{
+			text-decoration: none;
+			color: #0497d3;
+			}
 
+		a:hover
+			{
+			color: #191919;
+			text-decoration: none;
+			}
+			
+		.helper
+			{
+			position: relative;
+			top: 60px;
+			border: 5px solid #e1e1e1;
+			clear: left;
+			padding: 15px 30px;
+			margin: 0 auto;
+			background-color: #F0F0F0;
+			width: 500px;
+			line-height: 15pt;
+			}
+	</style>
+</head>
+<body>
+	<div class=\"helper\">
+		<h3>Security Warning</h3>
+		<p><a href=\"http://www.getpixie.co.uk\" alt=\"Get Pixie!\">Pixie</a> has blocked your request to this site due to security concerns. The site administrator has been notified of your details. Please try to visit this site again later if you have recieved this message in error.</p>
+	</div>
+</body>
+</html>";
+
+	header('Status: 503 Service Unavailable'); 
+	exit($nuke_proof_suit); // 503 status might discourage search engines from indexing or caching the error message
+
+	}
+//
+//	WE SHOULD NOT BE OFFERING A POTENTIAL ATTACKER A GET OUT OF A DEAD END LINK SO THAT THEY CAN TRY AGAIN! ---------------
+//	<p><a href=\"http://www.getpixie.co.uk\" alt=\"Get Pixie!\">Pixie</a> has blocked your request to this site due to security concerns. The site administrator has been notified of your details. <a href=\"$site_url\" title=\"$site_name\">Click here to be redirected to the $site_name homepage</a>.</p>
+//	THAT CODE FROM ABOVE HAS BEEEN REMOVED! Remove this comment block if you agree. ---------------
+//	lib_db is now not a requirement to init this required included page. ---------------
+//	The result of an attacker should never interface with our database and just instead be dealt with by being silently dropped. -----
+//
 // ------------------------------------------------------------------
 // Generate a new password
 	function generate_password($length=10)
@@ -62,64 +132,78 @@
 	{
 		$in = serverset('REQUEST_URI');
 		$ip = $_SERVER['REMOTE_ADDR'];
-		if (strlen($in) > 260) logme("BombShelter: possible attack, bomb via GET.","yes","error");
+		// logme is just going to flood the logs if under repeated mass attack and bring the mysql server down to a crawl if it's a botnet attack.
+		// Without logging the attacker's ip address, just logging that there was an attack is pointless and just worries users without providing them a way to action something.
+		// if (strlen($in) > 260) logme("BombShelter: possible attack, bomb via GET.","yes","error");
 		if (strlen($in) > 260) { 
-		
-		$site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
-		$site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
-
-		exit(
-		
-"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
-		\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
-<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">
-<head>
-	<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />
-	<title>Pixie (www.getpixie.co.uk) - Security Warning</title>
-	<style type=\"text/css\">
-		body
-			{
-			font-family: Arial, 'Lucida Grande', Verdana, Sans-Serif;
-			color: #333;
-			}
-		
-		a, a:visited
-			{
-			text-decoration: none;
-			color: #0497d3;
-			}
-
-		a:hover
-			{
-			color: #191919;
-			text-decoration: none;
-			}
-			
-		.helper
-			{
-			position: relative;
-			top: 60px;
-			border: 5px solid #e1e1e1;
-			clear: left;
-			padding: 15px 30px;
-			margin: 0 auto;
-			background-color: #F0F0F0;
-			width: 500px;
-			line-height: 15pt;
-			}
-	</style>
-</head>
-<body>
-	<div class=\"helper\">
-		<h3>Security Warning</h3>
-		<p><a href=\"http://www.getpixie.co.uk\" alt=\"Get Pixie!\">Pixie</a> has blocked your request to this site due to security concerns. The site administrator has been notified of your details. <a href=\"$site_url\" title=\"$site_name\">Click here to be redirected to the $site_name homepage</a>.</p>
-	</div>
-</body>
-</html>"
-		
-		);
+		// See the comment directly below function nuke_proof_suit as to why these two aren't needed
+		// We don't want an attacker fed anything if they want to try to break the site.
+		// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'"); // Depreciating this
+		// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'"); // Depreciating this
+		nukeProofSuit();
 		}
 	}
+// ------------------------------------------------------------------
+function globalSec($page_location, $sec_check)
+{
+	// Here we check to make sure that the super global $_REQUEST array's variables have not been poisioned
+	// by an intruder before they are extracted
+	// I'm not going to log this, I think doing that is a mistake and ignorance is also bliss...
+	// We can maybe turn these isset checks into an array and loop it
+
+	// I think we might want to do this for the prefs too when they are extracted. What do you think?
+	if ($sec_check == 1) {
+
+	if (isset($_REQUEST['_GET'])) { 
+	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
+	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
+	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify get data was made.',"yes","error");
+	nukeProofSuit(); }
+
+	if (isset($_REQUEST['_POST'])) { 
+	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
+	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
+	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify get post data was made.',"yes","error");
+	nukeProofSuit(); }
+
+	if (isset($_REQUEST['_COOKIE'])) { 
+	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
+	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
+	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify cookie data was made.',"yes","error");
+	nukeProofSuit();	}
+
+	if (isset($_REQUEST['_SESSION'])) { 
+	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
+	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
+	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify session data was made.',"yes","error");
+	nukeProofSuit();	}
+
+	if (isset($_REQUEST['GLOBALS'])) { 
+	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
+	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
+	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify globals data was made.',"yes","error");
+	nukeProofSuit();	}
+
+	if (isset($_REQUEST['_FILES'])) { 
+	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
+	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
+	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify file data was made.',"yes","error");
+	nukeProofSuit();	}
+
+	if (isset($_REQUEST['_REQUEST'])) { 
+	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
+	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
+	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify request data was made.',"yes","error");
+	nukeProofSuit();	}
+
+	if (isset($_REQUEST['_SERVER'])) { 
+	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
+	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
+	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify server data was made.',"yes","error");
+	nukeProofSuit();	}
+	}
+
+}
 // ------------------------------------------------------------------
 	function doSlash($in)
 	{ 
