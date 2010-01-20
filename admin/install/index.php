@@ -5,7 +5,8 @@
 // Licence: GNU General Public License v3                   	   //
 // Title: Installer.                                               //
 //*****************************************************************//
-
+require '../lib/lib_misc.php';     										  		// loaded for security
+	bombShelter();                  											  		// che
 	$debug = 'no';	// Set this to yes to debug and see all the global vars coming into the file
 			// To find error messages, search the page for php_errormsg if you turn this debug feature on
 
@@ -19,30 +20,30 @@
 	echo '</pre></p>';
 	}
 
-	// Variables that needs to be defined
+	// Variables that need to be defined
 
 	$pixie_version = '1.04';		// You can define the version number for Pixie releases here
 	$pixie_user = 'Pixie Installer';		// The name on the first log
 	$pixie_server_timezone = 'Europe/London';		// Hosted server timezone
+	$pixie_step = '0';
+	$pixie_dropolddata = 'No';
+	$pixie_reinstall = 'No';
 
 	$pixie_prefix = NULL; // Prevent undefined variables. If undefined - Initialise them!
 	$pixie_database = NULL;
 	$pixie_password = NULL;
 	$pixie_username = NULL;
 	$pixie_host = NULL;
-	$pixie_step = '0';
 	$pixie_sitename = NULL;
 	$pixie_email = NULL;
 	$pixie_name = NULL;
-	$pixie_dropolddata = 'No';
-	$pixie_reinstall = 'No';
 	$error = NULL;
 	$error1 = NULL;
 	$step = NULL;
 	$urlstart = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 	$urlstart = str_replace("admin/install/index.php","",$urlstart);
 	$pixie_url = $urlstart;
-	$pixie_user_privs = 'NULL'; // This defines an undefined constant or index?
+	$pixie_user_privs = 'NULL'; // This defines an undefined constant or index? I think it needs unset or something...
 
 	// Experimental features need switches, put those switches here
 
@@ -54,28 +55,12 @@
 	// php uses this setting in scripts to get the correct server time. Not user local time.
 	// It must be set to not bog php down with errors.
 
-
     if (strnatcmp(phpversion(),'5.1.0') >= 0) 
     { 
         	date_default_timezone_set("$pixie_server_timezone");	# equal or newer 
-    } 
-    else 
-    { 
-        $error = 'WARNING! Your current PHP version: ' . phpversion() . ' is not the current stable version of php. Please consult your server Administrator about upgrading php for security reasons.';	# not sufficiant 
-    if (strnatcmp(phpversion(),'5.0.0') >= 0) 
-    { 
-	$error = 'WARNING! Your current PHP version: ' . phpversion() . ' is depreciated and unsupported. Please consult your server Administrator about upgrading php for security reasons.';
     }
 
-    }
-
-	// Here we check to make sure that the GET/POST/COOKIE and SESSION variables have not been poisioned
-	// by an intruder before they are extracted
-
-	if (isset($_REQUEST['_GET'])) { exit('Pixie Installer -index.php - An attempt to modify get data was made.'); }
-	if (isset($_REQUEST['_POST'])) { exit('Pixie Installer -index.php - An attempt to modify post data was made.'); }
-	if (isset($_REQUEST['_COOKIE'])) { exit('Pixie Installer -index.php - An attempt to modify cookie data was made.'); }
-	if (isset($_REQUEST['_SESSION'])) { exit('Pixie Installer -index.php - An attempt to modify session data was made.'); }
+	globalSec('Main index.php', 1);
 
 	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie'); // access to form vars if register globals is off
 
@@ -460,7 +445,6 @@
 			include '../config.php';           		// load configuration
 			include '../lib/lib_db.php';       		// load libraries order is important
 			include '../lang/'.$pixie_langu.'.php';       // get the language file
-			include '../lib/lib_misc.php';     		//			
 			include '../lib/lib_date.php';			//
 			include '../lib/lib_validate.php'; 		// 
 			include '../lib/lib_core.php';          //
@@ -652,7 +636,7 @@ RewriteRule ^(.*)$ index.php [F,L]
 </IfModule>";
 				fwrite($fh, $data);
 				fclose($fh);
-				chmod('../../.htaccess', 0640); // chmod the .htaccess file
+				chmod('../../.htaccess', 0640); // Try to chmod the .htaccess file
   			}
   			
   			// load external sql
@@ -688,13 +672,12 @@ RewriteRule ^(.*)$ index.php [F,L]
 			
 			$prefs = get_prefs();           		// prefs as an array
 			extract($prefs);                		// add prefs to globals
-			include '../lang/'.$language.'.php';       // get the language file
-			include '../lib/lib_misc.php';     		//			
+			include '../lang/'.$language.'.php';      	 // get the language file
 			include '../lib/lib_date.php';			//
 			include '../lib/lib_validate.php'; 		// 
-			include '../lib/lib_core.php';          //
-			include '../lib/lib_backup.php';	    //
-			include '../lib/lib_logs.php';          //
+			include '../lib/lib_core.php';          	//
+			include '../lib/lib_backup.php';	    	//
+			include '../lib/lib_logs.php';          	//
 
 	if ($debug == 'yes') {
 	$show_vars = get_defined_vars();
@@ -814,9 +797,6 @@ www.getpixie.co.uk
 				mail($pixie_email, $subject, $emessage);
 						  }
 
-
-
-
 			if (!$error) {
 				$pixie_step = '4';
 			} else {
@@ -833,6 +813,20 @@ www.getpixie.co.uk
 			header( 'Location: ../../admin/' ); exit();}   // redirect to pixie if its found
 			}
 
+    if (strnatcmp(phpversion(),'5.1.0') >= 0) 
+    { 
+        	date_default_timezone_set("$pixie_server_timezone");	# equal or newer 
+    } 
+    else 
+    { 
+        $error = 'WARNING! Your current PHP version: ' . phpversion() . ' is not the current stable version of php. Please consult your server Administrator about upgrading php for security reasons.';	# not sufficiant 
+    if (strnatcmp(phpversion(),'5.0.0') >= 0) 
+    { 
+	$error = 'WARNING! Your current PHP version: ' . phpversion() . ' is depreciated and unsupported. Please consult your server Administrator about upgrading php for security reasons.';
+    }
+
+    }
+
 		break;
 	
 	}
@@ -840,8 +834,6 @@ www.getpixie.co.uk
 	if (!$pixie_step) {
 		$pixie_step = '1';
 	}
-
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -1140,7 +1132,7 @@ padding-top: 2em;
 		<p>If you would like to add any <b>themes</b> or <b>modules</b>, be sure to visit the <a href="http://www.getpixie.co.uk" title="Pixie">Pixie website</a> to browse the collection. Please remember to delete the install directory within Pixie to secure your site.</p>
 		<div class="divcentertext2">What would you like to do <b>next</b>?
 		<br /><br /><a href="<?php print $site_url; ?>" title="Visit the homepage">Visit your new homepage</a> or<br />
-		<a href="<?php print $site_url.'admin/'; ?>" title="Login to Pixie">Login and start adding content</a> to your site...<br /></div>
+		<a href="<?php print $site_url . 'admin/'; ?>" title="Login to Pixie">Login and start adding content</a> to your site...<br /></div>
 		<p>If you need <b>help</b> with Pixie, you can join the <a href="http://groups.google.com/group/pixie-cms" title="Pixie Forums">Pixie Forums</a> and start a discussion. <b>Everyone</b> is welcome.<br />
 		<br />If you would like to help <b>develop</b> Pixie, you can visit Pixie's <a href="http://code.google.com/p/pixie-cms/" title="Help develop Pixie">Google code project page</a> to get started.</p>
 		<div class="divcentertext2"><br /><b>Thank you for installing Pixie!</b></div><br />
@@ -1187,7 +1179,7 @@ padding-top: 2em;
 			
 			case "2":
 			
-			$url1 = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+			$url1 = "http://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
 			$url1 = str_replace('admin/install/index.php',"",$url1);
 		?>
 		<p class="toptext">Now Pixie needs some details about your site (you will have access to more settings once Pixie is installed):</p>
@@ -1380,7 +1372,7 @@ $zonelist = array('Pacific/Midway',
 
 ?>
 
-		<p class="toptext">Welcome to the <a href="http://www.getpixie.co.uk" alt="Get Pixie!">Pixie</a> installer, just a few steps to go until you have your own Pixie powered website. Firstly we need your database details:</p>
+		<p class="toptext">Welcome to the <a href="http://www.getpixie.co.uk" alt="Get Pixie!">Pixie</a> installer, just a few steps to go until you have your own Pixie powered website. Firstly we need your database details :</p>
 		
 		<form action="index.php" method="post" id="form_db" class="form">
 			<fieldset>

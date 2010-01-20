@@ -6,17 +6,7 @@
 // Title: Pixie JavaScript                                         //
 //*****************************************************************//
 
-	header('Content-Type: text/javascript');
-
-	error_reporting(0);		// I still don't think that this is a good idea, we should be able to debug
-
-	// Here we check to make sure that the GET/POST/COOKIE and SESSION variables have not been poisioned
-	// by an intruder before they are extracted
-
-	if (isset($_REQUEST['_GET'])) { exit('Pixie Admin - index.php - An attempt to modify get data was made.'); }
-	if (isset($_REQUEST['_POST'])) { exit('Pixie Admin - index.php - An attempt to modify post data was made.'); }
-	if (isset($_REQUEST['_COOKIE'])) { exit('Pixie Admin - index.php - An attempt to modify cookie data was made.'); }
-	if (isset($_REQUEST['_SESSION'])) { exit('Pixie Admin - index.php - An attempt to modify session data was made.'); }
+	error_reporting(0);	// Here was the tablesorter bug Scott, no ; at the end of error_reporting(0)
 
 	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');
 
@@ -24,6 +14,8 @@
 	include '../lib/lib_db.php';
 	include '../lib/lib_misc.php';
 	include '../lib/lib_auth.php';
+
+	header('Content-Type: text/javascript');
 ?>
 jQuery(document).ready(function(){
 	
@@ -75,7 +67,7 @@ jQuery(document).ready(function(){
 	jQuery(function() { 
 	jQuery.getScript('jscript/tablesorter.js', function(){
 	// call the tablesorter plugin 
-	jQuery(\"table\").tablesorter({ 
+	jQuery('table').tablesorter({ 
         // enable debug mode 
         debug: false 
 	}); 

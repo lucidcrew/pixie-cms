@@ -10,11 +10,11 @@
 if (!empty($pixieconfig['table_prefix'])) {
 	define ("PFX",$pixieconfig['table_prefix']);
 } else define ("PFX",'');
-
-if (!function_exists(adjust_prefix)) {
+/* Constant PFX already defined somewhere around here */
+if (!function_exists('adjust_prefix')) {
 	function adjust_prefix($table){
 		if (stripos($table, PFX) === 0) return $table;
-		else return PFX.$table;
+		else return PFX . $table;
 	}
 }
 

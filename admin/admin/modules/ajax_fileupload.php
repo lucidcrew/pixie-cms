@@ -1,10 +1,10 @@
 <?php
-
-	error_reporting(0);		// I don't think setting this is a good idea unless there is a debug switch.
-
-	include '../../config.php';
+error_reporting(0);	// Turns off error reporting
+if (!file_exists('../../config.php') || filesize('../../config.php') < 10) {		// check for config
+require '../../lib/lib_db.php'; db_down(); exit();
+}
+	require '../../config.php';
 	include '../../lib/lib_db.php';
-	include '../../lib/lib_misc.php';
 	include '../../lib/lib_auth.php';
 	include '../../lib/lib_date.php';
 	include '../../lib/lib_validate.php';
@@ -15,19 +15,12 @@
 
 	if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
 
-	// Here we check to make sure that the GET/POST/COOKIE and SESSION variables have not been poisioned
-	// by an intruder before they are extracted
-
-	if (isset($_REQUEST['_GET'])) { exit('Pixie Admin - ajax_fileupload.php - An attempt to modify get data was made.'); }
-	if (isset($_REQUEST['_POST'])) { exit('Pixie Admin - ajax_fileupload.php - An attempt to modify post data was made.'); }
-	if (isset($_REQUEST['_COOKIE'])) { exit('Pixie Admin - ajax_fileupload.php - An attempt to modify cookie data was made.'); }
-	if (isset($_REQUEST['_SESSION'])) { exit('Pixie Admin - ajax_fileupload.php - An attempt to modify session data was made.'); }
+	globalSec('ajax_fileupload.php', 1);
 
 	extract($_REQUEST);		// access to form vars if register globals is off // note : NOT setting a prefix yet, not looked at it yet
-
 	$prefs = get_prefs();
 	extract($prefs);
-	include '../../lang/'.$language.'.php';
+	include '../../lang/' . $language . '.php';
 	
 	// rebuild new form field
 	if ($form) {
@@ -35,27 +28,27 @@
 		if (first_word($form) == 'image') {
 		db_dropdown('pixie_files', "" , $form, "file_type = 'Image' order by file_id desc");
 		if (!$ie) {
-		echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('".$form."'); return false;\" title=\"".$lang['upload']."\">".strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n";
+		echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $form . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n";
 		}
 		} else if (first_word($form) == 'document') {
 		db_dropdown('pixie_files', "" , $form, "file_type = 'Other' order by file_id desc");
 		if (!$ie) {
-		echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('".$form."'); return false;\" title=\"".$lang['upload']."\">".strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n";
+		echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $form . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n";
 		}
 		} else if (first_word($form) == 'video') {
 		db_dropdown('pixie_files', "" , $form, "file_type = 'Video' order by file_id desc");
 		if (!$ie) {
-		echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('".$form."'); return false;\" title=\"".$lang['upload']."\">".strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n";
+		echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $form . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload']) . "...</a></span>\n\t\t\t\t\t\t\t\t</div>\n";
 		}
 		} else if (first_word($form) == 'audio') {
 		db_dropdown('pixie_files', "" , $form, "file_type = 'Audio' order by file_id desc");
 		if (!$ie) {
-		echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('".$form."'); return false;\" title=\"".$lang['upload']."\">".strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n";
+		echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $form . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload']) . "...</a></span>\n\t\t\t\t\t\t\t\t</div>\n";
 		}
 		} else {
 		db_dropdown('pixie_files', "" , $form, "file_id >= '0' order by file_id desc");
 		if (!$ie) {
-		echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('".$form."'); return false;\" title=\"".$lang['upload']."\">".strtolower($lang['upload'])."...</a></span>\n\t\t\t\t\t\t\t\t</div>\n";
+		echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $form . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload']) . "...</a></span>\n\t\t\t\t\t\t\t\t</div>\n";
 		}
 		}
 
@@ -92,7 +85,7 @@
 	$multi_upload->tmp_names_array = $_FILES['upload']['tmp_name'];
 	$multi_upload->names_array = $_FILES['upload']['name'];
 	$multi_upload->error_array = $_FILES['upload']['error'];
-	$multi_upload->replace = (isset($_POST['replace'])) ? $_POST['replace'] : "n";
+	$multi_upload->replace = (isset($_POST['replace'])) ? $_POST['replace'] : 'n';
 	$multi_upload->extensions = array('.png', '.jpg', '.gif', '.zip', '.mp3', '.pdf', '.exe', '.rar', '.swf', '.vcf', '.css', '.dmg', '.php', '.doc', '.xls', '.xml', '.eps', '.rtf', '.iso', '.psd', '.txt', '.ppt', '.mov', '.flv', '.avi', '.m4v', '.mp4', '.gz', '.bz2', '.tar', '.7z', '.svg', '.svgz', '.lzma', '.sig', '.sign', '.js', '.rb', '.ttf', '.html', '.phtml', '.flac', '.ogg', '.wav', '.mkv', '.pls', '.m4a', '.xspf', '.ogv');
 	$multi_upload->upload_multi_files();
 
