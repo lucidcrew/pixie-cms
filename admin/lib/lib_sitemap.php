@@ -1,4 +1,5 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -13,7 +14,7 @@
 class google_sitemap
 {
   var $header = "<\x3Fxml version=\"1.0\" encoding=\"UTF-8\"\x3F>\n\t<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\txsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9\n\thttp://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\">";
-  var $charset = "UTF-8";
+  var $charset = 'UTF-8';
   var $footer = "\t</urlset>\n";
   var $items = array();
 
@@ -25,7 +26,7 @@ class google_sitemap
     //Make sure $new_item is an 'google_sitemap item' object
     if(!is_a($new_item, "google_sitemap_item")){
       //Stop execution with an error message
-      trigger_error("Can't add a non-google_sitemap_item object to the sitemap items array");
+      trigger_error('Can\'t add a non-google_sitemap_item object to the sitemap items array');
     }
     $this->items[] = $new_item;
   }

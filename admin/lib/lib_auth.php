@@ -1,4 +1,5 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -12,15 +13,15 @@
 	
 		if (!$log_in) { 
 			$s = 'myaccount';
-			logme($lang['ok_login'],"no","user"); 
+			logme($lang['ok_login'], 'no', 'user'); 
 		} else { 
 			$s = 'login'; $message = $log_in;
-			logme($lang['failed_login'],"yes","error"); 
+			logme($lang['failed_login'], 'yes', 'error'); 
 		}
 			
 	} else if ($s == 'logout') {
 
-		setcookie('pixie_login',' ',time()-3600,'/'); $s = 'login';
+		setcookie('pixie_login', ' ', time()-3600,'/'); $s = 'login';
 	
 	} else { 
 	
@@ -49,36 +50,36 @@
 		$password = sterilise($password, true);
 		$remember = sterilise($remember, true);
 	
-		$howmany = count(safe_rows("*","pixie_log","log_message = '".$lang['failed_login']."' and user_ip = '".$_SERVER["REMOTE_ADDR"]."' and log_time < now() and log_time > DATE_ADD(now(), INTERVAL -1 DAY)"));
+		$howmany = count(safe_rows('*', 'pixie_log', "log_message = '" . $lang['failed_login'] . "' and user_ip = '" . $_SERVER["REMOTE_ADDR"] . "' and log_time < now() and log_time > DATE_ADD(now(), INTERVAL -1 DAY)"));
 		
 		sleep(3);																																    // should halt dictionary attacks
 		
 		// no more logins than 3 in 24 hours
-		if ($howmany > "3") {
+		if ($howmany > 3) {
 			$message = $lang['login_exceeded'];
-			logme($lang['logins_exceeded'],"yes","error"); 
+			logme($lang['logins_exceeded'], 'yes', 'error'); 
 			return $message;
 		} else {
 		if ($username and $password) {
-			$r = safe_field("user_name", "pixie_users", "user_name = '$username'and 
-			pass = password(lower('".doSlash($password)."')) and privs >= 0");
+			$r = safe_field('user_name', 'pixie_users', "user_name = '$username'and 
+			pass = password(lower('" . doSlash($password) . "')) and privs >= 0");
 
 			if ($r) {
-				$user_hits = safe_field('user_hits','pixie_users',"user_name='$username'");
-				safe_update("pixie_users", "last_access = now()", "user_name = '$username'");
-				safe_update("pixie_users", "user_hits  = $user_hits + 1", "user_name = '$username'");
+				$user_hits = safe_field('user_hits', 'pixie_users', "user_name='$username'");
+				safe_update('pixie_users', 'last_access = now()', "user_name = '$username'");
+				safe_update('pixie_users', "user_hits  = $user_hits + 1", "user_name = '$username'");
 
-        $nonce = safe_field('nonce','pixie_users',"user_name='$username'");
+        $nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
         
 			  if ($remember) {	                                                     // persistent cookie required
-					setcookie('pixie_login',$username.','.md5($username.$nonce),time()+3600*24*365,'/'); 
+					setcookie('pixie_login', $username . ',' . md5($username . $nonce), time()+3600*24*365, '/'); 
 				} else {                                                               // session-only cookie required
-					setcookie('pixie_login',$username.','.md5($username.$nonce),'0', '/');    			        
+					setcookie('pixie_login', $username . ',' . md5($username . $nonce), 0, '/');    			        
 				}
 
-        $privs = safe_field('privs','pixie_users',"user_name='$username'");			 // login is good, create user
-	      $realname = safe_field('realname','pixie_users',"user_name='$username'");
-	      $nonce = safe_field('nonce','pixie_users',"user_name='$username'");
+        $privs = safe_field('privs', 'pixie_users', "user_name='$username'");			 // login is good, create user
+	      $realname = safe_field('realname', 'pixie_users', "user_name='$username'");
+	      $nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
 	      $GLOBALS['pixie_real_name'] = $realname;
         $GLOBALS['pixie_user_privs'] = $privs;
 				$GLOBALS['pixie_user'] = $username;
@@ -103,25 +104,25 @@
 		global $lang;
 		
 		if(isset($_COOKIE['pixie_login'])) {	
-			list($username,$cookie_hash) = split(',',$_COOKIE['pixie_login']);
-			$nonce = safe_field('nonce','pixie_users',"user_name='$username'");
+			list($username,$cookie_hash) = split(',', $_COOKIE['pixie_login']);
+			$nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
 
-			if (md5($username.$nonce) == $cookie_hash) {														 // check nonce
-				$privs = safe_field('privs','pixie_users',"user_name='$username'");			 // login is good, create user
-	      $realname = safe_field('realname','pixie_users',"user_name='$username'");
+			if (md5($username . $nonce) == $cookie_hash) {														 // check nonce
+				$privs = safe_field('privs', 'pixie_users', "user_name='$username'");			 // login is good, create user
+	      $realname = safe_field('realname', 'pixie_users', "user_name='$username'");
 	      $GLOBALS['pixie_real_name'] = $realname;
         $GLOBALS['pixie_user_privs'] = $privs;
 				$GLOBALS['pixie_user'] = $username;
 				return '';	
 			} else {                                                                 // something's wrong
 				$GLOBALS['pixie_user'] = '';
-				setcookie('pixie_login','',time()-3600);
+				setcookie('pixie_login', '', time()-3600);
 				$message = $lang['bad_cookie'];
 				return $message;
 			}
     } else {
     	$GLOBALS['pixie_user'] = '';
-			setcookie('pixie_login','',time()-3600);
+			setcookie('pixie_login', '', time()-3600);
     }
 	}
 ?>

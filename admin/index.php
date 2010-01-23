@@ -20,73 +20,57 @@
 // ----------------------------------------------------------------------//
 // Title: Admin Index			                                 //
 //***********************************************************************//
-error_reporting(0);			// turn off error reporting
-if (!file_exists('config.php') || filesize('config.php') < 10) {		// check for config
-if (file_exists('install/index.php')) { header( 'Location: install/' ); exit(); }					  		            // redirect to installer
-if (!file_exists('install/index.php')) { require 'lib/lib_db.php'; db_down(); exit(); }
+if (defined('DIRECT_ACCESS')) { require_once 'lib/lib_misc.php'; nukeProofSuit(); exit(); }
+define('DIRECT_ACCESS', 1);										/* Knock once for yes */
+error_reporting(0);											/* turn off error reporting */
+if (!file_exists('config.php') || filesize('config.php') < 10) {					/* check for config */
+if (file_exists('install/index.php')) { header( 'Location: install/' ); exit(); }			/* redirect to installer */
+if (!file_exists('install/index.php')) { require_once 'lib/lib_db.php'; db_down(); exit(); }		/* redirect to an error page if down */
 }
-require 'lib/lib_misc.php';		//
-	bombShelter();                  										// check URL size
-	// Set $debug to yes to debug and see all the global vars coming into the file
-	// To find error messages, search the page for php_errormsg if you turn this debug feature on
-	$debug = 'no';
+require_once 'lib/lib_misc.php';									/* perform basic sanity checks */
+	bombShelter();											/* check URL size */
+require_once 'lib/lib_var.php';										/* import variables */
 
-	if ($debug == 'yes') {
-	error_reporting(E_ALL & ~E_DEPRECATED);
-	}
+	if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }				/* set error reporting up if debug is enabled */
 
-	$server_timezone = 'Europe/London';		/* We set this first incase of upgrade without timezone being set in config.php upgraders should manually set it. */
+	globalSec('Admin index.php', 1);								/* prevent superglobal poisoning before extraction */
 
-	$messageok  = NULL;	/* Prevents insecure undefined variable $messageok */
-	$login_forgotten  = NULL;	/* Prevents insecure undefined variable $login_forgotten */
-	$do  = NULL;	/* Prevents insecure undefined variable $do */
+	extract($_REQUEST);										/* access to form vars if register globals is off */ /* note : NOT setting a prefix yet, not looked at it yet */
+require_once 'config.php';										/* load configuration */
+	include_once 'lib/lib_db.php';									/* import the database function library */
+	$prefs = get_prefs();										/* turn the prefs into an array */
+	extract($prefs);										/* add prefs to globals using php's extract function */
+	include_once 'lib/lib_logs.php'; pagetime('init');						/* start the runtime clock */
+	if (strnatcmp(phpversion(),'5.1.0') >= 0) { date_default_timezone_set("$server_timezone"); }	/* New! Built in php function. Tell php what the server timezone is so that we can use php 5's rewritten time and date functions to set the correct time without error messages */
+	include_once 'lang/' . $language . '.php';							/* get the language file */
+	include_once 'lib/lib_date.php';								/* import the date library */
+	include_once 'lib/lib_auth.php';								/* check user is logged in */
+	include_once 'lib/lib_validate.php';								/* import the validate library */
+	include_once 'lib/lib_core.php';								/* import the core library */
+	include_once 'lib/lib_paginator.php';								/* import the paginator library */
+	include_once 'lib/lib_upload.php';								/* import the upload library */
+	include_once 'lib/lib_rss.php';									/* import the rss library */
+	include_once 'lib/lib_tags.php';								/* import the tags library */
+	include_once 'lib/bad-behavior-pixie.php';							/* no spam please */
+	include_once 'lib/lib_backup.php';								/* import the backup library */
+	/* Error - lib_simplepie.php - Non-static method SimplePie_Misc::parse_date() should not be called statically - Waiting for simplepie devs to fix, it only happens with php5 */
+	include_once 'lib/lib_simplepie.php';								/* because pie should be simple */
+  	if (!file_exists( 'settings.php' ) || filesize( 'settings.php') < 10) {				/* check for settings.php */
+	$gzip_admin = 'no';}										/* ensure $gzip_admin not unset */
+  	if (file_exists( 'settings.php' ) || filesize( 'settings.php' ) < 10) {				/* check for settings.php */
+	include_once 'settings.php';}									/* load settings.php, if found */
 
-	globalSec('Admin index.php', 1);
+	$s = check_404($s);										/* check section exists */
 
-	extract($_REQUEST);		// access to form vars if register globals is off // note : NOT setting a prefix yet, not looked at it yet
-	require 'config.php';			// load configuration
-	include 'lib/lib_db.php';		// load libraries order is important
-	$prefs = get_prefs();		// prefs as an array
-	extract($prefs);		// add prefs to globals
-	include 'lib/lib_logs.php'; pagetime('init');		// runtime clock
-	putenv('TZ=' . "$timezone");		// timezone fix (php5.1.0 or newer will set it's server timezone using function date_default_timezone_set!)
-	if (strnatcmp(phpversion(),'5.1.0') >= 0) { date_default_timezone_set("$server_timezone"); }	/* New! Built in php function. Tell php what the server timezone is so that we can use php's rewritten time and date functions with the correct time and without error messages  */
-	include 'lang/' . $language . '.php';	// get the language file
-	include 'lib/lib_date.php';		//
-	include 'lib/lib_auth.php';		// check user is logged in
-	include 'lib/lib_validate.php';		// 
-	include 'lib/lib_core.php';		//
-	include 'lib/lib_paginator.php';	//
-	include 'lib/lib_upload.php';		//
-	include 'lib/lib_rss.php';		//
-	include 'lib/lib_tags.php';		//
-	include 'lib/bad-behavior-pixie.php';   // no spam please
-	include 'lib/lib_backup.php';	        //
-	/* Error - lib_simplepie.php - Non-static method SimplePie_Misc::parse_date() should not be called statically - Waiting for devs to fix, it only happens with php5 */
-	include 'lib/lib_simplepie.php';        // because pie should be simple
-  	if (!file_exists( 'settings.php' ) || filesize( 'settings.php') < 10) {		// check for settings.php
-	$gzip_admin = 'no';}		// ensure no unset variables if file is missing
-  	if (file_exists( 'settings.php' ) || filesize( 'settings.php' ) < 10) {		// check for settings.php
-	include 'settings.php';}
-
-	$s = check_404($s);		// check section exists
-
-	if ($debug == 'yes') {
-	error_reporting(E_ALL & ~E_DEPRECATED);
-	$show_vars = get_defined_vars();
+	if (PIXIE_DEBUG == 'yes') { $show_vars = get_defined_vars();					/* output important variables to screen if debug is enabled */
 	echo '<p><pre class="showvars">The _REQUEST array contains : ';
 	htmlspecialchars(print_r($show_vars["_REQUEST"]));
 	echo '</pre></p>';
-	}
-
-	if ($debug == 'yes') {
-	$show_vars = get_defined_vars();
 	echo '<p><pre class="showvars">The prefs array contains : ';
 	htmlspecialchars(print_r($show_vars["prefs"]));
-	echo '</pre></p>';
-	}
+	echo '</pre></p>'; }
 
-	if ($do == 'rss' && $user) { adminrss($s, $user); } else {																//
+	if ($do == 'rss' && $user) { adminrss($s, $user); } else {
 ?>
 <?php if ($gzip_admin == 'yes') { if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) if (extension_loaded('zlib')) ob_start('ob_gzhandler'); else ob_start(); ?>
 	<?php } /* Start gzip compression */ ?>
@@ -142,7 +126,7 @@ require 'lib/lib_misc.php';		//
 	<link rel="stylesheet" href="admin/theme/cskin.css" type="text/css" media="screen" />
 
 	<?php
-	// check for IE specific style files
+	/* check for IE specific style files */
 	$cssie = 'admin/theme/ie.css';
 	$cssie6 = 'admin/theme/ie6.css';
 	$cssie7 = 'admin/theme/ie7.css';
@@ -157,7 +141,7 @@ require 'lib/lib_misc.php';		//
 	echo "\n\t<!--[if IE 7]><link href=\"" . $cssie7 . "\" type=\"text/css\" rel=\"stylesheet\" media=\"screen\" /><![endif]-->\n";
 	}
 
-	// check for handheld style file
+	/* check for handheld style file */
 	$csshandheld = 'admin/theme/handheld.css';
 	if (file_exists($csshandheld)) {
 	echo "\n\t<link href=\"" . $csshandheld . "\" rel=\"stylesheet\" media=\"handheld\" />\n";
@@ -173,7 +157,7 @@ require 'lib/lib_misc.php';		//
 	<link rel="alternate" type="application/rss+xml" title="Pixie - <?php print $lang['latest_activity']; ?>" href="?s=myaccount&amp;do=rss&amp;user=<?php print safe_field('nonce','pixie_users',"user_name ='" . $GLOBALS['pixie_user'] . "'"); ?>" />
 
 </head>
-  <?php flush(); ?>
+  <?php flush(); /* Send the head so that the browser has something to do whilst it waits */ ?>
 <body class="pixie <?php $s . " "; $date_array = getdate(); print 'y'.$date_array['year'] . " "; print 'm' . $date_array['mon'] . " "; print 'd' . $date_array['mday'] . " "; print 'h' . $date_array['hours'] . " "; print $s; ?>">
 	<div id="message"></div>
 	<div id="pixie">
@@ -222,8 +206,10 @@ require 'lib/lib_misc.php';		//
 				</ul>
 			</div>
 		</div>
-	</div>
 
+  <?php if (PIXIE_DEBUG == 'yes') { /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>'; phpinfo(); } ?>
+
+	</div>
     <!-- JavaScript includes are placed after the content at the very bottom of the page, just before the closing body tag. -->
       <!-- This ensures that all content is loaded before manipulation of the DOM occurs. It also fixes a bug in opera where opera tries to load the carousel too early. -->
 	<!-- javascript -->
@@ -264,10 +250,6 @@ require 'lib/lib_misc.php';		//
 	<?php bb2_insert_head(); ?>
 	<!-- If javascript is disabled show more of the carousel -->
 	<noscript><style type="text/css">.jcarousel-skin-tango{max-height: 100%;}</style></noscript>
-	<?php if ($debug == 'yes') {
-	/* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>';
-	phpinfo();
-	} ?>
 </body>
 </html>
 <!-- page generated in: <?php pagetime('print');?> -->

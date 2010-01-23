@@ -1,4 +1,5 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -12,33 +13,33 @@ if ($login_forgotten) {
 	
 	$username = sterilise($username, true);
 	
-	$r1 = safe_field('email','pixie_users',"email='$username'");	
-	$r2 = safe_field('user_name','pixie_users',"user_name='$username'");
+	$r1 = safe_field('email', 'pixie_users', "email='$username'");	
+	$r2 = safe_field('user_name', 'pixie_users', "user_name='$username'");
 
 	if ($r1 || $r2) {
 		if ($r1) {
 			$rs = $r1;
 		} else {
-			$rs = safe_field('email','pixie_users',"user_name='$username'");
+			$rs = safe_field('email', 'pixie_users', "user_name='$username'");
 		}
 
 		if ($rs) {
 			$password = generate_password(8);
 			$nonce = md5( uniqid( rand(), true ) );
 			$sql = "pass = password(lower('$password')), nonce = '$nonce'";
-			$ok = safe_update("pixie_users", "$sql", "email = '$rs'");
+			$ok = safe_update('pixie_users', "$sql", "email = '$rs'");
 			
 			if ($ok) {
 				$email = $rs;
 				$subject = $lang['email_newpassword_subject'];				
-				$emessage = $lang['email_newpassword_message'].$password;
-				$user = safe_field('realname','pixie_users',"email='$email'");
+				$emessage = $lang['email_newpassword_message'] . $password;
+				$user = safe_field('realname','pixie_users', "email='$email'");
 				$headers = "From: postmaster@{$_SERVER['HTTP_HOST']}" . "\r\n" .
 					'X-Mailer: PHP/' . phpversion();
 				mail($email, $subject, $emessage, $headers);
 				$messageok = $lang['forgotten_ok'];
-				logme($lang['forgotten_log_ok'].$user.' ('.$email.').',"yes","user"); 
-				$m = "ok";
+				logme($lang['forgotten_log_ok'] . $user . ' (' . $email . ').', 'yes', 'user'); 
+				$m = 'ok';
 			} else {
 				$message = $lang['unknown_error'];
 			}
@@ -47,13 +48,13 @@ if ($login_forgotten) {
 		
 	} else {
 		$message = $lang['forgotten_missing'];
-		logme($lang['forgotten_log_error'],"yes","error"); 
+		logme($lang['forgotten_log_error'], 'yes', 'error'); 
 	}
 
 }
 
 
-if ($m == "forgotten") {
+if ($m == 'forgotten') {
 ?>
 				<div id="login">
 					<form action="?s=login&amp;m=forgotten" method="post" id="form_forgotten" class="form">
@@ -71,7 +72,7 @@ if ($m == "forgotten") {
 						</fieldset>
 					</form>
 					<ul>
-						<li class="return"><a href="<?php print $site_url;?>" title="<?php echo $lang['view_site']; ?>"><?php  print $lang['form_returnto']; print str_replace("http://", "", $site_url);?></a></li>
+						<li class="return"><a href="<?php print $site_url;?>" title="<?php echo $lang['view_site']; ?>"><?php  print $lang['form_returnto']; print str_replace('http://', "", $site_url);?></a></li>
 					</ul>	
 				</div>
 <?php
@@ -102,7 +103,7 @@ if ($m == "forgotten") {
 					</form>
 					<ul>
 						<li class="forgotten"><a href="?s=login&amp;m=forgotten"><?php print $lang['form_forgotten']; ?></a></li>
-						<li class="return"><a href="<?php print $site_url;?>" title="<?php echo $lang['view_site']; ?>"><?php  print $lang['form_returnto']; print str_replace("http://", "", $site_url);?></a></li>
+						<li class="return"><a href="<?php print $site_url;?>" title="<?php echo $lang['view_site']; ?>"><?php  print $lang['form_returnto']; print str_replace('http://', "", $site_url);?></a></li>
 					</ul>	
 				</div>
 <?php

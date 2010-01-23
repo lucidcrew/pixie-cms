@@ -1,3 +1,3 @@
 <?php
-// nothing to see here
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 ?>

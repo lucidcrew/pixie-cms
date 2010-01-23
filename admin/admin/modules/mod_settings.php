@@ -1,4 +1,5 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -6,13 +7,13 @@
 // Title: Settings                                                 //
 //*****************************************************************//
 
-$x = ereg_replace("[^A-Za-z0-9]", "", $x);
+$x = ereg_replace('[^A-Za-z0-9]', "", $x);
 				
 if(isset($_COOKIE['pixie_login'])) {
-	list($username,$cookie_hash) = split(',',$_COOKIE['pixie_login']);
-	$nonce = safe_field('nonce','pixie_users',"user_name='$username'");
-	if (md5($username.$nonce) == $cookie_hash) {
-		$privs = safe_field('privs','pixie_users',"user_name='$username'");		
+	list($username, $cookie_hash) = split(',', $_COOKIE['pixie_login']);
+	$nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
+	if (md5($username . $nonce) == $cookie_hash) {
+		$privs = safe_field('privs', 'pixie_users', "user_name='$username'");		
 		if ($privs >= 2) {
 			if (file_exists("admin/modules/mod_$x.php")) {
 				include("admin/modules/mod_$x.php");

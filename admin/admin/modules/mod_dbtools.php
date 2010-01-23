@@ -1,4 +1,5 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -10,7 +11,7 @@
 
 if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 
-	if ($do == "backup") {
+	if ($do == 'backup') {
 	
 		$backup_obj = new MySQL_Backup();
 		$backup_obj->server = $pixieconfig['host'];
@@ -25,7 +26,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 		$backup_obj->fname_format = 'd_m_Y-H-i-s';
 
 
-		$filename = date("d_m_Y-H-i-s").".sql.gz";
+		$filename = date('d_m_Y-H-i-s') . '.sql.gz';
 		$task = MSB_SAVE;
 		$use_gzip = true;
 
@@ -33,26 +34,26 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 			$message = $backup_obj->error;
 		} else {
 			$messageok = $lang['backup_ok'];
-			logme($lang['backup_ok'],"no","save");
-			safe_update("pixie_settings","last_backup = '$filename'", "settings_id = '1'");
+			logme($lang['backup_ok'], 'no', 'save');
+			safe_update('pixie_settings', "last_backup = '$filename'", "settings_id = '1'");
 			$prefs = get_prefs();
 			extract($prefs);        
 		}
 	}
 
 	if ($del) { 
-		if (file_exists("../files/sqlbackups/".$del)) { 
-			$current = safe_field('last_backup','pixie_settings',"settings_id='1'");
+		if (file_exists('../files/sqlbackups/' . $del)) { 
+			$current = safe_field('last_backup', 'pixie_settings', "settings_id='1'");
 			if ($current != $del) {
-				$delk = file_delete("../files/sqlbackups/".$del);
+				$delk = file_delete('../files/sqlbackups/' . $del);
 			} else {
-				$unable = "yes";
+				$unable = 'yes';
 			}
 		}
 		
 		if ($delk) {
-			$messageok = $lang['backup_delete_ok']." $del.";
-			logme($lang['backup_delete_ok']." $del.","no","save");
+			$messageok = $lang['backup_delete_ok'] . " $del.";
+			logme($lang['backup_delete_ok'] . " $del . ", 'no', 'save');
 		} else {
 			if ($unable) {
 				$message = $lang['backup_delete_no'];
@@ -86,17 +87,17 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 						<h3><?php echo $lang['database_backups']; ?></h3>
 			
 <?php
-			$dir="../files/sqlbackups/";
+		$dir = '../files/sqlbackups/';
   		if (is_dir($dir)) {
   			$fd = @opendir($dir);
     		if($fd) {
       		while (($part = @readdir($fd)) == true) {
-        		if ($part != "." && $part != "..") {
-        		if ($part != "index.php") {
+        		if ($part != '.' && $part != '..') {
+        		if ($part != 'index.php') {
         			if ($part == $last_backup) {
-        				echo "\t\t\t\t\t\t<div class=\"abackup backuplatest\"><img src=\"admin/theme/images/icons/file_sql.png\" alt=\"SQL ".$lang['backup']."\" class=\"aicon\" /><span class=\"backup_fname\">".str_replace(".sql.gz", "", $part)."</span><a href=\"".$site_url."files/sqlbackups/$part\" title=\"".$lang['download'].": $part\" class=\"backup_download\">".$lang['download']."</a></div>\n";
+        				echo "\t\t\t\t\t\t<div class=\"abackup backuplatest\"><img src=\"admin/theme/images/icons/file_sql.png\" alt=\"SQL " . $lang['backup'] . "\" class=\"aicon\" /><span class=\"backup_fname\">" . str_replace('.sql.gz', "", $part) . "</span><a href=\"" . $site_url . "files/sqlbackups/$part\" title=\"" . $lang['download'] . ": $part\" class=\"backup_download\">" . $lang['download'] . "</a></div>\n";
         			} else {
-	          		echo "\t\t\t\t\t\t<div class=\"abackup\"><img src=\"admin/theme/images/icons/file_sql.png\" alt=\"SQL ".$lang['backup']."\" class=\"aicon\" /><span class=\"backup_fname\">".str_replace(".sql.gz", "", $part)."</span><a href=\"".$site_url."files/sqlbackups/$part\" title=\"".$lang['download'].": $part\" class=\"backup_download\">".$lang['download']."</a> <a href=\"?s=$s&amp;x=$x&amp;del=$part\" title=\"".$lang['delete'].": $part\" onclick=\"return confirm('".$lang['delete_file']." ($part)')\" class=\"backup_delete\">".$lang['delete']."</a></div>\n";
+	          		echo "\t\t\t\t\t\t<div class=\"abackup\"><img src=\"admin/theme/images/icons/file_sql.png\" alt=\"SQL " . $lang['backup'] . "\" class=\"aicon\" /><span class=\"backup_fname\">" . str_replace('.sql.gz', "", $part) . "</span><a href=\"" . $site_url . "files/sqlbackups/$part\" title=\"" . $lang['download'] . ": $part\" class=\"backup_download\">" . $lang['download'] . "</a> <a href=\"?s=$s&amp;x=$x&amp;del=$part\" title=\"" . $lang['delete'] . ": $part\" onclick=\"return confirm('" . $lang['delete_file'] . " ($part)')\" class=\"backup_delete\">" . $lang['delete'] . "</a></div>\n";
         			}
         		}	
       			}

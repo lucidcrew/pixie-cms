@@ -5,9 +5,7 @@
 // Licence: GNU General Public License v3                   	   //
 // Title: TinyMCE Setup.                                           //
 //*****************************************************************//
-
-	header('Content-Type: text/javascript');
-
+header('Content-Type: text/javascript');
 	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');
 ?>
 

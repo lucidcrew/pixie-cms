@@ -1,4 +1,8 @@
 <?php
+if (defined('DIRECT_ACCESS')) { require_once '../../lib/lib_misc.php'; nukeProofSuit(); exit(); }
+define('DIRECT_ACCESS', 1);
+require_once '../../lib/lib_misc.php';										/* perform basic sanity checks */
+	bombShelter();                  									/* check URL size */
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -13,16 +17,16 @@ if ($_POST['message']) {
 	echo "
 				<span class=\"message_text_error\">";
 				
-				if ($_POST['back'] != "no") {
+				if ($_POST['back'] != 'no') {
 				echo "<img src=\"admin/theme/images/icons/error.png\" />";
 				}
-				echo $_POST['message']."</span>";
+				echo $_POST['message'] . '</span>';
 				if ($_POST['back'] != "no") {
 				echo "<span class=\"message_back\"> (<a href=\"javascript:history.go(-1);\" title=\"Back (Will reload any submitted form data)\">go back &raquo;</a>)</span>";
 				}
 } else if ($_POST['messageok']) {
 	echo "
-				<span class=\"message_text_ok\"><img src=\"admin/theme/images/icons/tick.png\" /> ".$_POST['messageok']."</span>
+				<span class=\"message_text_ok\"><img src=\"admin/theme/images/icons/tick.png\" /> " . $_POST['messageok'] . "</span>
 	";
 }
 ?>
