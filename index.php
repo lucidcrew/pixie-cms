@@ -20,23 +20,22 @@
 // ----------------------------------------------------------------------//
 // Title: Index			                                         //
 //***********************************************************************//
-if (defined('DIRECT_ACCESS')) { require_once 'admin/lib/lib_misc.php'; nukeProofSuit(); exit(); }
+if (defined('DIRECT_ACCESS')) { require_once 'admin/lib/lib_misc.php'; nukeProofSuit(); exit(); }		/* Prevent any kind of predefinition of DIRECT_ACCESS */
+if (defined('PIXIE_DEBUG')) { require_once 'admin/lib/lib_misc.php'; nukeProofSuit(); exit(); }			/* Prevent any kind of predefinition of PIXIE_DEBUG */
 define('DIRECT_ACCESS', 1);											/* Knock once for yes */
-error_reporting(0);	// Turns off error reporting
 if (!file_exists('admin/config.php') || filesize('admin/config.php') < 10) {					/* check for config */
 if (file_exists('admin/install/index.php')) { header( 'Location: admin/install/' ); exit(); }			/* redirect to installer */
 if (!file_exists('admin/install/index.php')) { require_once 'admin/lib/lib_db.php'; db_down(); exit(); }	/* redirect to an error page if down */
 }
 require_once 'admin/lib/lib_misc.php';										/* perform basic sanity checks */
-	bombShelter();                  									/* check URL size */
+bombShelter();                  										/* check URL size */
 require_once 'admin/lib/lib_var.php';										/* import variables */
-
-	if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set error reporting up if debug is enabled */
+error_reporting(0);												/* turn off error reporting */
+if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }						/* set error reporting up if debug is enabled */
 
 	globalSec('Main index.php', 1);										/* prevent superglobal poisoning before extraction */
-
 	extract($_REQUEST);											/* access to form vars if register globals is off */ /* note : NOT setting a prefix yet, not looked at it yet */
-require_once 'admin/config.php';           									/* load configuration */
+	require_once 'admin/config.php';           								/* load configuration */
 	include_once 'admin/lib/lib_db.php';       								/* import the database function library */
 	$prefs = get_prefs();           									/* turn the prefs into an array */
 	extract($prefs);											/* add prefs to globals using php's extract function */
