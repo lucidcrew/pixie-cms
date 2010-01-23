@@ -1,4 +1,5 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -18,6 +19,7 @@
 // ------------------------------------------------------------------
 	function nukeProofSuit()                                          
 	{
+header('Status: 503 Service Unavailable');  /* 503 status might discourage search engines from indexing or caching the error message */
 $nuke_proof_suit = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
 		\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
 <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">
@@ -64,9 +66,7 @@ $nuke_proof_suit = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//
 	</div>
 </body>
 </html>";
-
-	header('Status: 503 Service Unavailable'); 
-	exit($nuke_proof_suit); // 503 status might discourage search engines from indexing or caching the error message
+	exit($nuke_proof_suit);
 
 	}
 //
@@ -81,7 +81,7 @@ $nuke_proof_suit = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//
 	function generate_password($length=10)
 	{
 		$pass = "";
-		$chars = "023456789bcdfghjkmnpqrstvwxyz"; 
+		$chars = '023456789bcdfghjkmnpqrstvwxyz'; 
 		$i = 0; 
 		while ($i < $length) {
 			$char = substr($chars, mt_rand(0, strlen($chars)-1), 1);
@@ -96,14 +96,14 @@ $nuke_proof_suit = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//
 // Get the first word in a _ seperated string
 	function first_word($theString)
 	{
-   $stringParts = explode("_", $theString);
+   $stringParts = explode('_', $theString);
    return $stringParts[0];
 	}
 // ------------------------------------------------------------------
 // Get the last word in a _ seperated string
 	function last_word($theString)
 	{
-   $stringParts = explode("_", $theString);
+   $stringParts = explode('_', $theString);
    return array_pop($stringParts);
 	}
 // ------------------------------------------------------------------
@@ -142,6 +142,9 @@ $nuke_proof_suit = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//
 		// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'"); // Depreciating this
 		nukeProofSuit();
 		}
+
+	// return true;		// Dunno.
+
 	}
 // ------------------------------------------------------------------
 function globalSec($page_location, $sec_check)
@@ -151,7 +154,7 @@ function globalSec($page_location, $sec_check)
 	// I'm not going to log this, I think doing that is a mistake and ignorance is also bliss...
 	// We can maybe turn these isset checks into an array and loop it
 
-	// I think we might want to do this for the prefs too when they are extracted. What do you think?
+	// We don't need to do this for the prefs too because it is trusted data coming from the database.
 	if ($sec_check == 1) {
 
 	if (isset($_REQUEST['_GET'])) { 
@@ -203,30 +206,32 @@ function globalSec($page_location, $sec_check)
 	nukeProofSuit();	}
 	}
 
+	// return true;		// Dunno.
+
 }
 // ------------------------------------------------------------------
 	function doSlash($in)
 	{ 
-		if(phpversion() >= "4.3.0") {
-			return doArray($in,'mysql_real_escape_string');
+		if(phpversion() >= '4.3.0') {
+			return doArray($in, 'mysql_real_escape_string');
 		} else {
-			return doArray($in,'mysql_escape_string');
+			return doArray($in, 'mysql_escape_string');
 		}
 	}
 // ------------------------------------------------------------------
-	function doArray($in,$function)
+	function doArray($in, $function)
 	{
-		return is_array($in) ? array_map($function,$in) : $function($in); 
+		return is_array($in) ? array_map($function, $in) : $function($in); 
 	}
 //-------------------------------------------------------------------
 // function to simply string in item_name format
 	function simplify($string) 
 	{
-		$out = str_replace("_"," ",$string);
+		$out = str_replace('_', " ", $string);
 		$strlen = strlen($out); 
 		$max = 150;   // find somwhere better for this?
 		if ($strlen > $max) {
-			$out = substr($out,0,$max)."..."; 
+			$out = substr($out, 0, $max) . '...'; 
 		}
 	 	return ucfirst($out);
   }	
@@ -237,7 +242,7 @@ function globalSec($page_location, $sec_check)
 		$strlen = strlen($string); 
 		$max = $length;
 		if ($strlen > $max) {
-			$string = substr($string,0,$max)."..."; 
+			$string = substr($string, 0, $max) . '...'; 
 		}
 	 	return $string;
   }
@@ -245,12 +250,12 @@ function globalSec($page_location, $sec_check)
 // function for checking if its 404 time
 	function check_404($section)
 	{
-		$check = file_exists('admin/modules/mod_'.$section.'.php');
+		$check = file_exists('admin/modules/mod_' . $section . '.php');
 
 		if ($check) {
 			return $section;
 		} else {
-			$section = "404";
+			$section = '404';
 			return $section;
 		}
 	}	
@@ -258,17 +263,17 @@ function globalSec($page_location, $sec_check)
 // function for checking if its 404 time from public hit
 	function public_check_404($section)
 	{
-		$section = str_replace("<x>","", $section);
-		if ($section == "rss") {
-			$check = safe_row("*","pixie_core", "page_name = '$section' AND public = 'yes' limit 0,1");
+		$section = str_replace('<x>', "", $section);
+		if ($section == 'rss') {
+			$check = safe_row('*', 'pixie_core', "page_name = '$section' AND public = 'yes' limit 0,1");
 		} else {
-			$check = safe_row("*","pixie_core", "page_name = '$section' AND public = 'yes' AND page_type != 'plugin' limit 0,1");
+			$check = safe_row('*', 'pixie_core', "page_name = '$section' AND public = 'yes' AND page_type != 'plugin' limit 0,1");
 		}
 		
 		if ($check) {
 			return $section;
 		} else {
-			$section = "404";
+			$section = '404';
 			return $section;
 		}
 	}
@@ -276,12 +281,12 @@ function globalSec($page_location, $sec_check)
 // function for checking what type of page we are dealing with
 	function check_type($section)
 	{ 
-		extract(safe_row("*","pixie_core", "page_name = '$section' AND public = 'yes' limit 0,1"));
+		extract(safe_row('*', 'pixie_core', "page_name = '$section' AND public = 'yes' limit 0,1"));
 		
 		if ($page_type) {
 			return $page_type;
 		} else {
-			return "Unable to find type of page in pixie_core. Has the page been deleted?";
+			return 'Unable to find type of page in pixie_core. Has the page been deleted?';
 		}
  	} 
 //-------------------------------------------------------------------
@@ -301,13 +306,13 @@ function globalSec($page_location, $sec_check)
 	{
 		$path = dirname($_SERVER['PHP_SELF']);
 		$position = strrpos($path,'/') + 1;
-		return substr($path,$position);
+		return substr($path, $position);
 	}
 //-------------------------------------------------------------------
 // function to return current page id
 	function get_page_id($section)
 	{
-		$page_id = safe_field('page_id','pixie_core',"page_name = '$section' AND public = 'yes' limit 0,1");
+		$page_id = safe_field('page_id', 'pixie_core', "page_name = '$section' AND public = 'yes' limit 0,1");
 		if ($page_id) {
 			return $page_id;
 		}
@@ -335,7 +340,7 @@ function globalSec($page_location, $sec_check)
 	   $current = $tags[$count];
 	   if ($current != "") {
 		 	$current = preg_replace("/[^a-zA-Z0-9]/", "", $current);
-		 	$all_tag .= $current." ";	
+		 	$all_tag .= $current . " ";	
 	   }
 		 $i++;
 	 }
@@ -346,14 +351,14 @@ function globalSec($page_location, $sec_check)
 // function to revert slug / used for tags only
 	function squash_slug($title)
 	{
-	 $slug = str_replace("-", " ", $title);
+	 $slug = str_replace('-', " ", $title);
 	 return strtolower($slug);
 	}
 //-------------------------------------------------------------------
 // function to check if a page is installed and public
 	function public_page_exists($page_name)
 	{
-		$rs = safe_row("*","pixie_core", "page_name = '$page_name' AND public = 'yes' limit 0,1");
+		$rs = safe_row('*', 'pixie_core', "page_name = '$page_name' AND public = 'yes' limit 0,1");
 		
 		if ($rs) {
 			return true;
@@ -387,45 +392,45 @@ function globalSec($page_location, $sec_check)
 		global $version, $lang, $s, $m, $x, $do;
 
 		//myaccount
-		if ($s == "myaccount") { $title = $lang['nav1_home']." - ".$lang['nav2_home']; }
-		if ($s == "myaccount" && $x == "myprofile") { $title = $lang['nav1_home']." - ".$lang['nav2_profile']; }
-		if ($s == "myaccount" && $x == "myprofile" && $do == "security") { $title = $lang['nav1_home']." - ".$lang['nav2_security']; }
+		if ($s == 'myaccount') { $title = $lang['nav1_home'] . ' - ' . $lang['nav2_home']; }
+		if ($s == 'myaccount' && $x == 'myprofile') { $title = $lang['nav1_home'] . ' - ' . $lang['nav2_profile']; }
+		if ($s == 'myaccount' && $x == 'myprofile' && $do == 'security') { $title = $lang['nav1_home'] . ' - ' . $lang['nav2_security']; }
 		
 		//publish - needs expanding!
-		if ($s == "publish") { $title = $lang['nav1_publish']; }
-		if ($s == "publish" && $x == "filemanager") { $title = $lang['nav1_publish']." - ".$lang['nav2_files']; }
+		if ($s == 'publish') { $title = $lang['nav1_publish']; }
+		if ($s == 'publish' && $x == 'filemanager') { $title = $lang['nav1_publish'] . ' - ' . $lang['nav2_files']; }
 
 		//settings - needs expanding!
-		if ($s == "settings") { $title = $lang['nav1_settings']; }
-		if ($s == "settings" && $m == "theme") { $title = $lang['nav1_settings']." - ".$lang['nav2_theme']; }
-		if ($s == "settings" && $m == "users") { $title = $lang['nav1_settings']." - ".$lang['nav2_users']; }
-		if ($s == "settings" && $x == "dbtools") { $title = $lang['nav1_settings']." - ".$lang['nav2_backup']; }
+		if ($s == 'settings') { $title = $lang['nav1_settings']; }
+		if ($s == 'settings' && $m == 'theme') { $title = $lang['nav1_settings'] . ' - ' . $lang['nav2_theme']; }
+		if ($s == 'settings' && $m == 'users') { $title = $lang['nav1_settings'] . ' - ' . $lang['nav2_users']; }
+		if ($s == 'settings' && $x == 'dbtools') { $title = $lang['nav1_settings'] . ' - ' . $lang['nav2_backup']; }
 
-		echo "Pixie v".$version.": ".$title;
+		echo 'Pixie v' . $version . ' : ' . $title;
 	}
 //-------------------------------------------------------------------
 // create a clean or ugly url based on the Pixie setting
-	function createURL($s, $m='', $x='', $p='') 
+	function createURL($s, $m = '', $x = '', $p = '') 
 	{
 		global $site_url, $clean_urls;
 
-		if ($clean_urls == "yes") {
-			$return = $site_url.$s."/".$m."/".$x."/".$p;
-			$return = str_replace("//","", $return);
-			$return = str_replace("///","", $return);
-			$return = str_replace("////","", $return);
-			$return = str_replace("http:", "http://", $return);
+		if ($clean_urls == 'yes') {
+			$return = $site_url . $s . '/' . $m . '/' . $x . '/' . $p;
+			$return = str_replace('//', "", $return);
+			$return = str_replace('///', "", $return);
+			$return = str_replace('////', "", $return);
+			$return = str_replace('http:', 'http://', $return);
 			$last = $return{strlen($return)-1};
-  		if ($last != "/") {
-  			$return = $return."/";
+  		if ($last != '/') {
+  			$return = $return . '/';
   		}
 			return $return;
 		} else {
-			$return = $site_url."?s=".$s."&m=".$m."&x=".$x."&p=".$p;
-			$return = str_replace("&m=&x=&p=", "", $return);
-			$return = str_replace("&x=&p=", "", $return);
+			$return = $site_url . '?s=' . $s . '&m=' . $m . '&x=' . $x . '&p=' . $p;
+			$return = str_replace('&m=&x=&p=', "", $return);
+			$return = str_replace('&x=&p=', "", $return);
 			if (!$p) {
-				$return = str_replace("&p=", "", $return);
+				$return = str_replace('&p=', "", $return);
 			}
 			return htmlentities($return);
 
@@ -435,14 +440,14 @@ function globalSec($page_location, $sec_check)
 // reset the page order
 	function page_order_reset() 
 	{
-		$pages = safe_rows("*","pixie_core", "public = 'yes' and in_navigation = 'yes' order by page_order asc");
+		$pages = safe_rows('*', 'pixie_core', "public = 'yes' and in_navigation = 'yes' order by page_order asc");
 		$num = count($pages);
 		
   	$i = 0;
 		while ($i < $num){
   			$out = $pages[$i];
   			$page_id = $out['page_id'];
-  			safe_update("pixie_core", "page_order  = $i + 1", "page_id = '$page_id'");
+  			safe_update('pixie_core', "page_order  = $i + 1", "page_id = '$page_id'");
   		$i++;
 		}
 	}
@@ -452,29 +457,29 @@ function globalSec($page_location, $sec_check)
 	{
 		global $s, $m, $x, $site_url, $lang;
 
-		$dir="./blocks";
+		$dir = './blocks';
   	if (is_dir($dir)) {
   		$fd = @opendir($dir);
     	if($fd) {
       	while (($part = @readdir($fd)) == true) {
-        	if ($part != "." && $part != "..") {
-        	if ($part != "index.php") {
-        		$part = str_replace("block_", "", $part);
-        		$part = str_replace(".php", "", $part);
+        	if ($part != '.' && $part != '..') {
+        	if ($part != 'index.php') {
+        		$part = str_replace('block_', "", $part);
+        		$part = str_replace('.php', "", $part);
           		$cloud .= "\t\t\t\t\t\t\t\t\t<a href=\"#\" title=\"Add block: $part\">$part</a>\n";
       		}
       		}
 		}
     	}
   	}
-		$cloud  = substr($cloud ,0,(strlen($cloud)-1))."";
+		$cloud  = substr($cloud , 0, (strlen($cloud)-1)) . "";
 		echo "\t\t\t\t\t\t\t\t<div class=\"form_block_suggestions\" id=\"form_block_list\">";
-		echo "<span class=\"form_block_suggestions_text\">".$lang['form_help_current_blocks']."</span>\n $cloud\n";
+		echo "<span class=\"form_block_suggestions_text\">" . $lang['form_help_current_blocks'] . "</span>\n $cloud\n";
 		echo "\t\t\t\t\t\t\t\t</div>\n"; 
 	}
 //-------------------------------------------------------------------
 // protect email from spam bots
-	function encode_email($emailaddy, $mailto=0) 
+	function encode_email($emailaddy, $mailto = 0) 
 	{
 
 	$emailNOSPAMaddy = '';
@@ -484,15 +489,15 @@ function globalSec($page_location, $sec_check)
 
 		$j = floor(rand(0, 1+$mailto));
 		if ($j==0) {
-		 	$emailNOSPAMaddy .= '&#'.ord(substr($emailaddy,$i,1)).';';
+		 	$emailNOSPAMaddy .= '&#' . ord(substr($emailaddy, $i, 1)) . ';';
 		} elseif ($j==1) {
-			$emailNOSPAMaddy .= substr($emailaddy,$i,1);
+			$emailNOSPAMaddy .= substr($emailaddy, $i, 1);
 		} elseif ($j==2) {
-		 	$emailNOSPAMaddy .= '%'.zeroise(dechex(ord(substr($emailaddy, $i, 1))), 2);
+		 	$emailNOSPAMaddy .= '%' . zeroise(dechex(ord(substr($emailaddy, $i, 1))), 2);
 		}
 	}
 
-	$emailNOSPAMaddy = str_replace('@','&#64;',$emailNOSPAMaddy);
+	$emailNOSPAMaddy = str_replace('@', '&#64;', $emailNOSPAMaddy);
 	return $emailNOSPAMaddy;
 	
 	}
@@ -533,9 +538,9 @@ function globalSec($page_location, $sec_check)
 		  // 0{0,7} matches any padded zeros, which are optional and go up to 8 chars
 	   
 		  // &#x0040 @ search for the hex values
-		  $val = preg_replace('/(&#[xX]0{0,8}'.dechex(ord($search[$i])).';?)/i', $search[$i], $val); // with a ;
+		  $val = preg_replace('/(&#[xX]0{0,8}' . dechex(ord($search[$i])) . ';?)/i', $search[$i], $val); // with a ;
 		  // &#00064 @ 0{0,7} matches '0' zero to seven times
-		  $val = preg_replace('/(&#0{0,8}'.ord($search[$i]).';?)/', $search[$i], $val); // with a ;
+		  $val = preg_replace('/(&#0{0,8}' . ord($search[$i]) . ';?)/', $search[$i], $val); // with a ;
 	   }
 	   
 	   // now the only remaining whitespace attacks are \t, \n, and \r
@@ -559,7 +564,7 @@ function globalSec($page_location, $sec_check)
 				$pattern .= $ra[$i][$j];
 			 }
 			 $pattern .= '/i';
-			 $replacement = substr($ra[$i], 0, 2).'<x>'.substr($ra[$i], 2); // add in <> to nerf the tag
+			 $replacement = substr($ra[$i], 0, 2) . '<x>' . substr($ra[$i], 2); // add in <> to nerf the tag
 			 $val = preg_replace($pattern, $replacement, $val); // filter out the hex tags
 			 if ($val_before == $val) {
 				// no replacements were made, so exit the loop

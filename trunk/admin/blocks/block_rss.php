@@ -1,4 +1,5 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -19,7 +20,7 @@
 							$feed->handle_content_type();
 							foreach ($feed->get_items() as $item):
 								$itemlink = $item->get_permalink();
-								echo "\t\t\t\t\t\t\t<li><a href=\"".$item->get_permalink()."\">".$item->get_title()."</a></li>\n";
+								echo "\t\t\t\t\t\t\t<li><a href=\"" . $item->get_permalink() . "\">" . $item->get_title() . "</a></li>\n";
 							endforeach;
 							echo "\n";
 							echo "<li style=\"display:none;\"></li>";	// Prevents invalid markup if the list is empty

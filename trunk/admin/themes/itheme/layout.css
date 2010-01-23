@@ -42,6 +42,11 @@ body
 	color: #282828;
 	}
 	
+#wrap
+	{
+	min-height: 576px;
+	}
+
 #credits
 	{
 	margin-top: 8px;
@@ -74,6 +79,7 @@ body
 	clear: both;
 	overflow: hidden;
 	float: left;
+margin-bottom: 1em;
 	}
 
 /* Block styles */

@@ -16,7 +16,7 @@ body
 	font-family: Tahoma, Verdana, sans-serif;
 	color: #333;
 	}
-	
+
 #wrap
 	{
 	background:url(images/bg.png) top center repeat-x	
@@ -35,6 +35,7 @@ body
 	position: relative;
 	background: url(images/nav-bg.png) center bottom no-repeat;
 	height: 148px;
+	width: 94%;
 	}
 	
 #content

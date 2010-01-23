@@ -20,86 +20,65 @@
 // ----------------------------------------------------------------------//
 // Title: Index			                                         //
 //***********************************************************************//
+if (defined('DIRECT_ACCESS')) { require_once 'admin/lib/lib_misc.php'; nukeProofSuit(); exit(); }
+define('DIRECT_ACCESS', 1);											/* Knock once for yes */
 error_reporting(0);	// Turns off error reporting
-if (!file_exists('admin/config.php') || filesize('admin/config.php') < 10) {		// check for config
-if (file_exists('admin/install/index.php')) { header( 'Location: admin/install/' ); exit(); }					  		            // redirect to installer
-if (!file_exists('admin/install/index.php')) { require 'admin/lib/lib_db.php'; db_down(); exit(); }
+if (!file_exists('admin/config.php') || filesize('admin/config.php') < 10) {					/* check for config */
+if (file_exists('admin/install/index.php')) { header( 'Location: admin/install/' ); exit(); }			/* redirect to installer */
+if (!file_exists('admin/install/index.php')) { require_once 'admin/lib/lib_db.php'; db_down(); exit(); }	/* redirect to an error page if down */
 }
-require 'admin/lib/lib_misc.php';     										  		// loaded for security
-	bombShelter();                  											  		// check URL size
-	$debug = 'no';	// Set this to yes to debug and see all the global vars coming into the file
-			// To find error messages, search the page for php_errormsg if you turn this debug feature on
+require_once 'admin/lib/lib_misc.php';										/* perform basic sanity checks */
+	bombShelter();                  									/* check URL size */
+require_once 'admin/lib/lib_var.php';										/* import variables */
 
-	if ($debug == 'yes') {
-	error_reporting(E_ALL & ~E_DEPRECATED);
-	}
+	if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set error reporting up if debug is enabled */
 
-	$ptitle = NULL;	/* Prevents insecure undefined variable $ptitle */
-	$pinfo = NULL;	/* Prevents insecure undefined variable $pinfo */
-	$delete = NULL;	/* Prevents insecure undefined variable $delete */
-	$username = NULL;	/* Prevents insecure undefined variable $username */
-	$server_timezone = 'Europe/London';		/* We set this first incase of upgrade without timezone being set in config.php upgraders should manually set it. */
-	// These variables are here to prevent an undefined variable for upgraders that don't have them defined in settings.php - remove them if it seems paranoid...
-	$gzip_theme_output = NULL;
-	$theme_jquery_google_apis = NULL;
-	$theme_jquery_google_apis_location = NULL;
-	$theme_swfobject_google_apis = NULL;
-	$theme_swfobject_google_apis_location = NULL;
+	globalSec('Main index.php', 1);										/* prevent superglobal poisoning before extraction */
 
-	globalSec('Main index.php', 1);
+	extract($_REQUEST);											/* access to form vars if register globals is off */ /* note : NOT setting a prefix yet, not looked at it yet */
+require_once 'admin/config.php';           									/* load configuration */
+	include_once 'admin/lib/lib_db.php';       								/* import the database function library */
+	$prefs = get_prefs();           									/* turn the prefs into an array */
+	extract($prefs);											/* add prefs to globals using php's extract function */
+	include_once 'admin/lib/lib_logs.php'; pagetime('init');						/* start the runtime clock */
+	if (strnatcmp(phpversion(),'5.1.0') >= 0) { date_default_timezone_set("$server_timezone"); }		/* New! Built in php function. Tell php what the server timezone is so that we can use php 5's rewritten time and date functions with the correct time and without error messages */
+	include_once 'admin/lib/lib_validate.php';								/* import the validate library */
+	include_once 'admin/lib/lib_date.php';									/* import the date library */
+	include_once 'admin/lib/lib_paginator.php';								/* import the paginator library */
+	include_once 'admin/lib/lib_pixie.php';									/* import the pixie library */
+	include_once 'admin/lib/lib_rss.php';									/* import the rss library */
+	include_once 'admin/lib/lib_tags.php';									/* import the tags library */
+	include_once 'admin/lib/bad-behavior-pixie.php';							/* no spam please */
+	/* Error - lib_simplepie.php - Non-static method SimplePie_Misc::parse_date() should not be called statically - Waiting for simplepie devs to fix, it only happens with php5 */
+	include_once 'admin/lib/lib_simplepie.php';								/* because pie should be simple */
 
-	extract($_REQUEST);	// access to form vars if register globals is off // note : NOT setting a prefix yet, not looked at it yet
-	require 'admin/config.php';           										  		// load configuration
-	include 'admin/lib/lib_db.php';       										  		// load libraries order is important
-	$prefs = get_prefs();           											  		// prefs as an array
-	extract($prefs);
-	include 'admin/lib/lib_logs.php'; pagetime('init');   						  		// runtime clock
-	putenv('TZ=' . "$timezone"); 															// timezone fix
-	if (strnatcmp(phpversion(),'5.1.0') >= 0) { date_default_timezone_set("$server_timezone"); }	/* New! Built in php function. Tell php what the server timezone is so that we can use php's rewritten time and date functions with the correct time and without error messages  */
-	include 'admin/lib/lib_validate.php'; 										  		// 
-	include 'admin/lib/lib_date.php';											  		//
-	include 'admin/lib/lib_paginator.php';										  		//
-	include 'admin/lib/lib_pixie.php';											  		//
-	include 'admin/lib/lib_rss.php';											  		//
-	include 'admin/lib/lib_tags.php';											  		//
-	include 'admin/lib/bad-behavior-pixie.php';                                   		// no spam please
-	/* Error - lib_simplepie.php - Non-static method SimplePie_Misc::parse_date() should not be called statically - Waiting for devs to fix, it only happens with php5 */
-	include 'admin/lib/lib_simplepie.php';                                   			// because pie should be simple
+	users_online();												/* current site visitors */
+	pixie();												/* let the magic begin */
+	referral();												/* referral */
 
-	users_online();																  		// current site visitors
-	pixie();																	  		// let the magic begin 
-	referral(); 																 		// referral
+	include_once 'admin/lang/' . $language . '.php';							/* get the language file */
+	include_once 'admin/themes/' . $site_theme . '/settings.php';						/* load the current themes settings */
 
-	include 'admin/lang/' . $language . '.php';                                       		// get the language file
-	include 'admin/themes/' . $site_theme . '/settings.php';                          		// load the current themes settings
-
-	if ($s == '404') { header('HTTP/1.0 404 Not Found'); }						  		// send correct header for 404 pages
-	if ($m == 'rss') { rss($s, $page_display_name, $page_id); } else {																	  		//
-	$page_description = safe_field('page_description', 'pixie_core', "page_name='$s'");	// load this pages description
+	if ($s == 404) { header('HTTP/1.0 404 Not Found'); }							/* send correct header for 404 pages */
+	if ($m == 'rss') { rss($s, $page_display_name, $page_id); } else {					/* rss */
+	$page_description = safe_field('page_description', 'pixie_core', "page_name='$s'");			/* load this page's description */
 	
 	if ($page_type == 'module') {
 		if (file_exists('admin/modules/' . $s . '_functions.php')) { include ('admin/modules/' . $s . '_functions.php'); }
 		$do = 'pre';  
-		include ('admin/modules/' . $s . '.php');											// load the module in pre mode
+		include ('admin/modules/' . $s . '.php');							/* load the module in pre mode */
 				    }
 
-	if ($debug == 'yes') {
-	error_reporting(E_ALL & ~E_DEPRECATED);
-	$show_vars = get_defined_vars();
+	if (PIXIE_DEBUG == 'yes') { $show_vars = get_defined_vars();						/* output important variables to screen if debug is enabled */
 	echo '<p><pre class="showvars">The _REQUEST array contains : ';
 	htmlspecialchars(print_r($show_vars["_REQUEST"]));
 	echo '</pre></p>';
-	}
-
-	if ($debug == 'yes') {
-	$show_vars = get_defined_vars();
 	echo '<p><pre class="showvars">The prefs array contains : ';
 	htmlspecialchars(print_r($show_vars["prefs"]));
-	echo '</pre></p>';
-	}
+	echo '</pre></p>'; }
 
-	if (file_exists('admin/themes/' . $site_theme . '/index.php')) {
-	include ('admin/themes/' . $site_theme . '/index.php'); }	/* Theme override */
+	if (file_exists('admin/themes/' . $site_theme . '/theme.php')) {
+	include_once ('admin/themes/' . $site_theme . '/theme.php'); }						/* New! Your custom theme file must be named theme.php instead of index.php */ /* Theme Override Super Feature */
 	else { 
 ?>
 
@@ -168,7 +147,7 @@ require 'admin/lib/lib_misc.php';     										  		// loaded for security
 	<link rel="stylesheet" href="<?php print $rel_path; ?>admin/themes/style.php?theme=<?php print $site_theme; ?>&amp;s=<?php print $style; ?>" type="text/css" media="screen" />
 	<link rel="stylesheet" href="<?php print $rel_path; ?>admin/themes/<?php print $site_theme; ?>/print.css" type="text/css" media="print" />
 	<?php
-	// check for IE specific style files
+	/* check for IE specific style files */
 	$cssie = "$rel_path . 'admin/themes/' . $site_theme . '/ie.css'";
 	$cssie6 = "$rel_path . 'admin/themes/' . $site_theme . '/ie6.css'";
 	$cssie7 = "$rel_path . 'admin/themes/' . $site_theme . '/ie7.css'";
@@ -183,7 +162,7 @@ require 'admin/lib/lib_misc.php';     										  		// loaded for security
 	echo "\n\t<!--[if IE 7]><link href=\"" . $cssie7 . "\" type=\"text/css\" rel=\"stylesheet\" media=\"screen\" /><![endif]-->\n";
 	}
 
-	// check for handheld style file
+	/* check for handheld style file */
 	$csshandheld = "$rel_path . 'admin/themes/' . $site_theme . '/handheld.css'";
 	if (file_exists($csshandheld)) {
 	echo "\n\t<link href=\"" . $csshandheld . "\" rel=\"stylesheet\" media=\"handheld\" />\n";
@@ -197,10 +176,10 @@ require 'admin/lib/lib_misc.php';     										  		// loaded for security
 	<!-- rss feeds-->
 	<?php build_rss(); ?>
 	
-	<?php $do = 'head'; if ($page_type == 'module') { include('admin/modules/' . $s . '.php'); } ?>
+	<?php $do = 'head'; if ($page_type == 'module') { include ('admin/modules/' . $s . '.php'); } ?>
 
 </head>
-  <?php flush(); ?>
+  <?php flush(); /* Send the head so that the browser has something to do whilst it waits */ ?>
 <body id="pixie" class="pixie <?php $date_array = getdate(); print 'y' . $date_array['year'] . " "; print 'm' . $date_array['mon'] . " "; print 'd' . $date_array['mday'] . " "; print 'h' . $date_array['hours'] . " "; if ($s) { print 's_' . $s . " "; } if ($m) { print 'm_' . $m . " "; } if ($x) { print 'x_' . $x . " "; } if ($p) { print 'p_' . $p; } ?>">
 
 	<?php build_head(); ?>
@@ -243,7 +222,7 @@ require 'admin/lib/lib_misc.php';     										  		// loaded for security
 				<?php } echo "\n"; ?>
 				<div id="content">
 	
-					<?php $do = 'default'; if ($page_type == 'static') { include('admin/modules/static.php'); } else if ($page_type == 'dynamic') { include('admin/modules/dynamic.php'); } else { include('admin/modules/' . $s . '.php'); } ?>
+					<?php $do = 'default'; if ($page_type == 'static') { include ('admin/modules/static.php'); } else if ($page_type == 'dynamic') { include ('admin/modules/dynamic.php'); } else { include ('admin/modules/' . $s . '.php'); } ?>
 					
 				</div>
 				<?php if ($contentfirst == 'yes') { echo "\n"; ?>
@@ -281,10 +260,7 @@ require 'admin/lib/lib_misc.php';     										  		// loaded for security
 
 	</div>
 
-  <?php if ($debug == 'yes') {
-  /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>';
-  phpinfo();
-  } ?>
+  <?php if (PIXIE_DEBUG == 'yes') { /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>'; phpinfo(); } ?>
 
 </body>
 </html>

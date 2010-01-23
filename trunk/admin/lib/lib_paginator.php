@@ -1,4 +1,5 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -11,7 +12,7 @@
 // Desc: Class to help make pagination easyier
 
 class Paginator {
-				//all variables are pivate.
+				//all variables are private.
 					var $previous;	
 					var $current;
 					var $next;
@@ -34,7 +35,7 @@ class Paginator {
 			//Constructor for Paginator.  Takes the current page and the number of items
 			//in the source data and sets the current page ($this->page) and the total
 			//items in the source ($this->total_items).
-			function Paginator($page,$num_rows) 
+			function Paginator($page, $num_rows) 
 			{ 
 			    if(!$page)
 					{
@@ -47,7 +48,7 @@ class Paginator {
 			}
 			//Takes  $limit and sets $this->limit. Calls private mehods
 			//setBasePage() and setExtraPage() which use $this->limit.
-			function set_Limit($limit=5)
+			function set_Limit($limit = 5)
 			{
 			    $this->limit = $limit;
 					$this->setBasePage();
@@ -69,7 +70,7 @@ class Paginator {
 			//20 numbered links and this was set to 5 and the current link was 10
 			//the result would be this 5 6 7 8 9 10 11 12 13 14 15.
 			
-			function set_Links($prev_next=5)
+			function set_Links($prev_next = 5)
 			{
 			    $this->prev_next = $prev_next;
 			}

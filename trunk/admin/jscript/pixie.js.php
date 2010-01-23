@@ -1,21 +1,20 @@
 <?php
-//*****************************************************************//
-// Pixie: The Small, Simple, Site Maker.                           //
-// ----------------------------------------------------------------//
-// Licence: GNU General Public License v3                   	   //
-// Title: Pixie JavaScript                                         //
-//*****************************************************************//
+header('Content-Type: text/javascript');
+if (defined('DIRECT_ACCESS')) { require_once '../lib/lib_misc.php'; nukeProofSuit(); exit(); }
+define('DIRECT_ACCESS', 1);
+require_once '../lib/lib_misc.php';										/* perform basic sanity checks */
+	bombShelter();                  									/* check URL size */
 
-	error_reporting(0);	// Here was the tablesorter bug Scott, no ; at the end of error_reporting(0)
+	error_reporting(0);
 
-	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');
-
-	include '../config.php';
-	include '../lib/lib_db.php';
-	include '../lib/lib_misc.php';
-	include '../lib/lib_auth.php';
-
-	header('Content-Type: text/javascript');
+	// Note : If you use this file, any global vars now have the prefix pixie, so what was $s is now $pixie_s
+	/* !IMPORTANT - This file thinks it's being run from admin/ */
+	/* instead of admin/jscript so paths are relative to admin */
+	include_once 'config.php';
+	include_once 'lib/lib_db.php';
+	include_once 'lib/lib_misc.php';
+	include_once 'lib/lib_auth.php';
+	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');	/* Note : If you use this file, any global vars now have the prefix pixie, so what was $s is now $pixie_s */
 ?>
 jQuery(document).ready(function(){
 	
@@ -60,6 +59,37 @@ jQuery(document).ready(function(){
 	jQuery(".image_preview select").bind("change",preview);
 
 	<?php if ($pixie_s == 'publish') {
+
+	/* The tablesorter is back!!! */
+
+	$tablesorter_init = "
+	jQuery(function() { 
+	jQuery.getScript('jscript/tablesorter.js', function(){
+	// call the tablesorter plugin 
+	jQuery('table').tablesorter({ 
+        // enable debug mode 
+        debug: false 
+	}); 
+
+	});
+
+	jQuery(document).ready(function() { 
+	jQuery('.tbl_heading').hover(function(index) {
+	jQuery(this).css('cursor','pointer'); }, function() {
+	jQuery(this).css('cursor','auto');
+	});
+	});
+
+	});
+
+
+	";
+
+	echo $tablesorter_init;
+
+	} ?>
+
+	<?php if ($pixie_s == 'myaccount') {
 
 	/* The tablesorter is back!!! */
 

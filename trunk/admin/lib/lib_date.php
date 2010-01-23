@@ -1,4 +1,5 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -17,9 +18,9 @@
 // Converts an mysql-timestamp to a Unix-timestamp
 	function returnUnixtimestamp($timestamp)
 	{
-	$timestamp = str_replace("-","", $timestamp); //introduced after mysql started to format time strangely
-	$timestamp = str_replace(" ","", $timestamp);
-	$timestamp = str_replace(":","", $timestamp);
+	$timestamp = str_replace('-', "", $timestamp); //introduced after mysql started to format time strangely
+	$timestamp = str_replace(" ", "", $timestamp);
+	$timestamp = str_replace(':', "", $timestamp);
 	
 	$year = substr($timestamp, 0, 4);
 	$month = substr($timestamp, 4, 2);
@@ -31,9 +32,9 @@
 	} 
 // -------------------------------------------------------------
 // Format a time, respecting the local time zone
-	function safe_strftime($format, $time='')
+	function safe_strftime($format, $time = '')
 	{
-		if ($format == "since") {
+		if ($format == 'since') {
 			$str = since($time);
 			return $str;
 		} else {
@@ -53,23 +54,23 @@
 			?	($mins==1)
 				?	$lang['a_minute']
 				:	$lang['a_few_seconds']
-			:	"$mins ".$lang['minutes'];
+			:	"$mins " . $lang['minutes'];
 		} else if (($diff <= 86400) && ($diff > 3600)) {
 			$hours = round($diff / 3600);
 			if ($hours <= 1) {
 				$since = $lang['a_hour'];
 			} else {
-				$since = "$hours ".$lang['hours'];
+				$since = "$hours " . $lang['hours'];
 			}
 		} else if ($diff >= 86400) {
 			$days = round($diff / 86400);
 			if ($days <= 1) {
 				$since = $lang['a_day'];
 			} else {
-				$since = "$days ".$lang['days'];
+				$since = "$days " . $lang['days'];
 			}
 		}
-		return $since.' '.$lang['ago'];
+		return $since . ' ' . $lang['ago'];
 	}
 // -------------------------------------------------------------
 // Calculate the offset between the server local time and the
@@ -79,7 +80,7 @@
 		global $timezone, $dst;
 
 		extract(getdate());
-		$serveroffset = gmmktime(0,0,0,$mon,$mday,$year) - mktime(0,0,0,$mon,$mday,$year);
+		$serveroffset = gmmktime(0, 0, 0, $mon, $mday, $year) - mktime(0, 0, 0, $mon, $mday, $year);
 		$offset = $timezone - $serveroffset;
 		if ($dst == "no") { $dst = 0; }
 		return $offset + ($dst ? 3600 : 0);
@@ -89,20 +90,20 @@
 	function date_dropdown($date) 
 	{
 
-	$months = array('','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
+	$months = array('', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
 
 	if (!$date) {
 		$unixtime = time()+tz_offset();
 		$this_day = date(d , $unixtime);
 		$this_month = date(n , $unixtime);
 		$this_year = date(Y , $unixtime);
-		$time = date(H.":".i , $unixtime);
+		$time = date(H . ':' . i , $unixtime);
 	} else {
 		$unixtime = returnUnixtimestamp($date);
 		$this_day = date(d , $unixtime);
 		$this_month = date(n , $unixtime);
 		$this_year = date(Y , $unixtime);
-		$time = date(H.":".i , $unixtime);
+		$time = date(H . ':' . i , $unixtime);
 	}
 
 	$max_day = 31;
@@ -133,8 +134,8 @@
 	}
 	echo "\t\t\t\t\t\t\t\t</select>\n";
 
-	$max_year = $this_year+5;
-	$min_year = $this_year-5;
+	$max_year = $this_year + 5;
+	$min_year = $this_year - 5;
 
 	echo "\t\t\t\t\t\t\t\t<select class=\"form_select\" name=\"year\">\n";
 	while ($min_year <= $max_year) {

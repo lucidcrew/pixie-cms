@@ -3,31 +3,20 @@
 /* Navigation */
 /*///////////////////////////////////////////////////////*/
 /*///////////////////////////////////////////////////////*/
- 	
-
-/* Safari hack */
-
-body:first-of-type #navigation
-	{
-	top: -48px;
-	left: -21px;
-	}
-	
-/* Safari hack end */
 
 #navigation
 	{
-	width: 800px;
+	width: 100%;
 	display: block;
 	position: relative;
+	left: -18px;
+	float: left;
 	top: -30px;
-	left: -20px;
 	}
 
 #navigation ul li
 	{
 	display: inline;
-	margin-right: 10px;
 	}
 
 #navigation li a
@@ -40,6 +29,7 @@ body:first-of-type #navigation
 	text-align: center;
 	color: #ccc;
 	text-decoration: none;
+	width: 10%;
 	}
 	
 #navigation li a:hover

@@ -1,4 +1,5 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -10,52 +11,52 @@
 switch ($do) {
 
 	// general information
-	case "info":
+	case 'info' :
 	
-	   $m_name = "RSS Plugin";
-	   $m_description = "Allows you to have control over the RSS feeds that are available to your visitors.";
-	   $m_author = "Scott Evans";
-	   $m_url = "http://www.toggle.uk.com";
-	   $m_version = "1";
-	   $m_type = "plugin";
-	   $m_publish = "yes";
+	   $m_name = 'RSS Plugin';
+	   $m_description = 'Allows you to have control over the RSS feeds that are available to your visitors.';
+	   $m_author = 'Scott Evans';
+	   $m_url = 'http://www.toggle.uk.com/';
+	   $m_version = 1;
+	   $m_type = 'plugin';
+	   $m_publish = 'yes';
 	   
 	break;
 
 	// install
-	case "install":
+	case 'install' :
 		// create any required tables
 		$execute = "CREATE TABLE IF NOT EXISTS `pixie_module_rss` (`rss_id` tinyint(2) NOT NULL auto_increment,`feed_display_name` varchar(80) collate utf8_unicode_ci NOT NULL default '',`url` varchar(80) collate utf8_unicode_ci NOT NULL default '',PRIMARY KEY  (`rss_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;";
 	break;
  
 	// pre (to be run before page load)
-	case "pre":
+	case 'pre' :
 	
 	break;
 	
 	// head (to be run in the head)
-	case "head":
+	case 'head' :
 	
 	break;
 	
   	// admin of module
-	case "admin":
+	case 'admin':
 	
-	   $module_name= "rss";																
-	   $table_name = "pixie_module_rss";														
-	   $order_by = "feed_display_name";		  													
-	   $asc_desc = "asc";        														
+	   $module_name= 'rss';																
+	   $table_name = 'pixie_module_rss';														
+	   $order_by = 'feed_display_name';		  													
+	   $asc_desc = 'asc';        														
 	   $view_exclude = array('rss_id');			
 	   $edit_exclude = array('rss_id');														
-	   $tags_support = "no";
+	   $tags_support = 'no';
 	   
-	   admin_module($module_name,$table_name,$order_by,$asc_desc,$view_exclude,$edit_exclude,"15", $tags);
+	   admin_module($module_name, $table_name, $order_by, $asc_desc, $view_exclude, $edit_exclude, 15, $tags);
 
 	break;
 
   	// show module
-	default:
-	  extract(safe_row("*", "pixie_core", "page_name = '$s'"));
+	default :
+	  extract(safe_row('*', 'pixie_core', "page_name = '$s'"));
 	  echo "<div id=\"$s\">
 	  	\t\t\t<h3>$page_display_name</h3>
 	  				<h4>Whats all this then?</h4>
@@ -68,14 +69,14 @@ switch ($do) {
 	  				For Apple users I recommend using <a href=\"http://newsfirerss.com/\" title=\"Newsfire RSS reader\">Newsfire</a>, or the built in RSS reader in <a href=\"http://www.apple.com/macosx/features/safari/\" title=\"Safari RSS reader\">Safari</a>. 
 	  				Windows users try <a href=\"http://www.blogbridge.com\" title=\"BlogBridge RSS reader\">BlogBridge</a>, or <a href=\"http://www.rssowl.org/\" title=\"RSSOwl RSS reader\">RSSOwl</a>.</p>\n";
 
-		$rs = safe_rows("*", "pixie_dynamic_settings", "rss = 'yes'");
+		$rs = safe_rows('*', 'pixie_dynamic_settings', "rss = 'yes'");
 		$num = count($rs);
 		if ($rs) {
 			$i = 0;
 			echo "\t\t\t\t\t<h4>Local Feeds</h4>
 						<ul id=\"local_feeds\">\n";
-				if (public_page_exists("rss")) {
-					$rs = safe_rows_start("*", "pixie_module_rss", "1 order by feed_display_name desc");
+				if (public_page_exists('rss')) {
+					$rs = safe_rows_start('*', 'pixie_module_rss', '1 order by feed_display_name desc');
 					$num = count($rs);
 					if ($rs) {
 						while ($a = nextRow($rs)) {
@@ -88,9 +89,9 @@ switch ($do) {
 					while ($i < $num){
 						$out = $rs[$i];
 						$page_id = $out['page_id'];
-						$rs1 = safe_row("*", "pixie_core", "page_id = '$page_id' limit 0,1");
+						$rs1 = safe_row('*', 'pixie_core', "page_id = '$page_id' limit 0,1");
 						extract($rs1);
-						echo "\t\t\t\t\t\t<li><a href=\"".createURL($page_name, "rss")."\" title=\"$site_name - $page_display_name\" />$page_display_name</a></li>\n";
+						echo "\t\t\t\t\t\t<li><a href=\"".createURL($page_name, 'rss') . "\" title=\"$site_name - $page_display_name\" />$page_display_name</a></li>\n";
 						$i++;
 					}
 				}

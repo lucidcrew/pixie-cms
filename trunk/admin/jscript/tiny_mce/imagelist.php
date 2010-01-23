@@ -5,13 +5,13 @@
 // Licence: GNU General Public License v3                   	     //
 // Title: TinyMCE Image List.                                      //
 //*****************************************************************//
-
+header('Content-Type: text/javascript');
 error_reporting(0);																														// turn off error reporting
 
-include "../../config.php";           																				
-include "../../lib/lib_db.php";       																			
-include "../../lib/lib_misc.php";     																		
-include "../../lib/lib_auth.php";
+include_once '../../config.php';           																				
+include_once '../../lib/lib_db.php';       																			
+include_once '../../lib/lib_misc.php';     																		
+include_once '../../lib/lib_auth.php';
 
 $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
 

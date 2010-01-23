@@ -1,4 +1,5 @@
 <?php 
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -27,13 +28,13 @@ function convertBytes( $value ) {
         $qty = substr( $value, 0, $value_length - 1 );
         $unit = strtolower( substr( $value, $value_length - 1 ) );
         switch ( $unit ) {
-            case 'k':
+            case 'k' :
                 $qty *= 1024;
                 break;
-            case 'm':
+            case 'm' :
                 $qty *= 1048576;
                 break;
-            case 'g':
+            case 'g' :
                 $qty *= 1073741824;
                 break;
         }
@@ -61,21 +62,21 @@ class file_upload {
 	var $create_directory = true;
 	
 	function file_upload() {
-		$this->language = "en";
+		$this->language = 'en';
 		$this->rename_file = false;
 		$this->ext_string = "";
 	}
 	function show_error_string() {
 		$msg_string = "";
 		foreach ($this->message as $value) {
-			$msg_string = $value."";
+			$msg_string = $value . "";
 		}
 		return $msg_string;
 	}
 	function set_file_name($new_name = "") { 
 		if ($this->rename_file) {
 			if ($this->the_file == "") return;
-			$name = ($new_name == "") ? strtotime("now") : $new_name;
+			$name = ($new_name == "") ? strtotime('now') : $new_name;
 			$name = $name.$this->get_extension($this->the_file);
 		} else {
 			$name = $this->the_file;
@@ -112,7 +113,7 @@ class file_upload {
 				$this->message[] = $this->error_text(13);
 				return false;
 			} else {
-				if ($this->do_filename_check == "y") {
+				if ($this->do_filename_check == 'y') {
 					if (preg_match("/^[^<>:\"\/\\|\?\*]*$/i", $the_name)) {
 						return true;
 					} else {
@@ -129,7 +130,7 @@ class file_upload {
 		}
 	}
 	function get_extension($from_file) {
-		$ext = strtolower(strrchr($from_file,"."));
+		$ext = strtolower(strrchr($from_file, '.'));
 		return $ext;
 	}
 	function validateExtension() {
@@ -147,10 +148,10 @@ class file_upload {
 	function move_upload($tmp_file, $new_file) {
 		umask(0);
 		if ($this->existing_file($new_file)) {
-			$newfile = $this->upload_dir.$new_file;
+			$newfile = $this->upload_dir . $new_file;
 			if ($this->check_dir($this->upload_dir)) {
 				if (move_uploaded_file($tmp_file, $newfile)) {
-					if ($this->replace == "y") {
+					if ($this->replace == 'y') {
 						//system("chmod 0777 $newfile");
 						chmod($newfile , 0777);
 					} else {
@@ -184,10 +185,10 @@ class file_upload {
 		}
 	}
 	function existing_file($file_name) {
-		if ($this->replace == "y") {
+		if ($this->replace == 'y') {
 			return true;
 		} else {
-			if (file_exists($this->upload_dir.$file_name)) {
+			if (file_exists($this->upload_dir . $file_name)) {
 				return false;
 			} else {
 				return true;
@@ -195,13 +196,13 @@ class file_upload {
 		}
 	}
 	function get_uploaded_file_info($name) {
-		$str = "File name: ".basename($name)."\n";
+		$str = 'File name: ' . basename($name) . "\n";
 		$str .= "File size: ".filesize($name)." bytes\n";
-		if (function_exists("mime_content_type")) {
-			$str .= "Mime type: ".mime_content_type($name)."\n";
+		if (function_exists('mime_content_type')) {
+			$str .= 'Mime type: ' . mime_content_type($name) . "\n";
 		}
 		if ($img_dim = getimagesize($name)) {
-			$str .= "Image dimensions: x = ".$img_dim[0]."px, y = ".$img_dim[1]."px\n";
+			$str .= 'Image dimensions: x = ' . $img_dim[0] . 'px, y = ' . $img_dim[1] . "px\n";
 		}
 		return $str;
 	}
@@ -209,7 +210,7 @@ class file_upload {
 		$delete = @unlink($file); 
 		clearstatcache();
 		if (@file_exists($file)) { 
-			$filesys = eregi_replace("/","\\",$file); 
+			$filesys = eregi_replace('/', "\\",$file); 
 			$delete = @system("del $filesys");
 			clearstatcache();
 			if (@file_exists($file)) {
@@ -224,19 +225,19 @@ class file_upload {
 		switch ($this->language) {
 			default:
 			// start http errors
-			$error[0] = "".$this->the_file." was successfully uploaded.";
-			$error[1] = "The uploaded file exceeds the max. upload filesize directive in the server configuration.";
-			$error[2] = "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the html form.";
-			$error[3] = "The uploaded file was only partially uploaded. Try uploading the file again.";
-			$error[4] = "No file was uploaded.";
+			$error[0] = "" . $this->the_file.' was successfully uploaded.';
+			$error[1] = 'The uploaded file exceeds the max. upload filesize directive in the server configuration.';
+			$error[2] = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the html form.';
+			$error[3] = 'The uploaded file was only partially uploaded. Try uploading the file again.';
+			$error[4] = 'No file was uploaded.';
 			// end  http errors
-			$error[10] = "Please select a file for upload.";
-			$error[11] = "Only files with the following extensions are allowed: ".$this->ext_string."";
-			$error[12] = "The filename contains invalid characters. Use only alphanumerical chars and separate parts of the name (if needed) with an underscore. A valid filename ends with one dot followed by the extension.";
-			$error[13] = "The filename exceeds the maximum length of ".$this->max_length_filename." characters.";
-			$error[14] = "The upload directory does not exist";
-			$error[15] = "A file with that name already exist.";
-			$error[16] = "The uploaded file was renamed to ".$this->file_copy.".";
+			$error[10] = 'Please select a file for upload.';
+			$error[11] = 'Only files with the following extensions are allowed: ' . $this->ext_string . "";
+			$error[12] = 'The filename contains invalid characters. Use only alphanumerical chars and separate parts of the name (if needed) with an underscore. A valid filename ends with one dot followed by the extension.';
+			$error[13] = 'The filename exceeds the maximum length of ' . $this->max_length_filename . ' characters.';
+			$error[14] = 'The upload directory does not exist';
+			$error[15] = 'A file with that name already exist.';
+			$error[16] = 'The uploaded file was renamed to ' . $this->file_copy . '.';
 			
 		}
 		return $error[$err_num];
@@ -255,11 +256,11 @@ class muli_files extends file_upload {
 	function extra_text($msg_num) {
 		switch ($this->language) {
 			default:
-			$extra_msg[1] = "Error for: ".$this->the_file."";
-			$extra_msg[2] = "You have tried to upload ".$this->wrong_extensions." files with a bad extension, the following extensions are allowed: ".$this->ext_string."";
-			$extra_msg[3] = "Select a file for upload.";
-			$extra_msg[4] = "Select the file(s) for upload.";
-			$extra_msg[5] = "You have tried to upload ".$this->bad_filenames." files with invalid characters inside the filename.";
+			$extra_msg[1] = 'Error for: ' . $this->the_file . "";
+			$extra_msg[2] = 'You have tried to upload ' . $this->wrong_extensions . ' files with a bad extension, the following extensions are allowed: ' . $this->ext_string . "";
+			$extra_msg[3] = 'Select a file for upload.';
+			$extra_msg[4] = 'Select the file(s) for upload.';
+			$extra_msg[5] = 'You have tried to upload ' . $this->bad_filenames . ' files with invalid characters inside the filename.';
 		}
 		return $extra_msg[$msg_num];
 	}

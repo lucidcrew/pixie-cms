@@ -1,4 +1,5 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -7,7 +8,7 @@
 //*****************************************************************//
 
 	// add your flickr id here (http://idgettr.com/)
-	$flickr_id = "51694355@N00";
+	$flickr_id = '51694355@N00';
 	
 ?>
 					<div id="block_flickr" class="block">

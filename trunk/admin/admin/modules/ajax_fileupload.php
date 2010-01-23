@@ -1,17 +1,18 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 error_reporting(0);	// Turns off error reporting
 if (!file_exists('../../config.php') || filesize('../../config.php') < 10) {		// check for config
-require '../../lib/lib_db.php'; db_down(); exit();
+require_once '../../lib/lib_db.php'; db_down(); exit();
 }
-	require '../../config.php';
-	include '../../lib/lib_db.php';
-	include '../../lib/lib_auth.php';
-	include '../../lib/lib_date.php';
-	include '../../lib/lib_validate.php';
-	include '../../lib/lib_upload.php';
-	include '../../lib/lib_rss.php';
-	include '../../lib/lib_tags.php';
-	include '../../lib/lib_logs.php';
+	require_once '../../config.php';
+	include_once '../../lib/lib_db.php';
+	include_once '../../lib/lib_auth.php';
+	include_once '../../lib/lib_date.php';
+	include_once '../../lib/lib_validate.php';
+	include_once '../../lib/lib_upload.php';
+	include_once '../../lib/lib_rss.php';
+	include_once '../../lib/lib_tags.php';
+	include_once '../../lib/lib_logs.php';
 
 	if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
 
@@ -60,10 +61,10 @@ require '../../lib/lib_db.php'; db_down(); exit();
 	$multi_upload = new muli_files;
 	
 	$file_name = $_FILES['upload']['name'][0];
-	$file_ext = substr(strrchr($file_name, "."), 1);
+	$file_ext = substr(strrchr($file_name, '.'), 1);
 	$file_ext = strtolower($file_ext);
 	
-	if (($file_ext == 'jpg') || ($file_ext == 'gif') || ($file_ext == 'png') || ($file_ext == 'svg')) {
+	if (($file_ext == 'jpg') || ($file_ext == 'gif') || ($file_ext == 'png')) {
 		$dir = '../../../files/images/';
 		$file_type = 'Image';
 	} else if (($file_ext == 'mov') || ($file_ext == 'flv') || ($file_ext == 'avi') || ($file_ext == 'm4v') || ($file_ext == 'mp4') || ($file_ext == 'mkv')|| ($file_ext == 'ogv')) {

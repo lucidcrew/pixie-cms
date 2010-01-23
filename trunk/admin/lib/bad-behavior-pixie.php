@@ -1,4 +1,5 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 /*
 Bad Behavior - detects and blocks unwanted Web accesses
 Copyright (C) 2005-2006 Michael Hampton
@@ -20,8 +21,8 @@ $bb2_settings_defaults = array(
 	'verbose' => false,
 	'logging' => true,
 	'httpbl_key' => '',
-	'httpbl_threat' => '25',
-	'httpbl_maxage' => '30',
+	'httpbl_threat' => 25,
+	'httpbl_maxage' => 30,
 );
 
 // Return current time in the format preferred by your database.
@@ -67,7 +68,7 @@ function bb2_db_rows($result) {
 
 // Return emergency contact email address.
 function bb2_email() {
-	$email = safe_field("email", "pixie_users", "privs = '3'");
+	$email = safe_field('email', 'pixie_users', 'privs = 3');
 	return $email;	// You need to change this.
 }
 
@@ -87,7 +88,7 @@ function bb2_write_settings($settings) {
 function bb2_install() {
 	$settings = bb2_read_settings();	
 	$ok = safe_query(bb2_table_structure($settings['log_table']));
-    if($ok) safe_query("UPDATE `".PFX."pixie_settings` SET `bb2_installed`='yes'");
+    if($ok) safe_query("UPDATE `" . PFX . "pixie_settings` SET `bb2_installed`='yes'");
 }
 
 // Screener
@@ -104,7 +105,7 @@ function bb2_insert_stats($force = false) {
 	$settings = bb2_read_settings();
 
 	if ($force || $settings['display_stats']) {
-		$blocked = safe_rows("*",$settings['log_table'], "`key` NOT LIKE '00000000'");
+		$blocked = safe_rows('*', $settings['log_table'], "`key` NOT LIKE '00000000'");
 		$number = count($blocked);
 		if ($blocked !== FALSE) {
 			echo sprintf('<p><a href="http://www.bad-behavior.ioerror.us/">%1$s</a> %2$s <strong>%3$s</strong> %4$s</p>', ('Bad Behavior'), ('has blocked'), $number, ('access attempts in the last 7 days.'));
@@ -118,12 +119,12 @@ function bb2_relative_path() {
 	//$site_url = safe_field("site_url", "pixie_settings", "settings_id = '1'");
 	//$url = parse_url($site_url);
 	//return $url['path'];
-	return "/";
+	return '/';
 }
 
 // Calls inward to Bad Behavor itself.
-require_once(BB2_CWD . "/bad-behavior/version.inc.php");
-require_once(BB2_CWD . "/bad-behavior/core.inc.php");
+require_once(BB2_CWD . '/bad-behavior/version.inc.php');
+require_once(BB2_CWD . '/bad-behavior/core.inc.php');
 if($bb2_installed == 'no') bb2_install();
 bb2_start(bb2_read_settings());
 ?>

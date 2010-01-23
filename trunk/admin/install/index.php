@@ -5,8 +5,7 @@
 // Licence: GNU General Public License v3                   	   //
 // Title: Installer.                                               //
 //*****************************************************************//
-require '../lib/lib_misc.php';     										  		// loaded for security
-	bombShelter();                  											  		// che
+
 	$debug = 'no';	// Set this to yes to debug and see all the global vars coming into the file
 			// To find error messages, search the page for php_errormsg if you turn this debug feature on
 
@@ -25,7 +24,7 @@ require '../lib/lib_misc.php';     										  		// loaded for security
 	$pixie_version = '1.04';		// You can define the version number for Pixie releases here
 	$pixie_user = 'Pixie Installer';		// The name on the first log
 	$pixie_server_timezone = 'Europe/London';		// Hosted server timezone
-	$pixie_step = '0';
+	$pixie_step = 1;
 	$pixie_dropolddata = 'No';
 	$pixie_reinstall = 'No';
 
@@ -40,8 +39,8 @@ require '../lib/lib_misc.php';     										  		// loaded for security
 	$error = NULL;
 	$error1 = NULL;
 	$step = NULL;
-	$urlstart = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-	$urlstart = str_replace("admin/install/index.php","",$urlstart);
+	$urlstart = 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+	$urlstart = str_replace('admin/install/index.php', "", $urlstart);
 	$pixie_url = $urlstart;
 	$pixie_user_privs = 'NULL'; // This defines an undefined constant or index? I think it needs unset or something...
 
@@ -57,10 +56,10 @@ require '../lib/lib_misc.php';     										  		// loaded for security
 
     if (strnatcmp(phpversion(),'5.1.0') >= 0) 
     { 
-        	date_default_timezone_set("$pixie_server_timezone");	# equal or newer 
+        	date_default_timezone_set("$pixie_server_timezone");	/* If php 5.10 set php server time zone */
     }
 
-	globalSec('Main index.php', 1);
+	// globalSec('Pixie Installer index.php', 1);
 
 	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie'); // access to form vars if register globals is off
 
@@ -68,19 +67,20 @@ require '../lib/lib_misc.php';     										  		// loaded for security
 		
 		// step 2
 		// create the config file, chmod the correct directories and install basic db stucture 
-		case '2':
+		case 2 :
 
 			if ($pixie_prefix == 'pixie_') { $pixie_prefix = 'pixie__'; }		// Prevent pixie_ being used as the prefix, causes bug
 
 			if ($pixie_dropolddata == 'Yes') {
 			if ($pixie_reinstall == 'Yes') {
-			$pixie_step = '1';
+			$pixie_step = 1;
 			$error = 'Please choose either fresh start or re-install. You cannot select both.';
 			break;
 			      }
 			}
 
 			if ($pixie_reinstall == 'Yes') {
+			if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important to set this first, so that we can use the new config.php */
 			include '../config.php';           		// load configuration
 			$pixie_database  =  $pixieconfig['db'];
 			$pixie_username  =  $pixieconfig['user'];
@@ -93,7 +93,7 @@ require '../lib/lib_misc.php';     										  		// loaded for security
 			$conn = mysql_connect($pixie_host, $pixie_username, $pixie_password);
 			
 			if (!$conn) {
-				if ($pixie_dropolddata == 'Yes') { $pixie_step = '1'; 	$error = 'Pixie could not connect to your database, check your details below.'; break; }
+				if ($pixie_dropolddata == 'Yes') { $pixie_step = 1; 	$error = 'Pixie could not connect to your database, check your details below.'; break; }
 				$error = 'Pixie could not connect to your database, check your details below.';
 
 			} else {
@@ -120,7 +120,7 @@ require '../lib/lib_misc.php';     										  		// loaded for security
 							}
 						      }
 						else{
-			$pixie_step = '1';
+			$pixie_step = 1;
 			$error = 'Error, could not the list tables. MySQL Error: ' . mysql_error();
 			break;
 					    }
@@ -131,7 +131,7 @@ require '../lib/lib_misc.php';     										  		// loaded for security
 							  // We could echo a sucess message here if we wanted
 							}
 						  else{
-			$pixie_step = '1';
+			$pixie_step = 1;
 			$error = 'Error deleting $table_name. MySQL Error: ' . mysql_error() . "";
 			break;
 					      }
@@ -144,6 +144,7 @@ require '../lib/lib_misc.php';     										  		// loaded for security
 						$fh = fopen('../config.php', 'w');
 						$data = 
 						"<?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -160,7 +161,6 @@ require '../lib/lib_misc.php';     										  		// loaded for security
 
 // Timezone //
 // This timezone setting is the server time zone //
-// and not your local time zone. //
 \$pixieconfig['server_timezone'] = '$pixie_server_timezone';
 ?>";
 						fwrite($fh, $data);
@@ -170,7 +170,7 @@ require '../lib/lib_misc.php';     										  		// loaded for security
 						chmod('../config.php', 0640);
 
 						// load in the required libraries
-						
+						if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important to set this first, so that we can use the new config.php */
 						include '../config.php';
 						include '../lib/lib_db.php';
 						
@@ -428,23 +428,23 @@ require '../lib/lib_misc.php';     										  		// loaded for security
 			}
 
 		if ($pixie_dropolddata == 'Yes') {
-		$pixie_step = '2';
+		$pixie_step = 2;
 		} else {
 
 			if (!$error) {
-				$pixie_step = '2';
+				$pixie_step = 2;
 			} else {
-				$pixie_step = '1';
+				$pixie_step = 1;
 			}
 		}
 		
 		break;
 		
-		case '3':	
-		
+		case 3 :	
+			if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important to set this first, so that we can use the new config.php */
 			include '../config.php';           		// load configuration
 			include '../lib/lib_db.php';       		// load libraries order is important
-			include '../lang/'.$pixie_langu.'.php';       // get the language file
+			include '../lang/' . $pixie_langu . '.php';       // get the language file
 			include '../lib/lib_date.php';			//
 			include '../lib/lib_validate.php'; 		// 
 			include '../lib/lib_core.php';          //
@@ -454,21 +454,29 @@ require '../lib/lib_misc.php';     										  		// loaded for security
 			$pixie_sitename = htmlentities($pixie_sitename);	// Helps prevents a bug where a ' in a string like : dave's site, errors out the admin interface
 
 			$check = new Validator ();
-			if (!$pixie_sitename) { $error .= $lang['site_name_error']." |"; $scream[] = 'name'; }
-			if (!$pixie_url) { $error .= $lang['site_url_error']." |"; $scream[] = 'url'; }
-			// we turn off url validation so localhost is accepted
-			//if (!$check->validateURL($url, $lang['site_url_error']." |")) { $scream[] = "url"; }
-			if ($check->foundErrors()) { $error .= $check->listErrors("x"); }
+			if (!$pixie_sitename) { $error .= $lang['site_name_error'] . ' |'; $scream[] = 'name'; }
+			if (!$pixie_url) { $error .= $lang['site_url_error'] . ' |' ; $scream[] = 'url'; }
+
+			if (preg_match('/localhost/i', $pixie_url)) {	/* This prevents an error if you are developing locally */
+				if (preg_match('/127.0.0./', $pixie_url)) {	/* This is just for fun! */
+					    echo 'hello!';
+				}
+
+				} else {
+				if (!$check->validateURL($pixie_url, $lang['site_url_error'] . ' |')) { $scream[] = 'url'; }
+			}
+
+			if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
 
 			$table_name = 'pixie_settings';
 			$site_url_last = $pixie_url{strlen($pixie_url)-1};
 			
-  			$err = explode("|",$error);
+  			$err = explode('|', $error);
   			$error = $err[0];
   			
   			if (!$error) {
-  			  	if ($site_url_last != "/") {
-  					$pixie_url = $pixie_url."/";
+  			  	if ($site_url_last != '/') {
+  					$pixie_url = $pixie_url . '/';
   				}
   				
   				// site defaults
@@ -494,9 +502,9 @@ require '../lib/lib_misc.php';     										  		// loaded for security
 				
 				// create .htaccess for clean URLs
 				$fh = fopen('../../.htaccess', 'w');
-				$clean = str_replace("/admin/install/index.php","",$_SERVER["REQUEST_URI"]);
+				$clean = str_replace("/admin/install/index.php", "", $_SERVER["REQUEST_URI"]);
 				if (!$clean) {
-					$clean = "/";
+					$clean = '/';
 				}
 				$data = 
 "#
@@ -628,8 +636,8 @@ RewriteRule ^(.*)$ index.php [F,L]
   # Enable expirations.
   ExpiresActive On
 
-  # Cache all files for 2 weeks after access (A).
-  ExpiresDefault A1209600
+  # Cache all files for 1 week after access (A).
+  ExpiresDefault A604800
 
   # Do not cache dynamically generated pages.
   ExpiresByType text/html A1
@@ -640,11 +648,11 @@ RewriteRule ^(.*)$ index.php [F,L]
   			}
   			
   			// load external sql
-  			$file = $pixie_type.'_db.sql';
+  			$file = $pixie_type . '_db.sql';
   			$file_content = file($file);
    			foreach($file_content as $sql_line){
    				// adjust for table prefix
-   				$sql_line = str_replace('pixie_', $pixieconfig['table_prefix'].'pixie_', $sql_line);
+   				$sql_line = str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $sql_line);
       			safe_query($sql_line);
 			}
 			  			
@@ -657,22 +665,22 @@ RewriteRule ^(.*)$ index.php [F,L]
 			chmod('../../files/sqlbackups/', 0777);
 
 			if (!$error) {
-				$pixie_step = '3';
+				$pixie_step = 3;
 			} else {
-				$pixie_step = '2';
+				$pixie_step = 2;
 			}
 		
 		break;
 		
 		// step 4 - finish 
-		case '4':
-		
+		case 4 :
+			if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }/* very important to set this first, so that we can use the new config.php */
 			include '../config.php';           		// load configuration
 			include '../lib/lib_db.php';       		// load libraries order is important
 			
 			$prefs = get_prefs();           		// prefs as an array
 			extract($prefs);                		// add prefs to globals
-			include '../lang/'.$language.'.php';      	 // get the language file
+			include '../lang/' . $language . '.php';      	 // get the language file
 			include '../lib/lib_date.php';			//
 			include '../lib/lib_validate.php'; 		// 
 			include '../lib/lib_core.php';          	//
@@ -690,9 +698,9 @@ RewriteRule ^(.*)$ index.php [F,L]
 			$check_result_number = 0;
 			// Boy, this needed cleaning up...
 
-			if ($pixie_name == "") { $error1 .= $lang['user_realname_missing']." |"; $scream[] = 'realname';
-			if ($check->foundErrors()) { $error1 .= $check->listErrors("x"); }
-			$err = explode("|",$error1);
+			if ($pixie_name == "") { $error1 .= $lang['user_realname_missing'] . ' |'; $scream[] = 'realname';
+			if ($check->foundErrors()) { $error1 .= $check->listErrors('x'); }
+			$err = explode('|', $error1);
 			$error = $err[0];
 						}
 
@@ -702,9 +710,9 @@ RewriteRule ^(.*)$ index.php [F,L]
 
 			$pixie_username = str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($pixie_username))); // This ensures no spaces in the username
 
-			if ($pixie_username == "") { $error1 .= $lang['user_name_missing']." |"; $scream[] = 'uname';
-			if ($check->foundErrors()) { $error1 .= $check->listErrors("x"); }
-			$err = explode("|",$error1);
+			if ($pixie_username == "") { $error1 .= $lang['user_name_missing'] . ' |'; $scream[] = 'uname';
+			if ($check->foundErrors()) { $error1 .= $check->listErrors('x'); }
+			$err = explode('|',$error1);
 			$error = $err[0];
 						}
 
@@ -712,10 +720,10 @@ RewriteRule ^(.*)$ index.php [F,L]
 			$check_result_number = $check_result_number + 1;
 					}
 
-			if (!$check->validateEmail($pixie_email,$lang['user_email_error']." |")) { $scream[] = 'email';
-			if ($pixie_email == "") { $error1 .= $lang['user_email_error']." |"; $scream[] = 'email';
-			if ($check->foundErrors()) { $error1 .= $check->listErrors("x"); }
-			$err = explode("|",$error1);
+			if (!$check->validateEmail($pixie_email,$lang['user_email_error'] . ' |')) { $scream[] = 'email';
+			if ($pixie_email == "") { $error1 .= $lang['user_email_error'] . ' |'; $scream[] = 'email';
+			if ($check->foundErrors()) { $error1 .= $check->listErrors('x'); }
+			$err = explode('|', $error1);
 			$error = $err[0];
 												  }
 
@@ -725,9 +733,9 @@ RewriteRule ^(.*)$ index.php [F,L]
 			$check_result_number = $check_result_number + 1;
 					}
 
-			if ($pixie_password == "") { $error1 .= $lang['user_password_missing']." |"; $scream[] = 'realname';
-			if ($check->foundErrors()) { $error1 .= $check->listErrors("x"); }
-			$err = explode("|",$error1);
+			if ($pixie_password == "") { $error1 .= $lang['user_password_missing'] . ' |'; $scream[] = 'realname';
+			if ($check->foundErrors()) { $error1 .= $check->listErrors('x'); }
+			$err = explode('|', $error1);
 			$error = $err[0];
 						}
 
@@ -755,85 +763,91 @@ RewriteRule ^(.*)$ index.php [F,L]
 			$file_content = file($file);
 			foreach($file_content as $sql_line){
 				// adjust prefix
-				$sql_line = str_replace('pixie_', $pixieconfig['table_prefix'].'pixie_', $sql_line);
+				$sql_line = str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $sql_line);
 				safe_query($sql_line);
 							    }
 
 			$newmessage = 'No';
 			// log the install
-			if ($pixie_dropolddata == 'Yes') { logme('Mmmm... Minty... Pixie was installed a freshhh... remember to delete the install directory on your server.','yes','error'); $newmessage = 'Yes'; }
-			if ($pixie_reinstall == 'Yes') { logme('Pixie was re-installed... you should manually delete the directory named install, which is located inside the admin directory.','yes','error'); $newmessage = 'Yes'; }
+			if ($pixie_dropolddata == 'Yes') { logme('Mmmm... Minty... Pixie was installed a freshhh... remember to delete the install directory on your server.', 'yes', 'error'); $newmessage = 'Yes'; }
+			if ($pixie_reinstall == 'Yes') { logme('Pixie was re-installed... you should manually delete the directory named install, which is located inside the admin directory.', 'yes', 'error'); $newmessage = 'Yes'; }
 			if ($newmessage == 'No') { 
-			logme('Pixie was installed... remember to delete the install directory on your server.','yes','error');
+			logme('Pixie was installed... remember to delete the install directory on your server.', 'yes', 'error');
 			}
 
-	if (strnatcmp(phpversion(),'5.1.0') >= 0) { 
-	logme('Welcome to Pixie ' . $pixie_version . ' running on PHP ' . phpversion() . ' be sure to visit <a href ="http://www.getpixie.co.uk/">www.getpixie.co.uk</a> to check for updates.','no','site');
+	if (strnatcmp(phpversion(), '5.1.0') >= 0) { 
+	logme('Welcome to Pixie ' . $pixie_version . ' running on PHP ' . phpversion() . ' be sure to visit <a href ="http://www.getpixie.co.uk/">www.getpixie.co.uk</a> to check for updates.', 'no', 'site');
 						  } else { 
-        logme('WARNING! Your current PHP version : ' . phpversion() . ' is not the current stable version of php. Please consult your server Administrator about upgrading php for security reasons.','yes','error');
+        logme('WARNING! Your current PHP version : ' . phpversion() . ' is not the current stable version of php. Please consult your server Administrator about upgrading php for security reasons.', 'yes', 'error');
 	if (strnatcmp(phpversion(),'5.0.0') >= 0) { 
-	logme('WARNING! Your current PHP version : ' . phpversion() . ' is depreciated and unsupported. Please consult your server Administrator about upgrading php for security reasons.','yes','error');
+	logme('WARNING! Your current PHP version : ' . phpversion() . ' is depreciated and unsupported. Please consult your server Administrator about upgrading php for security reasons.', 'yes', 'error');
 						  }
 						  }
 
 				// needs to be added to language file
 				$emessage = "	
-Hi ".$pixie_name.",
+Hi " . $pixie_name . ",
 Congratulations! Pixie is now installed. Here are your login details:
 
-Username: ".$pixie_username."
-Password: ".$pixie_password."
+Username: " . $pixie_username . "
+Password: " . $pixie_password . "
 
-You can visit: ".$pixie_url." to view your site
-or ".$pixie_url."admin to login.
+You can visit: " . $pixie_url . " to view your site
+or " . $pixie_url . "admin to login.
 
 Thank You for installing Pixie.
-We hope you enjoy it!
+We hope you enjoy using it!
 
 www.getpixie.co.uk
 ";
 
-				$subject = "Hi ".$pixie_name.", Pixie was successfully installed.";
+				$subject = 'Hi ' . $pixie_name . ', Pixie was successfully installed.';
 				mail($pixie_email, $subject, $emessage);
 						  }
 
 			if (!$error) {
-				$pixie_step = '4';
+				$pixie_step = 4;
 			} else {
-				$pixie_step = '3';
+				$pixie_step = 3;
 			}
 		break;
 		
 		default:
 
-		if ($debug == 'yes') { if ($pixie_step == '0') { $pixie_step = '1'; } }
+	if ($pixie_step == 0) {
 
-		if ($pixie_step !== '1') {	// Always return back to the installer if requested
-			if (filesize('../config.php') > 30) {		   // check for config
-			header( 'Location: ../../admin/' ); exit();}   // redirect to pixie if its found
-			}
-
-    if (strnatcmp(phpversion(),'5.1.0') >= 0) 
+    if (strnatcmp(phpversion(), '5.1.0') >= 0) 
     { 
         	date_default_timezone_set("$pixie_server_timezone");	# equal or newer 
     } 
     else 
     { 
         $error = 'WARNING! Your current PHP version: ' . phpversion() . ' is not the current stable version of php. Please consult your server Administrator about upgrading php for security reasons.';	# not sufficiant 
-    if (strnatcmp(phpversion(),'5.0.0') >= 0) 
+    if (strnatcmp(phpversion(), '5.0.0') >= 0) 
     { 
 	$error = 'WARNING! Your current PHP version: ' . phpversion() . ' is depreciated and unsupported. Please consult your server Administrator about upgrading php for security reasons.';
     }
 
     }
 
+	}
+
+if ($debug !== 'yes') {
+
+	if ($pixie_step !== 1) {
+
+			if (filesize('../config.php') > 10) {			 /* check for admin/config.php */
+			header( 'Location: ../../admin/' ); exit();}		/* redirect to pixie's admin if its found */
+			}
+
 		break;
-	
-	}
-	
+
+	} /* END $pixie_step !== 1 */
+
 	if (!$pixie_step) {
-		$pixie_step = '1';
+		$pixie_step = 1;
 	}
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -1113,7 +1127,7 @@ padding-top: 2em;
 	<div id="logo-holder"><img src="banner.gif" alt="Pixie logo" id="logo"></div>
 	<div id="placeholder">
 		<?php
-		if ($pixie_step == '4') {
+		if ($pixie_step == 4) {
 		?>
 		<h3>Finished...</h3>	
 		<?php
@@ -1123,7 +1137,7 @@ padding-top: 2em;
 		<?php
 		}		 
 		switch($pixie_step) {
-			case '4':
+			case 4 :
 				global $site_url;
 		?>
 		<div class="center"><br /><b>Congratulations!</b></div><br />
@@ -1131,7 +1145,7 @@ padding-top: 2em;
 		<div class="divcentertext2"><br />Your new <b>Pixie</b> web site is now setup and ready to use.</div>
 		<p>If you would like to add any <b>themes</b> or <b>modules</b>, be sure to visit the <a href="http://www.getpixie.co.uk" title="Pixie">Pixie website</a> to browse the collection. Please remember to delete the install directory within Pixie to secure your site.</p>
 		<div class="divcentertext2">What would you like to do <b>next</b>?
-		<br /><br /><a href="<?php print $site_url; ?>" title="Visit the homepage">Visit your new homepage</a> or<br />
+		<br /><br /><a id="frontpage-url" href="<?php print $site_url; ?>" title="Visit the homepage">Visit your new homepage</a> or<br />
 		<a href="<?php print $site_url . 'admin/'; ?>" title="Login to Pixie">Login and start adding content</a> to your site...<br /></div>
 		<p>If you need <b>help</b> with Pixie, you can join the <a href="http://groups.google.com/group/pixie-cms" title="Pixie Forums">Pixie Forums</a> and start a discussion. <b>Everyone</b> is welcome.<br />
 		<br />If you would like to help <b>develop</b> Pixie, you can visit Pixie's <a href="http://code.google.com/p/pixie-cms/" title="Help develop Pixie">Google code project page</a> to get started.</p>
@@ -1141,7 +1155,7 @@ padding-top: 2em;
 		<?php } ?>
 		<?php
 			break;
-			case '3':
+			case 3 :
 		?>
 		
 		<p class="toptext">Nearly finished!<br />Last step is to create the "Super User" account for Pixie:</p>
@@ -1177,10 +1191,10 @@ padding-top: 2em;
 		<?php
 			break;
 			
-			case "2":
+			case 2 :
 			
-			$url1 = "http://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
-			$url1 = str_replace('admin/install/index.php',"",$url1);
+			$url1 = 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+			$url1 = str_replace('admin/install/index.php', "", $url1);
 		?>
 		<p class="toptext">Now Pixie needs some details about your site (you will have access to more settings once Pixie is installed):</p>
 		
@@ -1404,12 +1418,12 @@ $zonelist = array('Pacific/Midway',
 							// Output all the timezones
 							Echo "<option value=\"$tzselect\">$tzselect</option>";
 							} ?>
-						</select><span class="form_help">The time zone as set on the host server</span>
+						</select><span class="form_help">The time zone as set on your host server</span>
 					</div>
 				</div>			
 				<div class="form_row">
 					<div class="form_label"><label for="prefix">Database Table Prefix <span class="form_optional">(optional)</span></label></div>
-					<div class="form_item"><input type="text" class="form_text" name="prefix" value="<?php print $pixie_prefix; ?>" size="40" maxlength="80" id="prefix" /><span class="form_help">Example : pixie_</span></div>
+					<div class="form_item"><input type="text" class="form_text" name="prefix" value="<?php print $pixie_prefix; ?>" size="40" maxlength="80" id="prefix" /><span class="form_help">Example : <b>data_</b></span></div>
 				</div>
 
 		<?php if ($debug == 'yes') { ?>
@@ -1444,6 +1458,7 @@ $zonelist = array('Pacific/Midway',
 			</fieldset>	
  		</form>
  		<?php
+
  			break;
  		}
  		?>
@@ -1544,6 +1559,13 @@ $j('#restart').hover(
 
 });
 
+});
+
+$j(function(){
+    $j('a#frontpage-url').click(function(){
+        window.open(this.href);
+        return false;
+    });
 });
 
    });
