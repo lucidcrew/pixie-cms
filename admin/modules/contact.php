@@ -10,7 +10,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 switch ($do) {
 
 	// General information:
-	case 'info':
+	case 'info' :
 		$m_name = 'Contact';
 		$m_description = 'A simple contact form for your website with hCard/vCard Microformats.';
 		$m_author = 'Scott Evans';
@@ -22,27 +22,27 @@ switch ($do) {
 	break;
 
 	// Install
-	case 'install':
+	case 'install' :
 		$execute = "CREATE TABLE IF NOT EXISTS `pixie_module_contact_settings` (`contact_id` mediumint(1) NOT NULL auto_increment,`show_profile_information` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',`show_vcard_link` set('yes','no') collate utf8_unicode_ci NOT NULL default 'no',PRIMARY KEY  (`contact_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;";
 		$execute1 = "INSERT INTO `pixie_module_contact_settings` (`contact_id`, `show_profile_information`, `show_vcard_link`) VALUES (1, 'yes', 'yes');";
 	break;
 
 	// The administration of the module (add, edit, delete)
-	case 'admin':
+	case 'admin' :
 		
 		// nothing to see here
 
 	break;
 
 	// Pre
-	case 'pre':
-	
+	case 'pre' :
+
 		$site_title = safe_field('site_name', 'pixie_settings', "settings_id = '1'");
 		$ptitle = $site_title . ' - Contact';
 		$pinfo = 'Contact ' . $site_title;
 		
 		
-		// if the form is submitted, send the email
+		// if the form is submitted
 		if ($contact_sub) {
 		
 			// lets check to see if the refferal is from the current site
@@ -52,6 +52,7 @@ switch ($do) {
 			if ($iam) { die(); }
 			
 			if ($uemail) {
+
 				$domain = explode('@', $uemail);
 				if (preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $uemail) && checkdnsrr($domain[1])) {
 					if ($subject) {
@@ -64,7 +65,6 @@ switch ($do) {
 							$headers .= "From: $uemail <$uemail>" . $eol;
 							$headers .= "Reply-To: $uemail <$uemail>" . $eol;
 							$headers .= "Return-Path: $uemail <$uemail>" . $eol;
-							mail($to, $subject, $message, $headers);
 						} else {
 							$error = 'Please enter a message.';
 						}
@@ -81,20 +81,38 @@ switch ($do) {
 			if ($error) {
 				unset($contact_sub);
 			}
-		}
-		
+
+			if (!$error) {
+
+			    session_start(); /* Retrieve the value of the hidden field */
+			    $form_secret = $_POST['form_secret'];
+			    if (isset($_SESSION['FORM_SECRET'])) {
+				    if (strcasecmp($form_secret, $_SESSION['FORM_SECRET']) === 0) { /* Check that the checksum we created on form submission is the same the posted FORM_SECRET */
+				    mail($to, $subject, $message, $headers); /* Send the mail */
+				    $log_message = "$uemail sent a message to $to using the contact form.";
+				    logme($log_message, 'no', 'site'); /* Log the action */
+				    unset($_SESSION['FORM_SECRET']); /* Unset the checksum */
+				    } else { /* Invalid secret key */ }
+				    } else { /* Secret key missing */ }
+			    }
+
+			}
+
 	break;
-	
+
 	// Head
-	case 'head':
+	case 'head' :
 
 	break;
 
 	// Show Module
-	default:
-		
-		// get the settings for this page
-		extract(safe_row('*', 'pixie_module_contact_settings', "contact_id='1'"));
+	default :
+
+		session_start(); /* So that we can use the value of the hidden field */
+		$secret = sha1(uniqid(rand(), true)); /* Create a sha1 checksum to help verify that we are only sending the mail once */
+		$_SESSION['FORM_SECRET'] = $secret; /* FORM_SECRET in $_SESSION['FORM_SECRET'] must be unique if you reuse this technique in other forms like the comments form for example */
+
+		extract(safe_row('*', 'pixie_module_contact_settings', "contact_id='1'")); /* get the settings for this page */
 
 		echo '<h3>Contact</h3>';
 			
@@ -160,6 +178,7 @@ switch ($do) {
 								<div class=\"form_item\"><textarea name=\"message\" cols=\"35\" class=\"form_text_area\" rows=\"8\" id=\"messagey\">$message</textarea></div>
 							</div>
 							<div class=\"form_row_submit\">
+								<input type=\"hidden\" name=\"form_secret\" id=\"form_secret\" value=\"$_SESSION[FORM_SECRET]\" />
 								<input type=\"hidden\" name=\"iam\" value=\"\" />
 								<input type=\"submit\" name=\"contact_sub\" class=\"form_submit\" id=\"contact_submit\" value=\"Submit\" />
 							</div>

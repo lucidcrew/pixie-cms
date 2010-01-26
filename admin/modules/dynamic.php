@@ -61,9 +61,9 @@ switch ($do) {
   				if ($web == 'http://') {
   					$web = "";
   				}
-  				
+
   				$howmanycomments = count(safe_rows('*', 'pixie_log', "log_message like '%" . $lang['comment_save_log'] . "%' and user_ip = '" . $_SERVER["REMOTE_ADDR"] . "' and log_time < now() and log_time > DATE_ADD(now(), INTERVAL -4 HOUR)"));
-				if ($howmanycomments >= 4) { 
+				if ($howmanycomments >= 4) { /* Spam limit - 4 posts every 4 hours. */ 
 					if (!$lang['comment_throttle_error']) {
 						$lang['comment_throttle_error'] = 'You are posting comments too quickly. Please slow down.';
 					}
@@ -83,6 +83,12 @@ switch ($do) {
 				$sname = sterilise($name);
 				$semail = sterilise($email);
 
+				$duplicate = 0;
+				$last_comment_last_number = getThing($query = 'SELECT * FROM pixie_module_comments ORDER BY comments_id DESC');
+				$last_comment = getThing($query = "SELECT comment FROM pixie_module_comments WHERE comments_id='$last_comment_last_number'");
+
+  				if (strcasecmp($comment, $last_comment) === 0) { $duplicate = 1; }
+
 				$scream = array();
 				if (!$name) { $error .= $lang['comment_name_error'] . ' |'; $scream[] = 'name'; }
 				if (!$comment) { $error .= $lang['comment_comment_error'] . ' |'; $scream[] = 'comment'; }
@@ -97,27 +103,35 @@ switch ($do) {
 				
 						// PROBABLY NEED TO SAVE DATE ON COMMENT MANUALLY
 
-					if (!$error) {
+				if (!$error) {
+
+			if ($duplicate !== 1) {
+
 						if ($admin_user) {
 							$admin_user = strip_tags($admin_user);
 							$sql = "comment = '$comment', name = '$name', email = '$email', url = '$web', post_id = '$post', admin_user = 'yes'";
 						} else {
 							$sql = "comment = '$comment', name = '$name', email = '$email', url = '$web', post_id = '$post', admin_user = 'no'";
 						}
-						
+
 						$comment_ok = safe_insert('pixie_module_comments', $sql);
 						$title = safe_field('title', 'pixie_dynamic_posts', "post_id ='$post'");
 						$countcom = count(safe_rows('*', 'pixie_module_comments', "post_id ='$post'"));
-						logme($lang['comment_save_log'] . "<a href=\"" . createURL($s, $m, $x) . "#comment_$countcom\" title=\"$title\">$title</a>.", 'no', 'comment');
+						logme($name . ' ' . $lang['comment_save_log'] . "<a href=\"" . createURL($s, $m, $x) . "#comment_$countcom\" title=\"$title\">$title</a>.", 'no', 'comment');
+
+
 					} else {
 						$err = explode('|', $error);
 						$error = $err[0];
 					}
 				} else {
-					logme($lang['comment_spam'], 'yes', 'comment_error');
+					/* logme($lang['comment_spam'], 'yes', 'comment_error'); */ /* No need to log something we can't action */
 					sleep(10); // slow spammers down
 				}
 			}
+
+				}
+
   		$mtitle = "";
 	  	show_single();
   	break;
