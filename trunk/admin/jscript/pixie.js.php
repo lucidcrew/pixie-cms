@@ -16,6 +16,7 @@ require_once '../lib/lib_misc.php';										/* perform basic sanity checks */
 	include_once 'lib/lib_auth.php';
 	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');	/* Note : If you use this file, any global vars now have the prefix pixie, so what was $s is now $pixie_s */
 ?>
+// jQuery.noConflict(); // Using this causes some sort of bug but it should not
 jQuery(document).ready(function(){
 	
 	var tagselect = { backgroundColor : "#0497d3", color : "#ffffff", padding : "1px 4px 1px 4px" };
@@ -97,7 +98,7 @@ jQuery(document).ready(function(){
 	jQuery(function() { 
 	jQuery.getScript('jscript/tablesorter.js', function(){
 	// call the tablesorter plugin 
-	jQuery('table').tablesorter({ 
+	jQuery('.tbl').tablesorter({ 
         // enable debug mode 
         debug: false 
 	}); 
