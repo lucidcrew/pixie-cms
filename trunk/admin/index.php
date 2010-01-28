@@ -52,8 +52,9 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set
 	include_once 'lib/lib_tags.php';								/* import the tags library */
 	include_once 'lib/bad-behavior-pixie.php';							/* no spam please */
 	include_once 'lib/lib_backup.php';								/* import the backup library */
-	/* Error - lib_simplepie.php - Non-static method SimplePie_Misc::parse_date() should not be called statically - Waiting for simplepie devs to fix, it only happens with php5 */
-	include_once 'lib/lib_simplepie.php';								/* because pie should be simple */
+
+	if (strnatcmp(phpversion(),'5.0.0') >= 0) { include_once 'lib/lib_simplepie_php5.php'; } else {	/* Load the php5 version of simplepie if you are running php5 */
+	include_once 'lib/lib_simplepie.php'; }								/* because pie should be simple */
   	if (!file_exists( 'settings.php' ) || filesize( 'settings.php') < 10) {				/* check for settings.php */
 	$gzip_admin = 'no';}										/* ensure $gzip_admin not unset */
   	if (file_exists( 'settings.php' ) || filesize( 'settings.php' ) < 10) {				/* check for settings.php */
@@ -152,12 +153,14 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set
 	<link rel="apple-touch-icon" href="<?php print $site_url; ?>files/images/apple_touch_icon_pixie.jpg"/>
 
 	<!-- rss feeds-->
-	<link rel="alternate" type="application/rss+xml" title="Pixie - <?php print str_replace('.',"",$lang['blog']); ?>" href="http://www.getpixe.co.uk/blog/rss/" />
-	<link rel="alternate" type="application/rss+xml" title="Pixie - <?php print $lang['latest_activity']; ?>" href="?s=myaccount&amp;do=rss&amp;user=<?php print safe_field('nonce','pixie_users',"user_name ='" . $GLOBALS['pixie_user'] . "'"); ?>" />
+	<link rel="alternate" type="application/rss+xml" title="Pixie - <?php print str_replace('.', "", $lang['blog']); ?>" href="http://www.getpixe.co.uk/blog/rss/" />
+	<?php if (isset($GLOBALS['pixie_user'])) { ?>
+	<link rel="alternate" type="application/rss+xml" title="Pixie - <?php print $lang['latest_activity']; ?>" href="?s=myaccount&amp;do=rss&amp;user=<?php print safe_field('nonce', 'pixie_users',"user_name ='" . $GLOBALS['pixie_user'] . "'"); ?>" />
+	<?php } ?>
 
 </head>
   <?php flush(); /* Send the head so that the browser has something to do whilst it waits */ ?>
-<body class="pixie <?php $s . " "; $date_array = getdate(); print 'y'.$date_array['year'] . " "; print 'm' . $date_array['mon'] . " "; print 'd' . $date_array['mday'] . " "; print 'h' . $date_array['hours'] . " "; print $s; ?>">
+<body class="pixie <?php $s . " "; $date_array = getdate(); print 'y' . $date_array['year'] . " "; print 'm' . $date_array['mon'] . " "; print 'd' . $date_array['mday'] . " "; print 'h' . $date_array['hours'] . " "; print $s; ?>">
 	<div id="message"></div>
 	<div id="pixie">
 		<div id="pixie_placeholder">
@@ -167,7 +170,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set
 				<div id="tools">
 					<ul id="tools_list">
 						<li id="tool_skip"><a href="#pixie_body" title="<?php echo $lang['skip_to']; ?>"><?php echo $lang['skip_to']; ?></a></li>
-						<?php if ($GLOBALS['pixie_user']){ ?><li id="tool_logout"><a href="?s=logout" title="<?php echo $lang['logout']; ?>"><?php echo $lang['logout']; ?></a></li><?php print "\n";} ?>
+						<?php if (isset($GLOBALS['pixie_user'])) { ?><li id="tool_logout"><a href="?s=logout" title="<?php echo $lang['logout']; ?>"><?php echo $lang['logout']; ?></a></li><?php print "\n";} ?>
 						<li id="tool_view"><a href="<?php print $site_url;?>" title="<?php echo $lang['view_site']; ?>"><?php echo $lang['view_site']; ?></a></li>
 					</ul>	
 				</div>
@@ -178,11 +181,11 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set
 				<div id="nav_1">
 					<?php print "\n"; if ($s != 'login') { ?>
 					<ul id="nav_level_1">
-						<?php if ($GLOBALS['pixie_user_privs'] >= 2){ ?><li><a href="?s=settings" title="<?php print $lang['nav1_settings'];?>"<?php if ($s == 'settings') { print " class=\"nav_current_1\"";}?>><?php print $lang['nav1_settings'];?></a><?php print "\n";} ?>
+						<?php if ($GLOBALS['pixie_user_privs'] >= 2) { ?><li><a href="?s=settings" title="<?php print $lang['nav1_settings'];?>"<?php if ($s == 'settings') { print " class=\"nav_current_1\"";}?>><?php print $lang['nav1_settings'];?></a><?php print "\n";} ?>
 						<?php if ($s != '404' && $s == 'settings'){ include('admin/modules/nav_' . $s . '.php'); } else if ($s != 'login') { echo "</li>\n"; } ?>
-						<?php if ($GLOBALS['pixie_user_privs'] >= 1){ ?><li><a href="?s=publish" title="<?php print $lang['nav1_publish'];?>"<?php if ($s == 'publish') { print " class=\"nav_current_1\"";}?>><?php print $lang['nav1_publish'];?></a><?php print "\n";} ?>
-						<?php if ($s != "404" && $s == "publish"){ include('admin/modules/nav_'.$s.'.php'); } else if ($s != "login") { echo "</li>\n"; } ?>
-						<?php if ($GLOBALS['pixie_user']){ ?><li><a href="?s=myaccount" title="<?php print $lang['nav1_home'];?>"<?php if  ($s == 'myaccount') { print " class=\"nav_current_1\"";}?>><?php print $lang['nav1_home'];?></a><?php print "\n";} ?>
+						<?php if ($GLOBALS['pixie_user_privs'] >= 1) { ?><li><a href="?s=publish" title="<?php print $lang['nav1_publish'];?>"<?php if ($s == 'publish') { print " class=\"nav_current_1\"";}?>><?php print $lang['nav1_publish'];?></a><?php print "\n";} ?>
+						<?php if ($s != '404' && $s == 'publish') { include('admin/modules/nav_'.$s.'.php'); } else if ($s != 'login') { echo "</li>\n"; } ?>
+						<?php if (isset($GLOBALS['pixie_user'])) { ?><li><a href="?s=myaccount" title="<?php print $lang['nav1_home'];?>"<?php if  ($s == 'myaccount') { print " class=\"nav_current_1\"";}?>><?php print $lang['nav1_home'];?></a><?php print "\n";} ?>
 						<?php if ($s != '404' && $s == 'myaccount'){ include('admin/modules/nav_' . $s . '.php'); } else if ($s != 'login') { echo "</li>\n"; } ?>
 					</ul>
 					<?php } print "\n"; ?>
@@ -192,7 +195,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set
 	
 			<div id="pixie_body">
 						
-	   			<?php if ($s != '404'){ include('admin/modules/mod_' . $s . '.php'); } else { include('modules/static.php'); }?>
+	   			<?php if ($s != '404') { include('admin/modules/mod_' . $s . '.php'); } else { include('modules/static.php'); }?>
 	
 			</div>
 		</div>

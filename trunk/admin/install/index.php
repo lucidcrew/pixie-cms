@@ -457,14 +457,14 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 			if (!$pixie_sitename) { $error .= $lang['site_name_error'] . ' |'; $scream[] = 'name'; }
 			if (!$pixie_url) { $error .= $lang['site_url_error'] . ' |' ; $scream[] = 'url'; }
 
-			if (preg_match('/localhost/i', $pixie_url)) {	/* This prevents an error if you are developing locally */
-				if (preg_match('/127.0.0./', $pixie_url)) {	/* This is just for fun! */
-					    echo 'hello!';
-				}
 
+				if (preg_match('/localhost/i', $pixie_url)) {	/* This prevents an error if you are developing locally */
+				} else {
+				if (preg_match('/127.0.0./', $pixie_url)) {	/* This prevents an error if you are developing locally */
 				} else {
 				if (!$check->validateURL($pixie_url, $lang['site_url_error'] . ' |')) { $scream[] = 'url'; }
-			}
+				}
+				}
 
 			if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
 

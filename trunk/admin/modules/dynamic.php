@@ -94,7 +94,15 @@ switch ($do) {
 				if (!$comment) { $error .= $lang['comment_comment_error'] . ' |'; $scream[] = 'comment'; }
 				$check = new Validator ();
 				if (!$check->validateEmail($email, $lang['comment_email_error'] . ' |')) { $scream[] = 'email'; }
+
+				if (preg_match('/localhost/i', $prefs['site_url'])) {	/* This prevents an error if you are developing locally */
+				} else {
+				if (preg_match('/127.0.0./', $prefs['site_url'])) {	/* This prevents an error if you are developing locally */
+				} else {
 				if ($web) { if (!$check->validateURL($web, $lang['comment_web_error'] . ' |')) { $scream[] = 'web'; } }
+				}
+				}
+
 				if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
 				
 				$commentson = safe_field('comments', 'pixie_dynamic_posts', "post_id ='$post'");

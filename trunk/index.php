@@ -48,13 +48,11 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }						/* se
 	include_once 'admin/lib/lib_rss.php';									/* import the rss library */
 	include_once 'admin/lib/lib_tags.php';									/* import the tags library */
 	include_once 'admin/lib/bad-behavior-pixie.php';							/* no spam please */
-	/* Error - lib_simplepie.php - Non-static method SimplePie_Misc::parse_date() should not be called statically - Waiting for simplepie devs to fix, it only happens with php5 */
-	include_once 'admin/lib/lib_simplepie.php';								/* because pie should be simple */
-
+	if (strnatcmp(phpversion(),'5.0.0') >= 0) { include_once 'admin/lib/lib_simplepie_php5.php'; } else {	/* Load the php5 version of simplepie if you are running php5 */
+	include_once 'admin/lib/lib_simplepie.php'; }								/* because pie should be simple */
 	users_online();												/* current site visitors */
 	pixie();												/* let the magic begin */
 	referral();												/* referral */
-
 	include_once 'admin/lang/' . $language . '.php';							/* get the language file */
 	include_once 'admin/themes/' . $site_theme . '/settings.php';						/* load the current themes settings */
 

@@ -10,10 +10,9 @@ require_once '../lib/lib_misc.php';										/* perform basic sanity checks */
 	// Note : If you use this file, any global vars now have the prefix pixie, so what was $s is now $pixie_s
 	/* !IMPORTANT - This file thinks it's being run from admin/ */
 	/* instead of admin/jscript so paths are relative to admin */
-	include_once 'config.php';
-	include_once 'lib/lib_db.php';
-	include_once 'lib/lib_misc.php';
-	include_once 'lib/lib_auth.php';
+	include_once '../config.php';
+	include_once '../lib/lib_db.php';
+	include_once '../lib/lib_auth.php';
 	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');	/* Note : If you use this file, any global vars now have the prefix pixie, so what was $s is now $pixie_s */
 ?>
 // jQuery.noConflict(); // Using this causes some sort of bug but it should not

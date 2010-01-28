@@ -39,6 +39,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 	$theme_swfobject_google_apis = NULL;
 	$theme_swfobject_google_apis_location = NULL;
 	/* Admin index */
+	$GLOBALS['pixie_user'] = NULL;
 	$messageok  = NULL;
 	$login_forgotten  = NULL;
 	$do  = NULL;
