@@ -25,11 +25,11 @@ if ($GLOBALS['pixie_user']) {
 				if ($website) {
 
 				if (preg_match('/localhost/i', $website)) {	/* This prevents an error if you are developing locally */
-				if (preg_match('/127.0.0./', $website)) {	/* This is just for fun! */
-					    echo 'hello!';
-				}
+				} else {
+				if (preg_match('/127.0.0./', $website)) {	/* This prevents an error if you are developing locally */
 				} else {
 				if (!$check->validateURL($website, $lang['profile_web_error'] . ' |')) { $scream[] = 'website'; }
+				}
 				}
 
 				}

@@ -20,11 +20,11 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 				if ($url) {
 
 				if (preg_match('/localhost/i', $url)) {	/* This prevents an error if you are developing locally */
-				if (preg_match('/127.0.0./', $url)) {	/* This is just for fun! */
-					    echo 'hello!';
-				}
+				} else {
+				if (preg_match('/127.0.0./', $url)) {	/* This prevents an error if you are developing locally */
 				} else {
 				if (!$check->validateURL($url, $lang['site_url_error'] . ' |')) { $scream[] = 'url'; }
+				}
 				}
 
 				}

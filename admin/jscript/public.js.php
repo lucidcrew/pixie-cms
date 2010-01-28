@@ -6,7 +6,10 @@
 // Title: Public JavaScript                                        //
 //*****************************************************************//
 header('Content-Type: text/javascript');
-if (!defined('DIRECT_ACCESS')) { exit(); }
+if (defined('DIRECT_ACCESS')) { require_once '../lib/lib_misc.php'; nukeProofSuit(); exit(); }
+define('DIRECT_ACCESS', 1);
+require_once '../lib/lib_misc.php';										/* perform basic sanity checks */
+	bombShelter();                  									/* check URL size */
 
 	error_reporting(0);
 
