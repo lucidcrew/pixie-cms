@@ -454,15 +454,15 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 			$pixie_sitename = htmlentities($pixie_sitename);	// Helps prevents a bug where a ' in a string like : dave's site, errors out the admin interface
 
 			$check = new Validator ();
-			if (!$pixie_sitename) { $error .= $lang['site_name_error'] . ' |'; $scream[] = 'name'; }
-			if (!$pixie_url) { $error .= $lang['site_url_error'] . ' |' ; $scream[] = 'url'; }
+			if (!$pixie_sitename) { $error .= $lang['site_name_error'] . ' '; $scream[] = 'name'; }
+			if (!$pixie_url) { $error .= $lang['site_url_error'] . ' ' ; $scream[] = 'url'; }
 
 
 				if (preg_match('/localhost/i', $pixie_url)) {	/* This prevents an error if you are developing locally */
 				} else {
 				if (preg_match('/127.0.0./', $pixie_url)) {	/* This prevents an error if you are developing locally */
 				} else {
-				if (!$check->validateURL($pixie_url, $lang['site_url_error'] . ' |')) { $scream[] = 'url'; }
+				if (!$check->validateURL($pixie_url, $lang['site_url_error'] . ' ')) { $scream[] = 'url'; }
 				}
 				}
 
@@ -698,7 +698,7 @@ RewriteRule ^(.*)$ index.php [F,L]
 			$check_result_number = 0;
 			// Boy, this needed cleaning up...
 
-			if ($pixie_name == "") { $error1 .= $lang['user_realname_missing'] . ' |'; $scream[] = 'realname';
+			if ($pixie_name == "") { $error1 .= $lang['user_realname_missing'] . ' '; $scream[] = 'realname';
 			if ($check->foundErrors()) { $error1 .= $check->listErrors('x'); }
 			$err = explode('|', $error1);
 			$error = $err[0];
@@ -710,7 +710,7 @@ RewriteRule ^(.*)$ index.php [F,L]
 
 			$pixie_username = str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($pixie_username))); // This ensures no spaces in the username
 
-			if ($pixie_username == "") { $error1 .= $lang['user_name_missing'] . ' |'; $scream[] = 'uname';
+			if ($pixie_username == "") { $error1 .= $lang['user_name_missing'] . ' '; $scream[] = 'uname';
 			if ($check->foundErrors()) { $error1 .= $check->listErrors('x'); }
 			$err = explode('|',$error1);
 			$error = $err[0];
@@ -720,8 +720,8 @@ RewriteRule ^(.*)$ index.php [F,L]
 			$check_result_number = $check_result_number + 1;
 					}
 
-			if (!$check->validateEmail($pixie_email,$lang['user_email_error'] . ' |')) { $scream[] = 'email';
-			if ($pixie_email == "") { $error1 .= $lang['user_email_error'] . ' |'; $scream[] = 'email';
+			if (!$check->validateEmail($pixie_email,$lang['user_email_error'] . ' ')) { $scream[] = 'email';
+			if ($pixie_email == "") { $error1 .= $lang['user_email_error'] . ' '; $scream[] = 'email';
 			if ($check->foundErrors()) { $error1 .= $check->listErrors('x'); }
 			$err = explode('|', $error1);
 			$error = $err[0];
@@ -733,7 +733,7 @@ RewriteRule ^(.*)$ index.php [F,L]
 			$check_result_number = $check_result_number + 1;
 					}
 
-			if ($pixie_password == "") { $error1 .= $lang['user_password_missing'] . ' |'; $scream[] = 'realname';
+			if ($pixie_password == "") { $error1 .= $lang['user_password_missing'] . ' '; $scream[] = 'realname';
 			if ($check->foundErrors()) { $error1 .= $check->listErrors('x'); }
 			$err = explode('|', $error1);
 			$error = $err[0];

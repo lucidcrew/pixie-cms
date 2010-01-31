@@ -926,7 +926,7 @@ jQuery(\"#mycarousel li\").hover(
 			}
 			
 			if ($timey && !checkdate($timey[1], $timey[0], $timey[2])) {
-				$error .= $lang['date_error'] . ' |';
+				$error .= $lang['date_error'] . ' ';
 			} else {
 				$minute = substr($timey[3], 2, 4);
 				$hour = substr($timey[3], 0, 2);
@@ -949,7 +949,7 @@ jQuery(\"#mycarousel li\").hover(
     for ($j = 0; $j<mysql_num_rows($r2); $j++) {
 			$check = new Validator ();
 			if ($at[$j] == 'timestamp' && !array_key_exists("$an[$j]", $_POST)) {
-				$check->validateNumber($unixtime, 'invalid time' . ' |');
+				$check->validateNumber($unixtime, 'invalid time' . ' ');
 				$sql .= "" . $an[$j] . " = '" . returnSQLtimestamp($unixtime) . "',";
 			} else if ((last_word($an[$j]) == 'id') && (!$had_id)) {
 				$had_id = 1;
@@ -1032,9 +1032,9 @@ jQuery(\"#mycarousel li\").hover(
 				if ($at[$j] == 'varchar') { sterilise(strip_tags($value)); }
 				if (($an[$j] == 'url') || ($an[$j] == 'website')) {
 					if ($nullf[0] == 'not_null') { 
-						$check->validateURL($value, $lang['url_error'] . ' |' );
+						$check->validateURL($value, $lang['url_error'] . ' ' );
 					} else if ($value != "") { 
-						$check->validateURL($value, $lang['url_error'] . ' |' );
+						$check->validateURL($value, $lang['url_error'] . ' ' );
 					}	
 				}
 	     
@@ -1051,12 +1051,12 @@ jQuery(\"#mycarousel li\").hover(
 				
 				if ($an[$j] == 'email') {
 					if ($nullf[0] == 'not_null') {
-						$check->validateEmail($value, $lang['email_error'] . ' |');
+						$check->validateEmail($value, $lang['email_error'] . ' ');
 					} else if ($value != "") {
-						$check->validateEmail($value, $lang['email_error'] . ' |');
+						$check->validateEmail($value, $lang['email_error'] . ' ');
 					}
 				}
-				if (($nullf[0] == 'not_null') && ($value == "")) { $error .= ucwords($an[$j]) . " " . $lang['is_required'] . ' |'; }
+				if (($nullf[0] == 'not_null') && ($value == "")) { $error .= ucwords($an[$j]) . " " . $lang['is_required'] . ' '; }
 				
 				// if empty int set to 0
 				if( $at[$j] == 'int' ) $value = ($value?$value:0);

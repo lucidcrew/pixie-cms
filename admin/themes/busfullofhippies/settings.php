@@ -9,7 +9,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 // what is the name of your theme?
 $theme_name = 'Bus Full Of Hippies';
 
-// Who creted the theme?
+// Who created the theme?
 $theme_creator = 'John Oxton';
 
 // What website would your like your theme to link to?

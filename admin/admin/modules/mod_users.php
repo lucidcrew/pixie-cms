@@ -41,10 +41,10 @@ if ($user_edit) {
 	$table_name = 'pixie_users';
 	$check = new Validator ();
 	
-	if ($uname == "") { $error .= $lang['user_name_missing'] . ' |'; $scream[] = 'uname'; }
+	if ($uname == "") { $error .= $lang['user_name_missing'] . ' '; $scream[] = 'uname'; }
 	$uname = str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($uname)));
-	if ($realname == "") { $error .= $lang['user_realname_missing'] . ' |'; $scream[] = "realname"; }
-	if (!$check->validateEmail($email, $lang['user_email_error'] . ' |')) { $scream[] = 'email'; }
+	if ($realname == "") { $error .= $lang['user_realname_missing'] . ' '; $scream[] = "realname"; }
+	if (!$check->validateEmail($email, $lang['user_email_error'] . ' ')) { $scream[] = 'email'; }
 	if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
 
 	if (!$error) {
@@ -86,10 +86,10 @@ if ($user_new) {
 	$table_name = 'pixie_users';
 	$check = new Validator ();
 
-	if ($uname == "") { $error .= $lang['user_name_missing'] . ' |'; $scream[] = 'uname'; }
+	if ($uname == "") { $error .= $lang['user_name_missing'] . ' '; $scream[] = 'uname'; }
 	$uname = str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($uname)));
-	if ($realname == "") { $error .= $lang['user_realname_missing'] . ' |'; $scream[] = 'realname'; }
-	if (!$check->validateEmail($email,$lang['user_email_error'] . ' |')) { $scream[] = 'email'; }
+	if ($realname == "") { $error .= $lang['user_realname_missing'] . ' '; $scream[] = 'realname'; }
+	if (!$check->validateEmail($email,$lang['user_email_error'] . ' ')) { $scream[] = 'email'; }
 	if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
 
 	if (!$error) {

@@ -18,9 +18,9 @@ if ($GLOBALS['pixie_user']) {
 				$table_name = 'pixie_users';
 				$check = new Validator ();
 
-				if ($realname == "") { $error .= $lang['profile_name_error'] . ' |'; $scream[] = 'realname'; }
+				if ($realname == "") { $error .= $lang['profile_name_error'] . ' '; $scream[] = 'realname'; }
 
-				if (!$check->validateEmail($email, $lang['profile_email_error'] . ' |')) { $scream[] = 'email'; }
+				if (!$check->validateEmail($email, $lang['profile_email_error'] . ' ')) { $scream[] = 'email'; }
 				
 				if ($website) {
 
@@ -28,22 +28,22 @@ if ($GLOBALS['pixie_user']) {
 				} else {
 				if (preg_match('/127.0.0./', $website)) {	/* This prevents an error if you are developing locally */
 				} else {
-				if (!$check->validateURL($website, $lang['profile_web_error'] . ' |')) { $scream[] = 'website'; }
+				if (!$check->validateURL($website, $lang['profile_web_error'] . ' ')) { $scream[] = 'website'; }
 				}
 				}
 
 				}
 
 				if ($link_1) {
-					if (!$check->validateURL($link_1, $lang['profile_web_error'] . ' |')) { $scream[] = 'link_1'; }
+					if (!$check->validateURL($link_1, $lang['profile_web_error'] . ' ')) { $scream[] = 'link_1'; }
 				}
 
 				if ($link_2) {
-					if (!$check->validateURL($link_2, $lang['profile_web_error'] . ' |')) { $scream[] = 'link_2'; }
+					if (!$check->validateURL($link_2, $lang['profile_web_error'] . ' ')) { $scream[] = 'link_2'; }
 				}
 
 				if ($link_3) {
-					if (!$check->validateURL($link_3, $lang['profile_web_error'] . ' |')) { $scream[] = 'link_3';	}			
+					if (!$check->validateURL($link_3, $lang['profile_web_error'] . ' ')) { $scream[] = 'link_3';	}			
 				}
 				
 				if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
@@ -96,11 +96,11 @@ if ($GLOBALS['pixie_user']) {
 			$r = safe_field('user_name', 'pixie_users', "user_name = '$user_name'and 
 			pass = password(lower('" . doSlash($current_pass) . "')) and privs >= 0");
 			
-			if (!$r) { $error .= $lang['profile_password_invalid'] . ' |'; $scream[] = 'current'; }
-			if (!$new_password) { $error .= $lang['profile_password_missing'] . ' |'; $scream[] = 'new'; }
-			if (!$confirm_password) { $error .= $lang['profile_password_missing'] . ' |'; $scream[] = 'confirm'; } 
-			if (strlen($new_password) < 6) { $error .= $lang['profile_password_invalid_length'] . ' |'; $scream[] = 'new'; $scream[] = 'confirm'; } 
-			if ($new_password != $confirm_password) { $error .= $lang['profile_password_match_error'] . ' |'; $scream[] = 'new'; $scream[] = 'confirm'; }
+			if (!$r) { $error .= $lang['profile_password_invalid'] . ' '; $scream[] = 'current'; }
+			if (!$new_password) { $error .= $lang['profile_password_missing'] . ' '; $scream[] = 'new'; }
+			if (!$confirm_password) { $error .= $lang['profile_password_missing'] . ' '; $scream[] = 'confirm'; } 
+			if (strlen($new_password) < 6) { $error .= $lang['profile_password_invalid_length'] . ' '; $scream[] = 'new'; $scream[] = 'confirm'; } 
+			if ($new_password != $confirm_password) { $error .= $lang['profile_password_match_error'] . ' '; $scream[] = 'new'; $scream[] = 'confirm'; }
 
 			if (!$error) {
 				$rs = safe_update('pixie_users', "pass = password(lower('$new_password'))","user_name='$user_name'");

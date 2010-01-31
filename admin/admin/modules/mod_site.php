@@ -14,8 +14,8 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 		if ($settings_edit) {
 			
 			$check = new Validator ();
-			if (!$sitename) { $error .= $lang['site_name_error'] . ' |'; $scream[] = 'name'; }
-			if (!$url) { $error .= $lang['site_url_error'] . ' |'; $scream[] = 'url'; }
+			if (!$sitename) { $error .= $lang['site_name_error'] . ' '; $scream[] = 'name'; }
+			if (!$url) { $error .= $lang['site_url_error'] . ' '; $scream[] = 'url'; }
 
 				if ($url) {
 
@@ -23,7 +23,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 				} else {
 				if (preg_match('/127.0.0./', $url)) {	/* This prevents an error if you are developing locally */
 				} else {
-				if (!$check->validateURL($url, $lang['site_url_error'] . ' |')) { $scream[] = 'url'; }
+				if (!$check->validateURL($url, $lang['site_url_error'] . ' ')) { $scream[] = 'url'; }
 				}
 				}
 

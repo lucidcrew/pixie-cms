@@ -83,24 +83,26 @@ switch ($do) {
 				$sname = sterilise($name);
 				$semail = sterilise($email);
 
-				$duplicate = 0;
-				$last_comment_last_number = getThing($query = 'SELECT * FROM pixie_module_comments ORDER BY comments_id DESC');
-				$last_comment = getThing($query = "SELECT comment FROM pixie_module_comments WHERE comments_id='$last_comment_last_number'");
-
-  				if (strcasecmp($comment, $last_comment) === 0) { $duplicate = 1; }
-
 				$scream = array();
-				if (!$name) { $error .= $lang['comment_name_error'] . ' |'; $scream[] = 'name'; }
-				if (!$comment) { $error .= $lang['comment_comment_error'] . ' |'; $scream[] = 'comment'; }
+				if (!$name) { $error .= $lang['comment_name_error'] . ' '; $scream[] = 'name'; }
+				if (!$comment) { $error .= $lang['comment_comment_error'] . ' '; $scream[] = 'comment'; }
 				$check = new Validator ();
-				if (!$check->validateEmail($email, $lang['comment_email_error'] . ' |')) { $scream[] = 'email'; }
+				if (!$check->validateEmail($email, $lang['comment_email_error'] . ' ')) { $scream[] = 'email'; }
 
 				if (preg_match('/localhost/i', $prefs['site_url'])) {	/* This prevents an error if you are developing locally */
 				} else {
 				if (preg_match('/127.0.0./', $prefs['site_url'])) {	/* This prevents an error if you are developing locally */
 				} else {
-				if ($web) { if (!$check->validateURL($web, $lang['comment_web_error'] . ' |')) { $scream[] = 'web'; } }
+				if ($web) { if (!$check->validateURL($web, $lang['comment_web_error'] . ' ')) { $scream[] = 'web'; } }
 				}
+				}
+
+				if ($comment !== NULL) {
+				$duplicate = 0;
+				$last_comment_last_number = getThing($query = 'SELECT * FROM pixie_module_comments ORDER BY comments_id DESC');
+				$last_comment = getThing($query = "SELECT comment FROM pixie_module_comments WHERE comments_id='$last_comment_last_number'");
+
+  				if (strcasecmp($comment, $last_comment) === 0) { $duplicate = 1; }
 				}
 
 				if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
