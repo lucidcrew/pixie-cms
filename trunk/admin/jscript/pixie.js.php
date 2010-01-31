@@ -58,30 +58,53 @@ jQuery(document).ready(function(){
 	
 	jQuery(".image_preview select").bind("change",preview);
 
-	<?php if ($pixie_s == 'publish') {
 
-	/* The tablesorter is back!!! */
+/* A function to apply the table sorter */
+function applyTablesort() {
 
-	$tablesorter_init = "
-	jQuery(function() { 
+    jQuery(function() {
+
 	jQuery.getScript('jscript/tablesorter.js', function(){
-	// call the tablesorter plugin 
-	jQuery('table').tablesorter({ 
-        // enable debug mode 
-        debug: false 
-	}); 
-
+	jQuery('.tbl').tablesorter({ /* Call the tablesorter plugin */
+        debug: false /* Enable debug mode */
+	});
 	});
 
 	jQuery(document).ready(function() { 
-	jQuery('.tbl_heading').hover(function(index) {
+	jQuery('.tbl_heading').hover(function(index) { /* Ensure we get a pointer cursor on hover to indicate you can sort the table */
 	jQuery(this).css('cursor','pointer'); }, function() {
 	jQuery(this).css('cursor','auto');
 	});
 	});
 
-	});
+    });  /* End jQuery function */
 
+
+};  /* End function applyTablesort */
+
+
+/* A function to load tablesorter.js via ajax and then call the applyTablesort function to use it  */
+function fetchTablesorterJs() {
+
+    jQuery(function() {
+
+	jQuery.ajaxSetup({async: false}); /* Set jQuery to load the scripts synchronously */
+	    jQuery.getScript('jscript/tablesorter.js', function(){ /* Load tablesorter.js via ajax, using a callback */
+		    jQuery.ajaxSetup({async: true});  /* Set jQuery back to load the scripts asynchronously (The default.) */
+			    if (jQuery('.tbl').length >= 1) { applyTablesort(); /* Apply the tablesorter by calling it's function */ }
+	    });  /* End load tablesorter.js function */
+
+    });  /* End jQuery function */
+
+
+};  /* End function fetchTablesorterJs */
+
+	<?php if ($pixie_s == 'publish') {
+
+	/* The tablesorter is back!!! */
+
+	$tablesorter_init = "
+	fetchTablesorterJs();
 
 	";
 
@@ -94,25 +117,7 @@ jQuery(document).ready(function(){
 	/* The tablesorter is back!!! */
 
 	$tablesorter_init = "
-	jQuery(function() { 
-	jQuery.getScript('jscript/tablesorter.js', function(){
-	// call the tablesorter plugin 
-	jQuery('.tbl').tablesorter({ 
-        // enable debug mode 
-        debug: false 
-	}); 
-
-	});
-
-	jQuery(document).ready(function() { 
-	jQuery('.tbl_heading').hover(function(index) {
-	jQuery(this).css('cursor','pointer'); }, function() {
-	jQuery(this).css('cursor','auto');
-	});
-	});
-
-	});
-
+	fetchTablesorterJs();
 
 	";
 
@@ -133,7 +138,7 @@ function preview() {
 	var check = jQuery(this).parent().find(".thickbox").html();
 
 	if (image != "-") {
-		jQuery(this).parent().find(".more_upload").prepend("<a href=\"../files/images/"+image+"\" onclick=\"\" class=\"thickbox\">preview</a> ");
+		jQuery(this).parent().find(".more_upload").prepend("<a href=\"../files/images/" + image + "\" onclick=\"\" class=\"thickbox\">preview</a> ");
 		tb_init('a.thickbox');
 	} else {
 		jQuery(this).parent().find(".thickbox").hide();
@@ -148,27 +153,27 @@ var tfield = "";
 
 function upswitch(field) {
 	jQuery(".thickbox").remove();
-	temp = jQuery("#"+field).parent().html();
+	temp = jQuery("#" + field).parent().html();
 	tfield = field;
-	jQuery("#"+field).parent().find(".more_upload").replaceWith("<span class='more_upload_start'><a href='#' onclick='cancel(); return false;' title='Cancel'>Cancel</a></span>");
+	jQuery("#" + field).parent().find(".more_upload").replaceWith("<span class='more_upload_start'><a href='#' onclick='cancel(); return false;' title='Cancel'>Cancel</a></span>");
 	jQuery(".more_upload").hide();
-	jQuery("#"+field).replaceWith("<form action=\"admin/modules/ajax_fileupload.php\" method=\"post\" id=\""+field+"\" class=\"inline_form\" enctype=\"multipart/form-data\" onsubmit=\"return AIM.submit(this, {'onStart' : startCallback, 'onComplete' : completeCallback})\"><input type=\"file\" name=\"upload[]\" id=\"upload\" size=\"18\" /><input type=\"hidden\" name=\"field\" value=\""+field+"\"><input type=\"submit\" name=\"submit_upload\" class=\"submit_upload\" value=\"Upload\" /><input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"10240\"></form>");
+	jQuery("#" + field).replaceWith("<form action=\"admin/modules/ajax_fileupload.php\" method=\"post\" id=\""+field+"\" class=\"inline_form\" enctype=\"multipart/form-data\" onsubmit=\"return AIM.submit(this, {'onStart' : startCallback, 'onComplete' : completeCallback})\"><input type=\"file\" name=\"upload[]\" id=\"upload\" size=\"18\" /><input type=\"hidden\" name=\"field\" value=\""+field+"\"><input type=\"submit\" name=\"submit_upload\" class=\"submit_upload\" value=\"Upload\" /><input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"10240\"></form>");
 	jQuery(".form_submit").attr("disabled", "true");
 
 }
 
 function cancel() {
-	jQuery("#"+tfield).replaceWith(temp);
+	jQuery("#" + tfield).replaceWith(temp);
 	jQuery(".more_upload").show();
 	jQuery(".form_submit").removeAttr("disabled");
-	jQuery("#"+tfield).parent().find(".more_upload_start").replaceWith("");
-	jQuery("#"+tfield).parent().find("input").replaceWith("");
+	jQuery("#" + tfield).parent().find(".more_upload_start").replaceWith("");
+	jQuery("#" + tfield).parent().find("input").replaceWith("");
 	jQuery(".image_preview select").bind("change",preview);
 }
 
 function startCallback() {
 	jQuery(".submit_upload").attr("disabled", "true");
-	jQuery("#"+tfield).parent().find(".more_upload_start").replaceWith("<img src='jscript/tiny_mce/themes/advanced/skins/default/img/progress.gif' alt='loading' width='15' height='15' id='upload_wait'/>");
+	jQuery("#" + tfield).parent().find(".more_upload_start").replaceWith("<img src='admin/theme/images/loading.gif' alt='loading' width='15' height='15' id='upload_wait'/>");
 	return true;
 }
 
@@ -186,12 +191,12 @@ function completeCallback(response) {
 		if (jQuery.browser.msie) {
 // Should use jQuery.support instead of jQuery.browser
 			jQuery.post("admin/modules/ajax_fileupload.php",{ form: tfield, ie: "true" }, function(data){
-				jQuery("#"+tfield).replaceWith(data);
+				jQuery("#" + tfield).replaceWith(data);
 				jQuery(".more_upload").show();
 			});
 		} else {
 			jQuery.post("admin/modules/ajax_fileupload.php",{ form: tfield }, function(data){
-				jQuery("#"+tfield).replaceWith(data);
+				jQuery("#" + tfield).replaceWith(data);
 				jQuery(".more_upload").show();
 			});	
 		}
