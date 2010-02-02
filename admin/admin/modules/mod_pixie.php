@@ -41,14 +41,21 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 								<div class=\"form_label\"><label for=\"langu\">" . $lang['form_pixie_language'] . " <span class=\"form_required\">" . $lang['form_required'] . "</span></label><span class=\"form_help\">" . $lang['form_help_pixie_language'] . "</span></div>
 								<div class=\"form_item_drop\"><select class=\"form_select\" name=\"langu\" id=\"langu\">";
 								// list all languages here
-								if ($language == 'en-gb') { echo "<option selected=\"selected\" value=\"en-gb\">English (GB)</option>"; } else { echo "<option value=\"en-gb\">English (GB)</option>"; }
-								if ($language == 'fi-fi') { echo "<option selected=\"selected\" value=\"fi-fi\">Finnish</option>"; } else { echo "<option value=\"fi-fi\">Finnish</option>"; }
-								if ($language == 'fr') { echo "<option selected=\"selected\" value=\"fr\">French</option>"; } else { echo "<option value=\"fr\">French</option>"; }
-								if ($language == 'it') { echo "<option selected=\"selected\" value=\"it\">Italian</option>"; } else { echo "<option value=\"it\">Italian</option>"; }
-								if ($language == 'pl') { echo "<option selected=\"selected\" value=\"pl\">Polish</option>"; } else { echo "<option value=\"pl\">Polish</option>"; }
-								if ($language == 'pt') { echo "<option selected=\"selected\" value=\"pt\">Portuguese</option>"; } else { echo "<option value=\"pt\">Portuguese</option>"; }
-								if ($language == 'es-cl') { echo "<option selected=\"selected\" value=\"es-cl\">Spanish</option>"; } else { echo "<option value=\"es-cl\">Spanish</option>"; }
-								if ($language == 'se-sv') { echo "<option selected=\"selected\" value=\"se-sv\">Swedish</option>"; } else { echo "<option value=\"se-sv\">Swedish</option>"; }
+								if ($language == 'cz') { echo "<option selected=\"selected\" value=\"cz\">Čeština</option>"; } else { echo "<option value=\"cz\">Čeština</option>"; } /* Czech */
+								if ($language == 'de') { echo "<option selected=\"selected\" value=\"de\">Deutsch</option>"; } else { echo "<option value=\"de\">Deutsch</option>"; } /* German */
+								if ($language == 'dutch-nl') { echo "<option selected=\"selected\" value=\"dutch-nl\">Nederlandse</option>"; } else { echo "<option value=\"dutch-nl\">Nederlandse</option>"; } /* Dutch */
+								if ($language == 'en-gb') { echo "<option selected=\"selected\" value=\"en-gb\">English (GB)</option>"; } else { echo "<option value=\"en-gb\">English (GB)</option>"; } /* English (GB) */
+								if ($language == 'es-cl') { echo "<option selected=\"selected\" value=\"es-cl\">Espanyol (català)</option>"; } else { echo "<option value=\"es-cl\">Espanyol (català)</option>"; } /* Spanish (Catalan) */
+								if ($language == 'es-es') { echo "<option selected=\"selected\" value=\"es-es\">Español</option>"; } else { echo "<option value=\"es-es\">Español</option>"; } /* Spanish */
+								if ($language == 'es-gl') { echo "<option selected=\"selected\" value=\"es-gl\">Español (Galego)</option>"; } else { echo "<option value=\"es-gl\">Español (Galego)</option>"; } /* Spanish (Galician) */
+								if ($language == 'fi-fi') { echo "<option selected=\"selected\" value=\"fi-fi\">Suomen</option>"; } else { echo "<option value=\"fi-fi\">Suomen</option>"; } /* Finnish */
+								if ($language == 'fr') { echo "<option selected=\"selected\" value=\"fr\">Français</option>"; } else { echo "<option value=\"fr\">Français</option>"; } /* French */
+								if ($language == 'it') { echo "<option selected=\"selected\" value=\"it\">Italiano</option>"; } else { echo "<option value=\"it\">Italiano</option>"; } /* Italian */
+								if ($language == 'lv-lv') { echo "<option selected=\"selected\" value=\"lv-lv\">Latviešu</option>"; } else { echo "<option value=\"lv-lv\">Latviešu</option>"; } /* Latvian */
+								if ($language == 'pl') { echo "<option selected=\"selected\" value=\"pl\">Polskie</option>"; } else { echo "<option value=\"pl\">Polskie</option>"; } /* Polish */
+								if ($language == 'pt') { echo "<option selected=\"selected\" value=\"pt\">Português</option>"; } else { echo "<option value=\"pt\">Português</option>"; } /* Portuguese */
+								if ($language == 'ru') { echo "<option selected=\"selected\" value=\"ru\">Русский</option>"; } else { echo "<option value=\"ru\">Русский</option>"; } /* Russian */
+								if ($language == 'se-sv') { echo "<option selected=\"selected\" value=\"se-sv\">Svenska</option>"; } else { echo "<option value=\"se-sv\">Svenska</option>"; } /* Swedish */
 						echo "</select></div>
 							</div>
 							<div class=\"form_row\">
