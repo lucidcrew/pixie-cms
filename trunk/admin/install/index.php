@@ -138,10 +138,8 @@
 					    }
 
 											     }
-
 					// write data to config file
-					if (is_writable('../config.php')) {
-						$fh = fopen('../config.php', 'w');
+					if ($fh = fopen('../config.php', 'a')) {
 						$data = 
 						"<?php
 if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
