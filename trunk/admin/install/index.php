@@ -7,16 +7,16 @@
 //*****************************************************************//
 
 	$debug = 'no';	// Set this to yes to debug and see all the global vars coming into the file
-			// To find error messages, search the page for php_errormsg if you turn this debug feature on
+					// To find error messages, search the page for php_errormsg if you turn this debug feature on
 
 	error_reporting(0);	// Turns off error reporting
 
 	if ($debug == 'yes') {
-	error_reporting(E_ALL & ~E_DEPRECATED);
-	$show_vars = get_defined_vars();
-	echo '<p><pre class="showvars">The _REQUEST array contains : ';
-	htmlspecialchars(print_r($show_vars["_REQUEST"]));
-	echo '</pre></p>';
+		error_reporting(E_ALL & ~E_DEPRECATED);
+		$show_vars = get_defined_vars();
+		echo '<p><pre class="showvars">The _REQUEST array contains : ';
+		htmlspecialchars(print_r($show_vars["_REQUEST"]));
+		echo '</pre></p>';
 	}
 
 	// Variables that need to be defined
@@ -54,17 +54,17 @@
 	// php uses this setting in scripts to get the correct server time. Not user local time.
 	// It must be set to not bog php down with errors.
 
-    if (strnatcmp(phpversion(),'5.1.0') >= 0) 
-    { 
-        	date_default_timezone_set("$pixie_server_timezone");	/* If php 5.10 set php server time zone */
-    }
+	if (strnatcmp(phpversion(),'5.1.0') >= 0) 
+	{
+		date_default_timezone_set("$pixie_server_timezone");	/* If php 5.10 set php server time zone */
+	}
 
 	// globalSec('Pixie Installer index.php', 1);
 
 	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie'); // access to form vars if register globals is off
 
 	switch($pixie_step) {
-		
+
 		// step 2
 		// create the config file, chmod the correct directories and install basic db stucture 
 		case 2 :
@@ -72,22 +72,22 @@
 			if ($pixie_prefix == 'pixie_') { $pixie_prefix = 'pixie__'; }		// Prevent pixie_ being used as the prefix, causes bug
 
 			if ($pixie_dropolddata == 'Yes') {
-			if ($pixie_reinstall == 'Yes') {
-			$pixie_step = 1;
-			$error = 'Please choose either fresh start or re-install. You cannot select both.';
-			break;
-			      }
+				if ($pixie_reinstall == 'Yes') {
+					$pixie_step = 1;
+					$error = 'Please choose either fresh start or re-install. You cannot select both.';
+					break;
+				}
 			}
 
 			if ($pixie_reinstall == 'Yes') {
-			if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important to set this first, so that we can use the new config.php */
-			include '../config.php';           		// load configuration
-			$pixie_database  =  $pixieconfig['db'];
-			$pixie_username  =  $pixieconfig['user'];
-			$pixie_password  =  $pixieconfig['pass'];
-			$pixie_host  =  $pixieconfig['host'];
-			$pixie_prefix  =  $pixieconfig['table_prefix'];
-			$pixie_server_timezone  =  $pixieconfig['server_timezone'];
+				if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important to set this first, so that we can use the new config.php */
+				include '../config.php'; // load configuration
+				$pixie_database  =  $pixieconfig['db'];
+				$pixie_username  =  $pixieconfig['user'];
+				$pixie_password  =  $pixieconfig['pass'];
+				$pixie_host  =  $pixieconfig['host'];
+				$pixie_prefix  =  $pixieconfig['table_prefix'];
+				$pixie_server_timezone  =  $pixieconfig['server_timezone'];
 			}
 
 			$conn = mysql_connect($pixie_host, $pixie_username, $pixie_password);
@@ -108,36 +108,36 @@
 					if ($pixie_dropolddata == 'Yes') { chmod('../config.php', 0777); $do_the_drop = 'Yes'; } // chmod doesn't work here but it might for you!
 					if ($pixie_reinstall == 'Yes') { chmod('../config.php', 0777); $do_the_drop = 'Yes'; } // chmod doesn't work here but it might for you!
 
-							  if ($do_the_drop == 'Yes') {
-					    /* This could be a function. It drops all tables from a database */
-					    /* Do not add this to lib_db because it is a security risk! */
-							  /* query all tables */
-							  $sql = "SHOW TABLES FROM $pixie_database";
-							  if($result = mysql_query($sql)){
-							  /* add table name to array */
-							  while($row = mysql_fetch_row($result)){
-							  $found_tables[]=$row[0];
+					if ($do_the_drop == 'Yes') {
+						/* This could be a function. It drops all tables from a database */
+						/* Do not add this to lib_db because it is a security risk! */
+						/* query all tables */
+						$sql = "SHOW TABLES FROM $pixie_database";
+						if ($result = mysql_query($sql)) {
+							/* add table name to array */
+							while ($row = mysql_fetch_row($result)){
+								$found_tables[]=$row[0];
 							}
-						      }
-						else{
-			$pixie_step = 1;
-			$error = 'Error, could not the list tables. MySQL Error: ' . mysql_error();
-			break;
-					    }
-							  /* loop through and drop each table */
-							  foreach($found_tables as $table_name){
-							  $sql = "DROP TABLE $pixie_database.$table_name";
-							  if($result = mysql_query($sql)){
-							  // We could echo a sucess message here if we wanted
+						}
+						else {
+							$pixie_step = 1;
+							$error = 'Error, could not the list tables. MySQL Error: ' . mysql_error();
+							break;
+						}
+						/* loop through and drop each table */
+						foreach ($found_tables as $table_name) {
+							$sql = "DROP TABLE $pixie_database.$table_name";
+							if ($result = mysql_query($sql)){
+								// We could echo a sucess message here if we wanted
 							}
-						  else{
-			$pixie_step = 1;
-			$error = 'Error deleting $table_name. MySQL Error: ' . mysql_error() . "";
-			break;
-					      }
-					    }
+							else {
+								$pixie_step = 1;
+								$error = 'Error deleting $table_name. MySQL Error: ' . mysql_error() . "";
+								break;
+							}
+						}
 
-											     }
+					}
 					// write data to config file
 					if ($fh = fopen('../config.php', 'a')) {
 						$data = 
@@ -171,9 +171,9 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 						if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important to set this first, so that we can use the new config.php */
 						include '../config.php';
 						include '../lib/lib_db.php';
-						
+
 						// install the base layer sql
-						
+
 						// pixie_bad_behaviour table
 						$sql = "						
 						CREATE TABLE IF NOT EXISTS `".$pixie_prefix."pixie_bad_behavior` (
@@ -192,7 +192,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 							KEY `user_agent` (`user_agent`(10))
 						) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 						";
-						
+
 						$ok = safe_query($sql);
 						
 						// pixie_core table
@@ -217,68 +217,68 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 							PRIMARY KEY  (`page_id`)
 						) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0 AUTO_INCREMENT=3 ;
 						";
-						
+
 						$ok = safe_query($sql1);
-						
+
 						// pixie_core data for 404 and comments plugin
 						$sql2 = "
 							INSERT INTO `".$pixie_prefix."pixie_core` (`page_id`, `page_type`, `page_name`, `page_display_name`, `page_description`, `page_blocks`, `page_content`, `page_views`, `page_parent`, `privs`, `publish`, `public`, `in_navigation`, `page_order`, `searchable`, `last_modified`) VALUES
 							(1, 'static', '404', 'Error 404', 'Page not found.', '', '<p>The page you are looking for cannot be found.</p>', 11, '', 2, 'yes', 'yes', 'no', 0, 'no', '2008-01-01 00:00:11'),
 							(2, 'plugin', 'comments', 'Comments', 'This plugin enables commenting on dynamic pages.', '', '', 1, '', 2, 'yes', 'yes', 'no', 0, 'no', '2008-01-01 00:00:11');	
 						";
-						
+
 						$ok = safe_query($sql2);
-						
+
 						// pixie_dynamic_posts table
 						$sql3 = "
 						CREATE TABLE IF NOT EXISTS `".$pixie_prefix."pixie_dynamic_posts` (
-					  		`post_id` int(11) NOT NULL auto_increment,
-					  		`page_id` int(11) NOT NULL default '0',
-					  		`posted` timestamp NOT NULL default '0000-00-00 00:00:00',
-					  		`title` varchar(235) collate utf8_unicode_ci NOT NULL default '',
-					  		`content` longtext collate utf8_unicode_ci NOT NULL,
-					  		`tags` varchar(200) collate utf8_unicode_ci NOT NULL default '',
-					  		`public` set('yes','no') collate utf8_unicode_ci NOT NULL default 'no',
-					  		`comments` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',
-					  		`author` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-					  		`last_modified` timestamp NULL default CURRENT_TIMESTAMP,
-					  		`post_views` int(12) default NULL,
-					  		`post_slug` varchar(255) collate utf8_unicode_ci NOT NULL default '',
-					  		PRIMARY KEY  (`post_id`),
-					  		UNIQUE KEY `id` (`post_id`)
+							`post_id` int(11) NOT NULL auto_increment,
+							`page_id` int(11) NOT NULL default '0',
+							`posted` timestamp NOT NULL default '0000-00-00 00:00:00',
+							`title` varchar(235) collate utf8_unicode_ci NOT NULL default '',
+							`content` longtext collate utf8_unicode_ci NOT NULL,
+							`tags` varchar(200) collate utf8_unicode_ci NOT NULL default '',
+							`public` set('yes','no') collate utf8_unicode_ci NOT NULL default 'no',
+							`comments` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',
+							`author` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+							`last_modified` timestamp NULL default CURRENT_TIMESTAMP,
+							`post_views` int(12) default NULL,
+							`post_slug` varchar(255) collate utf8_unicode_ci NOT NULL default '',
+							PRIMARY KEY  (`post_id`),
+							UNIQUE KEY `id` (`post_id`)
 						) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 						";
-						
+
 						$ok = safe_query($sql3);
-						
+
 						// pixie_dynamic_settings table
 						$sql4 = "
 						CREATE TABLE IF NOT EXISTS `".$pixie_prefix."pixie_dynamic_settings` (
-						  	`settings_id` int(11) NOT NULL auto_increment,
-						  	`page_id` int(11) NOT NULL default '0',
-						  	`posts_per_page` int(2) NOT NULL default '0',
-						  	`rss` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',
-						  	PRIMARY KEY  (`settings_id`)
+							settings_id` int(11) NOT NULL auto_increment,
+							`page_id` int(11) NOT NULL default '0',
+							`posts_per_page` int(2) NOT NULL default '0',
+							`rss` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',
+							PRIMARY KEY  (`settings_id`)
 						) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0 AUTO_INCREMENT=1 ;			
 						";
-						
+
 						$ok = safe_query($sql4);
-						
+
 						// pixie_files table
 						$sql5 = "
 						CREATE TABLE IF NOT EXISTS `".$pixie_prefix."pixie_files` (
-						  	`file_id` smallint(6) NOT NULL auto_increment,
-						  	`file_name` varchar(80) collate utf8_unicode_ci NOT NULL default '',
-						  	`file_extension` varchar(5) collate utf8_unicode_ci NOT NULL default '',
-						  	`file_type` set('Video','Image','Audio','Other') collate utf8_unicode_ci NOT NULL default '',
-						  	`tags` varchar(200) collate utf8_unicode_ci NOT NULL default '',
-						  	PRIMARY KEY  (`file_id`),
-						  	UNIQUE KEY `id` (`file_id`)
+							`file_id` smallint(6) NOT NULL auto_increment,
+							`file_name` varchar(80) collate utf8_unicode_ci NOT NULL default '',
+							`file_extension` varchar(5) collate utf8_unicode_ci NOT NULL default '',
+							`file_type` set('Video','Image','Audio','Other') collate utf8_unicode_ci NOT NULL default '',
+							`tags` varchar(200) collate utf8_unicode_ci NOT NULL default '',
+							PRIMARY KEY  (`file_id`),
+							UNIQUE KEY `id` (`file_id`)
 						) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0 AUTO_INCREMENT=5 ;
 						";
-			
+
 						$ok = safe_query($sql5);
-						
+
 						// insert the default files supplied with pixie
 						$sql6 = "
 							INSERT INTO `".$pixie_prefix."pixie_files` (`file_id`, `file_name`, `file_extension`, `file_type`, `tags`) VALUES
@@ -287,123 +287,123 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 							(3, 'apple_touch_icon.jpg', 'jpg', 'Image', 'icon apple touch'),
 							(4, 'apple_touch_icon_pixie.jpg', 'jpg', 'Image', 'icon apple touch pixie');
 						";
-						
+
 						$ok = safe_query($sql6);
-						
+
 						// pixie_log table
 						$sql7 = "
 						CREATE TABLE IF NOT EXISTS `".$pixie_prefix."pixie_log` (
-						  	`log_id` int(6) NOT NULL auto_increment,
-						  	`user_id` varchar(40) collate utf8_unicode_ci NOT NULL default '',
-						  	`user_ip` varchar(15) collate utf8_unicode_ci NOT NULL default '',
-						  	`log_time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-						  	`log_type` set('referral','system') collate utf8_unicode_ci NOT NULL default '',
-						  	`log_message` varchar(250) collate utf8_unicode_ci NOT NULL default '',
-						  	`log_icon` varchar(20) collate utf8_unicode_ci NOT NULL default '',
-						  	`log_important` set('yes','no') collate utf8_unicode_ci NOT NULL default 'no',
-						  	PRIMARY KEY  (`log_id`),
-						  	UNIQUE KEY `id` (`log_id`)
+							`log_id` int(6) NOT NULL auto_increment,
+							`user_id` varchar(40) collate utf8_unicode_ci NOT NULL default '',
+							`user_ip` varchar(15) collate utf8_unicode_ci NOT NULL default '',
+							`log_time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+							`log_type` set('referral','system') collate utf8_unicode_ci NOT NULL default '',
+							`log_message` varchar(250) collate utf8_unicode_ci NOT NULL default '',
+							`log_icon` varchar(20) collate utf8_unicode_ci NOT NULL default '',
+							`log_important` set('yes','no') collate utf8_unicode_ci NOT NULL default 'no',
+							PRIMARY KEY  (`log_id`),
+							UNIQUE KEY `id` (`log_id`)
 						) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;						
 						";
-						
+
 						$ok = safe_query($sql7);
-						
+
 						// pixie_log_users_online table
 						$sql8 = "
 						CREATE TABLE IF NOT EXISTS `".$pixie_prefix."pixie_log_users_online` (
-						  	`visitor_id` int(11) NOT NULL auto_increment,
-						  	`visitor` varchar(15) collate utf8_unicode_ci NOT NULL default '',
-						  	`last_visit` int(14) NOT NULL default '0',
-						  	PRIMARY KEY  (`visitor_id`)
+							`visitor_id` int(11) NOT NULL auto_increment,
+							`visitor` varchar(15) collate utf8_unicode_ci NOT NULL default '',
+							`last_visit` int(14) NOT NULL default '0',
+							PRIMARY KEY  (`visitor_id`)
 						) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 						";
 
 						$ok = safe_query($sql8);
-						
+
 						// pixie_module_comments table
 						$sql9 = "
 						CREATE TABLE IF NOT EXISTS `".$pixie_prefix."pixie_module_comments` (
-						  	`comments_id` int(5) NOT NULL auto_increment,
-						  	`post_id` int(5) NOT NULL default '0',
-						  	`posted` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-						  	`name` varchar(80) collate utf8_unicode_ci NOT NULL default '',
-						  	`email` varchar(80) collate utf8_unicode_ci NOT NULL default '',
-						  	`url` varchar(80) collate utf8_unicode_ci default NULL,
-						  	`comment` longtext collate utf8_unicode_ci NOT NULL,
-						  	`admin_user` set('yes','no') collate utf8_unicode_ci NOT NULL default 'no',
-						  	PRIMARY KEY  (`comments_id`)
+							`comments_id` int(5) NOT NULL auto_increment,
+							`post_id` int(5) NOT NULL default '0',
+							`posted` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+							`name` varchar(80) collate utf8_unicode_ci NOT NULL default '',
+							`email` varchar(80) collate utf8_unicode_ci NOT NULL default '',
+							`url` varchar(80) collate utf8_unicode_ci default NULL,
+							`comment` longtext collate utf8_unicode_ci NOT NULL,
+							`admin_user` set('yes','no') collate utf8_unicode_ci NOT NULL default 'no',
+							PRIMARY KEY  (`comments_id`)
 						) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;						
 						";
-						
+
 						$ok = safe_query($sql9);
-						
+
 						// pixie_settings table
 						$sql10 = "
 						CREATE TABLE IF NOT EXISTS `".$pixie_prefix."pixie_settings` (
-						  	`settings_id` smallint(6) NOT NULL auto_increment,
-						  	`site_name` varchar(80) collate utf8_unicode_ci NOT NULL default '',
-						  	`site_keywords` longtext collate utf8_unicode_ci NOT NULL,
-						  	`site_url` varchar(255) collate utf8_unicode_ci NOT NULL default '',
-						  	`site_theme` varchar(80) collate utf8_unicode_ci NOT NULL default '',
-						  	`site_copyright` varchar(80) collate utf8_unicode_ci NOT NULL default '',
-						  	`site_author` varchar(80) collate utf8_unicode_ci NOT NULL default '',
-						  	`default_page` varchar(40) collate utf8_unicode_ci NOT NULL default '',
-						  	`clean_urls` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',
-						  	`version` varchar(5) collate utf8_unicode_ci NOT NULL default '',
-						  	`language` varchar(6) collate utf8_unicode_ci NOT NULL default '',
-						  	`timezone` varchar(6) collate utf8_unicode_ci NOT NULL default '',
-						  	`dst` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',
-						  	`date_format` varchar(30) collate utf8_unicode_ci NOT NULL default '',
-						  	`logs_expire` varchar(3) collate utf8_unicode_ci NOT NULL default '',
-						  	`rich_text_editor` tinyint(1) NOT NULL default '0',
-						  	`system_message` tinytext collate utf8_unicode_ci NOT NULL,
-						  	`last_backup` varchar(120) collate utf8_unicode_ci NOT NULL default '',
-						  	`bb2_installed` SET('yes','no') collate utf8_unicode_ci NOT NULL DEFAULT 'no',
-						  	PRIMARY KEY  (`settings_id`)
+							`settings_id` smallint(6) NOT NULL auto_increment,
+							`site_name` varchar(80) collate utf8_unicode_ci NOT NULL default '',
+							`site_keywords` longtext collate utf8_unicode_ci NOT NULL,
+							`site_url` varchar(255) collate utf8_unicode_ci NOT NULL default '',
+							`site_theme` varchar(80) collate utf8_unicode_ci NOT NULL default '',
+							`site_copyright` varchar(80) collate utf8_unicode_ci NOT NULL default '',
+							`site_author` varchar(80) collate utf8_unicode_ci NOT NULL default '',
+							`default_page` varchar(40) collate utf8_unicode_ci NOT NULL default '',
+							`clean_urls` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',
+							`version` varchar(5) collate utf8_unicode_ci NOT NULL default '',
+							`language` varchar(6) collate utf8_unicode_ci NOT NULL default '',
+							`timezone` varchar(6) collate utf8_unicode_ci NOT NULL default '',
+							`dst` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',
+							`date_format` varchar(30) collate utf8_unicode_ci NOT NULL default '',
+							`logs_expire` varchar(3) collate utf8_unicode_ci NOT NULL default '',
+							`rich_text_editor` tinyint(1) NOT NULL default '0',
+							`system_message` tinytext collate utf8_unicode_ci NOT NULL,
+							`last_backup` varchar(120) collate utf8_unicode_ci NOT NULL default '',
+							`bb2_installed` SET('yes','no') collate utf8_unicode_ci NOT NULL DEFAULT 'no',
+							PRIMARY KEY  (`settings_id`)
 						) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;						
 						";
-						
+
 						$ok = safe_query($sql10);
-						
+
 						// pixie_users table
 						$sql11 = "
 						CREATE TABLE IF NOT EXISTS `".$pixie_prefix."pixie_users` (
-						  	`user_id` int(4) NOT NULL auto_increment,
-						  	`user_name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-						  	`realname` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-						  	`street` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-						  	`town` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-						  	`county` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-						  	`country` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-						  	`post_code` varchar(20) collate utf8_unicode_ci NOT NULL default '',
-						  	`telephone` varchar(30) collate utf8_unicode_ci NOT NULL default '',
-						  	`email` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-						  	`website` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-						  	`biography` mediumtext collate utf8_unicode_ci NOT NULL,
-						  	`occupation` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-						  	`link_1` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-						  	`link_2` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-						  	`link_3` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-						  	`privs` tinyint(2) NOT NULL default '1',
-						  	`pass` varchar(128) collate utf8_unicode_ci NOT NULL default '',
-						  	`nonce` varchar(64) collate utf8_unicode_ci NOT NULL default '',
-						  	`user_hits` int(7) NOT NULL default '0',
-						  	`last_access` timestamp NOT NULL default CURRENT_TIMESTAMP,
-						  	PRIMARY KEY  (`user_id`),
-						  	UNIQUE KEY `name` (`user_name`)
+							`user_id` int(4) NOT NULL auto_increment,
+							`user_name` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+							`realname` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+							`street` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+							`town` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+							`county` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+							`country` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+							`post_code` varchar(20) collate utf8_unicode_ci NOT NULL default '',
+							`telephone` varchar(30) collate utf8_unicode_ci NOT NULL default '',
+							`email` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+							`website` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+							`biography` mediumtext collate utf8_unicode_ci NOT NULL,
+							`occupation` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+							`link_1` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+							`link_2` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+							`link_3` varchar(100) collate utf8_unicode_ci NOT NULL default '',
+							`privs` tinyint(2) NOT NULL default '1',
+							`pass` varchar(128) collate utf8_unicode_ci NOT NULL default '',
+							`nonce` varchar(64) collate utf8_unicode_ci NOT NULL default '',
+							`user_hits` int(7) NOT NULL default '0',
+							`last_access` timestamp NOT NULL default CURRENT_TIMESTAMP,
+							PRIMARY KEY  (`user_id`),
+							UNIQUE KEY `name` (`user_name`)
 						) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=1 AUTO_INCREMENT=1 ;						
 						";
 
 						$ok = safe_query($sql11);
-						
+
 						// place dummy settings into settings table
 						$sql12 = "
 							INSERT INTO `".$pixie_prefix."pixie_settings` (`settings_id`, `site_name`, `site_keywords`, `site_url`, `site_theme`, `site_copyright`, `site_author`, `default_page`, `clean_urls`, `version`, `language`, `timezone`, `dst`, `date_format`, `logs_expire`, `rich_text_editor`, `system_message`, `last_backup`) VALUES
 							(1, '-', '-', '-', '-', '', '', '-', 'no', '-', '-', '-', 'yes', '-', '-', 1, '', '');
 						";
-						
-						$ok = safe_query($sql12);	
 
+						$ok = safe_query($sql12);
+						
 						$already_there_test = "
 							SELECT settings_id FROM ".$pixie_prefix."pixie_settings;
 						";
@@ -411,74 +411,72 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 						$ok = safe_query($already_there_test);
 
 						if (!$ok) {
-							  $error = 'Core database schema could not be created.';
-							  }
+							$error = 'Core database schema could not be created.';
+						}
 						
 					} else {
+						if (filesize('../config.php') < 5) {	// check for config
+							$error = "Pixie is unable to write to your config.php file, you may need to manually change the file using a text editor and FTP or change the permissions of the file.<br/> <a href=\"http://code.google.com/p/pixie-cms/w/list\" title=\"Pixie Wiki\">View the help files for more information</a>.";
+						}
+					}
 
-					if (filesize('../config.php') < 5) {	// check for config
-					$error = "Pixie is unable to write to your config.php file, you may need to manually change the file using a text editor and FTP or change the permissions of the file.<br/> <a href=\"http://code.google.com/p/pixie-cms/w/list\" title=\"Pixie Wiki\">View the help files for more information</a>.";
-					}
-						
-					}
-					
-				} 
+				}
 			}
 
-		if ($pixie_dropolddata == 'Yes') {
-		$pixie_step = 2;
-		} else {
-
-			if (!$error) {
+			if ($pixie_dropolddata == 'Yes') {
 				$pixie_step = 2;
 			} else {
-				$pixie_step = 1;
+				if (!$error) {
+					$pixie_step = 2;
+				} else {
+					$pixie_step = 1;
+				}
 			}
-		}
-		
-		break;
-		
-		case 3 :	
-			if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important to set this first, so that we can use the new config.php */
-			include '../config.php';           		// load configuration
-			include '../lib/lib_db.php';       		// load libraries order is important
-			include '../lang/' . $pixie_langu . '.php';       // get the language file
-			include '../lib/lib_date.php';			//
-			include '../lib/lib_validate.php'; 		// 
-			include '../lib/lib_core.php';          //
-			include '../lib/lib_backup.php';	    //
 
-			$pixie_sitename = addslashes($pixie_sitename);	// Helps prevents a bug where a ' in a string like : dave's site, errors out the admin interface
-			$pixie_sitename = htmlentities($pixie_sitename);	// Helps prevents a bug where a ' in a string like : dave's site, errors out the admin interface
+		break;
+
+		case 3 :
+			if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); } /* very important to set this first, so that we can use the new config.php */
+			include '../config.php'; // load configuration
+			include '../lib/lib_db.php';// load libraries order is important
+			include '../lang/' . $pixie_langu . '.php'; // get the language file
+			include '../lib/lib_date.php';
+			include '../lib/lib_validate.php';
+			include '../lib/lib_core.php';
+			include '../lib/lib_backup.php';
+
+			$pixie_sitename = addslashes($pixie_sitename); // Helps prevents a bug where a ' in a string like : dave's site, errors out the admin interface
+			$pixie_sitename = htmlentities($pixie_sitename); // Helps prevents a bug where a ' in a string like : dave's site, errors out the admin interface
 
 			$check = new Validator ();
 			if (!$pixie_sitename) { $error .= $lang['site_name_error'] . ' '; $scream[] = 'name'; }
 			if (!$pixie_url) { $error .= $lang['site_url_error'] . ' ' ; $scream[] = 'url'; }
 
-
-				if (preg_match('/localhost/i', $pixie_url)) {	/* This prevents an error if you are developing locally */
+			if (preg_match('/localhost/i', $pixie_url)) {
+				/* This prevents an error if you are developing locally */
+			} else {
+				if (preg_match('/127.0.0./', $pixie_url)) {
+					/* This prevents an error if you are developing locally */
 				} else {
-				if (preg_match('/127.0.0./', $pixie_url)) {	/* This prevents an error if you are developing locally */
-				} else {
-				if (!$check->validateURL($pixie_url, $lang['site_url_error'] . ' ')) { $scream[] = 'url'; }
+					if (!$check->validateURL($pixie_url, $lang['site_url_error'] . ' ')) { $scream[] = 'url'; }
 				}
-				}
+			}
 
 			if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
 
 			$table_name = 'pixie_settings';
 			$site_url_last = $pixie_url{strlen($pixie_url)-1};
-			
-  			$err = explode('|', $error);
-  			$error = $err[0];
-  			
-  			if (!$error) {
-  			  	if ($site_url_last != '/') {
-  					$pixie_url = $pixie_url . '/';
-  				}
-  				
-  				// site defaults
-  				// save settings to the database
+
+			$err = explode('|', $error);
+			$error = $err[0];
+
+			if (!$error) {
+				if ($site_url_last != '/') {
+					$pixie_url = $pixie_url . '/';
+				}
+				
+				// site defaults
+				// save settings to the database
 				$ok = safe_update(
 					"pixie_settings", 
 					"site_name = '$pixie_sitename', 
@@ -497,7 +495,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 					 clean_urls = 'no'",
 					 "settings_id ='1'"
 				);
-				
+
 				// create .htaccess for clean URLs
 				$fh = fopen('../../.htaccess', 'w');
 				$clean = str_replace("/admin/install/index.php", "", $_SERVER["REQUEST_URI"]);
@@ -510,7 +508,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 #
 
 #	Pixie Powered (www.getpixie.co.uk)
-#	Licence: GNU General Public License v3                   		 
+#	Licence: GNU General Public License v3
 #	Copyright (C) Scott Evans   
 
 #	This program is free software: you can redistribute it and/or modify
@@ -528,7 +526,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 
 #	www.getpixie.co.uk                          
 
-# 	This file was automatically created for you by the Pixie Installer.
+#	This file was automatically created for you by the Pixie Installer.
 
 # Set the default handler.
 DirectoryIndex index.php
@@ -643,19 +641,19 @@ RewriteRule ^(.*)$ index.php [F,L]
 				fwrite($fh, $data);
 				fclose($fh);
 				chmod('../../.htaccess', 0640); // Try to chmod the .htaccess file
-  			}
-  			
-  			// load external sql
-  			$file = $pixie_type . '_db.sql';
-  			$file_content = file($file);
-   			foreach($file_content as $sql_line){
-   				// adjust for table prefix
-   				$sql_line = str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $sql_line);
-      			safe_query($sql_line);
 			}
-			  			
-  			// chmod the files folder
-  			chmod('../../files/', 0777);
+
+			// load external sql
+			$file = $pixie_type . '_db.sql';
+			$file_content = file($file);
+			foreach ($file_content as $sql_line){
+				// adjust for table prefix
+				$sql_line = str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $sql_line);
+				safe_query($sql_line);
+			}
+
+			// chmod the files folder
+			chmod('../../files/', 0777);
 			chmod('../../files/audio/', 0777);
 			chmod('../../files/cache/', 0777);
 			chmod('../../files/images/', 0777);
@@ -685,12 +683,12 @@ RewriteRule ^(.*)$ index.php [F,L]
 			include '../lib/lib_backup.php';	    	//
 			include '../lib/lib_logs.php';          	//
 
-	if ($debug == 'yes') {
-	$show_vars = get_defined_vars();
-	echo '<p><pre class="showvars">The prefs array contains : ';
-	htmlspecialchars(print_r($show_vars["prefs"]));
-	echo '</pre></p>';
-	}
+			if ($debug == 'yes') {
+				$show_vars = get_defined_vars();
+				echo '<p><pre class="showvars">The prefs array contains : ';
+				htmlspecialchars(print_r($show_vars["prefs"]));
+				echo '</pre></p>';
+			}
 
 			$check = new Validator ();
 			$check_result_number = 0;
@@ -745,45 +743,45 @@ RewriteRule ^(.*)$ index.php [F,L]
 			// We have four results to check, so if they were all done, do this :
 			if ($check_result_number == 4) {
 
-			$sql = "realname = '$pixie_name'"; 
-			safe_insert('pixie_users', $sql);
-			safe_update('pixie_settings', "site_author = '$pixie_name', site_copyright = '$pixie_name'", "settings_id ='1'");	
-			$sql = "user_name = '$pixie_username'"; 
-			safe_update('pixie_users', $sql, "user_id ='1'");
-			$sql = "email = '$pixie_email'"; 
-			safe_update('pixie_users', $sql, "user_id ='1'");
-			$nonce = md5( uniqid( rand(), true ) ); // Could we use sha1 instead? sha1( uniqid( rand(), true ) );	// http://www.php.net/manual/en/function.sha1.php
-			$sql = "pass = password(lower('$pixie_password')), nonce = '$nonce', privs = '3', link_1 = 'http://www.toggle.uk.com', link_2 = 'http://www.getpixie.co.uk', link_3 = 'http://www.iwouldlikeawebsite.com', website='$site_url', `biography`=''"; 
-			safe_update('pixie_users', $sql, "user_id ='1'");
+				$sql = "realname = '$pixie_name'"; 
+				safe_insert('pixie_users', $sql);
+				safe_update('pixie_settings', "site_author = '$pixie_name', site_copyright = '$pixie_name'", "settings_id ='1'");	
+				$sql = "user_name = '$pixie_username'"; 
+				safe_update('pixie_users', $sql, "user_id ='1'");
+				$sql = "email = '$pixie_email'"; 
+				safe_update('pixie_users', $sql, "user_id ='1'");
+				$nonce = md5( uniqid( rand(), true ) ); // Could we use sha1 instead? sha1( uniqid( rand(), true ) );	// http://www.php.net/manual/en/function.sha1.php
+				$sql = "pass = password(lower('$pixie_password')), nonce = '$nonce', privs = '3', link_1 = 'http://www.toggle.uk.com', link_2 = 'http://www.getpixie.co.uk', link_3 = 'http://www.iwouldlikeawebsite.com', website='$site_url', `biography`=''"; 
+				safe_update('pixie_users', $sql, "user_id ='1'");
 
-			// upgrade sql
-			$file = 'upgrade.sql';
-			$file_content = file($file);
-			foreach($file_content as $sql_line){
-				// adjust prefix
-				$sql_line = str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $sql_line);
-				safe_query($sql_line);
-							    }
+				// upgrade sql
+				$file = 'upgrade.sql';
+				$file_content = file($file);
+				foreach ($file_content as $sql_line) {
+					// adjust prefix
+					$sql_line = str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $sql_line);
+					safe_query($sql_line);
+				}
 
-			$newmessage = 'No';
-			// log the install
-			if ($pixie_dropolddata == 'Yes') { logme('Mmmm... Minty... Pixie was installed a freshhh... remember to delete the install directory on your server.', 'yes', 'error'); $newmessage = 'Yes'; }
-			if ($pixie_reinstall == 'Yes') { logme('Pixie was re-installed... you should manually delete the directory named install, which is located inside the admin directory.', 'yes', 'error'); $newmessage = 'Yes'; }
-			if ($newmessage == 'No') { 
-			logme('Pixie was installed... remember to delete the install directory on your server.', 'yes', 'error');
-			}
+				$newmessage = 'No';
+				// log the install
+				if ($pixie_dropolddata == 'Yes') { logme('Mmmm... Minty... Pixie was installed a freshhh... remember to delete the install directory on your server.', 'yes', 'error'); $newmessage = 'Yes'; }
+				if ($pixie_reinstall == 'Yes') { logme('Pixie was re-installed... you should manually delete the directory named install, which is located inside the admin directory.', 'yes', 'error'); $newmessage = 'Yes'; }
+				if ($newmessage == 'No') { 
+					logme('Pixie was installed... remember to delete the install directory on your server.', 'yes', 'error');
+				}
 
-	if (strnatcmp(phpversion(), '5.1.0') >= 0) { 
-	logme('Welcome to Pixie ' . $pixie_version . ' running on PHP ' . phpversion() . ' be sure to visit <a href ="http://www.getpixie.co.uk/">www.getpixie.co.uk</a> to check for updates.', 'no', 'site');
-						  } else { 
-        logme('WARNING! Your current PHP version : ' . phpversion() . ' is not the current stable version of php. Please consult your server Administrator about upgrading php for security reasons.', 'yes', 'error');
-	if (strnatcmp(phpversion(),'5.0.0') >= 0) { 
-	logme('WARNING! Your current PHP version : ' . phpversion() . ' is depreciated and unsupported. Please consult your server Administrator about upgrading php for security reasons.', 'yes', 'error');
-						  }
-						  }
+				if (strnatcmp(phpversion(), '5.1.0') >= 0) { 
+					logme('Welcome to Pixie ' . $pixie_version . ' running on PHP ' . phpversion() . ' be sure to visit <a href ="http://www.getpixie.co.uk/">www.getpixie.co.uk</a> to check for updates.', 'no', 'site');
+				} else { 
+					logme('WARNING! Your current PHP version : ' . phpversion() . ' is not the current stable version of php. Please consult your server Administrator about upgrading php for security reasons.', 'yes', 'error');
+					if (strnatcmp(phpversion(),'5.0.0') >= 0) { 
+						logme('WARNING! Your current PHP version : ' . phpversion() . ' is depreciated and unsupported. Please consult your server Administrator about upgrading php for security reasons.', 'yes', 'error');
+					}
+				}
 
 				// needs to be added to language file
-				$emessage = "	
+				$emessage = "
 Hi " . $pixie_name . ",
 Congratulations! Pixie is now installed. Here are your login details:
 
@@ -801,7 +799,7 @@ www.getpixie.co.uk
 
 				$subject = 'Hi ' . $pixie_name . ', Pixie was successfully installed.';
 				mail($pixie_email, $subject, $emessage);
-						  }
+			}
 
 			if (!$error) {
 				$pixie_step = 4;
@@ -809,43 +807,44 @@ www.getpixie.co.uk
 				$pixie_step = 3;
 			}
 		break;
-		
+
 		default:
 
-	if ($pixie_step == 0) {
+			if ($pixie_step == 0) {
 
-    if (strnatcmp(phpversion(), '5.1.0') >= 0) 
-    { 
-        	date_default_timezone_set("$pixie_server_timezone");	# equal or newer 
-    } 
-    else 
-    { 
-        $error = 'WARNING! Your current PHP version: ' . phpversion() . ' is not the current stable version of php. Please consult your server Administrator about upgrading php for security reasons.';	# not sufficiant 
-    if (strnatcmp(phpversion(), '5.0.0') >= 0) 
-    { 
-	$error = 'WARNING! Your current PHP version: ' . phpversion() . ' is depreciated and unsupported. Please consult your server Administrator about upgrading php for security reasons.';
-    }
-
-    }
-
-	}
-
-if ($debug !== 'yes') {
-
-	if ($pixie_step !== 1) {
-
-			if (filesize('../config.php') > 10) {			 /* check for admin/config.php */
-			header( 'Location: ../../admin/' ); exit();}		/* redirect to pixie's admin if its found */
+				if (strnatcmp(phpversion(), '5.1.0') >= 0) 
+				{ 
+						date_default_timezone_set("$pixie_server_timezone");	# equal or newer 
+				} 
+				else 
+				{ 
+					$error = 'WARNING! Your current PHP version: ' . phpversion() . ' is not the current stable version of php. Please consult your server Administrator about upgrading php for security reasons.';	# not sufficiant 
+					if (strnatcmp(phpversion(), '5.0.0') >= 0) 
+					{ 
+						$error = 'WARNING! Your current PHP version: ' . phpversion() . ' is depreciated and unsupported. Please consult your server Administrator about upgrading php for security reasons.';
+					}
+				}
 			}
 
-		break;
+			if ($debug !== 'yes') {
 
-	} /* END $pixie_step !== 1 */
+				if ($pixie_step !== 1) {
 
-	if (!$pixie_step) {
-		$pixie_step = 1;
-	}
-}
+					if (filesize('../config.php') > 10) {
+						/* check for admin/config.php */
+						header( 'Location: ../../admin/' );
+						exit();
+					} /* redirect to pixie's admin if its found */
+				}
+
+				break;
+
+			}
+
+			if (!$pixie_step) {
+				$pixie_step = 1;
+			}
+	} /* END switch($pixie_step) */
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -855,9 +854,9 @@ if ($debug !== 'yes') {
 
 	<!-- 
 	Pixie Powered (www.getpixie.co.uk)
-	Licence: GNU General Public License v3                   		 
+	Licence: GNU General Public License v3
 	Copyright (C) <?php print date('Y');?>, Scott Evans   
-	                             
+
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
@@ -870,8 +869,8 @@ if ($debug !== 'yes') {
 
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see http://www.gnu.org/licenses/   
-    
-	www.getpixie.co.uk                          
+
+	www.getpixie.co.uk
 	-->
 	
 	<title>Pixie (www.getpixie.co.uk) - Installer</title>
@@ -1419,7 +1418,7 @@ $zonelist = array('Pacific/Midway',
 					<div class="form_item_drop">
 						<select class="form_select" name="server_timezone" id="server_timezoneselect">
 							<option selected="selected" value="<?php print $pixie_server_timezone; ?>"><?php print $pixie_server_timezone; ?></option>
-							<?php foreach($zonelist as $tzselect){
+							<?php foreach ($zonelist as $tzselect){
 							// Output all the timezones
 							Echo "<option value=\"$tzselect\">$tzselect</option>";
 							} ?>
@@ -1560,7 +1559,7 @@ $j('#restart').hover(
       }
     );
 
-		      <?php } ?>
+			<?php } ?>
 
 });
 
