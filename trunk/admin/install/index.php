@@ -1206,13 +1206,20 @@ padding-top: 2em;
 					<div class="form_item_drop">
 						<select class="form_select" name="langu" id="langu">
 							<option selected="selected" value="en-gb">English</option>
-							<option value="fi-fi">Suomen</option>		<!--	Finnish		-->
-							<option value="fr">Fran&ccedil;ais</option>	<!--	French		-->
-							<option value="it">Italiano</option>		<!--	Italian		-->
-							<option value="pl">Polska</option>		<!--	Polish		-->
-							<option value="pt">Portugu&ecirc;s</option>	<!--	Portuguese	-->
-							<option value="es-cl">Espa&ntilde;ol</option>	<!--	Spanish		-->
-							<option value="se-sv">Svenska</option>		<!--	Swedish		-->
+							<option value="cz">Čeština</option>				<!--	Czech			-->
+							<option value="de">Deutsch</option>				<!--	German			-->
+							<option value="dutch-nl">Nederlandse</option>			<!--	Dutch			-->
+							<option value="es-cl">Espanyol (català)</option>		<!--	Spanish (Catalan)	-->
+							<option value="es-es">Español</option>				<!--	Spanish			-->
+							<option value="es-gl">Español (Galego)</option>			<!--	Spanish (Galician)	-->
+							<option value="fi-fi">Suomen</option>				<!--	Finnish			-->
+							<option value="fr">Fran&ccedil;ais</option>			<!--	French			-->
+							<option value="it">Italiano</option>				<!--	Italian			-->
+							<option value="lv-lv">Latviešu</option>				<!--	Latvian			-->
+							<option value="pl">Polskie</option>				<!--	Polish			-->
+							<option value="pt">Portugu&ecirc;s</option>			<!--	Portuguese		-->
+							<option value="ru">Русский</option>				<!--	Russian			-->
+							<option value="se-sv">Svenska</option>				<!--	Swedish			-->
 						</select>
 					</div>
 				</div>		
