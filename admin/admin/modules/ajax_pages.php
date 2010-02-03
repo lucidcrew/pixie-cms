@@ -1,5 +1,8 @@
 <?php
-if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
+if (defined('DIRECT_ACCESS')) { require_once '../../lib/lib_misc.php'; nukeProofSuit(); exit(); }
+define('DIRECT_ACCESS', 1);
+require_once '../../lib/lib_misc.php';										/* perform basic sanity checks */
+	bombShelter();                  									/* check URL size */
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -10,11 +13,10 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 error_reporting(0);
 
 if ($_POST['pages']) {
-	
-	include '../../config.php';           																			
-	include '../../lib/lib_db.php';       																			
-	include '../../lib/lib_misc.php';     																			
-	include '../../lib/lib_auth.php';																						
+
+	include_once '../../config.php';
+	include_once '../../lib/lib_db.php';
+	include_once '../../lib/lib_auth.php';
 
 	$count = count($_POST['pages']);
 

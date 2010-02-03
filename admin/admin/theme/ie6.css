@@ -159,7 +159,7 @@ fieldset
 	cursor: pointer;
 	}
 
-.form_item_textarea_nomce
+.form_item_textarea_no_ckeditor
 	{
 	margin: 0;
 	padding: 0;

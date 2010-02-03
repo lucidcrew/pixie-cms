@@ -124,7 +124,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 							</div>
 							<div class=\"form_row\">
 								<div class=\"form_label\"><label for=\"keywords\">" . $lang['form_site_keywords'] . " <span class=\"form_optional\">" . $lang['form_optional'] . "</span></label><span class=\"form_help\">" . $lang['form_help_site_keywords'] . "</span></div>
-								<div class=\"form_item_textarea\"><textarea name=\"keywords\" cols=\"50\" class=\"form_item_textarea_nomce\" rows=\"3\" id=\"keywords\">$site_keywords</textarea></div>
+								<div class=\"form_item_textarea\"><textarea name=\"keywords\" cols=\"50\" class=\"form_item_textarea_no_ckeditor\" rows=\"3\" id=\"keywords\">$site_keywords</textarea></div>
 							</div>
 							<div class=\"form_row\">
 								<div class=\"form_label\"><label for=\"site_author\">" . $lang['form_site_author'] . " <span class=\"form_optional\">" . $lang['form_optional'] . "</span></label></div>

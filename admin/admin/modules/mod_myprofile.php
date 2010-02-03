@@ -93,6 +93,9 @@ if ($GLOBALS['pixie_user']) {
 
 			sleep(3);
 
+			/* $new_password = addslashes($new_password); */	/* Unfortunately, you can become permenatly logged out if you use a " in a password */
+			/* $confirm_password = addslashes($confirm_password); */	/* If we do this first, then we need to do stripslashes() when it comes out, potentially breaking compatibility with upgraders */
+
 			$r = safe_field('user_name', 'pixie_users', "user_name = '$user_name'and 
 			pass = password(lower('" . doSlash($current_pass) . "')) and privs >= 0");
 			
@@ -110,13 +113,13 @@ if ($GLOBALS['pixie_user']) {
 				  } else {
 				  	$email = safe_field('email','pixie_users',"user_name='$user_name'");
 						$subject = $lang['email_changepassword_subject'];				
-						$emessage = $lang['email_newpassword_message'].$new_password;
+						$emessage = $lang['email_newpassword_message'] . $new_password;
 						$user = safe_field('user_name','pixie_users',"email='$email'");
 						mail($email, $subject, $emessage);
 				  	$messageok = $lang['profile_password_ok'];
 				  }
 			} else {
-				$err = explode('|',$error);
+				$err = explode('|', $error);
 				$message = $err[0];
 			}
 		}
@@ -227,9 +230,9 @@ default:
 								<div class=\"form_label\"><label for=\"biography\">" . $lang['form_address_biography'] . " <span class=\"form_optional\">" . $lang['form_optional'] . "</span></label></div>";
 
 							if ($GLOBALS['rich_text_editor'] == 1) {
-	   						echo "\n\t\t\t\t\t\t\t\t<div class=\"mceSwitch\" id=\"biography_mceSwitch\">\n\t\t\t\t\t\t\t\t\t<input type=\"button\" onclick=\"setTextareaToTinyMCE('biography');\" value=\"Editor\" class=\"mceEditorOn mceCurrent\" /><input type=\"button\" onclick=\"unsetTextareaToTinyMCE('biography');\" value=\"HTML\" class=\"mceEditorOff\" />\n\t\t\t\t\t\t\t\t\t<div class=\"form_item_textarea_mce\">\n\t\t\t\t\t\t\t\t\t\t<textarea name=\"biography\" id=\"biography\" cols=\"50\" class=\"mceEditor\" rows=\"10\">$biography</textarea>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	   						echo "\n\t\t\t\t\t\t\t\t<div class=\"form_item_textarea_ckeditor\">\n\t\t\t\t\t\t\t\t\t\t<textarea name=\"biography\" id=\"biography\" cols=\"50\" class=\"ckeditor\" rows=\"10\">$biography</textarea>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n";
 	   					} else {
-	   						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"biography\" class=\"form_item_textarea_nomce\">$biography</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
+	   						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"biography\" class=\"form_item_textarea_no_ckeditor\">$biography</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
 	   					}
 
 	   				echo "							<div class=\"form_row $link_1_style\">

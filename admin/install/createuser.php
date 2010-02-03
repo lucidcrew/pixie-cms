@@ -3,6 +3,7 @@ error_reporting(0);	// Turns off error reporting
 if (!file_exists('../config.php') || filesize('../config.php') < 10) {		// check for config
 require '../lib/lib_db.php'; db_down(); exit();
 }
+if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important to set this first, so that we can use the new config.php */
 	require '../lib/lib_misc.php';     																				//
 	$debug = 'no';	// Set this to yes to debug and see all the global vars coming into the file
 	$server_timezone = 'Europe/London';

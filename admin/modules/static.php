@@ -35,7 +35,7 @@ switch ($do) {
 			extract(safe_row('*', 'pixie_core', "page_name='$s'"));
 			echo "<div id=\"$s\">\n\t\t\t\t\t\t<h3>$page_display_name</h3>\n";
 			if(isset($_COOKIE['pixie_login'])) {
-				list($username,$cookie_hash) = explode(',', $_COOKIE['pixie_login']);
+				list($username, $cookie_hash) = explode(',', $_COOKIE['pixie_login']);
 				$nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
 				if (md5($username . $nonce) == $cookie_hash) {
 					$privs = safe_field('privs', 'pixie_users', "user_name='$username'");		

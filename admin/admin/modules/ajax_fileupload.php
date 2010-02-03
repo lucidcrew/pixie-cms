@@ -1,9 +1,9 @@
 <?php
-if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
-error_reporting(0);	// Turns off error reporting
-if (!file_exists('../../config.php') || filesize('../../config.php') < 10) {		// check for config
-require_once '../../lib/lib_db.php'; db_down(); exit();
-}
+if (defined('DIRECT_ACCESS')) { require_once '../../lib/lib_misc.php'; nukeProofSuit(); exit(); }
+define('DIRECT_ACCESS', 1);
+require_once '../../lib/lib_misc.php';										/* perform basic sanity checks */
+	bombShelter();                  									/* check URL size */
+
 	require_once '../../config.php';
 	include_once '../../lib/lib_db.php';
 	include_once '../../lib/lib_auth.php';
