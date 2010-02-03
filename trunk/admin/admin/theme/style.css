@@ -263,44 +263,7 @@ legend
 	color: #0497d3;
 	}
 
-.mceEditorOn, .mceEditorOff
-	{
-	background-color: #E4E4E4;
-	border-color: #CCCCCC;
-	border-style: solid;
-	border-width: 0px;
-	padding: 2px 8px 2px 8px;
-	}
-
-.mceCurrent
-	{
-	font-weight: bold;
-	background-color: #CCCCCC;
-	border-color: #CCCCCC;
-	border-style: solid;
-	}
-
-.mceEditor
-	{
-	background-image: url("images/formbacklarge.gif");
-	background-repeat: repeat-x;
-	background-color: #FFFFFF;
-	width: 100%;
-	font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;
-	font-size: 13px;
-	}
-
-.mceSwitch
-	{
-	margin-top: 5px;
-	}
-	
-.form_item_textarea_mce
-	{
-	background-color: #CCCCCC;
-	}
-
-.form_item_textarea_nomce
+.form_item_textarea_no_ckeditor
 	{
 	background-image: url("images/formbacklarge.gif");
 	background-repeat: repeat-x;
@@ -310,7 +273,7 @@ legend
 	height: 200px;
 	}
 
-#site_settings .form_item_textarea_nomce, #pixie_settings .form_item_textarea_nomce
+#site_settings .form_item_textarea_no_ckeditor, #pixie_settings .form_item_textarea_no_ckeditor
 	{
 	height: 120px;
 	}
@@ -320,7 +283,7 @@ legend
 	border: 1px solid #CCCCCC;
 	}
 
-.form_textarea, .form_text, .form_item_textarea_nomce
+.form_textarea, .form_text, .form_item_textarea_no_ckeditor
 	{
 	padding: 3px 5px 3px 5px;
 	}

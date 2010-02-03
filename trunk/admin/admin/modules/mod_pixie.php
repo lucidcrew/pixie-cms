@@ -170,7 +170,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 							</div>
 							<div class=\"form_row\">
 								<div class=\"form_label\"><label for=\"sysmess\">" . $lang['form_pixie_sysmess'] . " <span class=\"form_optional\">" . $lang['form_optional'] . "</span></label><span class=\"form_help\">" . $lang['form_help_pixie_sysmess'] . "</span></div>
-								<div class=\"form_item_textarea\"><textarea name=\"sysmess\" cols=\"50\" class=\"form_item_textarea_nomce\" rows=\"3\" id=\"sysmess\">$system_message</textarea></div>
+								<div class=\"form_item_textarea\"><textarea name=\"sysmess\" cols=\"50\" class=\"form_item_textarea_no_ckeditor\" rows=\"3\" id=\"sysmess\">$system_message</textarea></div>
 							</div>
 							<div class=\"form_row_button\" id=\"form_button\">
 								<input type=\"submit\" name=\"settings_edit\" class=\"form_submit\" id=\"form_addedit_submit\" value=\"" . $lang['form_button_update'] . "\" />

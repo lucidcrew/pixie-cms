@@ -220,12 +220,8 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set
 	<script type="text/javascript" src="jscript/slider.js"></script>
 	<script type="text/javascript" src="jscript/ajaxfileupload.js"></script>
 	<script type="text/javascript" src="jscript/thickbox.js"></script>
-	<?php /* Add tinymce */ if ($tinymce_load !== 'no') { ?>
-	<script type="text/javascript" src="jscript/tiny_mce/tiny_mce.js"></script>
-	<script type="text/javascript" src="jscript/tiny_mce/tiny_mce_setup.js.php?theme=<?php print $site_theme; ?>&amp;s=<?php print $x; ?>&amp;m=<?php print $m;?>"></script>
-	<?php } /* End add tinymce */ ?>
-
-	<script type="text/javascript" src="jscript/pixie.js.php?s=<?php print $s; ?>"></script>
+	<script type="text/javascript" src="jscript/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="jscript/pixie.js.php?s=<?php print $s; ?>&amp;cke_mode_adv=<?php print $cke_mode_adv; ?>"></script>
 
 <?php
 		global $message;

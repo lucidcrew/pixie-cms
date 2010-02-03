@@ -1,20 +1,13 @@
 <?php
-header('Content-Type: text/javascript');
-if (defined('DIRECT_ACCESS')) { require_once '../lib/lib_misc.php'; nukeProofSuit(); exit(); }
-define('DIRECT_ACCESS', 1);
-require_once '../lib/lib_misc.php';										/* perform basic sanity checks */
-	bombShelter();                  									/* check URL size */
-
 	error_reporting(0);
 
 	// Note : If you use this file, any global vars now have the prefix pixie, so what was $s is now $pixie_s
 	/* !IMPORTANT - This file thinks it's being run from admin/ */
 	/* instead of admin/jscript so paths are relative to admin */
-	include_once '../config.php';
-	include_once '../lib/lib_db.php';
-	include_once '../lib/lib_auth.php';
+
 	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');	/* Note : If you use this file, any global vars now have the prefix pixie, so what was $s is now $pixie_s */
 ?>
+    //<![CDATA[
 // jQuery.noConflict(); // Using this causes some sort of bug but it should not.
 jQuery(document).ready(function(){
 	
@@ -105,7 +98,6 @@ function fetchTablesorterJs() {
 
 	$tablesorter_init = "
 	fetchTablesorterJs();
-
 	";
 
 	echo $tablesorter_init;
@@ -118,7 +110,6 @@ function fetchTablesorterJs() {
 
 	$tablesorter_init = "
 	fetchTablesorterJs();
-
 	";
 
 	echo $tablesorter_init;
@@ -205,3 +196,24 @@ function completeCallback(response) {
 		jQuery('.form_submit').removeAttr('disabled');
 	}
 }
+
+
+
+function useCkeditor() {
+
+/* CKEDITOR.basePath = 'jscript/ckeditor/'; */
+  <?php if ($pixie_cke_mode_adv == 'yes') { ?> CKEDITOR.config.customConfig = '../ckeditor-advanced-config.js';
+  <?php } else { ?> CKEDITOR.config.customConfig = '../ckeditor-config.js'; <?php } ?>
+	CKEDITOR.replaceClass = 'rich-text';
+
+
+};  /* End function useCkeditor */
+
+
+
+jQuery(function() {
+
+	if (jQuery('.rich-text').length >= 1) { useCkeditor(); }/* If ckeditor.js is loaded, lets see if we can use it on anything... */
+
+}); /* End jQuery function */
+    //]]>
