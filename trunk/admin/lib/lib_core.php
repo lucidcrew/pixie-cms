@@ -33,7 +33,7 @@ class ShowTable {
 	var $a_array = array();
 	var $edit;
 
-	function ShowTable ($Res, $exclude, $table_name, $view_number, $lo,$finalmax, $whereami, $type, $s) {
+	function ShowTable ($Res, $exclude, $table_name, $view_number, $lo, $finalmax, $whereami, $type, $s) {
 
 		$this->Res = $Res;
 		$this->exclude = $exclude;
@@ -758,17 +758,17 @@ jQuery(\"#mycarousel li\").hover(
 	  global $message, $m, $lang;
 	  
 	  	$table_name = adjust_prefix($table_name);
-		$sql = "select * from $table_name where " . $edit_id . "=" . $edit . "";
+		$sql = "select * from $table_name where ". $edit_id ."=" . $edit . "";
 		$r2 = safe_query($sql);
-	
+
 		if ($r2) {
-			if ($F = mysql_fetch_array($r2))  {
+			if ($f = mysql_fetch_array($r2))  {
 				for ($j = 0; $j<mysql_num_fields($r2); $j++) {
-					$an .= mysql_field_name($r2, $j) . '|';
-					$at .= mysql_field_type($r2, $j) . '|';
-					$al .= mysql_field_len($r2, $j) . '|';
-					$af .= mysql_field_flags($r2, $j) . '|';
-					$az .= $F[$j] . '|';
+					$an .= mysql_field_name($r2, $j) . "|";
+					$at .= mysql_field_type($r2, $j) . "|";
+					$al .= mysql_field_len($r2, $j) . "|";
+					$af .= mysql_field_flags($r2, $j) . "|";
+					$az .= $f[$j] . "|";
 				}
 
 				if ($m == 'static') {
