@@ -254,7 +254,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 						// pixie_dynamic_settings table
 						$sql4 = "
 						CREATE TABLE IF NOT EXISTS `".$pixie_prefix."pixie_dynamic_settings` (
-							settings_id` int(11) NOT NULL auto_increment,
+							`settings_id` int(11) NOT NULL auto_increment,
 							`page_id` int(11) NOT NULL default '0',
 							`posts_per_page` int(2) NOT NULL default '0',
 							`rss` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',
@@ -497,7 +497,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 				);
 
 				// create .htaccess for clean URLs
-				$fh = fopen('../../.htaccess', 'w');
+				$fh = fopen('../../.htaccess', 'a');
 				$clean = str_replace("/admin/install/index.php", "", $_SERVER["REQUEST_URI"]);
 				if (!$clean) {
 					$clean = '/';
@@ -642,6 +642,27 @@ RewriteRule ^(.*)$ index.php [F,L]
 				fclose($fh);
 				chmod('../../.htaccess', 0640); // Try to chmod the .htaccess file
 			}
+
+/* I don't know if the following will work but if it does, we should use it or similar after config.php's creation too. */
+
+/* if (!file_exists('../../.htaccess') || filesize('../../.htaccess') < 10) {
+echo "<script type=\"text/javascript\">    //<![CDATA[
+					   alert('Pixie was unable to create the file .htaccess, you can download the file now and upload it by hand after the installation.');
+					  //]]></script>";
+$temp = tmpfile();
+fwrite($temp, "$data");
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename='.basename($temp));
+    header('Content-Transfer-Encoding: binary');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($temp));
+    ob_clean();
+    flush();
+    readfile($temp);
+ } /* Instead of throwing an error or doing nothing, we should let the user download the file and provide a message if it didn't work. */
 
 			// load external sql
 			$file = $pixie_type . '_db.sql';
@@ -1137,15 +1158,15 @@ padding-top: 2em;
 			case 4 :
 				global $site_url;
 		?>
-		<div class="center"><br /><b>Congratulations!</b></div><br />
+		<div class="center" id="c-top"><br /><b>Congratulations!</b></div><br />
 		<div class="center"><img id="pixieicon" src="<?php print $site_url . 'files/images/apple_touch_icon.jpg'; ?>" alt="Pixie Logo jpg" /></div>
 		<div class="divcentertext2"><br />Your new <b>Pixie</b> web site is now setup and ready to use.</div>
-		<p>If you would like to add any <b>themes</b> or <b>modules</b>, be sure to visit the <a href="http://www.getpixie.co.uk" title="Pixie">Pixie website</a> to browse the collection. Please remember to delete the install directory within Pixie to secure your site.</p>
-		<div class="divcentertext2">What would you like to do <b>next</b>?
-		<br /><br /><a id="frontpage-url" href="<?php print $site_url; ?>" title="Visit the homepage">Visit your new homepage</a> or<br />
-		<a href="<?php print $site_url . 'admin/'; ?>" title="Login to Pixie">Login and start adding content</a> to your site...<br /></div>
-		<p>If you need <b>help</b> with Pixie, you can join the <a href="http://groups.google.com/group/pixie-cms" title="Pixie Forums">Pixie Forums</a> and start a discussion. <b>Everyone</b> is welcome.<br />
-		<br />If you would like to help <b>develop</b> Pixie, you can visit Pixie's <a href="http://code.google.com/p/pixie-cms/" title="Help develop Pixie">Google code project page</a> to get started.</p>
+		<p>If you would like to add <b>modules</b> or <b>themes</b>, be sure to visit the <a href="http://www.getpixie.co.uk" title="Pixie">Pixie website</a> to browse the collection. Please do also remember to delete the install directory within Pixie (As soon as possible.) To secure your site.</p>
+		<div class="divcentertext2"><u>What would you like to do now ?</u>
+		<br /><br />Login and <a href="<?php print $site_url . 'admin/'; ?>" title="Login to Pixie">start adding content</a> to your site?<br />
+		<a id="frontpage-url" href="<?php print $site_url; ?>" title="Visit the frontpage">View your new frontpage</a>?<br /></div>
+		<p>You can also join in the discussion or ask for <b>help</b> at the <a href="http://groups.google.com/group/pixie-cms" title="Pixie Forums">Pixie Forums</a>.<br />
+		<br />And if you would like to help <b>develop</b> Pixie, you can also visit the Pixie <a href="http://code.google.com/p/pixie-cms/" title="Help develop Pixie">Google code project page</a>, browse the latest development release or report any bugs.</p>
 		<div class="divcentertext2"><br /><b>Thank you for installing Pixie!</b></div><br />
 		<?php if ($debug == 'yes') { ?>
 		<div class="center" id="restart"><form action="index.php" method="post" id="restart-form" class="form"><input type="hidden" name="step" value="1" /><input type="submit" name="next" class="form_submit_b" value="Re-Install" /></form></div>
@@ -1484,6 +1505,7 @@ $zonelist = array('Pacific/Midway',
 	<!-- javascript -->
 	<script type="text/javascript" src="../jscript/jquery.js"></script>
 	<script type="text/javascript">
+    //<![CDATA[
     var $j = jQuery.noConflict();
 
     // Pixie external links jquery functions
@@ -1570,6 +1592,9 @@ $j(function(){
         window.open(this.href);
         return false;
     });
+
+        $j('#pixieicon').wait(2500).fadeOut('slow');
+
 });
 
    });
@@ -1581,7 +1606,9 @@ function googleTranslateElementInit() {
     pageLanguage: 'en'
   }, 'google_translate_element');
 }
-</script><script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    //]]>
+</script>
+<script type="text/javascript" src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <?php } ?>
 </body>
 </html>

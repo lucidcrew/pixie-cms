@@ -228,6 +228,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set
 		if (($message) || ($messageok)) {
 			echo "
 	<script type=\"text/javascript\">
+    //<![CDATA[
 		jQuery(function(){";
  			if ($message) {
  				if($GLOBALS['system_message'] != $message) {
@@ -240,7 +241,8 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set
  				echo "\n\t\t\tjQuery.post(\"admin/modules/ajax_message.php\",{ messageok: \"$messageok\" }, function(data){ jQuery(data).appendTo(\"div#message\"); jQuery(\"#message\").hide(); jQuery(\"#message\").fadeIn(\"slow\"); jQuery(\"#message\").css({ padding: \"5px\" }); jQuery(\"#message\").addClass(\"okmess\"); });";
  			}
 		echo "
-		}) 
+		})
+    //]]>
 	</script>\n";
 		}
 ?>
