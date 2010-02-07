@@ -1235,7 +1235,8 @@ padding-top: 2em;
 							<option value="it">Italiano</option>				<!--	Italian			-->
 							<option value="lv-lv">Latviešu</option>				<!--	Latvian			-->
 							<option value="pl">Polskie</option>				<!--	Polish			-->
-							<option value="pt">Portugu&ecirc;s</option>			<!--	Portuguese		-->
+							<option value="pt-br">Português do Brasil</option>		<!--	Portuguese Brazilian	-->
+							<option value="pt-pt">Português</option>			<!--	Portuguese		-->
 							<option value="ru">Русский</option>				<!--	Russian			-->
 							<option value="se-sv">Svenska</option>				<!--	Swedish			-->
 						</select>

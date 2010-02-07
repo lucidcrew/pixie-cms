@@ -273,7 +273,7 @@ class ShowTable {
 	   				} else if ($Type[$j] == 'longtext' || $Leng[$j]>800 || $Type[$j] == 'blob') {
 	   					if ($GLOBALS['rich_text_editor'] == 1) {
 	   						if (!$containsphp) {
-	   							echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea_ckeditor\">\n\t\t\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" id=\"$Nams[$j]\" cols=\"50\" class=\"rich-text\" rows=\"10\">" . htmlentities($Fild[$j], ENT_QUOTES, 'UTF-8') . "</textarea>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
+	   							echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea_ckeditor\">\n\t\t\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" id=\"$Nams[$j]\" cols=\"50\" class=\"ck-textarea\" rows=\"10\">" . htmlentities($Fild[$j], ENT_QUOTES, 'UTF-8') . "</textarea>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
 	   						} else {
 	   							echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_no_ckeditor\">" . htmlspecialchars($Fild[$j]) . "</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
 	   						}
@@ -729,27 +729,34 @@ class ShowTable {
 		echo "\t\t\t\t</ul>\n";
 		}
 
-		echo "<script type=\"text/javascript\">
-jQuery(function(){jQuery(document).ready(function(){jQuery('#mycarousel').jcarousel({animation:'500',wrap:'both',scroll:5,itemFirstInCallback:{onAfterAnimation:mycarousel_itemFirstInCallback}});});
-// Move the carousel to the current page
-function mycarousel_itemFirstInCallback(carousel,item,idx,state)
-{if(state=='init')carousel.scroll($scroll,false);};
-var \$currentLi = jQuery(\".current a\").parent();
-jQuery(document).ready(function(){jQuery(\"#mycarousel li\").not(\$currentLi).css(\"opacity\", \"1\");jQuery(\$currentLi).fadeIn().css(\"opacity\", \"0.9\");jQuery(\".current a\").fadeOut(500).fadeIn(1000);});
+		$carousel = <<<'EOD'
+<script type="text/javascript">//<![CDATA[
+    var $j = jQuery.noConflict();
+    $j(function(){
 
+	$j(document).ready(function(){
+	    $j('#mycarousel').jcarousel({animation:'500', wrap:'both', scroll:5, itemFirstInCallback:{onAfterAnimation:mycarousel_itemFirstInCallback}});
+	});
+		/* Move the carousel to the current page */
+		function mycarousel_itemFirstInCallback(carousel, item, idx, state) { if (state == 'init') carousel.scroll(5, false);};
+		    var currentLi = $j('.current a').parent();
+			$j(document).ready(function(){
+			    $j('#mycarousel li').not(currentLi).css('opacity', '1');
+			    $j(currentLi).fadeIn().css('opacity', '0.9');
+			    $j('.current a').fadeOut(500).fadeIn(1000);});
+				$j('#mycarousel li').hover(function () {
+				    $j(this).css('opacity', '0.9');
+				}, 
+				function () {
+				    $j(this).css('opacity', '1');
+				});
 
-jQuery(\"#mycarousel li\").hover(
-      function () {
-        jQuery(this).css(\"opacity\", \"0.9\");
-      }, 
-      function () {
-        jQuery(this).css(\"opacity\", \"1\");
-      }
-    );
+			});
 
+    //]]></script>
+EOD;
 
-});
-</script>\n\n";
+echo $carousel;
 
 	}
 // ------------------------------------------------------------------

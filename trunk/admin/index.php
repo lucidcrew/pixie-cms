@@ -159,7 +159,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set
 	<?php } ?>
 
 </head>
-  <?php flush(); /* Send the head so that the browser has something to do whilst it waits */ ?>
+    <?php flush(); /* Send the head so that the browser has something to do whilst it waits */ ?>
 <body class="pixie <?php $s . " "; $date_array = getdate(); print 'y' . $date_array['year'] . " "; print 'm' . $date_array['mon'] . " "; print 'd' . $date_array['mday'] . " "; print 'h' . $date_array['hours'] . " "; print $s; ?>">
 	<div id="message"></div>
 	<div id="pixie">
@@ -209,43 +209,51 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set
 			</div>
 		</div>
 
-  <?php if (PIXIE_DEBUG == 'yes') { /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>'; phpinfo(); } ?>
-
 	</div>
-    <!-- JavaScript includes are placed after the content at the very bottom of the page, just before the closing body tag. -->
-      <!-- This ensures that all content is loaded before manipulation of the DOM occurs. It also fixes a bug in opera where opera tries to load the carousel too early. -->
+    <?php if ($s != 'login') /* Check to see if we need to add IE specific stylesheets to ckeditor */ { $ck_cssie = 'themes/' . $site_theme . '/ie.css'; $ck_cssie6 = 'themes/' . $site_theme . '/ie6.css'; $ck_cssie7 = 'themes/' . $site_theme . '/ie7.css'; $ck_csshandheld = 'themes/' . $site_theme . '/handheld.css'; /* Check to see if we need to add handheld specific stylesheets to ckeditor */ /* End if not logged in */ } ?>
 	<!-- javascript -->
-	<script type="text/javascript" src="jscript/tags.js"></script>
+	<script type="text/javascript">    //<![CDATA[
+	var $j = jQuery.noConflict();
+    <?php if ($s != 'login') /* Check to see if we need to add IE specific stylesheets to ckeditor */ { ?>
+	globalUrlVars = { pixieSiteUrl : '<?php print $site_url; ?>', pixieThemeDir : '<?php print $site_theme; ?>'
+	<?php if (file_exists($ck_cssie)) { ?>
+	, cssCssie : '/ie.css'
+	<?php } if (file_exists($ck_cssie6)) { ?>
+	, cssCssie6 : '/ie6.css'
+	<?php } if (file_exists($ck_cssie7)) { ?>
+	, cssCssie7 : '/ie7.css'
+	<?php } if (file_exists($ck_csshandheld)) { ?>
+	, cssHandheld : '/handheld.css'
+	<?php } ?> };
+    <?php /* End if not logged in */ } ?>
+    <?php global $message; if (($message) || ($messageok)) { ?>
+	$j(function(){
+
+	    function pixieErrorMessage() {
+		$j.post('admin/modules/ajax_message.php', { message: '<?php print $message ?>' }, function(data){ $j(data).appendTo('div#message'); $j('#message').hide(); $j('#message').fadeIn('slow'); $j('#message').css({ padding: '5px' }); $j('#message').addClass('errormess'); });
+	    };  /* End function PixieErrorMessage */
+	    function pixieOkMessage() {
+		$j.post('admin/modules/ajax_message.php', { message: '<?php print $message ?>', back: 'no' }, function(data){ $j(data).appendTo('div#message'); $j('#message').hide(); $j('#message').fadeIn('slow'); $j('#message').css({ padding: '5px' }); $j('#message').addClass('okmess'); });
+	    };  /* End function PixieOkMessage */
+	    function pixieLoginMessage() {
+		$j.post('admin/modules/ajax_message.php', { messageok: '<?php print $messageok ?>' }, function(data){ $j(data).appendTo('div#message'); $j('#message').hide(); $j('#message').fadeIn('slow'); $j('#message').css({ padding: '5px' }); $j('#message').addClass('okmess'); });
+	    };  /* End function PixieLoginMessage */
+
+	<?php if ($message) { if($GLOBALS['system_message'] != $message) { ?>
+	    pixieErrorMessage(); <?php } else { ?> pixieOkMessage(); <?php } ?>
+	<?php } else if ($messageok) { safe_update('pixie_settings', "value = now()", "name = 'dbupdatetime'"); ?> pixieLoginMessage();<?php } ?>
+
+		});  /* End jQuery function */
+
+    <?php } ?>				//]]></script>
+	<?php if ($s != 'login') { ?><script type="text/javascript" src="jscript/tags.js"></script><?php } ?>
 	<script type="text/javascript" src="jscript/interface.js"></script>
 	<script type="text/javascript" src="jscript/slider.js"></script>
-	<script type="text/javascript" src="jscript/ajaxfileupload.js"></script>
-	<script type="text/javascript" src="jscript/thickbox.js"></script>
-	<script type="text/javascript" src="jscript/ckeditor/ckeditor.js"></script>
-	<script type="text/javascript" src="jscript/pixie.js.php?s=<?php print $s; ?>&amp;cke_mode_adv=<?php print $cke_mode_adv; ?>"></script>
-
-<?php
-		global $message;
-		if (($message) || ($messageok)) {
-			echo "
-	<script type=\"text/javascript\">
-    //<![CDATA[
-		jQuery(function(){";
- 			if ($message) {
- 				if($GLOBALS['system_message'] != $message) {
- 					echo "\n\t\t\tjQuery.post(\"admin/modules/ajax_message.php\",{ message: \"$message\" }, function(data){ jQuery(data).appendTo(\"div#message\"); jQuery(\"#message\").hide(); jQuery(\"#message\").fadeIn(\"slow\"); jQuery(\"#message\").css({ padding: \"5px\" }); jQuery(\"#message\").addClass(\"errormess\"); });";
- 				} else {
- 					echo "\n\t\t\tjQuery.post(\"admin/modules/ajax_message.php\",{ message: \"$message\", back: \"no\" }, function(data){ jQuery(data).appendTo(\"div#message\"); jQuery(\"#message\").hide(); jQuery(\"#message\").fadeIn(\"slow\"); jQuery(\"#message\").css({ padding: \"5px\" }); jQuery(\"#message\").addClass(\"okmess\"); });";
- 				}
- 	 		} else if ($messageok) {
- 				safe_update('pixie_settings', "value = now()", "name = 'dbupdatetime'");
- 				echo "\n\t\t\tjQuery.post(\"admin/modules/ajax_message.php\",{ messageok: \"$messageok\" }, function(data){ jQuery(data).appendTo(\"div#message\"); jQuery(\"#message\").hide(); jQuery(\"#message\").fadeIn(\"slow\"); jQuery(\"#message\").css({ padding: \"5px\" }); jQuery(\"#message\").addClass(\"okmess\"); });";
- 			}
-		echo "
-		})
-    //]]>
-	</script>\n";
-		}
-?>
+	<?php if ($s != 'login') { ?><?php if ($s == 'publish' || 'settings') { ?><script type="text/javascript" src="jscript/ajaxfileupload.js"></script><?php } ?><?php } ?>
+	<?php if ($s != 'login') { ?><?php if ($s == 'publish' || 'settings') { ?><script type="text/javascript" src="jscript/thickbox.js"></script><?php } ?><?php } ?>
+	<?php if ($s != 'login') { ?><?php if (($pixie_s == 'publish' || 'settings') || ($pixie_x == 'myprofile')) { ?><script type="text/javascript" src="jscript/ckeditor/ckeditor.js"></script><?php } ?><?php } ?>
+	<script type="text/javascript" src="jscript/pixie.js.php?s=<?php print $s; ?>&amp;x=<?php print $x; ?>&amp;cke_mode_adv=<?php print $cke_mode_adv; ?>"></script>
+  <?php if (PIXIE_DEBUG == 'yes') { /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>'; phpinfo(); } ?>
 	<!-- bad behavior -->
 	<?php bb2_insert_head(); ?>
 	<!-- If javascript is disabled show more of the carousel -->
