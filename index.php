@@ -145,9 +145,9 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }						/* se
 	<link rel="stylesheet" href="<?php print $rel_path; ?>admin/themes/<?php print $site_theme; ?>/print.css" type="text/css" media="print" />
 	<?php
 	/* check for IE specific style files */
-	$cssie = "$rel_path . 'admin/themes/' . $site_theme . '/ie.css'";
-	$cssie6 = "$rel_path . 'admin/themes/' . $site_theme . '/ie6.css'";
-	$cssie7 = "$rel_path . 'admin/themes/' . $site_theme . '/ie7.css'";
+	$cssie = $rel_path . 'admin/themes/' . $site_theme . '/ie.css';
+	$cssie6 = $rel_path . 'admin/themes/' . $site_theme . '/ie6.css';
+	$cssie7 = $rel_path . 'admin/themes/' . $site_theme . '/ie7.css';
 
 	if (file_exists($cssie)) {
 	echo "\n\t<!--[if IE]><link href=\"" . $cssie . "\" type=\"text/css\" rel=\"stylesheet\" media=\"screen\" /><![endif]-->\n";
@@ -160,7 +160,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }						/* se
 	}
 
 	/* check for handheld style file */
-	$csshandheld = "$rel_path . 'admin/themes/' . $site_theme . '/handheld.css'";
+	$csshandheld = $rel_path . 'admin/themes/' . $site_theme . '/handheld.css';
 	if (file_exists($csshandheld)) {
 	echo "\n\t<link href=\"" . $csshandheld . "\" rel=\"stylesheet\" media=\"handheld\" />\n";
 	}

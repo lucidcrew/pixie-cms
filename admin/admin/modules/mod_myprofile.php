@@ -230,7 +230,7 @@ default:
 								<div class=\"form_label\"><label for=\"biography\">" . $lang['form_address_biography'] . " <span class=\"form_optional\">" . $lang['form_optional'] . "</span></label></div>";
 
 							if ($GLOBALS['rich_text_editor'] == 1) {
-	   						echo "\n\t\t\t\t\t\t\t\t<div class=\"form_item_textarea_ckeditor\">\n\t\t\t\t\t\t\t\t\t\t<textarea name=\"biography\" id=\"biography\" cols=\"50\" class=\"ckeditor\" rows=\"10\">$biography</textarea>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n";
+	   						echo "\n\t\t\t\t\t\t\t\t<div class=\"form_item_textarea_ckeditor\">\n\t\t\t\t\t\t\t\t\t\t<textarea name=\"biography\" id=\"biography\" cols=\"50\" class=\"ck-textarea\" rows=\"10\">$biography</textarea>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n";
 	   					} else {
 	   						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"biography\" class=\"form_item_textarea_no_ckeditor\">$biography</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
 	   					}

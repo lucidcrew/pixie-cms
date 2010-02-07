@@ -486,7 +486,7 @@ legend
 	padding: 8px 5px 5px 5px;
 	}
 
-tr:hover
+table.tbl tr:hover
 	{
 	background-image: url("images/bg_tr.gif");
 	background-repeat: repeat-x;

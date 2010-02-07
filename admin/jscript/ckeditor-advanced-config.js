@@ -2,24 +2,38 @@
 Pixie advanced ckeditor config
 */
 
-CKEDITOR.editorConfig = function(config)
-{
+var cssShortPath = 'admin/themes/';
+var cssDir = cssShortPath + globalUrlVars.pixieThemeDir;
+
+/* Use the optional stylesheets, if we've got them */
+if (globalUrlVars.cssCssie) { var cssCssie = ', ' + cssDir + globalUrlVars.cssCssie; }
+if (globalUrlVars.cssCssie6) { var cssCssie6 = ', ' + cssDir + globalUrlVars.cssCssie6; }
+if (globalUrlVars.cssCssie7) { var cssCssie7 = ', ' + cssDir + globalUrlVars.cssCssie7; }
+if (globalUrlVars.cssHandheld) { var cssHandheld = ', ' + cssDir + globalUrlVars.cssHandheld; }
+
+/* Tell ckeditor how we want it to be configured */
+CKEDITOR.editorConfig = function(config) {
+
+	config.baseHref = globalUrlVars.pixieSiteUrl;
+	config.docType = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+	config.contentsCss = [ cssDir + '/core.css', cssDir + '/layout.css', cssDir + '/navigation.css' cssCssie cssCssie6 cssCssie7 cssHandheld ];
+        config.filebrowserBrowseUrl = '?s=publish&x=filemanager&ck=1&ckfile=1';
+        config.filebrowserImageBrowseUrl = '?s=publish&x=filemanager&ck=1&ckimage=1';
+	config.filebrowserWindowWidth = '800';
+        config.filebrowserWindowHeight = '600';
 	/* Define changes to the advanced configuration here. For example: */
-	config.language = 'en-uk';
-	config.enterMode = CKEDITOR.ENTER_BR; /* Pet dislike. Enter key means br not p */
-	config.shiftEnterMode = CKEDITOR.ENTER_P; /* Paragraphs are now made by pressing shift and enter together */
-	config.skin = 'office2003'; /* Use skin = 'v2'; instead to make it look like it's tinymce */
-//	see : http://docs.cksource.com/CKEditor_3.x/Developers_Guide/File_Browser_(Uploader)
-// 	http://docs.cksource.com/CKEditor_3.x/Developers_Guide/File_Browser_(Uploader)/Dialogs_-_Adding_File_Browser
-//	http://docs.cksource.com/CKEditor_3.x/Developers_Guide/File_Browser_(Uploader)/Custom_File_Browser
-//	The next two lines don't work but we want them to, how?
-//	        config.filebrowserBrowseUrl = 'admin/index.php?s=publish&x=filemanager';
-//	        config.filebrowserUploadUrl = 'admin/index.php?s=publish&x=filemanager';
-/*        config.uiColor = '#9AB8F3'; */		/* Use to add color to the editor */
-        config.toolbar =
-        [
-	['Preview', '-', 'Cut','Copy','Paste', 'Find', 'Undo','Redo', '-','SelectAll','RemoveFormat', 'Table','HorizontalRule','PageBreak', 'ShowBlocks', '-', 'Templates', '-', 'Styles','Format', '-', 'Font','FontSize'],
+	/* config.language = 'en-uk'; */ /* Not required. ckeditor automatically selects language based on what your browser is set to */
+	/* config.contentsLangDirection = 'rtl'; */  /* Unhash this setting if you are using a right to left language like Japanese */
+	config.skin = 'office2003'; /* Use config.skin = 'v2'; instead to make it look like it's tinymce */
+	config.emailProtection = 'encode'; /* Protect email links from spammers */
+	config.resize_enabled = true;
+	config.colorButton_enableMore = true;
+        config.toolbar = [
+	['Preview', '-', 'Cut', 'Copy', 'Paste', 'Find', 'Undo', 'Redo', '-', 'SelectAll', 'RemoveFormat', 'Table', 'HorizontalRule', 'PageBreak', 'ShowBlocks', '-', 'Templates', '-', 'Styles', 'Format', '-', 'Font', 'FontSize'],
 	'/',
-	['Bold','Italic','Underline','Strike', 'SpecialChar', 'TextColor', '-','SpellChecker', 'Scayt', '-', 'NumberedList','BulletedList','-','Outdent','Indent','Blockquote', '-', 'JustifyRight','JustifyCenter','JustifyLeft', 'JustifyBlock', '-', 'Link','Unlink','Anchor', '-', 'Image','Flash', 'Smiley', 'BGColor', '-', 'NewPage', '-', 'Source', '-', 'Maximize']
+	['Bold', 'Italic', 'Underline', 'Strike', 'SpecialChar', 'TextColor', '-','SpellChecker', 'Scayt', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'Blockquote', '-', 'JustifyRight', 'JustifyCenter', 'JustifyLeft', 'JustifyBlock', '-', 'Link', 'Unlink', 'Anchor', '-', 'Image', 'Flash', 'Smiley', 'BGColor', '-', 'PageBreak', '-', 'NewPage', '-', 'Source', '-', 'Maximize']
         ];
+	config.enterMode = CKEDITOR.ENTER_BR; /* Pet dislike. Enter key means br not p */
+	config.shiftEnterMode = CKEDITOR.ENTER_P; /* Paragraphs are now made by pressing shift and enter together instead */
+
 };

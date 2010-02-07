@@ -53,7 +53,8 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 								if ($language == 'it') { echo "<option selected=\"selected\" value=\"it\">Italiano</option>"; } else { echo "<option value=\"it\">Italiano</option>"; } /* Italian */
 								if ($language == 'lv-lv') { echo "<option selected=\"selected\" value=\"lv-lv\">Latviešu</option>"; } else { echo "<option value=\"lv-lv\">Latviešu</option>"; } /* Latvian */
 								if ($language == 'pl') { echo "<option selected=\"selected\" value=\"pl\">Polskie</option>"; } else { echo "<option value=\"pl\">Polskie</option>"; } /* Polish */
-								if ($language == 'pt') { echo "<option selected=\"selected\" value=\"pt\">Português</option>"; } else { echo "<option value=\"pt\">Português</option>"; } /* Portuguese */
+								if ($language == 'pt-br') { echo "<option selected=\"selected\" value=\"pt-br\">Português do Brasil</option>"; } else { echo "<option value=\"pt-br\">Português do Brasil</option>"; } /* Portuguese Brazilian */
+								if ($language == 'pt-pt') { echo "<option selected=\"selected\" value=\"pt-pt\">Português</option>"; } else { echo "<option value=\"pt-pt\">Português</option>"; } /* Portuguese */
 								if ($language == 'ru') { echo "<option selected=\"selected\" value=\"ru\">Русский</option>"; } else { echo "<option value=\"ru\">Русский</option>"; } /* Russian */
 								if ($language == 'se-sv') { echo "<option selected=\"selected\" value=\"se-sv\">Svenska</option>"; } else { echo "<option value=\"se-sv\">Svenska</option>"; } /* Swedish */
 						echo "</select></div>
