@@ -170,7 +170,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set
 				<div id="tools">
 					<ul id="tools_list">
 						<li id="tool_skip"><a href="#pixie_body" title="<?php echo $lang['skip_to']; ?>"><?php echo $lang['skip_to']; ?></a></li>
-						<?php if (isset($GLOBALS['pixie_user'])) { ?><li id="tool_logout"><a href="?s=logout" title="<?php echo $lang['logout']; ?>"><?php echo $lang['logout']; ?></a></li><?php print "\n";} ?>
+						<?php if (isset($GLOBALS['pixie_user'])) { ?><?php if ($s != 'login') { ?><li id="tool_logout"><a href="?s=logout" title="<?php echo $lang['logout']; ?>"><?php echo $lang['logout']; ?></a></li><?php } ?><?php print "\n";} ?>
 						<li id="tool_view"><a href="<?php print $site_url;?>" title="<?php echo $lang['view_site']; ?>"><?php echo $lang['view_site']; ?></a></li>
 					</ul>	
 				</div>

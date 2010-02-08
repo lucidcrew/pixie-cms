@@ -211,7 +211,7 @@ function useCkeditor() {
 
 $j(function() {
 
-	if ($j('.ck-textarea').length >= 1) { useCkeditor(); }/* If ckeditor.js is loaded, lets see if we can use it on anything... */
+	if ($j('.ck-textarea').length >= 1) { useCkeditor(); } /* If ckeditor.js is loaded, lets see if we can use it on anything... */
 
 }); /* End jQuery function */
     <?php /* End if $pixie_s == publish */ } ?><?php /* End if not logged in */ } ?>
