@@ -1,0 +1,8 @@
+<?php define('FNAME', basename(__FILE__));
+class Page {
+  public $time=1265316658;
+  public $title='Pixie+with+flat-file+storage';
+  public $text='%3Ch2%3EWelcome%21%3C%2Fh2%3E%3Cimg+style%3D%22float%3Aright%22+src%3D%22..%2Ffiles%2Fimages%2Fflat-file.jpg%22+alt%3D%22flat-file%22+%2F%3E%3Cp%3EThere%27s+no+need+to+log-in+to+change+content%2C+as+this+demo+is+only+designed+to+show+the+possibilities+that+%3Cstrong%3EPixie%3C%2Fstrong%3E+developers+could+decide+to+employ.%3C%2Fp%3E%3Cp%3EYou+should+be+able+to+edit+existing+pages%2C+and+make+new+ones.+To+learn+more+about+the+code%2C+you+can+%3Cem%3Ehave+a+read%3C%2Fem%3E+of%A0+the+%3Ca+href%3D%22about.php%22%3EAbout+page%3C%2Fa%3E.%3C%2Fp%3E%3Cp%3EThis+is+a+work+still+in+progress%2C+with+the+main+considerations+being+simplicity%2C+minimal+code+and+hence+fast%2C+and+of+course+security.+However%2C+simplicity+does%A0%3Cstrong%3Enot%3C%2Fstrong%3E+hinder+the+user+from+having+any+features+that+they+require%2C+as+along+with+former+Pixie+philosophy%2C+it%27s+designed+to+be+extensible%2C+whether+through+server-side+scripting%2C+client-side+scripting+or+html%2Fcss+development.%3C%2Fp%3E%3Cp%3ETry+editing+this+%3Ca+href%3D%22test.php%22%3ETest+page%3C%2Fa%3E+to+start+off%2C+if+you+like.+Feel+free+to+alter+anything+you+want%2C+as+it+will+be+restored+periodically.+Let%27s+hope+it+doesn%27t+%3Cem%3Ecrash%3C%2Fem%3E%A0%3Cimg+src%3D%22..%2Ffiles%2Fimages%2Fbiggrin.gif%22+alt%3D%22biggrin%22+%2F%3E%3C%2Fp%3E%3Chr+%2F%3E%3Cp%3EEnjoy%2C+%7EIsa%3C%2Fp%3E';
+}
+include '../pixie.php';
+?>

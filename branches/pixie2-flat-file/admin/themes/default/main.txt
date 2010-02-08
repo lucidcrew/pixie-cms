@@ -1,0 +1,46 @@
+<!DOCTYPE html 
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><title>Pixie2-Demo {title}</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+  <link rel="stylesheet" type="text/css" href="../admin/themes/{theme}/core.css" media="screen" />
+
+  <!-- site icon -->
+  <link rel="Shortcut Icon" type="image/x-icon" href="../files/images/favicon.ico" />
+  <link rel="apple-touch-icon" href="../files/images/apple_touch_icon_pixie.jpg"/>
+</head>
+<body>
+<div id="admin_header">
+	<b>Hello guest</b>
+	<div id="admin_header_text">{cur_time}.</div>
+	<div id="admin_header_controls"><a href="./" title="Goto Pixie">Pixie</a><a href="index.php?op=new" title="Create new page">New</a></div>
+</div>
+<!--<div id="header">
+	<h1>A Demo for Pixie-devel using a flat-file database system</h1>
+</div>-->
+<div class="colmask rightmenu"><div class="colleft">
+        <div class="col1">
+        <!-- Column 1 start -->
+		<h1>{title}</h1>
+		{main_text}
+		<div class="admin" align="right">
+			<a href="{fname}?op=edit">Edit</a>
+		</div>
+        <!-- Column 1 end -->
+        </div>
+        <div class="col2">
+        <!-- Column 2 start -->
+	{side_text}
+		<div class="admin">
+			<a href="index.php?op=side">Edit</a>
+		</div>
+        <!-- Column 2 end -->
+        </div>
+</div></div>
+<div id="footer">
+        Page <b>last modified</b> on <i>{last_mod} UTC</i> and <b>rendered</b> in <i>{elapsed_time}</i> seconds.	
+</div>
+</body>
+</html>
+
