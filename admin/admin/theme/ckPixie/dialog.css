@@ -1,0 +1,79 @@
+body .cke_dialog{visibility:visible;}
+.cke_skin_ckPixie .cke_dialog_body{z-index:1;position:relative;border:#191919 2px solid;margin:2px 16px 20px;}
+.cke_skin_ckPixie .cke_dialog_tl,.cke_skin_ckPixie .cke_dialog_tr,.cke_skin_ckPixie .cke_dialog_tc,.cke_skin_ckPixie .cke_dialog_bl,.cke_skin_ckPixie .cke_dialog_br,.cke_skin_ckPixie .cke_dialog_bc{background-image:url(images/sprites.gif);background-repeat:no-repeat;position:absolute;z-index:-1;}
+.cke_skin_ckPixie .cke_dialog_tl{background-position:-16px -16px;height:16px;width:16px;top:0;left:0;}
+.cke_skin_ckPixie .cke_rtl .cke_dialog_tl{background-position:-16px -397px;}
+.cke_skin_ckPixie .cke_dialog_tr{background-position:-16px -76px;height:16px;width:16px;top:0;right:0;}
+.cke_skin_ckPixie .cke_rtl .cke_dialog_tr{background-position:-16px -457px;}
+.cke_skin_ckPixie .cke_dialog_tc{background-position:0 -136px;background-repeat:repeat-x;height:16px;top:0;left:16px;right:16px;}
+.cke_skin_ckPixie .cke_dialog_bl{background-position:-16px -196px;height:51px;width:30px;bottom:0;left:0;}
+.cke_skin_ckPixie .cke_rtl .cke_dialog_bl{background-position:-16px -517px;}
+.cke_skin_ckPixie .cke_dialog_br{background-position:-16px -263px;height:51px;width:30px;bottom:0;right:0;}
+.cke_skin_ckPixie .cke_rtl .cke_dialog_br{background-position:-16px -584px;}
+.cke_skin_ckPixie .cke_dialog_bc{background-position:0 -330px;background-repeat:repeat-x;height:51px;bottom:0;left:30px;right:30px;}
+.cke_skin_ckPixie .cke_dialog_ml,.cke_skin_ckPixie .cke_dialog_mr{background-repeat:repeat-y;position:absolute;width:16px;bottom:51px;top:auto;}
+.cke_skin_ckPixie .cke_dialog_ml{background-position:0 0;left:0;}
+.cke_skin_ckPixie .cke_dialog_mr{background-position:-16px 0;right:0;}
+.cke_skin_ckPixie .cke_browser_iequirks .cke_dialog_ml,.cke_skin_ckPixie .cke_browser_iequirks .cke_dialog_mr{margin-top:3px;}
+.cke_skin_ckPixie .cke_dialog_title{background-image:url(images/sprites.gif);background-position:0 -680px;background-repeat:repeat-x;font-weight:700;font-size:14pt;color:transparent;background-color:#191919;cursor:move;position:relative;min-height:19px;padding:2px 10px 26px;}
+.cke_skin_ckPixie .cke_browser_ie.cke_rtl .cke_dialog_title{position:static!important;unicode-bidi:bidi-override;}
+.cke_skin_ckPixie .cke_dialog_contents{background-color:#fff;overflow:auto;background-image:url(images/sprites.gif);background-position:-27px -1412px;background-repeat:repeat-x;padding:40px 20px 5px;}
+.cke_skin_ckPixie .cke_dialog_footer{background-color:#fff;text-align:right;padding-bottom:12px;background-image:url(images/logo-ckeditor.gif);background-position:bottom left;background-repeat:no-repeat;min-height:34px;}
+.cke_skin_ckPixie .cke_rtl .cke_dialog_footer{text-align:left;}
+.cke_skin_ckPixie .cke_dialog_tabs{height:23px;background-color:#191919;display:inline-block;margin-left:10px;margin-top:-27px;position:absolute;z-index:2;min-width:65px;text-align:center;right:25px;}
+.cke_skin_ckPixie a.cke_dialog_tab,.cke_skin_ckPixie a:link.cke_dialog_tab,.cke_skin_ckPixie a:active.cke_dialog_tab,.cke_skin_ckPixie a:hover.cke_dialog_tab,.cke_skin_ckPixie a:visited.cke_dialog_tab{color:#fff;border-left:1px solid #F0D902;border-right:1px solid #F0D902;border-top:1px solid #F6E601;height:15px;display:inline-block;cursor:pointer;min-width:63px;text-align:center;background-image:url(images/sprites.gif);background-position:-27px -1373px;background-repeat:repeat-x;padding:8px 6px 4px;}
+.cke_skin_ckPixie .cke_browser_gecko18 a.cke_dialog_tab,.cke_skin_ckPixie .cke_browser_gecko18 a:link.cke_dialog_tab,.cke_skin_ckPixie .cke_browser_gecko18 a:active.cke_dialog_tab,.cke_skin_ckPixie .cke_browser_gecko18 a:hover.cke_dialog_tab,.cke_skin_ckPixie .cke_browser_gecko18 a:visited.cke_dialog_tab{display:inline;position:relative;top:6px;}
+.cke_skin_ckPixie a:hover.cke_dialog_tab{color:#FFD906;}
+.cke_skin_ckPixie a.cke_dialog_tab_selected,.cke_skin_ckPixie a:link.cke_dialog_tab_selected,.cke_skin_ckPixie a:active.cke_dialog_tab_selected,.cke_skin_ckPixie a:hover.cke_dialog_tab_selected,.cke_skin_ckPixie a:visited.cke_dialog_tab_selected{border-bottom:2px solid #313131;cursor:default;color:#FFD906;background-image:url(images/sprites.gif);background-position:-27px -1331px;background-repeat:repeat-x;background-color:#191919;z-index:10;}
+.cke_skin_ckPixie .cke_single_page .cke_dialog_title{padding-bottom:3px;min-height:48px;}
+.cke_skin_ckPixie .cke_dialog_ui_vbox table,.cke_skin_ckPixie .cke_dialog_ui_hbox table{margin:auto;}
+.cke_skin_ckPixie .cke_dialog_ui_vbox_child{padding:5px 0;}
+.cke_skin_ckPixie input.cke_dialog_ui_input_text,.cke_skin_ckPixie input.cke_dialog_ui_input_password{background-color:#FFF;border:none;width:100%;height:18px;margin-top:1px;padding:1px 0 0;}
+.cke_skin_ckPixie textarea.cke_dialog_ui_input_textarea{background-color:#FFF;border:none;width:100%;overflow:auto;resize:none;padding:0;}
+.cke_skin_ckPixie div.cke_disabled .cke_dialog_ui_labeled_content *{background-color:#BBBABA;cursor:default;}
+.cke_skin_ckPixie .cke_dialog_ui_hbox{width:100%;}
+.cke_skin_ckPixie .cke_dialog_ui_hbox_first,.cke_skin_ckPixie .cke_dialog_ui_hbox_child,.cke_skin_ckPixie .cke_dialog_ui_hbox_last{vertical-align:top;}
+.cke_skin_ckPixie .cke_ltr .cke_dialog_ui_hbox_first,.cke_skin_ckPixie .cke_ltr .cke_dialog_ui_hbox_child{padding-right:10px;}
+.cke_skin_ckPixie .cke_rtl .cke_dialog_ui_hbox_first,.cke_skin_ckPixie .cke_rtl .cke_dialog_ui_hbox_child{padding-left:10px;}
+.cke_skin_ckPixie a.cke_dialog_ui_button{border-collapse:separate;cursor:default;}
+.cke_skin_ckPixie span.cke_dialog_ui_button{background-image:url(images/sprites.gif);background-position:-27px -765px;background-repeat:repeat-x;border:#BBBABA 1px solid;text-align:center;color:#4F4E4E;background-color:#fff;display:inline-block;cursor:default;padding:4px 12px;}
+.cke_skin_ckPixie span.cke_dialog_ui_button:hover{background-color:#DBDADA;background-image:none;}
+.cke_skin_ckPixie a.cke_dialog_ui_button span.cke_disabled{border:#898980 1px solid;color:#5e5e55;background-color:#c5c5b3;}
+.cke_skin_ckPixie a:focus span.cke_dialog_ui_button,.cke_skin_ckPixie a:active span.cke_dialog_ui_button{background-color:#DBDADA;}
+.cke_skin_ckPixie .cke_dialog_footer_buttons{display:inline-table;margin-right:25px;margin-left:25px;width:auto;position:relative;}
+.cke_skin_ckPixie .cke_browser_gecko18 .cke_dialog_footer_buttons{display:inline;}
+.cke_skin_ckPixie .cke_dialog_footer_buttons span.cke_dialog_ui_button{width:60px;margin:7px 0;}
+.cke_skin_ckPixie strong{font-weight:700;}
+.cke_skin_ckPixie .cke_dialog_close_button{background-image:url(../images/pixielogo.gif);background-repeat:no-repeat;background-position:center center;position:absolute;cursor:pointer;text-align:center;height:28px;width:70px;top:4px;}
+.cke_skin_ckPixie .cke_rtl .cke_dialog_close_button{left:10px;}
+.cke_skin_ckPixie .cke_browser_ie6.cke_rtl .cke_dialog_close_button{position:relative;float:left;margin-top:-55px;margin-left:-7px;}
+.cke_skin_ckPixie .cke_browser_iequirks.cke_rtl.cke_single_page .cke_dialog_close_button{margin-top:-32px;}
+.cke_skin_ckPixie .cke_browser_iequirks.cke_ltr .cke_dialog_close_button{margin-top:0;}
+.cke_skin_ckPixie .cke_dialog_ui_input_select{border:1px solid #BBBABA;background-color:#FFF;height:24px;}
+.cke_skin_ckPixie iframe.cke_dialog_ui_input_file{width:100%;height:25px;}
+.cke_skin_ckPixie .cke_dialog .cke_dark_background{background-position:-27px -763px;background-repeat:repeat-x;text-align:center;font-size:14px;border:transparent 1px solid;}
+.cke_skin_ckPixie .cke_dialog .cke_dark_background:hover{border:#0398D3 1px solid;cursor:pointer;}
+.cke_skin_ckPixie .cke_dialog .cke_hand{cursor:pointer;}
+.cke_skin_ckPixie .cke_dialog a.cke_btn_reset{float:left;background-position:0 -36px;background-image:url(images/mini.jpg);width:24px;height:24px;background-repeat:no-repeat;border:1px none;font-size:1px;}
+.cke_skin_ckPixie .cke_rtl .cke_dialog a.cke_btn_reset{float:left;}
+.cke_skin_ckPixie .cke_dialog a.cke_btn_locked,.cke_skin_ckPixie .cke_dialog a.cke_btn_unlocked{float:left;background-position:0 0;background-image:url(images/mini.jpg);width:40px;height:16px;background-repeat:no-repeat;border:none 1px;font-size:1px;opacity:0.9;}
+.cke_skin_ckPixie .cke_dialog a.cke_btn_locked:hover,.cke_skin_ckPixie .cke_dialog a.cke_btn_unlocked:hover{opacity:1;}
+.cke_skin_ckPixie .cke_dialog a.cke_btn_unlocked{background-position:0 -20px;background-image:url(images/mini.jpg);}
+.cke_skin_ckPixie .cke_dialog .cke_btn_over{border:outset 1px;cursor:pointer;}
+.cke_skin_ckPixie .cke_dialog #ImagePreviewBox{white-space:normal;border:1px solid #BBBABA;overflow:scroll;height:160px;width:230px;background-color:#FFF;float:left;padding:2px;}
+.cke_skin_ckPixie .cke_dialog #ImagePreviewLoader{position:absolute;white-space:normal;overflow:hidden;height:160px;width:230px;opacity:0.9;background-color:#e4e4e4;margin:2px;padding:2px;}
+.cke_skin_ckPixie .cke_dialog #FlashPreviewBox{white-space:normal;border:1px solid #BBBABA;overflow:auto;height:160px;width:390px;background-color:#FFF;margin-left:10px;padding:2px;}
+.cke_skin_ckPixie .cke_disabled{color:#BBBABA;}
+.cke_skin_ckPixie .cke_hc .cke_dialog_title,.cke_skin_ckPixie .cke_hc .cke_dialog_tabs,.cke_skin_ckPixie .cke_hc .cke_dialog_contents,.cke_skin_ckPixie .cke_hc .cke_dialog_footer{border-left:1px solid;border-right:1px solid;}
+.cke_skin_ckPixie .cke_hc .cke_dialog_title{border-top:1px solid;}
+.cke_skin_ckPixie .cke_hc .cke_dialog_footer{border-bottom:1px solid;}
+.cke_skin_ckPixie .cke_hc .cke_dialog_close_button span{display:inline;cursor:pointer;font-weight:700;position:relative;top:3px;}
+.cke_skin_ckPixie .cke_hc a.cke_btn_locked,.cke_skin_ckPixie .cke_hc a.cke_btn_unlocked,.cke_skin_ckPixie .cke_hc a.cke_btn_reset{border-style:solid;}
+.cke_skin_ckPixie table.cke_dialog.cke_browser_gecko,.cke_skin_ckPixie .cke_browser_gecko18 .cke_dialog_footer_buttons span.cke_dialog_ui_button{display:block;}
+.cke_skin_ckPixie .cke_rtl .cke_dialog_tabs,.cke_skin_ckPixie .cke_ltr .cke_dialog_close_button{left:26px;margin-top:10px;}
+.cke_skin_ckPixie .cke_single_page .cke_dialog_tabs,.cke_skin_ckPixie .cke_dialog_close_button span{display:none;}
+.cke_skin_ckPixie div.cke_dialog_ui_input_text,.cke_skin_ckPixie div.cke_dialog_ui_input_password,.cke_skin_ckPixie div.cke_dialog_ui_input_textarea{background-color:#FFF;border:1px solid #BBBABA;margin-bottom:4px;padding:1px 0;}
+.cke_dialog_ui_labeled_label{padding-right:20px;}
+#hicolor,#selhicolor{margin-bottom:2px;color:#BBBABA;border-color:#BBBABA;}
+.cke_skin_ckPixie .cke_dialog_ui_vbox table,.cke_skin_ckPixie .cke_dialog_ui_hbox table td.cke_dialog_ui_vbox_child,.cke_skin_ckPixie .cke_rtl .cke_dialog a.cke_btn_locked,.cke_skin_ckPixie .cke_rtl .cke_dialog a.cke_btn_unlocked{float:right;}
+.cke_skin_ckPixie .cke_dialog .cke_centered,.cke_skin_ckPixie .cke_dialog .cke_light_background{text-align:center;}

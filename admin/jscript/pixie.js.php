@@ -194,24 +194,36 @@ function completeCallback(response) {
 }
 
 
-
+/* A function to apply ckeditor instances to any textarea that has the class ck-textarea */
 function useCkeditor() {
 
-/* CKEDITOR.basePath = 'jscript/ckeditor/'; */
-  <?php if ($pixie_cke_mode_adv == 'yes') { ?> CKEDITOR.config.customConfig = '../ckeditor-advanced-config.js';
-  <?php } else { ?> CKEDITOR.config.customConfig = '../ckeditor-config.js'; <?php } ?>
-/* CKEDITOR.plugins.addExternal( 'sample', '/myplugins/sample/' ); */
-/* CKEDITOR.skins.addExternal( 'sample', '/myplugins/sample/' ); */
-	CKEDITOR.replaceClass = 'ck-textarea';
+    CKEDITOR.plugins.addExternal('pixieGeSHi', globalUrlVars.pixieSiteUrl + 'admin/jscript/editor-plugins/pixieGeSHi/'); /* Relative paths above the ckeditor/plugins/ dir don't work without a full path, I think it's a bug */
+    CKEDITOR.plugins.addExternal('pixiePageBreak', globalUrlVars.pixieSiteUrl + 'admin/jscript/editor-plugins/pixiePageBreak/'); /* Relative paths above the ckeditor/plugins/ dir don't work without a full path, I think it's a bug */
+    CKEDITOR.config.customConfig = '../ckeditor-config.js';
+    CKEDITOR.replaceClass = 'ck-textarea';
 
 
 };  /* End function useCkeditor */
 
 
+/* A function to apply an advanced toolbar toggle switch to the top right right of ckeditor */
+function ckToolbarSlider() {
+
+    $j('.form_item_textarea_ckeditor').prepend('<a class=\"advanced-cke-toggle\" href=\"javascript:void(0);\" title=\"Toggle advanced Mode\">&#43;</a>'); /* Needs language for the title tooltip. */
+    $j('.advanced-cke-toggle').css('float', 'left').css('position', 'absolute').css('right', '4%').css('margin-top', '5px');
+    $j('.advanced-cke-toggle').click(function(event) { 
+	event.preventDefault();
+	$j('.cke_skin_ckPixie .cke_toolbar:first-child').toggle();
+    });
+
+
+};  /* End function ckToolbarSlider */
+
+
 
 $j(function() {
 
-	if ($j('.ck-textarea').length >= 1) { useCkeditor(); } /* If ckeditor.js is loaded, lets see if we can use it on anything... */
+	if ($j('.ck-textarea').length >= 1) { useCkeditor(); ckToolbarSlider(); } /* If ckeditor.js is loaded, lets see if we can use it on anything... */
 
 }); /* End jQuery function */
     <?php /* End if $pixie_s == publish */ } ?><?php /* End if not logged in */ } ?>

@@ -162,7 +162,7 @@ img
 
 html
 	{
-	background-color: #191919;
+	background-color: #191919; /* !Please do not apply colours to the html tag, it breaks stuff and is a bad habit to get into. */
 	}
 
 body
@@ -649,3 +649,5 @@ h2
 	background-color:#000;
 	color:#0B9BD4;
 	}
+
+.ck-textarea {width:100%;display:none;}
