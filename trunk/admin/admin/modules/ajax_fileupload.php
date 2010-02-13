@@ -1,4 +1,11 @@
 <?php
+header('Content-Type: text/html; charset=utf-8');
+//*****************************************************************//
+// Pixie: The Small, Simple, Site Maker.                           //
+// ----------------------------------------------------------------//
+// Licence: GNU General Public License v3                   	   //
+// Title:   AJAX File Upload.					   //
+//*****************************************************************//
 if (defined('DIRECT_ACCESS')) { require_once '../../lib/lib_misc.php'; nukeProofSuit(); exit(); }
 define('DIRECT_ACCESS', 1);
 require_once '../../lib/lib_misc.php';										/* perform basic sanity checks */

@@ -1,0 +1,7 @@
+body{font-family:'Lucida Grande',Verdana,Arial,Sans-Serif;font-size:11pt;line-height:14pt;color:#333;background-color:#fff;}
+html{overflow-y:auto;background-color:#fff!important;margin-left:10px;margin-right:10px;}
+img,input,textarea{cursor:default;}
+textarea{border:1px solid #CCC;}
+legend{color:#0497D3;font-size:11pt;padding:5px;}
+a{color:#0497D3;outline-style:none;outline-width:medium;text-decoration:none;}
+a:hover{color:#191919;outline-style:none;outline-width:medium;text-decoration:none;}

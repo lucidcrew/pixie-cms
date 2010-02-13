@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: text/html; charset=utf-8');
 //***********************************************************************//
 // Pixie: The Small, Simple, Site Maker.                                 //
 // ----------------------------------------------------------------------//
@@ -74,8 +75,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set
 ?>
 <?php if ($gzip_admin == 'yes') { if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) if (extension_loaded('zlib')) ob_start('ob_gzhandler'); else ob_start(); ?>
 	<?php } /* Start gzip compression */ ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
 <head>
@@ -215,16 +215,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set
 	<script type="text/javascript">    //<![CDATA[
 	var $j = jQuery.noConflict();
     <?php if ($s != 'login') /* Check to see if we need to add IE specific stylesheets to ckeditor */ { ?>
-	globalUrlVars = { pixieSiteUrl : '<?php print $site_url; ?>', pixieThemeDir : '<?php print $site_theme; ?>'
-	<?php if (file_exists($ck_cssie)) { ?>
-	, cssCssie : '/ie.css'
-	<?php } if (file_exists($ck_cssie6)) { ?>
-	, cssCssie6 : '/ie6.css'
-	<?php } if (file_exists($ck_cssie7)) { ?>
-	, cssCssie7 : '/ie7.css'
-	<?php } if (file_exists($ck_csshandheld)) { ?>
-	, cssHandheld : '/handheld.css'
-	<?php } ?> };
+	globalUrlVars = { pixieSiteUrl : '<?php print $site_url; ?>', pixieThemeDir : '<?php print $site_theme; ?>' };
     <?php /* End if not logged in */ } ?>
     <?php global $message; if (($message) || ($messageok)) { ?>
 	$j(function(){
@@ -252,12 +243,12 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }					/* set
 	<?php if ($s != 'login') { ?><?php if ($s == 'publish' || 'settings') { ?><script type="text/javascript" src="jscript/ajaxfileupload.js"></script><?php } ?><?php } ?>
 	<?php if ($s != 'login') { ?><?php if ($s == 'publish' || 'settings') { ?><script type="text/javascript" src="jscript/thickbox.js"></script><?php } ?><?php } ?>
 	<?php if ($s != 'login') { ?><?php if (($pixie_s == 'publish' || 'settings') || ($pixie_x == 'myprofile')) { ?><script type="text/javascript" src="jscript/ckeditor/ckeditor.js"></script><?php } ?><?php } ?>
-	<script type="text/javascript" src="jscript/pixie.js.php?s=<?php print $s; ?>&amp;x=<?php print $x; ?>&amp;cke_mode_adv=<?php print $cke_mode_adv; ?>"></script>
+	<script type="text/javascript" src="jscript/pixie.js.php?s=<?php print $s; ?>&amp;x=<?php print $x; ?>"></script>
   <?php if (PIXIE_DEBUG == 'yes') { /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>'; phpinfo(); } ?>
 	<!-- bad behavior -->
 	<?php bb2_insert_head(); ?>
-	<!-- If javascript is disabled show more of the carousel -->
-	<noscript><style type="text/css">.jcarousel-skin-tango{max-height: 100%;}</style></noscript>
+	<!-- If javascript is disabled show more of the carousel and display the ckeditor textareas -->
+	<noscript><style type="text/css">.jcarousel-skin-tango{max-height:100%;}.ck-textarea{display:block;}</style></noscript>
 </body>
 </html>
 <!-- page generated in: <?php pagetime('print');?> -->
