@@ -39,7 +39,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 		} else {
 			$referral = $land['unknown_referrer'];
 		}
-		if ($GLOBALS['pixie_user']) {
+		if (isset($GLOBALS['pixie_user'])) {
 			$uname = $GLOBALS['pixie_user'];
 		} else {
 			$uname = 'Visitor';
@@ -65,7 +65,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 	function logme($message, $imp, $icon) 
 	{
 		$ip = $_SERVER['REMOTE_ADDR'];
-		if ($GLOBALS['pixie_user']) {
+		if (isset($GLOBALS['pixie_user'])) {
 			$uname = $GLOBALS['pixie_user'];
 		} else {
 			$uname = 'Visitor';

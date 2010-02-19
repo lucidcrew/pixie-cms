@@ -36,9 +36,9 @@
 	$pixie_sitename = NULL;
 	$pixie_email = NULL;
 	$pixie_name = NULL;
-	$error = NULL;
 	$error1 = NULL;
 	$step = NULL;
+	$site_url = NULL;
 	$urlstart = 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
 	$urlstart = str_replace('admin/install/index.php', "", $urlstart);
 	$pixie_url = $urlstart;
@@ -125,14 +125,14 @@
 							break;
 						}
 						/* loop through and drop each table */
-						foreach ($found_tables as $table_name) {
-							$sql = "DROP TABLE $pixie_database.$table_name";
+						foreach ($found_tables as $table_name_delete) {
+							$sql = "DROP TABLE $pixie_database.$table_name_delete";
 							if ($result = mysql_query($sql)){
 								// We could echo a sucess message here if we wanted
 							}
 							else {
 								$pixie_step = 1;
-								$error = 'Error deleting $table_name. MySQL Error: ' . mysql_error() . "";
+								$error = "Error deleting $table_name_delete. MySQL Error: " . mysql_error() . "";
 								break;
 							}
 						}
@@ -426,7 +426,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 			if ($pixie_dropolddata == 'Yes') {
 				$pixie_step = 2;
 			} else {
-				if (!$error) {
+				if (!isset($error)) {
 					$pixie_step = 2;
 				} else {
 					$pixie_step = 1;
@@ -465,12 +465,12 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 			if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
 
 			$table_name = 'pixie_settings';
-			$site_url_last = $pixie_url{strlen($pixie_url)-1};
+			$site_url_last = $pixie_url { strlen($pixie_url) - 1 };
 
 			$err = explode('|', $error);
 			$error = $err[0];
 
-			if (!$error) {
+			if (!isset($error)) {
 				if ($site_url_last != '/') {
 					$pixie_url = $pixie_url . '/';
 				}
@@ -527,6 +527,9 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 #	www.getpixie.co.uk                          
 
 #	This file was automatically created for you by the Pixie Installer.
+
+# Set the default charset
+AddDefaultCharset UTF-8
 
 # Set the default handler.
 DirectoryIndex index.php
@@ -681,7 +684,7 @@ fwrite($temp, "$data");
 			chmod('../../files/other/', 0777);
 			chmod('../../files/sqlbackups/', 0777);
 
-			if (!$error) {
+			if (!isset($error)) {
 				$pixie_step = 3;
 			} else {
 				$pixie_step = 2;
@@ -721,7 +724,7 @@ fwrite($temp, "$data");
 			$error = $err[0];
 						}
 
-			if (!$error) {	
+			if (!isset($error)) {	
 			$check_result_number = $check_result_number + 1;
 					}
 
@@ -733,7 +736,7 @@ fwrite($temp, "$data");
 			$error = $err[0];
 						}
 
-			if (!$error) {
+			if (!isset($error)) {
 			$check_result_number = $check_result_number + 1;
 					}
 
@@ -746,7 +749,7 @@ fwrite($temp, "$data");
 
 						}
 
-			if (!$error) {
+			if (!isset($error)) {
 			$check_result_number = $check_result_number + 1;
 					}
 
@@ -756,7 +759,7 @@ fwrite($temp, "$data");
 			$error = $err[0];
 						}
 
-			if (!$error) {
+			if (!isset($error)) {
 			$check_result_number = $check_result_number + 1;
 					}
 
@@ -822,7 +825,7 @@ www.getpixie.co.uk
 				mail($pixie_email, $subject, $emessage);
 			}
 
-			if (!$error) {
+			if (!isset($error)) {
 				$pixie_step = 4;
 			} else {
 				$pixie_step = 3;
@@ -894,10 +897,8 @@ www.getpixie.co.uk
 	www.getpixie.co.uk
 	-->
 	
-	<title>Pixie (www.getpixie.co.uk) - Installer</title>
-	
 	<!-- meta tags -->
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<meta name="keywords" content="toggle, binary, html, xhtml, css, php, xml, mysql, flash, actionscript, action, script, web standards, accessibility, scott, evans, scott evans, sunk, media, www.getpixie.co.uk, scripts, news, portfolio, shop, blog, web, design, print, identity, logo, designer, fonts, typography, england, uk, london, united kingdom, staines, middlesex, computers, mac, apple, osx, os x, windows, linux, itx, mini, pc, gadgets, itunes, mp3, technology, www.toggle.uk.com" />
 	<meta name="description" content="http://www.toggle.uk.com/ - web and print design portfolio for scott evans (uk)." />
 	<meta http-equiv="imagetoolbar" content="no" />
@@ -905,6 +906,8 @@ www.getpixie.co.uk
 	<meta name="revisit-after" content="7 days" />
 	<meta name="author" content="Scott Evans" />
   	<meta name="copyright" content="Scott Evans" />
+
+	<title>Pixie (www.getpixie.co.uk) - Installer</title>
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="../admin/theme/style.php" type="text/css" media="screen"  />
@@ -1138,7 +1141,7 @@ padding-top: 2em;
 	<div id="bg-wrap">
 	<div id="bg">
 	<?php
-	if ($error) {
+	if (isset($error)) {
 		print "<p class=\"error\">$error</p>";
 	}
 	?>
@@ -1169,7 +1172,7 @@ padding-top: 2em;
 		<br />And if you would like to help <b>develop</b> Pixie, you can also visit the Pixie <a href="http://code.google.com/p/pixie-cms/" title="Help develop Pixie">Google code project page</a>, browse the latest development release or report any bugs.</p>
 		<div class="divcentertext2"><br /><b>Thank you for installing Pixie!</b></div><br />
 		<?php if ($debug == 'yes') { ?>
-		<div class="center" id="restart"><form action="index.php" method="post" id="restart-form" class="form"><input type="hidden" name="step" value="1" /><input type="submit" name="next" class="form_submit_b" value="Re-Install" /></form></div>
+		<div class="center" id="restart"><form accept-charset="UTF-8" action="index.php" method="post" id="restart-form" class="form"><input type="hidden" name="step" value="1" /><input type="submit" name="next" class="form_submit_b" value="Re-Install" /></form></div>
 		<?php } ?>
 		<?php
 			break;
@@ -1178,7 +1181,7 @@ padding-top: 2em;
 		
 		<p class="toptext">Nearly finished!<br />Last step is to create the "Super User" account for Pixie:</p>
 	
-		<form action="index.php" method="post" id="form_user" class="form">
+		<form accept-charset="UTF-8" action="index.php" method="post" id="form_user" class="form">
 			<fieldset>
 			<legend>Super User information</legend>
 				<div class="form_row">
@@ -1216,7 +1219,7 @@ padding-top: 2em;
 		?>
 		<p class="toptext">Now Pixie needs some details about your site (you will have access to more settings once Pixie is installed):</p>
 		
-		<form action="index.php" method="post" id="form_site" class="form">
+		<form accept-charset="UTF-8" action="index.php" method="post" id="form_site" class="form">
 			<fieldset>
 			<legend>Site information</legend>
 				<div class="form_row">
@@ -1239,6 +1242,7 @@ padding-top: 2em;
 							<option value="pt-pt">Português</option>			<!--	Portuguese		-->
 							<option value="ru">Русский</option>				<!--	Russian			-->
 							<option value="se-sv">Svenska</option>				<!--	Swedish			-->
+							<option value="tr-tr">Türkçe</option>				<!--	Turkish			-->
 						</select>
 					</div>
 				</div>		
@@ -1414,7 +1418,7 @@ $zonelist = array('Pacific/Midway',
 
 		<p class="toptext">Welcome to the <a href="http://www.getpixie.co.uk" alt="Get Pixie!">Pixie</a> installer, just a few steps to go until you have your own Pixie powered website. Firstly we need your database details :</p>
 		
-		<form action="index.php" method="post" id="form_db" class="form">
+		<form accept-charset="UTF-8" action="index.php" method="post" id="form_db" class="form">
 			<fieldset>
 			<legend>Database information</legend>		
 				<div class="form_row ">

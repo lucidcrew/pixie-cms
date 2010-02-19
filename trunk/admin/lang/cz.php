@@ -7,7 +7,8 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 // Title: Language File (Česky). 
 // Author: Daniel Čekan (DJDaca), djdaca(zavinac)orangesoft.cz     //
 //*****************************************************************//
-
+if (!isset($delete)) { $delete = NULL; }
+if (!isset($username)) { $username = NULL; }
 $lang = array(
 	// system
 	'skip_to' => 'Skoč na obsah',

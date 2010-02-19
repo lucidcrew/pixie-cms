@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: text/html; charset=utf-8');
+header('Content-Type: text/html; charset=UTF-8');
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
@@ -128,7 +128,7 @@ p{font-size:90%;}
 <?php if (isset($_POST['submit'])) { print $geshi_out; } ?>
 
 <?php if (!(isset($_POST['submit']))) { ?>
-<form action="<?php echo basename($_SERVER['PHP_SELF']); ?>" method="post">
+<form accept-charset="UTF-8" action="<?php echo basename($_SERVER['PHP_SELF']); ?>" method="post">
 <h3 id="lang">Choose a language *</h3>
 <p>
 <div id="style-radio"><input type="radio" name="style_type" value="1" checked> Use inline syles (<a href="http://qbnz.com/highlighter/geshi-doc.html#using-css-classes" target="_blank">?</a>)</input><br /><input type="radio" name="style_type" value="2"> Use your own css</input><br /><br />

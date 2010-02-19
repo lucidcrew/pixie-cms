@@ -68,7 +68,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 			$rel_path = './';
 		}
 
-		if (!$s) {
+		if ((!isset($s)) || (!$s)) {
 			$last = $default_page{strlen($default_page)-1};
 			$default = explode('/', $default_page);
 			$s = sterilise($default['0']);
@@ -79,14 +79,16 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 		
 		$s = public_check_404($s);
 		
-		if ($s == '404') {
+		if ((isset($s)) && ($s == '404')) {
 			$m = "";
 			$x = "";
 			$p = "";
 		}
 		
 		if ($m == 'rss') {
+			if (isset($s)) {
 			$rss = public_check_rss($s);
+			}
 			if (!$rss) {
 				$s = '404';
 				$m = "";
@@ -95,7 +97,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 			}
 		}
 		
-		$page_type = check_type($s);
+		if (isset($s)) { $page_type = check_type($s); }
 		if ($page_type == 'dynamic') {
 			$style = $page_type;
 		} else if ($page_type == 'static') {
@@ -206,7 +208,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 
 				echo "
 	<div id=\"admin_header\">
-		<h1>Hello " . firstword($realname) . "</h1>
+		<h1>Hello "; if (isset($realname)) { echo firstword($realname); } echo "</h1>
 		<div id=\"admin_header_text\"><p>" . safe_strftime($date_format, time()) . ". Currently your site has $user_count visitor(s) online.</p></div>
 		<div id=\"admin_header_controls\"><p><a href=\"" . $site_url . "admin/\" title=\"Goto Pixie\">Pixie</a><a href=\"" . $site_url . "admin/?s=logout\" title=\"Logout of pixie\">Logout</a></p></div>
 	</div>\n";
@@ -220,7 +222,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 		
 		// will probably need support for child pages!
 		
-		if ($ptitle) {
+		if (isset($ptitle)) {
 			echo $ptitle;
 		} else {		
 			if ($page_type == 'dynamic' && $m == 'permalink') {

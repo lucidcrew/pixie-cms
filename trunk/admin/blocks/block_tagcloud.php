@@ -7,6 +7,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 // Title: Block Tag Cloud.                                         //
 //*****************************************************************//
 
+if (isset($s)) {
 $id = get_page_id($s);
 $type = check_type($s);
 global $lang;
@@ -25,4 +26,5 @@ if ($type == 'dynamic') {
 	public_tag_cloud($table, $condition);
 }
 echo "\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"block_footer\"></div>\n\t\t\t\t\t</div>\n";
+}
 ?>

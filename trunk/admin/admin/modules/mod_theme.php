@@ -7,8 +7,9 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 // Title: Theme Settings.                                          //
 //*****************************************************************//
 
-if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
-	
+if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
+
+    if (isset($do)) {
 	if ($do) {
 		if (file_exists('themes/' . $do)) {
 			$ok = safe_update('pixie_settings',  
@@ -21,6 +22,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 			$message = $lang['theme_error'];
 		}
 	}
+    }
 
 	$prefs = get_prefs();
 	extract($prefs);

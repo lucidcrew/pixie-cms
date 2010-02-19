@@ -6,7 +6,8 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 // Licence: GNU General Public License v3                   	   //
 // Title: Language File (Finnish FIh) Translation: Joni Karki      //
 //*****************************************************************//
-
+if (!isset($delete)) { $delete = NULL; }
+if (!isset($username)) { $username = NULL; }
 $lang = array(
 	// system
 	'skip_to' => 'Suoraan sis&#228;lt&#246;&#246;n',

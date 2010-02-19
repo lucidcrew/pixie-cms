@@ -1,64 +1,9 @@
 /* pixie Myaccount */
-
-#log_tools
-	{
-	float: right;
-	}
-
-#log_tools li
-	{
-	display: inline;
-	margin-left: 3px;
-	background-image: url("images/bg_button_grey.gif");
-	background-repeat: repeat-x;
-	padding: 6px 0;
-	}
-
-#log_tools li a
-	{
-	color: #191919;
-	}
-
-#log_tools li a:hover
-	{
-	color: #767676;
-	}
-
-#log_tools li a:hover
-	{
-	border: 1px solid #b9b8b8;
-	}
-
-#log_tools li:hover
-	{
-	background-image: url("images/bg_button_grey_hover.gif");
-	background-repeat: repeat-x;	
-	}
-
-#log_rss a
-	{
-	background-image: url("images/icons/rssorange.png");
-	background-repeat: no-repeat;
-	background-position: 10px 9px;
-	padding: 7px 12px 5px 34px;
-	border: 1px solid #7f7f7f;
-	}
-
-#log_switch_referral a
-	{
-	padding: 7px 12px 5px 12px;
-	border: 1px solid #7f7f7f;
-	}
-
-#log_switch_latest a
-	{
-	padding: 7px 12px 5px 12px;
-	border: 1px solid #7f7f7f;
-	}
-
-#blocks
-	{
-	margin-top: 33px;
-	}
-	
-
+#log_tools{float:right;}
+#log_tools li{display:inline;margin-left:3px;background-image:url(images/bg_button_grey.gif);background-repeat:repeat-x;padding:6px 0;}
+#log_tools li a{color:#191919;}
+#log_tools li a:hover{color:#767676;border:1px solid #b9b8b8;}
+#log_tools li:hover{background-image:url(images/bg_button_grey_hover.gif);background-repeat:repeat-x;}
+#log_rss a{background-image:url(images/icons/rssorange.png);background-repeat:no-repeat;background-position:10px 9px;border:1px solid #7f7f7f;padding:7px 12px 5px 34px;}
+#blocks{margin-top:33px;}
+#log_switch_referral a,#log_switch_latest a{border:1px solid #7f7f7f;padding:7px 12px 5px;}

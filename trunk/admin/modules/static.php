@@ -12,26 +12,25 @@ switch ($do) {
   // Module Admin
 	case 'admin' :
 
-		if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
+		if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 1) {
 			$type = 'static';
 			$table_name = 'pixie_core';
 			$edit_id = 'page_id';
-			if (!$edit) {
+			if ((!isset($edit)) || (!$edit)) {
 				$edit = safe_field('page_id', 'pixie_core', "page_name='$x'");
 			}
 			admin_carousel($x);		
 			admin_head();	
-			admin_edit($table_name, $edit_id, $edit, $edit_exclude=array('page_id', 'page_type', 'page_name', 'page_description', 'page_display_name', 'page_blocks', 'admin', 'page_views', 'public', 'publish', 'hidden', 'searchable', 'page_order', 'last_modified', 'page_parent', 'in_navigation', 'privs'));
+			admin_edit($table_name, $edit_id, $edit, $edit_exclude = array('page_id', 'page_type', 'page_name', 'page_description', 'page_display_name', 'page_blocks', 'admin', 'page_views', 'public', 'publish', 'hidden', 'searchable', 'page_order', 'last_modified', 'page_parent', 'in_navigation', 'privs'));
 		}
 	break;
 
 	// Show Module
 	default :
-    if (!$s) {
-    		$s = 404;
-    	}
+
+	if ((!isset($s)) && (!$s)) { $s = 404; }
     
-		if ($s) {
+		if ((isset($s)) && ($s)) {
 			extract(safe_row('*', 'pixie_core', "page_name='$s'"));
 			echo "<div id=\"$s\">\n\t\t\t\t\t\t<h3>$page_display_name</h3>\n";
 			if(isset($_COOKIE['pixie_login'])) {

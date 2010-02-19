@@ -7,10 +7,14 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 // Title: lib_auth.                                                //
 //*****************************************************************//
 
-	if ($login_submit) {
-	
+	if ((isset($login_submit)) && ($login_submit)) {
+
+	if (!isset($username)) { $username = NULL; }
+	if (!isset($password)) { $password = NULL; }
+	if (!isset($remember)) { $remember = NULL; }
+
 		$log_in = auth_login($username, $password, $remember); 
-	
+
 		if (!$log_in) { 
 			$s = 'myaccount';
 			logme($lang['ok_login'], 'no', 'user'); 
@@ -19,17 +23,21 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 			logme($lang['failed_login'], 'yes', 'error'); 
 		}
 			
-	} else if ($s == 'logout') {
+	} else if ((isset($s)) && ($s == 'logout')) {
 
 		setcookie('pixie_login', ' ', time()-3600,'/'); $s = 'login';
 	
 	} else { 
 	
 	  $log_in = auth_check();
-	
-		if ($GLOBALS['pixie_user']) { 
-			if (!$s) { $s = 'myaccount';}
-		} else { 
+
+		if (isset($GLOBALS['pixie_user'])) {
+
+			if ($GLOBALS['pixie_user']) { 
+
+				if ((!isset($s)) && (!$s)) { $s = 'myaccount'; }
+
+			} else { 
 
 			/*if ($s == 'help') { 
 				$s = 'help';
@@ -38,6 +46,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 			/*}*/
 
 			$message = $log_in; 
+			}
 		}
 	}
 
@@ -60,7 +69,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 			logme($lang['logins_exceeded'], 'yes', 'error'); 
 			return $message;
 		} else {
-		if ($username and $password) {
+		if (isset($username) && isset($password)) {
 			$r = safe_field('user_name', 'pixie_users', "user_name = '$username'and 
 			pass = password(lower('" . doSlash($password) . "')) and privs >= 0");
 
@@ -71,7 +80,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 
         $nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
         
-			  if ($remember) {	                                                     // persistent cookie required
+			  if ((isset($remember)) && ($remember)) {	                                                     // persistent cookie required
 					setcookie('pixie_login', $username . ',' . md5($username . $nonce), time()+3600*24*365, '/'); 
 				} else {                                                               // session-only cookie required
 					setcookie('pixie_login', $username . ',' . md5($username . $nonce), 0, '/');    			        
@@ -80,8 +89,9 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
         $privs = safe_field('privs', 'pixie_users', "user_name='$username'");			 // login is good, create user
 	      $realname = safe_field('realname', 'pixie_users', "user_name='$username'");
 	      $nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
-	      $GLOBALS['pixie_real_name'] = $realname;
-        $GLOBALS['pixie_user_privs'] = $privs;
+	      if (isset($realname)) { $GLOBALS['pixie_real_name'] = $realname; }
+
+        if (isset($privs)) { $GLOBALS['pixie_user_privs'] = $privs; }
 				$GLOBALS['pixie_user'] = $username;
 				$GLOBALS['nonce'] = $nonce;
 				return '';                                     	
@@ -104,14 +114,15 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 		global $lang;
 		
 		if(isset($_COOKIE['pixie_login'])) {	
-			list($username,$cookie_hash) = split(',', $_COOKIE['pixie_login']);
+			list($username, $cookie_hash) = explode(',', $_COOKIE['pixie_login']);
 			$nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
 
 			if (md5($username . $nonce) == $cookie_hash) {														 // check nonce
 				$privs = safe_field('privs', 'pixie_users', "user_name='$username'");			 // login is good, create user
 	      $realname = safe_field('realname', 'pixie_users', "user_name='$username'");
-	      $GLOBALS['pixie_real_name'] = $realname;
-        $GLOBALS['pixie_user_privs'] = $privs;
+	      if (isset($realname)) { $GLOBALS['pixie_real_name'] = $realname; }
+
+        if (isset($privs)) { $GLOBALS['pixie_user_privs'] = $privs; }
 				$GLOBALS['pixie_user'] = $username;
 				return '';	
 			} else {                                                                 // something's wrong

@@ -16,7 +16,7 @@ $j(document).ready(function(){
 	$j('#message').click(function(){ $j(this).slideUp('normal'); $j('#message span').fadeOut('slow'); });
 });  /* End jQuery document ready function */
 
-    <?php if ($pixie_s != 'login') { ?>
+    <?php if ((isset($pixie_s)) && $pixie_s != 'login') { ?>
 $j(document).ready(function(){
 
 	var tagselect = { backgroundColor : '#0497d3', color : '#ffffff', padding : '1px 4px 1px 4px' };
@@ -28,7 +28,7 @@ $j(document).ready(function(){
 		$j('#tags').jTagging($j('#form_tags_list'), " ", tagnorm, tagselect, tagnormhover);
 		$j('#page_blocks').jTagging($j('#form_block_list'), " ", tagnorm, tagselect, tagnormhover);
 	}
-    <?php if ($pixie_s == 'settings') { ?>
+    <?php if ((isset($pixie_s)) && $pixie_s == 'settings') { ?>
 	$j('#pages').Sortable(
 	{
 		accept : 'page',
@@ -56,7 +56,7 @@ $j(document).ready(function(){
 	$j('.more_upload').show();
 	$j('.image_preview select').bind('change', preview);
     <?php /* End if $pixie_s == settings */ } ?>
-    <?php if ($pixie_s == 'myaccount' || 'publish') { ?>
+    <?php if ((isset($pixie_s)) && $pixie_s == 'myaccount' || 'publish') { ?>
 /* A function to apply the table sorter */
 function applyTablesort() {
 
@@ -104,7 +104,7 @@ function fetchTablesorterJs() {
 
 });  /* End jQuery document ready function */
     <?php /* End if $pixie_s == myaccount or publish */ } ?>
-    <?php if (($pixie_s == 'publish' || 'settings') || ($pixie_x == 'myprofile')) { ?>
+    <?php if ((isset($pixie_s)) && ($pixie_s == 'publish' || 'settings') || ($pixie_x == 'myprofile')) { ?>
 /* preview image */
 function preview() {
 
@@ -134,7 +134,7 @@ function upswitch(field) {
 	tfield = field;
 	$j('#' + field).parent().find('.more_upload').replaceWith("<span class='more_upload_start'><a href='#' onclick='cancel(); return false;' title='Cancel'>Cancel</a></span>");
 	$j('.more_upload').hide();
-	$j('#' + field).replaceWith("<form action=\"admin/modules/ajax_fileupload.php\" method=\"post\" id=\""+field+"\" class=\"inline_form\" enctype=\"multipart/form-data\" onsubmit=\"return AIM.submit(this, {'onStart' : startCallback, 'onComplete' : completeCallback})\"><input type=\"file\" name=\"upload[]\" id=\"upload\" size=\"18\" /><input type=\"hidden\" name=\"field\" value=\""+field+"\"><input type=\"submit\" name=\"submit_upload\" class=\"submit_upload\" value=\"Upload\" /><input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"10240\"></form>");
+	$j('#' + field).replaceWith("<form accept-charset=\"UTF-8\" action=\"admin/modules/ajax_fileupload.php\" method=\"post\" id=\""+field+"\" class=\"inline_form\" enctype=\"multipart/form-data\" onsubmit=\"return AIM.submit(this, {'onStart' : startCallback, 'onComplete' : completeCallback})\"><input type=\"file\" name=\"upload[]\" id=\"upload\" size=\"18\" /><input type=\"hidden\" name=\"field\" value=\""+field+"\"><input type=\"submit\" name=\"submit_upload\" class=\"submit_upload\" value=\"Upload\" /><input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"10240\"></form>");
 	$j('.form_submit').attr('disabled', 'true');
 
 
@@ -220,10 +220,35 @@ function ckToolbarSlider() {
 };  /* End function ckToolbarSlider */
 
 
+/* A function to apply the carousel */
+function carouselInit() {
 
+    /* A function to move the carousel to the current page */
+    function mycarousel_itemFirstInCallback(carousel, item, idx, state) { if (state == 'init') carousel.scroll(5, false);};
+	$j(document).ready(function(){
+	    $j('#mycarousel').jcarousel({animation:'500', wrap:'both', scroll:5, itemFirstInCallback:{onAfterAnimation:mycarousel_itemFirstInCallback}
+
+	});
+	var currentLi = $j('.current a').parent();
+
+	    $j(document).ready(function(){
+		$j('#mycarousel li').not(currentLi).css('opacity', '1');
+		$j(currentLi).fadeIn().css('opacity', '0.9');
+		$j('.current a').fadeOut(500).fadeIn(1000);});
+		    $j('#mycarousel li').hover(function() { $j(this).css('opacity', '0.9'); }, 
+			function () { $j(this).css('opacity', '1'); });
+
+	    });
+
+
+};  /* End function carouselInit */
+
+
+/* The main jQuery function */
 $j(function() {
 
 	if ($j('.ck-textarea').length >= 1) { useCkeditor(); ckToolbarSlider(); } /* If ckeditor.js is loaded, lets see if we can use it on anything... */
+	if ($j('#mycarousel').length >= 1) { carouselInit(); } /* If the carousel container is present, load up the carousel... */
 
 }); /* End jQuery function */
     <?php /* End if $pixie_s == publish */ } ?><?php /* End if not logged in */ } ?>

@@ -12,7 +12,7 @@ CKEDITOR.editorConfig = function(config) {
 	config.docType = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 	config.contentsCss = [ 'admin/admin/theme/ckPixie/contents.css' ];
         config.filebrowserBrowseUrl = '?s=publish&x=filemanager&ck=1&ckfile=1';
-        /* config.filebrowserImageBrowseUrl = '?s=publish&x=filemanager&ck=1&ckimage=1'; */ /* Disabled until http://dev.fckeditor.net/ticket/4987 is fixed */
+        config.filebrowserImageBrowseUrl = '?s=publish&x=filemanager&ck=1&ckimage=1';
 	config.filebrowserWindowWidth = '800';
         config.filebrowserWindowHeight = '600';
 	/* Define changes to the advanced configuration here. For example: */

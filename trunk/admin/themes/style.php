@@ -1,12 +1,12 @@
 <?php
+header('Content-type: text/css'); /* declare the output of the file as CSS */
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
 // Licence: GNU General Public License v3                   	   //
 // Title: Style Import.                                            //
 //*****************************************************************//
-header('Content-type: text/css'); /* declare the output of the file as CSS */
-if (defined('DIRECT_ACCESS')) { require_once '../lib/lib_misc.php'; nukeProofSuit(); exit(); }
+if (defined('DIRECT_ACCESS')) { require_once '../lib/lib_misc.php'; pixieExit(); exit(); }
 define('DIRECT_ACCESS', 1);
 require_once '../lib/lib_misc.php';										/* perform basic sanity checks */
 	bombShelter();                  									/* check URL size */
@@ -20,9 +20,10 @@ require_once '../lib/lib_misc.php';										/* perform basic sanity checks */
 	@import url($pixie_theme/navigation.css);
 	";
 
-	$file = $pixie_theme . '/' . $pixie_s . '.css';
-
-	if (file_exists($file)) {
-	echo "@import url($file);";
-				}
+	if (isset($pixie_s)) {
+	    $file = $pixie_theme . '/' . $pixie_s . '.css';
+	    if (file_exists($file)) {
+	    echo "@import url($file);";
+	    }
+	}
 ?>

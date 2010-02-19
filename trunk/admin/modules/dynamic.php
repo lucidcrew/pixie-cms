@@ -12,7 +12,7 @@ switch ($do) {
   // Module Admin
 	case 'admin':
 
-		if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
+		if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 1) {
 			if ($x == "") {
 				$message = 'Please create a dynamic page in the settings area.';
 			} else {
@@ -22,12 +22,12 @@ switch ($do) {
 				$page_id = safe_field('page_id', 'pixie_core', "page_name='$x'"); 
 
 					
-				if ($go == 'new') {
+				if ((isset($go)) && ($go == 'new')) {
 					admin_head();
-					admin_new($table_name, $edit_exclude=array('page_id', 'post_id', 'last_modified', 'author', 'post_views', 'post_slug'));
-				} else if ($edit) {
+					admin_new($table_name, $edit_exclude = array('page_id', 'post_id', 'last_modified', 'author', 'post_views', 'post_slug'));
+				} else if ((isset($edit)) && ($edit)) {
 					admin_head();
-					admin_edit($table_name, $edit_id, $edit, $edit_exclude=array('page_id', 'post_id', 'last_modified', 'last_modified_by', 'author', 'post_views', 'post_slug'));
+					admin_edit($table_name, $edit_id, $edit, $edit_exclude = array('page_id', 'post_id', 'last_modified', 'last_modified_by', 'author', 'post_views', 'post_slug'));
 				} else {
 					admin_carousel($x);
 					echo "\t\t\t<div id=\"blocks\">\n";
@@ -36,7 +36,7 @@ switch ($do) {
 					echo "\t\t\t\t</div>\n";
 					admin_head();
 					echo "\t\t\t\t<div id=\"pixie_content\">";
-					admin_overview($table_name, 'where page_id = ' . $page_id . '', 'posted', 'desc', $exclude=array('page_id', 'post_id', 'author', 'public', 'comments', 'tags', 'content', 'last_modified', 'last_modified_by', 'post_views', 'post_slug'), '15', $type);
+					admin_overview($table_name, 'where page_id = ' . $page_id . '', 'posted', 'desc', $exclude = array('page_id', 'post_id', 'author', 'public', 'comments', 'tags', 'content', 'last_modified', 'last_modified_by', 'post_views', 'post_slug'), '15', $type);
 					echo "\t\t\t\t</div>";
 				}
 			}
@@ -57,7 +57,7 @@ switch ($do) {
   	break;
 
   	case 'permalink':
-  		if ($comment_submit) {
+  		if (isset($comment_submit)) {
   				if ($web == 'http://') {
   					$web = "";
   				}
@@ -74,14 +74,14 @@ switch ($do) {
 				$comment = nl2br($comment); 
 				$comment = str_replace('<a', "<a rel=\"external nofollow\"", $comment); 
 				$name = strip_tags($name);
-				$email = strip_tags($email);
+				if (isset($email)) { $email = strip_tags($email); }
 				$web = strip_tags($web);
 				$post = strip_tags($post);
 				
 				$scomment = sterilise($comment);
 				$sweb = sterilise($web);
 				$sname = sterilise($name);
-				$semail = sterilise($email);
+				if (isset($email)) { $semail = sterilise($email); }
 
 				$scream = array();
 				if (!$name) { $error .= $lang['comment_name_error'] . ' '; $scream[] = 'name'; }
@@ -113,7 +113,7 @@ switch ($do) {
 				
 						// PROBABLY NEED TO SAVE DATE ON COMMENT MANUALLY
 
-				if (!$error) {
+				if (!isset($error)) {
 
 			if ($duplicate !== 1) {
 
@@ -127,7 +127,9 @@ switch ($do) {
 						$comment_ok = safe_insert('pixie_module_comments', $sql);
 						$title = safe_field('title', 'pixie_dynamic_posts', "post_id ='$post'");
 						$countcom = count(safe_rows('*', 'pixie_module_comments', "post_id ='$post'"));
+						if (isset($s)) {
 						logme($name . ' ' . $lang['comment_save_log'] . "<a href=\"" . createURL($s, $m, $x) . "#comment_$countcom\" title=\"$title\">$title</a>.", 'no', 'comment');
+						}
 
 
 					} else {
@@ -174,21 +176,25 @@ switch ($do) {
   	break;
 
   	case 'tags':
+		if (isset($s)) {
   		$id = get_page_id($s);
   		echo "<h3>$page_display_name (" . $lang['tags'] . ")</h3>\n\t\t\t\t\t<div class=\"tag_section\">\n";
 	  	public_tag_cloud('pixie_dynamic_posts', 'page_id = ' . $id . '');
 	  	echo "\t\t\t\t\t</div>\n";
+		}
   	break;
   	
   	default:
   		$mtitle = "$page_display_name";
+		if (isset($s)) {
   		$id = get_page_id($s);
   		$rs = safe_rows_start('*', 'pixie_dynamic_posts', "page_id = '$id' and public = 'yes' and posted < now() order by posted desc limit $posts_per_page");
 	  	show_all($rs);
-		break;
+		}
+	break;
 		}
 		
-	break;
+    break;
 }
 
 // ------------------------------------------------------------------
@@ -199,8 +205,10 @@ switch ($do) {
 		echo "<h3>$mtitle</h3>\n";
 
 		if (!$m) {
+		    if (isset($s)) {
 			$page_description = safe_field('page_description', 'pixie_core', "page_name='$s'");
 			//echo "\t\t\t\t\t<div id=\"page_description\">$page_description</div>";
+		    }
 		}
 		
 		$i = 0;
@@ -215,35 +223,38 @@ switch ($do) {
 			$fullname = safe_field('realname', 'pixie_users', "user_name='$author'");
 
 			if (public_page_exists('profiles')) {
-				$mauthor = "<a href=\"".createURL("profiles", $author) . "\" class=\"url fn\" title=\"" . $lang['view'] . " $fullname's " . $lang['profile'] . "\">$fullname</a>";
+				$mauthor = "<a href=\"" . createURL("profiles", $author) . "\" class=\"url fn\" title=\"" . $lang['view'] . " $fullname's " . $lang['profile'] . "\">$fullname</a>";
 			} else {
 				$mauthor = "<a href=\"$site_url\" class=\"url fn\" title=\"$site_url\">$fullname</a>";
 			}
 
-			if ($tags) {
+			if ((isset($tags)) && ($tags)) {
 				$all_tags = strip_tags($tags);
 					$all_tags = str_replace('&quot;', "", $tags);
 					$tags_array_temp = explode(" ", $all_tags);
 	
-					for ($count=0; $count < (count($tags_array_temp)); $count++) {
+					for ($count = 0; $count < (count($tags_array_temp)); $count++) {
 						$current = $tags_array_temp[$count];
-						$first = $current{strlen($current)-strlen($current)};
+						$first = $current { strlen($current) - strlen($current) };
 						if ($first == " ") {
-							$current = substr($current, 1, strlen($current)-1);
+							$current = substr($current, 1, strlen($current) - 1);
 						}
 						$ncurrent = make_slug($current);
+						if (isset($s)) {
 						$tag_list .= "<a href=\"" . createURL($s, 'tag', $ncurrent) . "\" title=\"" . $lang['view'] . " " . $lang['all_posts_tagged'] . ': ' . $current . "\" rel=\"tag\" >" . $current . "</a>, ";
+						}
 						if ($ncurrent != "") {
 							$class_list .= "tag_$ncurrent ";
 						}
 					}
-					$tag_list  = substr($tag_list , 0, (strlen($tag_list)-2)) . "";
+					$tag_list  = substr($tag_list , 0, (strlen($tag_list) - 2)) . "";
 			}
 
 			$comms = safe_rows('*', 'pixie_module_comments', "post_id = '$post_id'");
 			$no_comms = count($comms);
+			if (isset($s)) {
 			$permalink = createURL($s, 'permalink', $slug);
-
+			}
 			$authorclass = strtolower($author);
 			$timeclass = safe_strftime('y%Y m%m d%d h%H', $logunix);
 
@@ -255,7 +266,7 @@ switch ($do) {
 
 			$num = $i+1;
 
-				echo"
+				echo "
 					<div class=\"section hentry author_$authorclass $class_list$timeclass $type post_" . $num . "\" id=\"post_$post_id\">
 						<h4 class=\"entry-title\"><a href=\"$permalink\" rel=\"bookmark\">$title</a></h4>
 						<ul class=\"post_links\">
@@ -267,25 +278,25 @@ switch ($do) {
 						}
 						}
 						if(isset($_COOKIE['pixie_login'])) {
-							list($username,$cookie_hash) = split(',', $_COOKIE['pixie_login']);
+							list($username, $cookie_hash) = explode(',', $_COOKIE['pixie_login']);
 							$nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
 							if (md5($username.$nonce) == $cookie_hash) {
 								$privs = safe_field('privs', 'pixie_users', "user_name='$username'");		
 								if ($privs >= 1) {
-									echo "\n\t\t\t\t\t\t\t<li class=\"post_edit\"><a href=\"" . $site_url . "admin/?s=publish&amp;m=dynamic&amp;x=$s&amp;edit=$post_id\" title=\"" . $lang['edit_post'] . "\">" . $lang['edit_post'] . "</a></li>";
+									echo "\n\t\t\t\t\t\t\t<li class=\"post_edit\"><a href=\"" . $site_url . "admin/?s=publish&amp;m=dynamic"; if (isset($s)) { echo '&amp;x=' . $s; } echo "&amp;edit=$post_id\" title=\"" . $lang['edit_post'] . "\">" . $lang['edit_post'] . "</a></li>";
 								}
 							}
 						}
-					echo"
+					echo "
 						</ul>
 						<div class=\"post entry-content\">\n";
 						//<!--more-->
 						$post = get_extended ($content);
 					 	echo "\t\t\t\t\t\t\t" . $post['main'];
 					 if ($post['extended']) {
-					 	echo "\n\t\t\t\t\t\t\t<p><a href=\"$permalink\" title=\"" . $lang['continue_reading'] . " $title\">" . $lang['continue_reading'] . " $title...</a></p>";
+					 	echo "\n\t\t\t\t\t\t\t<p><a href=\"$permalink\" class=\"read-more\" title=\"" . $lang['continue_reading'] . " $title\">" . $lang['continue_reading'] . " $title...</a></p>";
 					 }
-					 echo"
+					 echo "
 						</div>	
 						<div class=\"post_credits\">
 						 	<span class=\"vcard author\">" . $lang['by'] . " $mauthor</span>
@@ -317,15 +328,15 @@ switch ($do) {
 
 			if ($totalposts > $currentnum) {
 				// then we need to link onto the next page	
-				echo "\t\t\t\t\t\t<div id=\"page_next\" class=\"link_next\"><a class=\"link_next_a\" href=\"" . createURL($s, 'page', $nextpage) . "\" title=\"" . $lang['next_page'] . ": $nextpage\">" . $lang['next_page'] . " &raquo;</a></div>\n";
+				echo "\t\t\t\t\t\t<div id=\"page_next\" class=\"link_next\"><a class=\"link_next_a\" href=\""; if (isset($s)) { echo createURL($s, 'page', $nextpage); } echo "\" title=\"" . $lang['next_page'] . ": $nextpage\">" . $lang['next_page'] . " &raquo;</a></div>\n";
 	
 			}
 			if ($m == 'page') {
 				if ($x >= 2) {
 					if ($previouspage == 1) {
-						echo "\t\t\t\t\t\t<div id=\"page_previous\" class=\"link_previous\"><a class=\"link_prev_a\" href=\"" . createURL($s) . "\" title=\"" . $lang['previous_page'] . ": $previouspage\">&laquo; " . $lang['previous_page'] . "</a></div>\n";
+						echo "\t\t\t\t\t\t<div id=\"page_previous\" class=\"link_previous\"><a class=\"link_prev_a\" href=\""; if (isset($s)) { echo createURL($s); } echo "\" title=\"" . $lang['previous_page'] . ": $previouspage\">&laquo; " . $lang['previous_page'] . "</a></div>\n";
 					} else {
-						echo "\t\t\t\t\t\t<div id=\"page_previous\" class=\"link_previous\"><a class=\"link_prev_a\" href=\"" . createURL($s, 'page', $previouspage) . "\" title=\"" . $lang['previous_page'] . ": $previouspage\">&laquo; " . $lang['previous_page'] . "</a></div>\n";
+						echo "\t\t\t\t\t\t<div id=\"page_previous\" class=\"link_previous\"><a class=\"link_prev_a\" href=\""; if (isset($s)) { echo createURL($s, 'page', $previouspage); } echo "\" title=\"" . $lang['previous_page'] . ": $previouspage\">&laquo; " . $lang['previous_page'] . "</a></div>\n";
 					}
 				}
 			}
@@ -336,8 +347,8 @@ switch ($do) {
 			
 			if ($p) {
 				$currentnum = $posts_per_page*$p;
-				$nextpage = $p+1;
-				$previouspage = $p-1;
+				$nextpage = $p + 1;
+				$previouspage = $p - 1;
 			} else {
 				$nextpage = 2;
 				$currentnum = $posts_per_page;
@@ -390,27 +401,31 @@ switch ($do) {
 				$mauthor = "<a href=\"$site_url\" class=\"url fn\" title=\"$site_url\">$fullname</a>";
 			}
 
-			if ($tags) {
+			if ((isset($tags)) && ($tags)) {
 				$all_tags = strip_tags($tags);
 				$all_tags = str_replace('&quot;', "", $tags);
 				$tags_array_temp = explode(" ", $all_tags);
 
-				for ($count=0; $count < (count($tags_array_temp)); $count++) {
+				for ($count = 0; $count < (count($tags_array_temp)); $count++) {
 					$current = $tags_array_temp[$count];
-					$first = $current{strlen($current)-strlen($current)};
+					$first = $current { strlen($current) - strlen($current) };
 					if ($first == " ") {
-						$current = substr($current,1,strlen($current)-1);
+						$current = substr($current, 1, strlen($current) - 1);
 					}
 					$ncurrent = make_slug($current);
-					$tag_list .= "<a href=\"" . createURL($s,'tag',$ncurrent) . "\" title=\"" . $lang['view'] . " " . $lang['all_posts_tagged'] . ": " . $current . "\"  rel=\"tag\" >" . $current . "</a>, ";
+					if (isset($s)) {
+					$tag_list .= "<a href=\"" . createURL($s,'tag', $ncurrent) . "\" title=\"" . $lang['view'] . " " . $lang['all_posts_tagged'] . ": " . $current . "\"  rel=\"tag\" >" . $current . "</a>, ";
+					}
 					if ($ncurrent != "") {
 						$class_list .= "tag_$ncurrent ";
 					}
 				}
-				$tag_list  = substr($tag_list, 0, (strlen($tag_list)-2)) . "";
+				$tag_list  = substr($tag_list, 0, (strlen($tag_list) - 2)) . "";
 			}
 
+			if (isset($s)) {
 			$permalink = createURL($s, 'permalink', $slug);
+			}
 
 			$authorclass = strtolower($author);
 			$timeclass = safe_strftime('y%Y m%m d%d h%H', $logunix);
@@ -421,16 +436,16 @@ switch ($do) {
 						<ul class=\"post_links\">
 							<li class=\"post_date\"><abbr class=\"published\" title=\"$microformat\">$date</abbr></li>";
 						if(isset($_COOKIE['pixie_login'])) {
-							list($username, $cookie_hash) = split(',', $_COOKIE['pixie_login']);
+							list($username, $cookie_hash) = explode(',', $_COOKIE['pixie_login']);
 							$nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
 							if (md5($username . $nonce) == $cookie_hash) {
 								$privs = safe_field('privs','pixie_users', "user_name='$username'");		
 								if ($privs >= 1) {
-									echo "\n\t\t\t\t\t\t\t<li class=\"post_edit\"><a href=\"" . $site_url . "admin/?s=publish&amp;m=dynamic&amp;x=$s&amp;edit=$post_id\" title=\"" . $lang['edit_post'] . "\">" . $lang['edit_post'] . "</a></li>";
+									echo "\n\t\t\t\t\t\t\t<li class=\"post_edit\"><a href=\"" . $site_url . "admin/?s=publish&amp;m=dynamic"; if (isset($s)) { echo '&amp;x=' . $s; } echo "&amp;edit=$post_id\" title=\"" . $lang['edit_post'] . "\">" . $lang['edit_post'] . "</a></li>";
 								}
 							}
 						}
-						echo"
+						echo "
 						</ul>
 						<div class=\"post entry-content\">\n";
 						//<!--more-->
@@ -439,7 +454,7 @@ switch ($do) {
 						if ($post['extended']) {
 					 		echo $post['extended'];
 						}
-						echo"
+						echo "
 						</div>		
 						<div class=\"post_credits\">
 						 	<span class=\"vcard author\">" . $lang['by'] . " $mauthor</span>
@@ -451,16 +466,16 @@ switch ($do) {
 					<div id=\"nav_posts\" class=\"dynamic_bottom_nav\">\n";
 					
 					// previous and next posts
-					
+					if (isset($s)) {
 					$thisid = get_page_id($s);
-					
+					}
 					// what post is next?
 					$searchnext = safe_field('post_id', 'pixie_dynamic_posts', "page_id = '$thisid' and public = 'yes' and posted > '$posted' and posted < now() limit 0,1");
 					
 					if ($searchnext) {
 						$ntitle = safe_field('title', 'pixie_dynamic_posts', "post_id ='$searchnext'");
 						$nslug = safe_field('post_slug', 'pixie_dynamic_posts', "post_id ='$searchnext'");
-						echo "\t\t\t\t\t\t<div id=\"post_next\" class=\"link_next\"><a class=\"link_next_a\" href=\"" . createURL($s, 'permalink', $nslug) . "\" title=\"" . $lang['next_post'] . ": $ntitle\">" . $lang['next_post'] . " &raquo;</a></div>\n";
+						echo "\t\t\t\t\t\t<div id=\"post_next\" class=\"link_next\"><a class=\"link_next_a\" href=\""; if (isset($s)) { echo createURL($s, 'permalink', $nslug); } echo "\" title=\"" . $lang['next_post'] . ": $ntitle\">" . $lang['next_post'] . " &raquo;</a></div>\n";
 					}
 					
 					// what post is previous?
@@ -469,7 +484,7 @@ switch ($do) {
 					if ($searchprev) {
 						$ptitle = safe_field('title', 'pixie_dynamic_posts', "post_id ='$searchprev'");
 						$pslug = safe_field('post_slug', 'pixie_dynamic_posts', "post_id ='$searchprev'");
-						echo "\t\t\t\t\t\t<div id=\"post_previous\" class=\"link_previous\"><a class=\"link_prev_a\" href=\"" . createURL($s, 'permalink', $pslug) . "\" title=\"".$lang['previous_post'] . ": $ptitle\">&laquo; " . $lang['previous_post'] . "</a></div>\n";
+						echo "\t\t\t\t\t\t<div id=\"post_previous\" class=\"link_previous\"><a class=\"link_prev_a\" href=\""; if (isset($s)) { echo createURL($s, 'permalink', $pslug); } echo "\" title=\"" . $lang['previous_post'] . ": "; if (isset($ptitle)) { echo $ptitle; } echo "\">&laquo; " . $lang['previous_post'] . "</a></div>\n";
 					}
 					
 					echo "\t\t\t\t\t</div>\n";
@@ -485,7 +500,7 @@ switch ($do) {
 						<h4 id=\"comments_title\">" . $lang['comments'] . "</h4>";
 
 					if(isset($_COOKIE['pixie_login'])) {	
-						list($username, $cookie_hash) = split(',', $_COOKIE['pixie_login']);
+						list($username, $cookie_hash) = explode(',', $_COOKIE['pixie_login']);
 						$nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
 						
 						if (md5($username . $nonce) == $cookie_hash) {
@@ -500,7 +515,9 @@ switch ($do) {
 						while ($i < $no_comms){
 							extract($r2[$i]);
 							$default = $site_url . 'files/images/no_grav.jpg';
-							$grav_url = 'http://www.gravatar.com/avatar.php?gravatar_id=' . md5($email) . "&amp;default=" . urlencode($default) . "&amp;size=40";
+							if (isset($email)) {
+							$grav_url = 'http://www.gravatar.com/avatar.php?gravatar_id=' . md5($email) . '&amp;default=' . urlencode($default) . '&amp;size=40';
+							}
 							$hash = $i+1;
 							if ($url) {
 								$namepr = "<span class=\"message_name author\"><a href=\"$permalink#comment_$hash\" rel=\"bookmark\" class=\"comment_permalink\">#$hash</a> <a href=\"" . htmlentities($url) . "\" rel=\"external nofollow\" class=\"url fn\">$name</a></span>";
@@ -543,11 +560,13 @@ switch ($do) {
 				echo "
 					<div class=\"comment_form\" id=\"commentform\">";
 						if ($comment_ok) {
-							echo "\n\t\t\t\t\t\t\t<p class=\"success\">" . $lang['comment_thanks'] . "</p>";
+				echo "\n\t\t\t\t\t\t\t<p class=\"success\">" . $lang['comment_thanks'] . '</p>';
 						} else if ($comments == 'yes') {
-							$posty = createURL($s, $m, $x);				
-							echo "
-						<form action=\"$posty#commentform\" method=\"post\" class=\"form\">
+							if (isset($s)) {
+							$posty = createURL($s, $m, $x);
+							}
+				echo "
+						<form accept-charset=\"UTF-8\" action=\"$posty#commentform\" method=\"post\" class=\"form\">
 						<script type=\"text/javascript\">
 						  var blogTool              = \"pixie\";
 						  var blogURL               = \"$site_url\";
@@ -556,7 +575,7 @@ switch ($do) {
 						  var postTitle             = \"$title\";
 						  var commentTextFieldName  = \"comment\";
 						  var commentButtonName     = \"comment_submit\";";
-					  if ($realname) {
+					  if ((isset($realname)) && ($realname)) {
 					  	echo "\n\t\t\t\t\t\t  var commentAuthorLoggedIn = true;";
 					  } else {
 					 		echo "\n\t\t\t\t\t\t  var commentAuthorLoggedIn = false;";
@@ -567,7 +586,7 @@ switch ($do) {
 						</script>
 							<fieldset>
 								<legend>" . $lang['comment_leave'] . "</legend>";
-							if ($error) {
+							if (isset($error)) {
 								echo "\n\t\t\t\t\t\t\t\t<p class=\"error\">$error</p>";
 								if (in_array('name', $scream)) { $name_style = 'form_highlight'; }
 								if (in_array('comment', $scream)) { $comment_style = 'form_highlight'; }
@@ -576,24 +595,24 @@ switch ($do) {
 							} else {
 								echo "<p class=\"notice\">" . $lang['comment_form_info'] . "</p>";
 							}
-							echo"
-								<div class=\"form_row $name_style\">
+							echo "
+								<div class=\"form_row "; if (isset($name_style)) { echo $name_style; } echo "\">
 									<div class=\"form_label\"><label for=\"comment_name\">" . $lang['comment_name'] . " <span class=\"form_required\">" . $lang['form_required'] . "</span></label></div>";
-								if ($realname) {
-									echo "\n\t\t\t\t\t\t\t\t\t<div class=\"form_item\"><input type=\"text\" disabled=\"disabled\" tabindex=\"1\" name=\"name\" class=\"form_text\" id=\"comment_name\" value=\"$realname\" /></div>";
+								if ((isset($realname)) && ($realname)) {
+									echo "\n\t\t\t\t\t\t\t\t\t<div class=\"form_item\"><input type=\"text\" disabled=\"disabled\" tabindex=\"1\" name=\"name\" class=\"form_text\" id=\"comment_name\""; if (isset($realname)) { echo " value=\"$realname\""; } echo " /></div>";
 								} else {
 									echo "\n\t\t\t\t\t\t\t\t<div class=\"form_item\"><input type=\"text\" tabindex=\"1\" name=\"name\" class=\"form_text\" id=\"comment_name\" value=\"$sname\"/></div>";
 								}
 								if ($sweb == "" ) {
 									$sweb = 'http://';
 								}
-								if ($realname) {
+								if ((isset($realname)) && ($realname)) {
 									$sweb = $site_url;
 									$semail = $umail;
 								}
 							echo "
 								</div>
-								<div class=\"form_row $email_style\">
+								<div class=\"form_row "; if (isset($email_style)) { echo $email_style; } echo "\">
 									<div class=\"form_label\"><label for=\"comment_email\">" . $lang['comment_email'] . " <span class=\"form_required\">" . $lang['form_required'] . "</span></label></div>
 									<div class=\"form_item\"><input type=\"text\" tabindex=\"2\" name=\"email\" class=\"form_text\" id=\"comment_email\" value=\"$semail\" /></div>
 								</div>
@@ -608,9 +627,9 @@ switch ($do) {
 								<div class=\"form_row_submit\">
 									<input type=\"submit\" name=\"comment_submit\" tabindex=\"4\" value=\"" . $lang['comment_button_leave'] . "\" class=\"form_submit\" />
 									<input type=\"hidden\" name=\"post\" value=\"$post_id\" />";
-								if ($realname) {
+								if ((isset($realname)) && ($realname)) {
 									echo "\n\t\t\t\t\t\t\t\t\t<input type=\"hidden\" name=\"admin_user\" value=\"" . md5($nonce) . "\" />
-									<input type=\"hidden\" name=\"name\" value=\"$realname\" />";
+									<input type=\"hidden\" name=\"name\""; if (isset($realname)) {  echo " value=\"$realname\""; } echo " />";
 								}
 							echo "
 								</div>
@@ -628,9 +647,11 @@ switch ($do) {
 		} else {
 			extract(safe_row('*', 'pixie_core', "page_name='404'"));
 			extract(safe_row('*', 'pixie_static_posts', "page_id='$page_id'"));
-			echo "<div id=\"$s\">\n\t\t\t\t\t\t<h3>$page_display_name</h3>\n";	
-			eval('?>' . $page_content . '<?php ');
-			echo "\n\t\t\t\t\t</div>\n";
+			if (isset($s)) {
+			    echo "<div id=\"$s\">\n\t\t\t\t\t\t<h3>$page_display_name</h3>\n";	
+			    eval('?>' . $page_content . '<?php ');
+			    echo "\n\t\t\t\t\t</div>\n";
+			}
 		}
 	}
 // ------------------------------------------------------------------
@@ -641,9 +662,11 @@ switch ($do) {
 		$date_array = getdate();
 		$this_month = $date_array['mon'];
 		$this_year = $date_array['year'];
-		
-		$id = get_page_id($s);
-		$rs = safe_row('*', 'pixie_dynamic_posts', "page_id = '$id' and public = 'yes' and posted < now() order by posted asc limit 0,1");
+
+		if (isset($s)) {
+		    $id = get_page_id($s);
+		    $rs = safe_row('*', 'pixie_dynamic_posts', "page_id = '$id' and public = 'yes' and posted < now() order by posted asc limit 0,1");
+		}
 	
 		echo "<div id=\"archives\">\n\t\t\t\t\t\t<h3>$mtitle</h3>\n\t\t\t\t\t\t<dl class=\"list_archives\">\n";
 		
@@ -675,7 +698,7 @@ switch ($do) {
 						$slug = $out['post_slug'];
 						$stamp = returnUnixtimestamp($posty);
 						$day = date('d', $stamp);
-						echo "\t\t\t\t\t\t\t<dd><span class=\"archive_subdate\">" . $day . ":</span> <a href=\"" . createURL($s, 'permalink', $slug) . "\" title=\"" . $lang['permalink_to'] . ": $title\">" . $title . "</a></dd>\n";
+						echo "\t\t\t\t\t\t\t<dd><span class=\"archive_subdate\">" . $day . ":</span> <a href=\""; if (isset($s)) { echo createURL($s, 'permalink', $slug); } echo "\" title=\"" . $lang['permalink_to'] . ": $title\">" . $title . "</a></dd>\n";
 						$j++;
 					}
 					$this_month = $this_month-1;

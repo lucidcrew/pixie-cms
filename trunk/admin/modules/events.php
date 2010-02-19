@@ -68,7 +68,9 @@ switch ($do) {
 	case 'pre' :
 		
 		// get the details of this page from pixie_core
+		if (isset($s)) {
 		extract(safe_row('*', 'pixie_core', "page_name='$s'"));
+		}
 		
 		// get the settings of the page from its settings table
 		extract(safe_row('*', 'pixie_module_events_settings', "events_id='1'"));
@@ -109,7 +111,9 @@ switch ($do) {
   	// Show Module
   	// This is where your module will output into the content div on the page
 	default :
-		
+
+	    if (isset($s)) {
+
 		echo "<div id=\"$s\">\n\t\t\t\t\t\t<h3>$page_display_name</h3>\n";
 
 		if ($rs) {
@@ -122,7 +126,7 @@ switch ($do) {
 		 
 						echo "
 						<div class=\"vevent\">
-							<h4 class=\"summary\" title=\"$title\">$title</h4>
+							<h4 class=\"summary\" title=\""; if (isset($title)) { echo $title; } echo "\">"; if (isset($title)) { echo $title; } echo "</h4>
 							<ul class=\"vdetails\">
 								<li class=\"vtime\">Date: <abbr class=\"dtstart\" title=\"$microformat\">$dateis</abbr></li>\n";
 								if ($location) {
@@ -132,7 +136,7 @@ switch ($do) {
 									echo "\t\t\t\t\t\t\t\t<li class=\"vlink\">Link: <a class=\"url\" href=\"$url\">$url</a></li>\n";
 								}
 								if ($google_calendar_links == 'yes') {
-									echo "\t\t\t\t\t\t\t\t<li class=\"vgoogle\"><a href=\"http://www.google.com/calendar/event?action=TEMPLATE&amp;text=" . urlencode($title) . "&amp;dates=$googtime/$googtime&amp;details=" . urlencode(strip_tags($description)) . "&amp;location=" . urlencode($location) . "&amp;trp=false&amp;sprop=$site_url&amp;sprop=name:$site_title\">Add to Google calendar</a></li>\n";	
+									echo "\t\t\t\t\t\t\t\t<li class=\"vgoogle\"><a href=\"http://www.google.com/calendar/event?action=TEMPLATE&amp;text="; if (isset($title)) { echo (urlencode($title)); } echo "&amp;dates=$googtime/$googtime&amp;details=" . urlencode(strip_tags($description)) . "&amp;location=" . urlencode($location) . "&amp;trp=false&amp;sprop=$site_url&amp;sprop=name:$site_title\">Add to Google calendar</a></li>\n";	
 								}
 							echo "	
 							</ul>
@@ -143,18 +147,23 @@ switch ($do) {
 						</div>\n";
 			}
 			
-			if (!$title) {
+			if (!isset($title)) {
 				echo "<p class=\"error\">No events found</p>";
 			}
 			
 			if ($m == 'archives') {
-				echo "\t\t\t\t\t\t<a class=\"view_more_link\" href=\"" . createURL($s) . "\">View upcoming events...</a>\n";
+				if (isset($s)) {
+				    echo "\t\t\t\t\t\t<a class=\"view_more_link\" href=\"" . createURL($s) . "\">View upcoming events...</a>\n";
+				}
 			} else {
+				if (isset($s)) {
 				echo "\t\t\t\t\t\t<a class=\"view_more_link\" href=\"" . createURL($s, 'archives') . "\">View the archives...</a>\n";
+				}
 			}
 		}
 	
 		echo "\t\t\t\t\t</div>";
+	    }
 
 	break;
 }

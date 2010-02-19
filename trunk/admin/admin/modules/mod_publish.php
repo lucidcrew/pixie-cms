@@ -7,7 +7,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 // Title: Publish.                                                 //
 //*****************************************************************//
 
-if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
+if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 1) {
 	if (($m) and (!$x)) {
 		extract(safe_row('*', 'pixie_core', "page_type = '$m' and publish = 'yes' and privs <= '" . $GLOBALS['pixie_user_privs'] . "' order by page_views desc limit 0,1"));
 		$x = $page_name;

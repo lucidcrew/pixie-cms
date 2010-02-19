@@ -43,7 +43,7 @@ switch ($do) {
 		
 		
 		// if the form is submitted
-		if ($contact_sub) {
+		if (isset($contact_sub)) {
 		
 			// lets check to see if the refferal is from the current site
 			if (strpos($_SERVER['HTTP_REFERER'], $site_url) != false) { die(); }
@@ -51,11 +51,11 @@ switch ($do) {
 			// lets check to see if our bot catcher has been filled in
 			if ($iam) { die(); }
 			
-			if ($uemail) {
+			if (isset($uemail)) {
 
 				$domain = explode('@', $uemail);
 				if (preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $uemail) && checkdnsrr($domain[1])) {
-					if ($subject) {
+					if (isset($subject)) {
 						if ($message) {
 							$message = sterilise($message);
 							$subject = sterilise($subject);
@@ -78,13 +78,12 @@ switch ($do) {
 				$error = 'Please provide your email address.';
 			}
 			
-			if ($error) {
+			if (isset($error)) {
 				unset($contact_sub);
 			}
 
-			if (!$error) {
+			if (!isset($error)) {
 
-			    session_start(); /* Retrieve the value of the hidden field */
 			    $form_secret = $_POST['form_secret'];
 			    if (isset($_SESSION['FORM_SECRET'])) {
 				    if (strcasecmp($form_secret, $_SESSION['FORM_SECRET']) === 0) { /* Check that the checksum we created on form submission is the same the posted FORM_SECRET */
@@ -108,21 +107,21 @@ switch ($do) {
 	// Show Module
 	default :
 
-		session_start(); /* So that we can use the value of the hidden field */
 		$secret = sha1(uniqid(rand(), true)); /* Create a sha1 checksum to help verify that we are only sending the mail once */
 		$_SESSION['FORM_SECRET'] = $secret; /* FORM_SECRET in $_SESSION['FORM_SECRET'] must be unique if you reuse this technique in other forms like the comments form for example */
 
 		extract(safe_row('*', 'pixie_module_contact_settings', "contact_id='1'")); /* get the settings for this page */
 
 		echo '<h3>Contact</h3>';
-			
-		if ($show_profile_information == 'yes') {
-		$rs = safe_rows_start('*', 'pixie_users', '1 order by privs desc');
-		while ($a = nextRow($rs)) {
+
+		if (isset($show_profile_information)) {
+		    if ($show_profile_information == 'yes') {
+			$rs = safe_rows_start('*', 'pixie_users', '1 order by privs desc');
+			while ($a = nextRow($rs)) {
 			extract($a);
 			echo "
 					<div class=\"vcard\">
-						<a class=\"url fn\" href=\"$website\"><span class=\"given-name\">" . firstword($realname) . "</span><span class=\"family-name\"> " . lastword($realname) . "</span></a>
+						<a class=\"url fn\" href=\"$website\"><span class=\"given-name\">"; if (isset($realname)) { echo firstword($realname); } echo "</span><span class=\"family-name\"> "; if (isset($realname)) { echo lastword($realname); } echo "</span></a>
 						<div class=\"org hide\">$occupation</div>
 						<div class=\"adr\">
 							<span class=\"street-address\">$street</span> 
@@ -133,20 +132,24 @@ switch ($do) {
 						</div>
 						<span class=\"tel\">$telephone</span>";
 						if ($show_vcard_link == 'yes') {
+						    if (isset($s)) {
 							echo "<p class=\"extras\"><span class=\"down_vcard\"><a href=\"http://technorati.com/contacts/" . createURL($s) . "\">Download my vCard</a></span></p>";
+						    }
 						}
 						echo "
 					</div>";
-		 }
+			}
+		    }
 		 }
 		 
-		 if ($error) {
+		 if (isset($error)) {
 		 	print "<p class=\"error\">$error</p>";
 		 }
 	
-		 if (!$contact_sub) {
+		 if (!isset($contact_sub)) {
+		 if (!isset($uemail)) { $uemail = NULL; }
 		 echo "
-					<form action=\"" . createURL($s) . "\" method=\"post\" id=\"contactform\" class=\"form\">
+					<form accept-charset=\"UTF-8\" action=\""; if (isset($s)) { echo createURL($s); } echo "\" method=\"post\" id=\"contactform\" class=\"form\">
 						<fieldset>
 						<legend>Email $site_title</legend>
 							<div class=\"form_row\">
@@ -159,13 +162,16 @@ switch ($do) {
 								$rs = safe_rows_start('*', 'pixie_users', '1 order by privs desc');
 								while ($a = nextRow($rs)) {
 									extract($a);
-									if(strlen($occupation) > 0) {
+									if((strlen($occupation) > 0) && (isset($realname))) {
 										echo "<option value=\"$user_id\">$realname ($occupation)</option>";
 									}
 									else {
 										echo "<option value=\"$user_id\">$realname</option>";
 									}
 								}
+
+								if (!isset($subject)) { $subject = NULL; }
+
 								echo "	
 								</select></div>
 							</div>

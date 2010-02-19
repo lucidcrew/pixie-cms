@@ -6,11 +6,12 @@ header('Content-Type: text/html; charset=utf-8');
 // Licence: GNU General Public License v3                   	   //
 // Title:   AJAX File Upload.					   //
 //*****************************************************************//
-if (defined('DIRECT_ACCESS')) { require_once '../../lib/lib_misc.php'; nukeProofSuit(); exit(); }
+
+if (defined('DIRECT_ACCESS')) { require_once '../../lib/lib_misc.php'; pixieExit(); exit(); }
 define('DIRECT_ACCESS', 1);
 require_once '../../lib/lib_misc.php';										/* perform basic sanity checks */
 	bombShelter();                  									/* check URL size */
-
+	error_reporting(0);
 	require_once '../../config.php';
 	include_once '../../lib/lib_db.php';
 	include_once '../../lib/lib_auth.php';
@@ -21,7 +22,7 @@ require_once '../../lib/lib_misc.php';										/* perform basic sanity checks *
 	include_once '../../lib/lib_tags.php';
 	include_once '../../lib/lib_logs.php';
 
-	if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
+	if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 1) {
 
 	globalSec('ajax_fileupload.php', 1);
 

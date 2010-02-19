@@ -8,7 +8,8 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 // Author: Victor Alvarez                                          //
 // Basado en la traducci�n de Carlos El�as (Spanish CL)            //
 //*****************************************************************//
-
+if (!isset($delete)) { $delete = NULL; }
+if (!isset($username)) { $username = NULL; }
 $lang = array(
     // system
     'skip_to' => 'Ir al contenido',

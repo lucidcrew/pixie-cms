@@ -7,10 +7,12 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 // Title: Login.                                                   //
 //*****************************************************************//
 
-if ($login_forgotten) {
+if (isset($login_forgotten)) {
 	
 	sleep(3);
-	
+
+	if (!isset($username)) { $username = NULL; }
+
 	$username = sterilise($username, true);
 	
 	$r1 = safe_field('email', 'pixie_users', "email='$username'");	
@@ -29,9 +31,10 @@ if ($login_forgotten) {
 			$sql = "pass = password(lower('$password')), nonce = '$nonce'";
 			$ok = safe_update('pixie_users', "$sql", "email = '$rs'");
 			
-			if ($ok) {
+			if ((isset($rs)) && ($ok)) {
 				$email = $rs;
-				$subject = $lang['email_newpassword_subject'];				
+				$subject = $lang['email_newpassword_subject'];
+				if (!isset($subject)) { $subject = NULL; }
 				$emessage = $lang['email_newpassword_message'] . $password;
 				$user = safe_field('realname','pixie_users', "email='$email'");
 				$headers = "From: postmaster@{$_SERVER['HTTP_HOST']}" . "\r\n" .
@@ -57,7 +60,7 @@ if ($login_forgotten) {
 if ($m == 'forgotten') {
 ?>
 				<div id="login">
-					<form action="?s=login&amp;m=forgotten" method="post" id="form_forgotten" class="form">
+					<form accept-charset="UTF-8" action="?s=login&amp;m=forgotten" method="post" id="form_forgotten" class="form">
 						<fieldset>
 							<legend>Forgotten your password?</legend>
 							<p><?php print $lang['form_help_forgotten']; ?></p>		
@@ -80,7 +83,7 @@ if ($m == 'forgotten') {
 ?>
 
 				<div id="login">
-					<form action="index.php" method="post" id="form_login" class="form">
+					<form accept-charset="UTF-8" action="index.php" method="post" id="form_login" class="form">
 						<fieldset>
 							<legend><?php print $lang['form_login']; ?></legend>		
 							<div class="form_row">

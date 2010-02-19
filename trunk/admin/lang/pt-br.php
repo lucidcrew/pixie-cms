@@ -7,7 +7,8 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 // Title: Language File (Portuguese Brazilian PT-BR).              //          
 // Author: Gustavo Jordan (gustavojcbrasil@gmail.com)              //
 //*****************************************************************//
-
+if (!isset($delete)) { $delete = NULL; }
+if (!isset($username)) { $username = NULL; }
 $lang = array(
 	// system
 	'skip_to' => 'Pular para conteúdo',

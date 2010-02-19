@@ -6,7 +6,8 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 // Licence: GNU General Public License v3                   	   //
 // Titel: Taalbestand (Nederlands NL).                             //
 //*****************************************************************//
-
+if (!isset($delete)) { $delete = NULL; }
+if (!isset($username)) { $username = NULL; }
 $lang = array(
 	// system
 	'skip_to' => 'Verder naar inhoud',

@@ -3,11 +3,13 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
-// Licence: GNU General Public License v3                   	     //
+// Licence: GNU General Public License v3                   	   //
 // Title: Language File (Russian).                                 //
 // It is translated - O.Smolinsky aka OSU                          //
 //(http://sites.google.com/site/osmolinsky/)                       //
 //*****************************************************************//
+if (!isset($delete)) { $delete = NULL; }
+if (!isset($username)) { $username = NULL; }
 $lang = array(
 	// system
     'skip_to' => 'перейти к содержимому',

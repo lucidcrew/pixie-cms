@@ -7,7 +7,8 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 // Titolo: File di lingua (Italiano IT).                           //
 // Traduzione di Reé Querin - www.q-design.it                      //
 //*****************************************************************//
-
+if (!isset($delete)) { $delete = NULL; }
+if (!isset($username)) { $username = NULL; }
 $lang = array(
 	// system
 	'skip_to' => 'Vai al contenuto',

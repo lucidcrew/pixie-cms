@@ -90,8 +90,10 @@ switch ($do) {
 				
 					// no tags were found, lets redirect back to the defualt view again.
 					// createURL is your friend... its one of the most useful functions in Pixie
+					if (isset($s)) {
 					$redirect = createURL($s);
 					header("Location: $redirect");
+					}
 	 				exit();
 	 				
 				}
@@ -128,12 +130,14 @@ switch ($do) {
 				if ($x) {
 					// turn $x back into a tag from a slug
 					$x = squash_slug($x);
+					if (isset($s)) {
 					extract(safe_row('*', 'pixie_core', "page_name = '$s'"));
+					}
 					// find all the links with a matching tag to $x
 					$rz = safe_rows('*', 'pixie_module_links', "tags REGEXP '[[:<:]]" . $x . "[[:>:]]'");
 
 					if ($rz) {
-						echo "<div id=\"$s\">\n\t\t\t\t\t<h3>$page_display_name</h3>\n";
+						echo "<div "; if (isset($s)) { echo "id=\"$s\""; } echo ">\n\t\t\t\t\t<h3>$page_display_name</h3>\n";
 						$num = count($rz);
 						echo "\t\t\t\t\t<div id=\"$x\" class=\"link_list\">\n\t\t\t\t\t\t<h4>" . ucwords($x) . "</h4>\n\t\t\t\t\t\t<ul>\n";
 						$i = 0;
@@ -156,9 +160,11 @@ switch ($do) {
 			default:
 				
 				// get the page display name from the database
+				if (isset($s)) {
 				extract(safe_row('*', 'pixie_core', "page_name = '$s'"));
+				}
 				// print the display name into a h3
-				echo "<div id=\"$s\">\n\t\t\t\t\t<h3>$page_display_name</h3>\n";
+				echo "<div "; if (isset($s)) { echo "id=\"$s\""; } echo ">\n\t\t\t\t\t<h3>$page_display_name</h3>\n";
 
 				// get all the tags from the links page using the all_tags function within Pixie
 				$tags_array = all_tags('pixie_module_links', "links_id >= '0'");

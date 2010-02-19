@@ -1,17 +1,15 @@
 <?php
-if (defined('DIRECT_ACCESS')) { require_once '../../lib/lib_misc.php'; nukeProofSuit(); exit(); }
-define('DIRECT_ACCESS', 1);
-require_once '../../lib/lib_misc.php';										/* perform basic sanity checks */
-	bombShelter();                  									/* check URL size */
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
 // Licence: GNU General Public License v3                   	   //
 // Title: Ajax page order system.                                  //
 //*****************************************************************//
-
+if (defined('DIRECT_ACCESS')) { require_once '../../lib/lib_misc.php'; pixieExit(); exit(); }
+define('DIRECT_ACCESS', 1);
+require_once '../../lib/lib_misc.php';										/* perform basic sanity checks */
+	bombShelter();                  									/* check URL size */
 error_reporting(0);
-
 if ($_POST['pages']) {
 
 	include_once '../../config.php';
@@ -20,7 +18,7 @@ if ($_POST['pages']) {
 
 	$count = count($_POST['pages']);
 
-	if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
+	if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 		$i = 0;
 		while ($i < $count){
 			$page_name = $_POST['pages'][$i];

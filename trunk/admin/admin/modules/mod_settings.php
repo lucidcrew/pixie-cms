@@ -7,10 +7,12 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 // Title: Settings                                                 //
 //*****************************************************************//
 
-$x = ereg_replace('[^A-Za-z0-9]', "", $x);
-				
+/* Was : */ /* $x = ereg_replace('[^A-Za-z0-9]', "", $x); */ /* but ereg_replace() is depreciated. */
+$x = preg_replace('[^A-Za-z0-9]', "", $x);
+if (!isset($username)) { $username = NULL; }
+
 if(isset($_COOKIE['pixie_login'])) {
-	list($username, $cookie_hash) = split(',', $_COOKIE['pixie_login']);
+	list($username, $cookie_hash) = explode(',', $_COOKIE['pixie_login']);
 	$nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
 	if (md5($username . $nonce) == $cookie_hash) {
 		$privs = safe_field('privs', 'pixie_users', "user_name='$username'");		

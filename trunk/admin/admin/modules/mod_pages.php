@@ -7,11 +7,11 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 // Title: All Pages with settings.                                 //
 //*****************************************************************//
 
-if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
+if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 
 	$table_name = 'pixie_core';
 
-	if ($empty) {
+	if ((isset($empty)) && ($empty)) {
 		$rf = safe_row('*', 'pixie_core', "page_id = '$empty'");
 
 		if ($rf) {
@@ -20,7 +20,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 			if ($page_type == 'dynamic') {
 				safe_delete('pixie_dynamic_posts', "page_id = '$empty'");
 				safe_optimize('pixie_dynamic_posts');
-				safe_repair("$pixie_dynamic_posts");		
+				if (isset($pixie_dynamic_posts)) { safe_repair("$pixie_dynamic_posts"); }
 			} else if ($page_type == 'static') {
 				safe_update('pixie_core', "page_content = ''", "page_id = '$empty'");
 				safe_optimize('pixie_core');
@@ -47,7 +47,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 
 	}
 
-	if ($edit) {
+	if ((isset($edit)) && ($edit)) {
 		
 		$rs = safe_row('*', 'pixie_core', "page_id = '$edit'");
 		extract ($rs);
@@ -71,15 +71,15 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 		$edit_id = 'page_id';
 
 		if ($page_type == 'static') {
-			admin_edit($table_name, $edit_id, $edit, $edit_exclude=array('page_id', 'page_type', 'page_views', 'publish', 'admin', 'page_content', 'last_modified', 'page_parent', 'page_order'));
+			if (isset($table_name)) { admin_edit($table_name, $edit_id, $edit, $edit_exclude = array('page_id', 'page_type', 'page_views', 'publish', 'admin', 'page_content', 'last_modified', 'page_parent', 'page_order')); }
 		} else if ($page_type == 'plugin') {
 			echo "\n\t\t\t\t<div class=\"helper\">\n\t\t\t\t\t<h3>" . $lang['help'] . "</h3>\n\t\t\t\t\t<p>" . $lang['helper_plugin'] . "</p>\n\t\t\t\t</div>";
 		} else {
-			admin_edit($table_name, $edit_id, $edit, $edit_exclude=array('page_id', 'page_type', 'page_views', 'publish', 'page_content', 'last_modified', 'page_parent', 'page_order'));
+			if (isset($table_name)) { admin_edit($table_name, $edit_id, $edit, $edit_exclude = array('page_id', 'page_type', 'page_views', 'publish', 'page_content', 'last_modified', 'page_parent', 'page_order')); }
 		}
 
 		if ($page_type == 'dynamic') {
-			admin_edit('pixie_dynamic_settings', $edit_id, $edit, $edit_exclude=array('settings_id', 'page_id', 'admin', 'page_content'));
+			admin_edit('pixie_dynamic_settings', $edit_id, $edit, $edit_exclude = array('settings_id', 'page_id', 'admin', 'page_content'));
 		}
 
 		if (($page_type == 'module') or ($page_type == 'plugin')) {
@@ -87,29 +87,30 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 			$table = 'pixie_module_' . $module_name . '_settings';
 			$id = $module_name . '_id';
 			if (table_exists($table)) {
-				admin_edit($table, $id, '1', $edit_exclude=array($id));
+				admin_edit($table, $id, '1', $edit_exclude = array($id));
 			}
 		}
 	
 		
-	} else if ($do == 'newpage') {
+	} else if (isset($do) && $do == 'newpage') {
 		if ($type == 'dynamic') {
 			echo "<div id=\"page_header\">
 				<h2>" . $lang['settings_page_new'] . " $type " . $lang['settings_page'] . "</h2>
 			</div>";
-			admin_new($table_name, $edit_exclude=array('page_id', 'page_type', 'page_views', 'publish', 'admin', 'page_content', 'last_modified', 'page_parent', 'page_order'));
+			if (isset($table_name)) { admin_new($table_name, $edit_exclude = array('page_id', 'page_type', 'page_views', 'publish', 'admin', 'page_content', 'last_modified', 'page_parent', 'page_order')); }
 		} else if ($type == 'static') {
 			echo "<div id=\"page_header\">
 				<h2>" . $lang['settings_page_new'] . " $type " . $lang['settings_page'] . "</h2>
 			</div>";
-			admin_new($table_name, $edit_exclude=array('page_id', 'page_type', 'page_views', 'publish', 'admin', 'page_content', 'last_modified', 'page_parent', 'page_order'));			
+			if (isset($table_name)) { admin_new($table_name, $edit_exclude = array('page_id', 'page_type', 'page_views', 'publish', 'admin', 'page_content', 'last_modified', 'page_parent', 'page_order')); }
 		} else {
-			if ($install) {
+			if ((isset($install)) && ($install)) {
 				if (!$modplug) {
 					$message = $lang['no_module_selected'];
 				} else {
-					// lets install
-					$do = install;
+					/* Lets install */
+					/* Was : */ /* $do = install; */
+					/* Should it not be this : */ $do = 'install'; /* ? */
 					include('modules/' . $modplug . '.php');
 					
 					if ($execute) {
@@ -131,8 +132,9 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 					if ($execute4) {
 						$execute4 =  str_replace('pixie_', $pixieconfig['table_prefix'] . "pixie_", $execute4);
 						safe_query($execute4);
-					}  
-					$do = info;
+					}
+					/* Was : */ /* $do = info; */
+					/* Should it not be this : */ $do = 'info'; /* ? */
 					include('modules/' . $modplug . '.php');
 
 					// make a safe reference in core, not public etc
@@ -151,7 +153,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 			
 				<div id=\"admin_form\">
 						
-					<form action=\"?s=settings&amp;x=pages&amp;do=newpage&type=module\" method=\"post\" id=\"form_modplug\" class=\"form\">
+					<form accept-charset=\"UTF-8\" action=\"?s=settings&amp;x=pages&amp;do=newpage&type=module\" method=\"post\" id=\"form_modplug\" class=\"form\">
 						<fieldset>
 							<legend>" . $lang['select_module'] . "</legend>\n";
 							
@@ -183,7 +185,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 								}
 							}
 							
-							if (!$mfound) {
+							if ((!isset($mfound)) || (!$mfound)) {
 								echo "\t\t\t\t\t\t<p>" . $lang['all_installed'] . "</p>";
 							}
 
@@ -208,7 +210,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 					<div id="admin_block_addpage" class="admin_block">
 						<h3><?php print $lang['settings_page_new'] . " " . $lang['settings_page']; ?></h3>
 
-						<form action="?s=settings&amp;x=pages" method="post" id="newpage">
+						<form accept-charset="UTF-8" action="?s=settings&amp;x=pages" method="post" id="newpage">
 							<fieldset>
 							<legend><?php print $lang['settings_page_new'] . " " . $lang['settings_page']; ?></legend>
 							<div class="form_row">
