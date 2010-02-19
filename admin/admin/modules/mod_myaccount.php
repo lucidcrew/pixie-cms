@@ -7,9 +7,9 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 // Title: My Account.                                              //
 //*****************************************************************//
 
-if ($GLOBALS['pixie_user']) {
+if (isset($GLOBALS['pixie_user'])) {
 
-	if (($s == 'myaccount') && ($x != 'myprofile')){
+	if ((isset($s)) && ($s == 'myaccount') && ($x != 'myprofile')){
 
 		$uname = $GLOBALS['pixie_user'];
 		$rs = safe_row('*', 'pixie_users', "user_name = '$uname' limit 0,1");
@@ -59,7 +59,7 @@ if ($GLOBALS['pixie_user']) {
 						
 			echo "\t\t\t\t\t<div class=\"admin_block\" id=\"admin_block_links\">";
 			echo "\t\t\t\t\t\n\t\t\t\t\t\t<h3 class=\"qlinks\">" . $lang['quick'] . " " . $lang['links'] . "</h3>\n\t\t\t\t\t\t<ul>\n";	
-			if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
+			if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 1) {
 				extract(safe_row('*', 'pixie_core', "page_type = 'dynamic' order by page_views desc limit 0,1"));
 				if ($page_type == 'dynamic') { echo "\t\t\t\t\t\t\t<li><a href=\"" . $site_url . "admin/?s=publish&amp;m=dynamic&amp;x=$page_name&amp;go=new\" title=\"" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "\">" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "</a></li>\n"; }
 				extract(safe_row('*', 'pixie_core', "page_type = 'static' order by page_views desc limit 0,1"));
@@ -88,13 +88,15 @@ if ($GLOBALS['pixie_user']) {
 	}
 
 	if ($m) {
-		$m = ereg_replace('[^A-Za-z0-9]', "", $m);
+		/* Was : */ /* $m = ereg_replace('[^A-Za-z0-9]', "", $m); */ /* But ereg_replace() is depreciated. */
+		$m = preg_replace('[^A-Za-z0-9]', "", $m);
 		include("../admin/modules/$m.php");
 	} else if ($x) {
-		$x = ereg_replace('[^A-Za-z0-9]', "", $x);
+		/* Was : */ /* $x = ereg_replace('[^A-Za-z0-9]', "", $x); */ /* But ereg_replace() is depreciated. */
+		$x = preg_replace('[^A-Za-z0-9]', "", $x);
 		include("mod_$x.php");
 	} else {
-		if ($do == 'referral') {
+		if (isset($do) && $do == 'referral') {
 		echo "
 				<div id=\"pixie_content\">
 					<ul id=\"log_tools\">
@@ -143,7 +145,7 @@ if ($GLOBALS['pixie_user']) {
 		safe_optimize('pixie_log');
 		safe_repair('pixie_log');
 
-		if ($do == 'referral') {
+		if (isset($do) && $do == 'referral') {
 			$rs = safe_rows_start('*, unix_timestamp(log_time) as stamp', 'pixie_log', "log_type = 'referral' AND log_time < now() order by log_time desc limit 30");
 		} else {
 			$rs = safe_rows_start('*, unix_timestamp(log_time) as stamp', 'pixie_log', "log_type = 'system' AND log_time < now() order by log_time desc limit 30");
@@ -175,11 +177,11 @@ if ($GLOBALS['pixie_user']) {
 					$trclass .= ' fade' . (30 - $counter);
 				}
 
-				if ($do == 'referral') {
+				if (isset($do) && $do == 'referral') {
 					$log_url =  htmlentities($log_message);
 					$from = "<a href=\"$log_url\" title=\"Visit: $log_url\">" . chopme(str_replace('http://', "", $log_url), 70) . "</a>";
 
-					echo"
+					echo "
 								<tr class=\"$trclass\">
 									<td class=\"tbl_row\" headers=\"icon\"><img src=\"admin/theme/images/icons/$log_icon.png\" alt=\"$log_icon icon\" /></td>
 									<td class=\"tbl_row\" headers=\"when\">$time</td>
@@ -187,7 +189,7 @@ if ($GLOBALS['pixie_user']) {
 									<td class=\"tbl_row\" headers=\"from\">$from</a></td>
 								</tr>";
 				} else {
-					echo"
+					echo "
 								<tr class=\"$trclass\">
 									<td class=\"tbl_row\" headers=\"icon\"><img src=\"admin/theme/images/icons/$log_icon.png\" alt=\"$log_icon icon\" /></td>
 									<td class=\"tbl_row\" headers=\"when\">$time</td>

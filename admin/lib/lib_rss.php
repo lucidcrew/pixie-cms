@@ -112,7 +112,7 @@ echo ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 			<pubDate>$date</pubDate>
 			<dc:creator>$author</dc:creator>\n\t\t\t";
 
-				if ($tags) {
+				if ((isset($tags)) && ($tags)) {
 					$tag_list = "";
 					$all_tags = strip_tags($tags);
 					$tags_array_temp = explode(" ", $all_tags);
@@ -126,14 +126,16 @@ echo ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 						$j++;
 					}
 
-					for ($count=0; $count < (count($tags_array_temp)); $count++) {
+					for ($count = 0; $count < (count($tags_array_temp)); $count++) {
 						$current = $tags_array_temp[$count];
 						$first = $current{strlen($current)-strlen($current)};
 						if ($first == " ") {
 							$current = substr($current,1,strlen($current)-1);
 						}
 						$ncurrent = make_slug($current);
+						if (isset($s)) {
 						$tag_list .= "<a href=\"" . createURL($s, 'tag', $ncurrent) . "\" title=\"View all posts in " . $current . "\">" . $current . "</a>, ";
+						}
 					}
 					$tag_list  = substr($tag_list , 0, (strlen($tag_list)-2)) . "";
 				}

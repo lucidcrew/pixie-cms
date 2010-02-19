@@ -7,7 +7,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 // Title: Nav_Publish.                                             //
 //*****************************************************************//
 
-if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
+if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 1) {
 
 	if ((!$m) && (!$x)) {
 		// try find the first page in the navigation
@@ -19,12 +19,10 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 1) {
 		}
 	}
 
-?>
+if (isset($s)) { ?>
 <ul id="sub_nav_level_1">
 						<li><a href="?s=<?php print $s; ?>" title="<?php print $lang['nav2_pages'];?>"<?php if ($x != 'filemanager') { echo " class=\"sub_nav_current_1\""; }?>><?php print $lang['nav2_pages'];?></a></li>
 						<li><a href="?s=<?php print $s; ?>&amp;x=filemanager" title="<?php print $lang['nav2_files'];?>"<?php if ($x == 'filemanager') { echo " class=\"sub_nav_current_1\""; }?>><?php print $lang['nav2_files'];?></a></li>
 					</ul>
-					</li>
-<?php			
-}
-?>
+<?php } ?></li>
+<?php } /* Not to sure why there is a closing li tag after a ul tag above? Please explain or remove */ ?>

@@ -7,7 +7,8 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 // Title: Language File (Galician es-gl).                          //
 // Author: Victor Alvarez                                          //
 //*****************************************************************//
-
+if (!isset($delete)) { $delete = NULL; }
+if (!isset($username)) { $username = NULL; }
 $lang = array(
     // system
     'skip_to' => 'Ir ao contido',

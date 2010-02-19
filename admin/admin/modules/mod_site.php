@@ -7,11 +7,11 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 // Title: Site Settings.                                           //
 //*****************************************************************//
 
-if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
+if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 	
 		$scream = array();
 
-		if ($settings_edit) {
+		if ((isset($settings_edit)) && ($settings_edit)) {
 			
 			$check = new Validator ();
 			if (!$sitename) { $error .= $lang['site_name_error'] . ' '; $scream[] = 'name'; }
@@ -43,7 +43,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 
   		$err = explode('|', $error);
 
-  		if (!$error) {
+  		if (!isset($error)) {
 				$ok = safe_update('pixie_settings', 
 									"site_name = '$sitename', 
 									site_url = '$url', 
@@ -67,10 +67,9 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 				$site_copyright = $site_cright;
 				$default_page = $default;
 			} else {
-				safe_optimize("$table_name");
-				safe_repair("$table_name");
-			  $messageok = $lang['ok_save_settings'];
-			 	$prefs = get_prefs();
+				if (isset($table_name)) { safe_optimize("$table_name"); safe_repair("$table_name"); }
+				$messageok = $lang['ok_save_settings'];
+				$prefs = get_prefs();
 				extract($prefs);
 			}
 		} else {
@@ -83,14 +82,14 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 		
 		echo "<h2>" . $lang['nav2_site'] . " " . $lang['nav2_settings'] . "</h2>";
 		echo "\n\n\t\t\t\t<div id=\"site_settings\">
- 					<form action=\"?s=$s&amp;x=$x\" method=\"post\" id=\"form_settings\" class=\"form\">	
+ 					<form accept-charset=\"UTF-8\" action=\"?s=$s&amp;x=$x\" method=\"post\" id=\"form_settings\" class=\"form\">	
  						<fieldset>	
  						<legend>" . $lang['form_legend_site_settings'] . "</legend>
-							<div class=\"form_row $name_style\">
+							<div class=\"form_row "; if (isset($name_style)) { echo $name_style; } echo "\">
 								<div class=\"form_label\"><label for=\"site_name\">" . $lang['form_site_name'] . " <span class=\"form_required\">" . $lang['form_required']."</span></label><span class=\"form_help\">" . $lang['form_help_site_name'] . "</span></div>
 								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"sitename\" value=\"$site_name\" size=\"40\" maxlength=\"80\" id=\"site_name\" /></div>
 							</div>
-							<div class=\"form_row $url_style\">
+							<div class=\"form_row "; if (isset($url_style)) { echo $url_style; } echo "\">
 								<div class=\"form_label\"><label for=\"url\">" . $lang['form_site_url'] . " <span class=\"form_required\">" . $lang['form_required'] . "</span></label><span class=\"form_help\">" . $lang['form_help_site_url'] . "</span></div>
 								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"url\" value=\"$site_url\" size=\"40\" maxlength=\"80\" id=\"url\" /></div>
 							</div>

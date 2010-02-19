@@ -7,9 +7,9 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 // Title: Database tools                                           //
 //*****************************************************************//
 
-//(would like cron (or similar) & email).   
+/* (would like cron (or similar) & email). */
 
-if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
+if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 
 	if ($do == 'backup') {
 	
@@ -41,7 +41,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 		}
 	}
 
-	if ($del) { 
+	if ((isset($del)) && ($del)) { 
 		if (file_exists('../files/sqlbackups/' . $del)) { 
 			$current = safe_field('last_backup', 'pixie_settings', "settings_id='1'");
 			if ($current != $del) {
@@ -68,7 +68,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 <div id="blocks">
 					<div id="admin_block_backup" class="admin_block">
 						<h3><?php echo $lang['create_backup']; ?></h3>
-						<form action="?s=settings&amp;x=dbtools" method="post" id="backup_save">
+						<form accept-charset="UTF-8" action="?s=settings&amp;x=dbtools" method="post" id="backup_save">
 							<fieldset>
 							<legend><?php echo $lang['nav2_backup']; ?></legend>
 								<div class="form_row_button">

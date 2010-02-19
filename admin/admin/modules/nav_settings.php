@@ -7,13 +7,13 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 // Title: Nav_Settings.                                            //
 //*****************************************************************//
 
-if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
+if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 
 	if ((!$m) && (!$x)) {
 		$x = 'pages';
 	}
 	
-?>
+if (isset($s)) { ?>
 <ul id="sub_nav_level_1">
 						<li><a href="?s=<?php print $s;?>&amp;x=pages" title="<?php print $lang['nav2_pages'] . " " . $lang['nav2_settings'];?>"<?php if ($x == 'pages') { echo " class=\"sub_nav_current_1\""; }?>><?php print $lang['nav2_pages'];?></a></li>
 						<li><a href="?s=<?php print $s;?>&amp;x=site" title="<?php print $lang['nav2_site'] . " " . $lang['nav2_settings'];?>"<?php if ($x == 'site') { echo " class=\"sub_nav_current_1\""; }?>><?php print $lang['nav2_site'];?></a></li>
@@ -23,7 +23,5 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 						<li><a href="?s=<?php print $s;?>&amp;x=users" title="<?php print $lang['nav2_users'];?>"<?php if ($x == 'users') { echo " class=\"sub_nav_current_1\""; }?>><?php print $lang['nav2_users'];?></a></li>
 						<li><a href="?s=<?php print $s;?>&amp;x=dbtools" title="<?php print $lang['nav2_backup'];?>"<?php if ($x == 'dbtools') { echo " class=\"sub_nav_current_1\""; }?>><?php print $lang['nav2_backup'];?></a></li>
 					</ul>
-					</li>
-<?php
-}
-?>
+<?php } ?></li>
+<?php } /* Again, what is this trailing li tag above for? Please explain or remove */ ?>

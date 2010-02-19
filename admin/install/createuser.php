@@ -6,7 +6,6 @@ require '../lib/lib_db.php'; db_down(); exit();
 if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important to set this first, so that we can use the new config.php */
 	require '../lib/lib_misc.php';     																				//
 	$debug = 'no';	// Set this to yes to debug and see all the global vars coming into the file
-	$server_timezone = 'Europe/London';
 
 	globalSec('Pixie Installer createuser.php', 1);
 
@@ -14,8 +13,8 @@ if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important
 	require '../config.php';
 	include '../lib/lib_db.php';       																				// load libraries order is important
 
-	if (strnatcmp(phpversion(),'5.1.0') >= 0) { date_default_timezone_set("$server_timezone"); }	/* New! Built in php function. Tell php what the server timezone is so that we can use php's rewritten time and date functions with the correct time and without error messages  */
-	print ($do);
+	if (strnatcmp(phpversion(),'5.1.0') >= 0) { if (!isset($server_timezone)) { $server_timezone = 'Europe/London'; } date_default_timezone_set("$server_timezone"); }	/* New! Built in php function. Tell php what the server timezone is so that we can use php's rewritten time and date functions with the correct time and without error messages  */
+	if (isset($do)) { print ($do); }
 
 	if ($debug == 'yes') {
 	error_reporting(E_ALL & ~E_DEPRECATED);
@@ -25,19 +24,21 @@ if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important
 	echo '</pre></p>';
 	}
 
-if ($user_new) {
+if ((isset($user_new)) && ($user_new)) {
 
 	$table_name = 'pixie_users';
-	if (!$error) {
+	if (!isset($error)) {
 
 		$password = generate_password(6);
 		$nonce = md5( uniqid( rand(), true ) );
-		$sql = "user_name = '$uname', realname = '$realname', email = '$email', pass = password(lower('$password')), nonce = '$nonce', privs = '$privs', biography =''"; 
+		if ((isset($realname)) && (isset($uname))) {
+		$sql = "user_name = '$uname', realname = '$realname', email = '$email', pass = password(lower('$password')), nonce = '$nonce', privs = '$privs', biography =''";
+		}
 
 		$ok = safe_insert($table_name, $sql);
 
 		if (!$ok) {
-			$message = "Error saving new $table_name entry. Possible duplicate user name.";
+			$message = "Error saving new $table_name entry. Possible duplicate user name."; /* Needs language */
 		} else {
 			// send email
 			
@@ -89,8 +90,6 @@ password: $password
 	www.getpixie.co.uk                          
 	-->
 	
-	<title>Pixie (www.getpixie.co.uk) - Create User</title>
-	
 	<!-- meta tags -->
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="elev3n, eleven, 11, 3l3v3n, el3v3n, binary, html, xhtml, css, php, xml, mysql, flash, actionscript, action, script, web standards, accessibility, scott, evans, scott evans, sunk, media, www.sunkmedia.co.uk, scripts, news, portfolio, shop, blog, web, design, print, identity, logo, designer, fonts, typography, england, uk, london, united kingdom, staines, middlesex, computers, mac, apple, osx, os x, windows, linux, itx, mini, pc, gadgets, itunes, mp3, technology" />
@@ -100,7 +99,9 @@ password: $password
 	<meta name="revisit-after" content="7 days" />
 	<meta name="author" content="Scott Evans" />
   	<meta name="copyright" content="Scott Evans" />
-  	
+
+	<title>Pixie (www.getpixie.co.uk) - Create User</title>
+
 	<!-- CSS -->
 	<link rel="stylesheet" href="../admin/theme/style.php" type="text/css" media="screen"  />
 	<style type="text/css">
@@ -229,15 +230,17 @@ password: $password
 	if ($message) {
 		print "<p class=\"error\">$message</p>";
 	}
+	if (isset($messageok)) {
 	if ($messageok) {
 		print "<p class=\"success\">$messageok</p>";
+	}
 	}
 	?>
 		<img src="banner.gif" alt="Pixie logo" id="logo">
 		<div id="placeholder">
 			<h3>Create a user</h3>
 				<p>Please fill in the user details below:</p>
-				<form action="createuser.php" method="post" class="form">
+				<form accept-charset="UTF-8" action="createuser.php" method="post" class="form">
 					<fieldset>
 						<div class="form_row">
 							<div class="form_label"><label for="uname">Username <span class="form_required">*</span></label></div>

@@ -6,7 +6,8 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 // Licence: GNU General Public License v3                   	   //
 // Title: Language File (Swedish SE).                              //
 //*****************************************************************//
-
+if (!isset($delete)) { $delete = NULL; }
+if (!isset($username)) { $username = NULL; }
 $lang = array(
 	// system
 	'skip_to' => 'Hoppa till inneh&aring;ll',
@@ -332,7 +333,7 @@ $lang = array(
 	'navigation' => 'Navigering',
 	'skip_to_content' => 'G&aring; till inneh&aring;ll &raquo;',
 	'skip_to_nav' => 'G&aring; till navigering &raquo;',
-	'by' => 'Vid',
+	'by' => 'Av',
 	'on' => 'p&aring;',
 	'view' => 'Visa',
 	'profile' => 'profil',

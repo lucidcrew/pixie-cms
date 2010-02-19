@@ -7,9 +7,9 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 // Title: Site Settings.                                           //
 //*****************************************************************//
 
-if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
+if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 
-		if ($settings_edit) {
+		if ((isset($settings_edit)) && ($settings_edit)) {
 			$table_name = 'pixie_settings';
 			$ok = safe_update('pixie_settings',  
 								"rich_text_editor = '$rte', 
@@ -24,8 +24,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 			if (!$ok) {
 			  $message = $lang['error_save_settings'];
 			} else {
-				safe_optimize("$table_name");
-				safe_repair("$table_name");
+				if (isset($table_name)) { safe_optimize("$table_name"); safe_repair("$table_name"); }
 			  $messageok = $lang['ok_save_settings'];
 			}
 		}
@@ -34,7 +33,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 		extract($prefs);
 		echo "<h2>Pixie " . $lang['nav2_settings'] . "</h2>";		
 		echo "\n\n\t\t\t\t<div id=\"pixie_settings\">
- 					<form action=\"?s=$s&amp;x=$x\" method=\"post\" id=\"form_settings\" class=\"form\">	
+ 					<form accept-charset=\"UTF-8\" action=\"?s=$s&amp;x=$x\" method=\"post\" id=\"form_settings\" class=\"form\">	
  						<fieldset>	
  						<legend>" . $lang['form_legend_pixie_settings'] . "</legend>
  							<div class=\"form_row\">
@@ -57,6 +56,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 								if ($language == 'pt-pt') { echo "<option selected=\"selected\" value=\"pt-pt\">Português</option>"; } else { echo "<option value=\"pt-pt\">Português</option>"; } /* Portuguese */
 								if ($language == 'ru') { echo "<option selected=\"selected\" value=\"ru\">Русский</option>"; } else { echo "<option value=\"ru\">Русский</option>"; } /* Russian */
 								if ($language == 'se-sv') { echo "<option selected=\"selected\" value=\"se-sv\">Svenska</option>"; } else { echo "<option value=\"se-sv\">Svenska</option>"; } /* Swedish */
+								if ($language == 'tr-tr') { echo "<option selected=\"selected\" value=\"tr-tr\">Türkçe</option>"; } else { echo "<option value=\"tr-tr\">Türkçe</option>"; } /* Turkish */
 						echo "</select></div>
 							</div>
 							<div class=\"form_row\">

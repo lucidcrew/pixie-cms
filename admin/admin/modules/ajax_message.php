@@ -1,9 +1,8 @@
 <?php
-if (defined('DIRECT_ACCESS')) { require_once '../../lib/lib_misc.php'; nukeProofSuit(); exit(); }
+if (defined('DIRECT_ACCESS')) { require_once '../../lib/lib_misc.php'; pixieExit(); exit(); }
 define('DIRECT_ACCESS', 1);
 require_once '../../lib/lib_misc.php';										/* perform basic sanity checks */
 	bombShelter();                  									/* check URL size */
-
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//

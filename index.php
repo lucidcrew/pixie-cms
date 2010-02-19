@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: text/html; charset=utf-8');
+header('Content-Type: text/html; charset=UTF-8');
 //***********************************************************************//
 // Pixie: The Small, Simple, Site Maker.                                 //
 // ----------------------------------------------------------------------//
@@ -21,66 +21,73 @@ header('Content-Type: text/html; charset=utf-8');
 // ----------------------------------------------------------------------//
 // Title: Index			                                         //
 //***********************************************************************//
-if (defined('DIRECT_ACCESS')) { require_once 'admin/lib/lib_misc.php'; nukeProofSuit(); exit(); }		/* Prevent any kind of predefinition of DIRECT_ACCESS */
-if (defined('PIXIE_DEBUG')) { require_once 'admin/lib/lib_misc.php'; nukeProofSuit(); exit(); }			/* Prevent any kind of predefinition of PIXIE_DEBUG */
-define('DIRECT_ACCESS', 1);											/* Knock once for yes */
-if (!file_exists('admin/config.php') || filesize('admin/config.php') < 10) {					/* check for config */
-if (file_exists('admin/install/index.php')) { header( 'Location: admin/install/' ); exit(); }			/* redirect to installer */
-if (!file_exists('admin/install/index.php')) { require_once 'admin/lib/lib_db.php'; db_down(); exit(); }	/* redirect to an error page if down */
+if (defined('DIRECT_ACCESS')) { require_once 'admin/lib/lib_misc.php'; nukeProofSuit(); exit(); }				/* Prevent any kind of predefinition of DIRECT_ACCESS */
+if (defined('PIXIE_DEBUG')) { require_once 'admin/lib/lib_misc.php'; nukeProofSuit(); exit(); }					/* Prevent any kind of predefinition of PIXIE_DEBUG */
+define('DIRECT_ACCESS', 1);													/* Knock once for yes */
+if (!file_exists('admin/config.php') || filesize('admin/config.php') < 10) {							/* check for config */
+if (file_exists('admin/install/index.php')) { header( 'Location: admin/install/' ); exit(); }					/* redirect to installer */
+if (!file_exists('admin/install/index.php')) { require_once 'admin/lib/lib_db.php'; db_down(); exit(); }			/* redirect to an error page if down */
 }
-require_once 'admin/lib/lib_misc.php';										/* perform basic sanity checks */
-bombShelter();                  										/* check URL size */
-require_once 'admin/lib/lib_var.php';										/* import variables */
-error_reporting(0);												/* turn off error reporting */
-if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }						/* set error reporting up if debug is enabled */
+ini_set('default_charset', 'utf-8');												/* set default php charset */
+require_once 'admin/lib/lib_misc.php';												/* perform basic sanity checks */
+bombShelter();                  												/* check URL size */
+error_reporting(0);														/* turn off error reporting */
+if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }								/* set error reporting up if debug is enabled */
 
-	globalSec('Main index.php', 1);										/* prevent superglobal poisoning before extraction */
-	extract($_REQUEST);											/* access to form vars if register globals is off */ /* note : NOT setting a prefix yet, not looked at it yet */
-	require_once 'admin/config.php';           								/* load configuration */
-	include_once 'admin/lib/lib_db.php';       								/* import the database function library */
-	$prefs = get_prefs();           									/* turn the prefs into an array */
-	extract($prefs);											/* add prefs to globals using php's extract function */
-	include_once 'admin/lib/lib_logs.php'; pagetime('init');						/* start the runtime clock */
-	if (strnatcmp(phpversion(),'5.1.0') >= 0) { date_default_timezone_set("$server_timezone"); }		/* New! Built in php function. Tell php what the server timezone is so that we can use php 5's rewritten time and date functions with the correct time and without error messages */
-	include_once 'admin/lib/lib_validate.php';								/* import the validate library */
-	include_once 'admin/lib/lib_date.php';									/* import the date library */
-	include_once 'admin/lib/lib_paginator.php';								/* import the paginator library */
-	include_once 'admin/lib/lib_pixie.php';									/* import the pixie library */
-	include_once 'admin/lib/lib_rss.php';									/* import the rss library */
-	include_once 'admin/lib/lib_tags.php';									/* import the tags library */
-	include_once 'admin/lib/bad-behavior-pixie.php';							/* no spam please */
-	if (strnatcmp(phpversion(),'5.0.0') >= 0) { include_once 'admin/lib/lib_simplepie_php5.php'; } else {	/* Load the php5 version of simplepie if you are running php5 */
-	include_once 'admin/lib/lib_simplepie.php'; }								/* because pie should be simple */
-	users_online();												/* current site visitors */
-	pixie();												/* let the magic begin */
-	referral();												/* referral */
-	include_once 'admin/lang/' . $language . '.php';							/* get the language file */
-	include_once 'admin/themes/' . $site_theme . '/settings.php';						/* load the current themes settings */
+	globalSec('Main index.php', 1);												/* prevent superglobal poisoning before extraction */
+	extract($_REQUEST);													/* access to form vars if register globals is off */ /* note : NOT setting a prefix yet, not looked at it yet */
+	require_once 'admin/config.php';           										/* load configuration */
+	include_once 'admin/lib/lib_db.php';       										/* import the database function library */
+	$prefs = get_prefs();           											/* turn the prefs into an array */
+	extract($prefs);													/* add prefs to globals using php's extract function */
+	if (strnatcmp(phpversion(),'5.1.0') >= 0) {
+	if (!isset($server_timezone)) { $server_timezone = 'Europe/London'; }
+	date_default_timezone_set("$server_timezone"); }									/* New! Built in php function. Tell php what the server timezone is so that we can use php 5's rewritten time and date functions with the correct time and without error messages */
+	define('TZ', "$timezone");												/* timezone fix (php 5.1.0 or newer will set it's server timezone using function date_default_timezone_set!) */
+	include_once 'admin/lib/lib_logs.php'; pagetime('init');								/* start the runtime clock */
+	include_once 'admin/lib/lib_validate.php';										/* import the validate library */
+	include_once 'admin/lib/lib_date.php';											/* import the date library */
+	include_once 'admin/lib/lib_paginator.php';										/* import the paginator library */
+	include_once 'admin/lib/lib_pixie.php';											/* import the pixie library */
+	include_once 'admin/lib/lib_rss.php';											/* import the rss library */
+	include_once 'admin/lib/lib_tags.php';											/* import the tags library */
+	include_once 'admin/lib/bad-behavior-pixie.php';									/* no spam please */
+	if (strnatcmp(phpversion(),'5.0.0') >= 0) { include_once 'admin/lib/lib_simplepie_php5.php'; } else {			/* Load the php5 version of simplepie if you are running php5 */
+	include_once 'admin/lib/lib_simplepie.php'; }										/* because pie should be simple */
+	users_online();														/* current site visitors */
+	pixie();														/* let the magic begin */
+	referral();														/* referral */
+	include_once 'admin/lang/' . $language . '.php';									/* get the language file */
+	include_once 'admin/themes/' . $site_theme . '/settings.php';								/* load the current themes settings */
 
-	if ($s == 404) { header('HTTP/1.0 404 Not Found'); }							/* send correct header for 404 pages */
-	if ($m == 'rss') { rss($s, $page_display_name, $page_id); } else {					/* rss */
-	$page_description = safe_field('page_description', 'pixie_core', "page_name='$s'");			/* load this page's description */
+	if ((isset($s)) && ($s == 404)) { header('HTTP/1.0 404 Not Found'); }							/* send correct header for 404 pages */
+	if ($m == 'rss') { if (isset($s)) { rss($s, $page_display_name, $page_id); }						/* rss */
+	} else { if (isset($s)) { $page_description = safe_field('page_description', 'pixie_core', "page_name='$s'"); }		/* load this page's description */
 	
 	if ($page_type == 'module') {
-		if (file_exists('admin/modules/' . $s . '_functions.php')) { include ('admin/modules/' . $s . '_functions.php'); }
+	    if (isset($s)) {
+		if (file_exists('admin/modules/' . $s . '_functions.php')) {
+		include ('admin/modules/' . $s . '_functions.php');
+		}
 		$do = 'pre';  
-		include ('admin/modules/' . $s . '.php');							/* load the module in pre mode */
-				    }
+		include ('admin/modules/' . $s . '.php');									/* load the module in pre mode */
+	    }
+	}
 
-	if (PIXIE_DEBUG == 'yes') { $show_vars = get_defined_vars();						/* output important variables to screen if debug is enabled */
+	if (PIXIE_DEBUG == 'yes') { $show_vars = get_defined_vars();								/* output important variables to screen if debug is enabled */
 	echo '<p><pre class="showvars">The _REQUEST array contains : ';
 	htmlspecialchars(print_r($show_vars["_REQUEST"]));
 	echo '</pre></p>';
 	echo '<p><pre class="showvars">The prefs array contains : ';
 	htmlspecialchars(print_r($show_vars["prefs"]));
 	echo '</pre></p>'; }
-
+	if ((isset($s)) && ($s == 'contact')) { session_start(); } /* Retrieve the value of the hidden field in the contact module */
 	if (file_exists('admin/themes/' . $site_theme . '/theme.php')) {
-	include_once ('admin/themes/' . $site_theme . '/theme.php'); }						/* New! Your custom theme file must be named theme.php instead of index.php */ /* Theme Override Super Feature */
+	include_once ('admin/themes/' . $site_theme . '/theme.php'); }								/* New! Your custom theme file must be named theme.php instead of index.php */ /* Theme Override Super Feature */
 	else { 
 ?>
 
-<?php if ($gzip_theme_output == 'yes') {
+<?php if (!isset($gzip_theme_output)) { $gzip_theme_output = 'no'; } if ($gzip_theme_output == 'yes') {
       if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) if (extension_loaded('zlib')) ob_start('ob_gzhandler');
       else ob_start();			} /* Start gzip compression */ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -108,22 +115,24 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }						/* se
 	www.getpixie.co.uk                          
 	-->
 	
-	<!-- title -->
-	<title><?php build_title($ptitle); ?></title>
-	
 	<!-- meta tags -->
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<meta name="keywords" content="<?php print $site_keywords; ?>" />
-	<meta name="description" content="<?php if ($pinfo) { print strip_tags($pinfo); } else { print strip_tags($page_description); } ?>" />
+	<meta name="description" content="<?php if (isset($pinfo)) { print strip_tags($pinfo); } else { print strip_tags($page_description); } ?>" />
 	<meta http-equiv="imagetoolbar" content="no" />
 	<meta name="robots" content="all" />
 	<meta name="revisit-after" content="7 days" />
 	<meta name="author" content="<?php print $site_author; ?>" />
 	<meta name="copyright" content="<?php print $site_copyright; ?>" />
 	<meta name="generator" content="Pixie <?php print $version; ?> - Copyright (C) 2006 - <?php print date('Y');?>." /> 
-	
-	<!-- javascript -->
+
+	<!-- title -->
+	<title><?php if (isset($ptitle)) { build_title($ptitle); } ?></title>
+
+	<?php if (!isset($theme_jquery_google_apis)) { $theme_jquery_google_apis = 'no'; } if (!isset($theme_jquery_google_apis_location)) { $theme_jquery_google_apis_location = NULL; } if (!isset($theme_swfobject_google_apis)) { $theme_swfobject_google_apis = 'no'; } if (!isset($theme_swfobject_google_apis_location)) { $theme_swfobject_google_apis_location = NULL; } ?>
 	<?php /* Chain stuff to load by condition, either yes or no */ if ($theme_swfobject_google_apis == 'yes') { $theme_jquery_google_apis = 'yes'; } if ($theme_jquery_google_apis == 'yes') { $theme_swfobject_google_apis = 'yes'; } if ($theme_jquery_google_apis == 'yes') { $jquery = 'yes'; } if ($theme_swfobject_google_apis == 'yes') { $jquery = 'yes'; } ?>
+
+	<!-- javascript -->
 	<?php if ($jquery == 'yes') { ?>
 	<?php /* Use jQuery from googleapis */ if ($theme_jquery_google_apis == 'yes') { ?>
 	<script type="text/javascript" src="<?php print $theme_jquery_google_apis_location; ?>"></script>
@@ -135,7 +144,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }						/* se
 	<?php } else { ?>
 	<script type="text/javascript" src="<?php print $rel_path; ?>admin/jscript/swfobject.js"></script>
 	<?php } /* End Use swfobject from googleapis */ ?>
-	<script type="text/javascript" src="<?php print $rel_path; ?>admin/jscript/public.js.php?s=<?php print $s; ?>"></script>
+	<script type="text/javascript" src="<?php print $rel_path; ?>admin/jscript/public.js.php<?php if (isset($s)) { print '?s=' . $s; } ?>"></script>
 	<?php } /* End jquery = yes */ ?>
 
 	<!-- bad behavior -->
@@ -174,11 +183,11 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }						/* se
 	<!-- rss feeds-->
 	<?php build_rss(); ?>
 	
-	<?php $do = 'head'; if ($page_type == 'module') { include ('admin/modules/' . $s . '.php'); } ?>
+	<?php $do = 'head'; if ($page_type == 'module') { if (isset($s)) { include ('admin/modules/' . $s . '.php'); } } ?>
 
 </head>
-  <?php flush(); /* Send the head so that the browser has something to do whilst it waits */ ?>
-<body id="pixie" class="pixie <?php $date_array = getdate(); print 'y' . $date_array['year'] . " "; print 'm' . $date_array['mon'] . " "; print 'd' . $date_array['mday'] . " "; print 'h' . $date_array['hours'] . " "; if ($s) { print 's_' . $s . " "; } if ($m) { print 'm_' . $m . " "; } if ($x) { print 'x_' . $x . " "; } if ($p) { print 'p_' . $p; } ?>">
+  <?php ob_flush(); flush(); /* Send the head so that the browser has something to do whilst it waits */ ?>
+<body id="pixie" class="pixie <?php $date_array = getdate(); print 'y' . $date_array['year'] . " "; print 'm' . $date_array['mon'] . " "; print 'd' . $date_array['mday'] . " "; print 'h' . $date_array['hours'] . " "; if ((isset($s)) && ($s)) { print 's_' . $s . " "; } if ($m) { print 'm_' . $m . " "; } if ($x) { print 'x_' . $x . " "; } if ($p) { print 'p_' . $p; } ?>">
 
 	<?php build_head(); ?>
 
@@ -204,7 +213,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }						/* se
 				</div>
 	
 				<h1 id="site_title" title="<?php print $site_name; ?>"><a href="<?php print $site_url; ?>" rel="home" class="replace"><?php print $site_name; ?><span></span></a></h1>
-				<h2 id="site_strapline" title="<?php if ($pinfo) { print strip_tags($pinfo); } else { print strip_tags($page_description); } ?>" class="replace"><?php if ($pinfo) { print strip_tags($pinfo); } else { print strip_tags($page_description); } ?><span></span></h2>
+				<h2 id="site_strapline" title="<?php if (isset($pinfo)) { print strip_tags($pinfo); } else { print strip_tags($page_description); } ?>" class="replace"><?php if (isset($pinfo)) { print strip_tags($pinfo); } else { print strip_tags($page_description); } ?><span></span></h2>
 	
 			</div>
 	
@@ -220,7 +229,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }						/* se
 				<?php } echo "\n"; ?>
 				<div id="content">
 	
-					<?php $do = 'default'; if ($page_type == 'static') { include ('admin/modules/static.php'); } else if ($page_type == 'dynamic') { include ('admin/modules/dynamic.php'); } else { include ('admin/modules/' . $s . '.php'); } ?>
+					<?php $do = 'default'; if ($page_type == 'static') { include ('admin/modules/static.php'); } else if ($page_type == 'dynamic') { include ('admin/modules/dynamic.php'); } else { if (isset($s)) { include ('admin/modules/' . $s . '.php'); } } ?>
 					
 				</div>
 				<?php if ($contentfirst == 'yes') { echo "\n"; ?>

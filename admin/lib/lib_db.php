@@ -30,7 +30,8 @@ class DB {
 		if (!$this->link) {
 			$GLOBALS['connected'] = false;
 		} else $GLOBALS['connected'] = true;
-		mysql_select_db($this->db) or die(db_down());
+		mysql_select_db($this->db) or die(db_down()); /* Connect to the database */
+		mysql_query("set names 'utf8'"); /* Set the charset to utf8 */
 	}
 }
 
@@ -46,7 +47,7 @@ $DB = new DB;
 	function safe_query($q='', $debug='', $unbuf='')
 	{
 		global $DB, $pixieconfig, $message, $dst, $tzHM;
-		$method = (!$unbuf) ? 'mysql_query' : 'mysql_unbuffered_query';
+		$method = (!$unbuf) ? 'mysql_query' : 'mysql_unbuffered_query'; /* To use mysql_unbuffered_query() while multiple database connections are open, you must specify the optional parameter link_identifier to identify which connection you want to use. */ /* resource mysql_unbuffered_query ( string $query [, resource $link_identifier ] ) */ /* http://php.net/manual/en/function.mysql-unbuffered-query.php */
 		if (!$q) return false;
 		if ($debug) { 
 			$message = 'MySQL Query: ' . $q . '<br/>MySQL Error : ' . mysql_error() . "";
@@ -55,7 +56,7 @@ $DB = new DB;
 		{
 			// get time zone
 			$tz = TZ;
-			// calculate hours from the TZ constant set in lib_var - works only if time zone set as +3600, +7200 etc
+			// calculate hours from the TZ constant - works only if time zone set as +3600, +7200 etc
 			if(is_numeric($tz))
 			{
 				$hours = ($tz/3600 % 3600);
@@ -305,11 +306,11 @@ $DB = new DB;
 		$i = 0;
 
 		echo "\t\t\t\t\t\t\t\t<select class=\"form_select\" name=\"$name\" id=\"$name\">\n";
-		if ((!$current) && ($go == 'new')) {
+		if ((!$current) && (isset($go)) && ($go == 'new')) {
 			echo "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"NULL\">-</option>\n";
-		} else if (($current == NULL) && ($edit)) {
+		} else if (($current == NULL) && (isset($edit)) && ($edit)) {
 			echo "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"NULL\">-</option>\n";
-		} else if ($edit) {
+		} else if ((isset($edit)) && ($edit)) {
 			echo "\t\t\t\t\t\t\t\t\t<option value=\"NULL\">-</option>\n";	 	
 		}
 
@@ -334,17 +335,19 @@ $DB = new DB;
 		echo "\t\t\t\t\t\t\t\t</select>";
 	}
 //------------------------------------------------------------------
-	function table_exists($table_name)
-	{
+	function table_exists($table_name) {
 
-		$table = adjust_prefix($table);
+		if (isset($table_name)) {
+		$table_name = adjust_prefix($table_name);
 		$rs = safe_query("select * from $table_name WHERE 1=0");
-		
-		if ($rs) {
-			return true;
-		} else {
-			return false;
 		}
+
+		if ((isset($rs)) && ($rs)) {
+		return true;
+		} else {
+		return false;
+		}
+
 	}
 //------------------------------------------------------------------
 	function db_down() 

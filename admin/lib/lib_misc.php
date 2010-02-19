@@ -13,14 +13,15 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 // BE MIGRATED TO lib_db.php.
 //
 // ------------------------------------------------------------------
-// Create the nuke proof suit.
-// When I'm on road; I always rock a nuke proof suit...
-// http://www.youtube.com/watch?v=gv521YkDrwg
-// ------------------------------------------------------------------
-	function nukeProofSuit()                                          
+
+/*	Set up debugging	*/
+	if (defined('PIXIE_DEBUG')) { pixieExit(); exit(); }
+	define('PIXIE_DEBUG', 'no'); /* Set debug to yes to debug and see all the global vars coming into the file */
+
+	function pixieExit()                                          
 	{
 header('Status: 503 Service Unavailable');  /* 503 status might discourage search engines from indexing or caching the error message */
-$nuke_proof_suit = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
+$pixie_exit = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
 		\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
 <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">
 <head>
@@ -66,7 +67,7 @@ $nuke_proof_suit = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//
 	</div>
 </body>
 </html>";
-	exit($nuke_proof_suit);
+	exit($pixie_exit);
 
 	}
 //
@@ -136,11 +137,11 @@ $nuke_proof_suit = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//
 		// Without logging the attacker's ip address, just logging that there was an attack is pointless and just worries users without providing them a way to action something.
 		// if (strlen($in) > 260) logme("BombShelter: possible attack, bomb via GET.","yes","error");
 		if (strlen($in) > 260) { 
-		// See the comment directly below function nuke_proof_suit as to why these two aren't needed
+		// See the comment directly below function pixieExit as to why these two aren't needed
 		// We don't want an attacker fed anything if they want to try to break the site.
 		// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'"); // Depreciating this
 		// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'"); // Depreciating this
-		nukeProofSuit();
+		pixieExit();
 		}
 
 	// return true;		// Dunno.
@@ -161,49 +162,49 @@ function globalSec($page_location, $sec_check)
 	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
 	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
 	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify get data was made.',"yes","error");
-	nukeProofSuit(); }
+	pixieExit(); }
 
 	if (isset($_REQUEST['_POST'])) { 
 	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
 	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
 	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify get post data was made.',"yes","error");
-	nukeProofSuit(); }
+	pixieExit(); }
 
 	if (isset($_REQUEST['_COOKIE'])) { 
 	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
 	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
 	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify cookie data was made.',"yes","error");
-	nukeProofSuit();	}
+	pixieExit();	}
 
 	if (isset($_REQUEST['_SESSION'])) { 
 	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
 	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
 	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify session data was made.',"yes","error");
-	nukeProofSuit();	}
+	pixieExit();	}
 
 	if (isset($_REQUEST['GLOBALS'])) { 
 	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
 	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
 	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify globals data was made.',"yes","error");
-	nukeProofSuit();	}
+	pixieExit();	}
 
 	if (isset($_REQUEST['_FILES'])) { 
 	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
 	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
 	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify file data was made.',"yes","error");
-	nukeProofSuit();	}
+	pixieExit();	}
 
 	if (isset($_REQUEST['_REQUEST'])) { 
 	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
 	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
 	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify request data was made.',"yes","error");
-	nukeProofSuit();	}
+	pixieExit();	}
 
 	if (isset($_REQUEST['_SERVER'])) { 
 	// $site_name = safe_field('site_name','pixie_settings',"settings_id='1'");
 	// $site_url = safe_field('site_url','pixie_settings',"settings_id='1'");
 	// logme('Pixie Site Security - ' . "$page_location" . ' - An attempt to modify server data was made.',"yes","error");
-	nukeProofSuit();	}
+	pixieExit();	}
 	}
 
 	// return true;		// Dunno.
@@ -335,8 +336,9 @@ function globalSec($page_location, $sec_check)
 // function to correctly form tags
 	function make_tag($tags)
 	{
+	if (isset($tags)) {
 	 $tags = explode(" ", $tags);
-	 for ($count=0; $count < (count($tags)); $count++) {
+	 for ($count = 0; $count < (count($tags)); $count++) {
 	   $current = $tags[$count];
 	   if ($current != "") {
 		 	$current = preg_replace("/[^a-zA-Z0-9]/", "", $current);
@@ -346,6 +348,8 @@ function globalSec($page_location, $sec_check)
 	 }
 	 
 	 return rtrim($all_tag);
+	}
+
 	}
 //-------------------------------------------------------------------
 // function to revert slug / used for tags only
@@ -392,19 +396,19 @@ function globalSec($page_location, $sec_check)
 		global $version, $lang, $s, $m, $x, $do;
 
 		//myaccount
-		if ($s == 'myaccount') { $title = $lang['nav1_home'] . ' - ' . $lang['nav2_home']; }
-		if ($s == 'myaccount' && $x == 'myprofile') { $title = $lang['nav1_home'] . ' - ' . $lang['nav2_profile']; }
-		if ($s == 'myaccount' && $x == 'myprofile' && $do == 'security') { $title = $lang['nav1_home'] . ' - ' . $lang['nav2_security']; }
+		if ((isset($s)) && ($s == 'myaccount')) { $title = $lang['nav1_home'] . ' - ' . $lang['nav2_home']; }
+		if ((isset($s)) && ($s == 'myaccount') && ($x == 'myprofile')) { $title = $lang['nav1_home'] . ' - ' . $lang['nav2_profile']; }
+		if ((isset($s)) && ($s == 'myaccount') && ($x == 'myprofile') && ($do == 'security')) { $title = $lang['nav1_home'] . ' - ' . $lang['nav2_security']; }
 		
 		//publish - needs expanding!
-		if ($s == 'publish') { $title = $lang['nav1_publish']; }
-		if ($s == 'publish' && $x == 'filemanager') { $title = $lang['nav1_publish'] . ' - ' . $lang['nav2_files']; }
+		if ((isset($s)) && ($s == 'publish')) { $title = $lang['nav1_publish']; }
+		if ((isset($s)) && ($s == 'publish') && ($x == 'filemanager')) { $title = $lang['nav1_publish'] . ' - ' . $lang['nav2_files']; }
 
 		//settings - needs expanding!
-		if ($s == 'settings') { $title = $lang['nav1_settings']; }
-		if ($s == 'settings' && $m == 'theme') { $title = $lang['nav1_settings'] . ' - ' . $lang['nav2_theme']; }
-		if ($s == 'settings' && $m == 'users') { $title = $lang['nav1_settings'] . ' - ' . $lang['nav2_users']; }
-		if ($s == 'settings' && $x == 'dbtools') { $title = $lang['nav1_settings'] . ' - ' . $lang['nav2_backup']; }
+		if ((isset($s)) && ($s == 'settings')) { $title = $lang['nav1_settings']; }
+		if ((isset($s)) && ($s == 'settings') && ($m == 'theme')) { $title = $lang['nav1_settings'] . ' - ' . $lang['nav2_theme']; }
+		if ((isset($s)) && ($s == 'settings') && ($m == 'users')) { $title = $lang['nav1_settings'] . ' - ' . $lang['nav2_users']; }
+		if ((isset($s)) && ($s == 'settings') && ($x == 'dbtools')) { $title = $lang['nav1_settings'] . ' - ' . $lang['nav2_backup']; }
 
 		echo 'Pixie v' . $version . ' : ' . $title;
 	}
@@ -487,12 +491,12 @@ function globalSec($page_location, $sec_check)
 
 	for ($i = 0; $i < strlen($emailaddy); $i = $i + 1) {
 
-		$j = floor(rand(0, 1+$mailto));
-		if ($j==0) {
+		$j = floor(rand(0, 1 + $mailto));
+		if ($j == 0) {
 		 	$emailNOSPAMaddy .= '&#' . ord(substr($emailaddy, $i, 1)) . ';';
-		} elseif ($j==1) {
+		} elseif ($j == 1) {
 			$emailNOSPAMaddy .= substr($emailaddy, $i, 1);
-		} elseif ($j==2) {
+		} elseif ($j == 2) {
 		 	$emailNOSPAMaddy .= '%' . zeroise(dechex(ord(substr($emailaddy, $i, 1))), 2);
 		}
 	}

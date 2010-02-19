@@ -6,14 +6,12 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 // Licence: GNU General Public License v3                   	   //
 // Title: Users.                                                   //
 //*****************************************************************//
-
-// user photos would be nice
-
-if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
+/* User photos would be nice! */
+if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 	
 $scream = array();
 
-if ($del) { 
+if ((isset($del)) && ($del)) { 
 	$cuser = $GLOBALS['pixie_user'];
 	$rs = safe_row('*', 'pixie_users', "user_id = '$del' limit 0,1");
 	extract($rs);
@@ -22,13 +20,14 @@ if ($del) {
 		$delete = safe_delete('pixie_users', "user_id='$del'");
 	}
 
-	if ($delete) {
+	if ((isset($delete)) && (isset($realname))) {
 		$emessage = $lang['email_account_close_message'];
 		$subject = $lang['email_account_close_subject'];
-		mail($email, $subject, $emessage);
+		if (!isset($subject)) { $subject = NULL; }
+		if (isset($email)) { mail($email, $subject, $emessage); }
 		$messageok = $lang['user'] . " " . $realname." " . $lang['user_delete_ok'];
 		logme($messageok, 'no', 'user');
-	  safe_optimize('pixie_users');
+		safe_optimize('pixie_users');
 		safe_repair('pixie_users');
 	} else {
 	  $message = $lang['user_delete_error'] . " " . $realname;
@@ -36,18 +35,18 @@ if ($del) {
 	}
 }
 
-if ($user_edit) {
+if ((isset($user_edit)) && ($user_edit)) {
 
 	$table_name = 'pixie_users';
 	$check = new Validator ();
 	
-	if ($uname == "") { $error .= $lang['user_name_missing'] . ' '; $scream[] = 'uname'; }
-	$uname = str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($uname)));
-	if ($realname == "") { $error .= $lang['user_realname_missing'] . ' '; $scream[] = "realname"; }
-	if (!$check->validateEmail($email, $lang['user_email_error'] . ' ')) { $scream[] = 'email'; }
+	if ((!isset($uname)) || ($uname == "")) { $error .= $lang['user_name_missing'] . ' '; $scream[] = 'uname'; }
+	if (!isset($uname)) { $uname = str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($uname))); }
+	if ((!isset($realname)) || ($realname == "")) { $error .= $lang['user_realname_missing'] . ' '; $scream[] = "realname"; }
+	if ((!isset($email)) || (!$check->validateEmail($email, $lang['user_email_error'] . ' '))) { $scream[] = 'email'; }
 	if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
 
-	if (!$error) {
+	if (!isset($error)) {
 
 		$sql = "user_name = '$uname', realname = '$realname', email = '$email', privs = '$privilege'";
 		$ok = safe_update('pixie_users', "$sql", "user_id = '$user_id'");
@@ -69,35 +68,37 @@ email: $email
 visit: " . $site_url . "admin to login.";
 			 
 			$subject = $lang['email_account_edit_subject'];
+			if (!isset($subject)) { $subject = NULL; }
 			mail($email, $subject, $emessage);
 			logme($messageok, 'no', 'user');
 		}
 
 	} else {
 		$edit = $user_id;
-		$user_name = $uname;
+		if (isset($uname)) { $user_name = $uname; }
 		$err = explode("|",$error);
 		$message = $err[0];
 	}
 }
 
-if ($user_new) {
+if ((isset($user_new)) && ($user_new)) {
 
 	$table_name = 'pixie_users';
 	$check = new Validator ();
 
-	if ($uname == "") { $error .= $lang['user_name_missing'] . ' '; $scream[] = 'uname'; }
-	$uname = str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($uname)));
-	if ($realname == "") { $error .= $lang['user_realname_missing'] . ' '; $scream[] = 'realname'; }
-	if (!$check->validateEmail($email,$lang['user_email_error'] . ' ')) { $scream[] = 'email'; }
+	if ((!isset($uname)) || ($uname == "")) { $error .= $lang['user_name_missing'] . ' '; $scream[] = 'uname'; }
+	if (isset($uname)) { $uname = str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($uname))); }
+	if ((!isset($realname)) || ($realname == "")) { $error .= $lang['user_realname_missing'] . ' '; $scream[] = 'realname'; }
+	if ((!isset($email)) || (!$check->validateEmail($email, $lang['user_email_error'] . ' '))) { $scream[] = 'email'; }
 	if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
 
-	if (!$error) {
+	if (!isset($error)) {
 
 		$password = generate_password(6);
-		$nonce = md5( uniqid( rand(), true ) );
+		$nonce = md5(uniqid(rand(), true ));
 		$sql = "user_name = '$uname', realname = '$realname', email = '$email', pass = password(lower('$password')), nonce = '$nonce', privs = '$privilege', link_1 = 'http://www.toggle.uk.com', link_2 = 'http://www.getpixie.co.uk', link_3 = 'http://www.iwouldlikeawebsite.com', biography=''"; 
-		$ok = safe_insert($table_name, $sql);
+
+		if (isset($table_name)) { $ok = safe_insert($table_name, $sql); }
 
 		if (!$ok) {
 			$message = $lang['user_duplicate'];
@@ -115,6 +116,7 @@ password: $password
 visit: " . $site_url . "admin to login.";
 			 
 			$subject = $lang['email_account_new_subject'];
+			if (!isset($subject)) { $subject = NULL; }
 			mail($email, $subject, $emessage);
 			$messageok = $lang['user_new_ok'] . " ". $realname . '.';
 			logme($messageok, 'no', 'user');
@@ -126,9 +128,9 @@ visit: " . $site_url . "admin to login.";
 	}
 } 		
 
- 			if ($edit){
+ 			if ((isset($edit)) && ($edit)){
 
- 				if (!$user_edit) {
+ 				if ((!isset($user_edit)) || (!$user_edit)) {
  					$rs = safe_row('*', 'pixie_users', "user_id = '$edit' limit 0,1");
  					if ($rs) {
  						extract($rs);
@@ -146,20 +148,20 @@ visit: " . $site_url . "admin to login.";
 				echo "<h2>" . $lang['edit_user'] . " ($user_name)</h2>";
  				
  				echo "\n\n\t\t\t\t<div id=\"users_newedit\">
- 					<form action=\"?s=$s&amp;x=$x\" method=\"post\" class=\"form\">
+ 					<form accept-charset=\"UTF-8\" action=\"?s=$s&amp;x=$x\" method=\"post\" class=\"form\">
  						<fieldset>
  						<legend>" . $lang['form_legend_user_settings'] . "</legend>
-		 					<div class=\"form_row $uname_style\">
+		 					<div class=\"form_row "; if (isset($uname_style)) { echo $uname_style; } echo "\">
 								<div class=\"form_label\"><label for=\"uname\">" . $lang['form_user_username'] . " <span class=\"form_required\">" . $lang['form_required'] . "</span><span class=\"form_help\">" . $lang['form_help_user_username'] . "</span></label></div>
 								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"uname\" value=\"$user_name\" size=\"50\" maxlength=\"80\" id=\"uname\" /></div>
 							</div>			
-							<div class=\"form_row $realname_style\">
+							<div class=\"form_row "; if (isset($realname_style)) { echo $realname_style; } echo "\">
 								<div class=\"form_label\"><label for=\"realname\">" . $lang['form_user_realname'] . " <span class=\"form_required\">" . $lang['form_required'] . "</span><span class=\"form_help\">" . $lang['form_help_user_realname'] . "</span></label></div>
-								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"realname\" value=\"$realname\" size=\"50\" maxlength=\"80\" id=\"realname\" /></div>
+								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"realname\""; if (isset($realname)) { echo " value=\"$realname\""; } echo " size=\"50\" maxlength=\"80\" id=\"realname\" /></div>
 							</div>
-							<div class=\"form_row $email_style\">
+							<div class=\"form_row "; if (isset($email_style)) { echo $email_style; } echo "\">
 								<div class=\"form_label\"><label for=\"email\">Email <span class=\"form_required\">" . $lang['form_required'] . "</span></label></div>
-								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"email\" value=\"$email\" size=\"50\" maxlength=\"80\" id=\"email\" /></div>
+								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"email\""; if (isset($email)) { echo " value=\"$email\""; } echo " size=\"50\" maxlength=\"80\" id=\"email\" /></div>
 							</div>
 							<div class=\"form_row\">
 								<div class=\"form_label\"><label for=\"privilege\">" . $lang['form_user_permissions'] . " <span class=\"form_required\">" . $lang['form_required'] . "</span><span class=\"form_help\">" . $lang['form_help_user_permissions'] . "</span></label></div>
@@ -187,7 +189,7 @@ visit: " . $site_url . "admin to login.";
  				</div>\n";
 	 			}
  					
- 			} else if ($do == 'newuser'){
+ 			} else if (isset($do) && $do == 'newuser'){
 
  				if (in_array('email', $scream)) { $email_style = 'form_highlight'; }
 				if (in_array('uname', $scream)) { $uname_style = 'form_highlight'; }
@@ -197,22 +199,22 @@ visit: " . $site_url . "admin to login.";
  				<p>' . $lang['create_user_info'] . '</p>';
 
  				echo "\n\n\t\t\t<div id=\"users_newedit\">
- 					<form action=\"?s=$s&amp;x=$x\" method=\"post\" class=\"form\">
+ 					<form accept-charset=\"UTF-8\" action=\"?s=$s&amp;x=$x\" method=\"post\" class=\"form\">
  						<fieldset>
  						<legend>" . $lang['form_legend_user_settings'] . "</legend>
-		 					<div class=\"form_row $uname_style\">
+		 					<div class=\"form_row "; if (isset($uname_style)) { echo $uname_style; } echo "\">
 								<div class=\"form_label\"><label for=\"uname\">" . $lang['form_user_username'] . " <span class=\"form_required\">" . $lang['form_required'] . "</span><span class=\"form_help\">" . $lang['form_help_user_username'] . "</span></label></div>
-								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"uname\" value=\"$uname\" size=\"50\" maxlength=\"80\" id=\"uname\"  /></div>
+								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"uname\""; if (isset($uname)) { echo " value=\"$uname\""; } echo " size=\"50\" maxlength=\"80\" id=\"uname\"  /></div>
 							</div>
 							
-							<div class=\"form_row $realname_style\">
+							<div class=\"form_row "; if (isset($realname_style)) { echo $realname_style; } echo "\">
 								<div class=\"form_label\"><label for=\"realname\">" . $lang['form_user_realname'] . " <span class=\"form_required\">" . $lang['form_required'] . "</span><span class=\"form_help\">" . $lang['form_help_user_realname'] . "</span></label></div>
-								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"realname\" value=\"$realname\" size=\"50\" maxlength=\"80\" id=\"realname\" /></div>
+								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"realname\""; if (isset($realname)) { echo " value=\"$realname\""; } echo " size=\"50\" maxlength=\"80\" id=\"realname\" /></div>
 							</div>
 	
-							<div class=\"form_row $email_style\">
+							<div class=\"form_row "; if (isset($email_style)) { echo $email_style; } echo "\">
 								<div class=\"form_label\"><label for=\"email\">Email <span class=\"form_required\">" . $lang['form_required'] . "</span></label></div>
-								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"email\" value=\"$email\" size=\"50\" maxlength=\"80\" id=\"email\" /></div>
+								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"email\""; if (isset($email)) { echo " value=\"$email\""; } echo " size=\"50\" maxlength=\"80\" id=\"email\" /></div>
 							</div>
 
 							<div class=\"form_row_button\" id=\"form_button\">
@@ -233,7 +235,7 @@ visit: " . $site_url . "admin to login.";
 				<div id="admin_block_user" class="admin_block">
 					<h3><?php print $lang['create_user']; ?></h3>
 <?php
-echo "					<form action=\"?s=$s&amp;x=users\" method=\"post\">
+echo "					<form accept-charset=\"UTF-8\" action=\"?s=$s&amp;x=users\" method=\"post\">
  					<fieldset>
  						<legend>" . $lang['create_user'] . "</legend>
 						<div class=\"form_row\">
@@ -289,13 +291,14 @@ echo "					<form action=\"?s=$s&amp;x=users\" method=\"post\">
 		  			$email = $out['email'];
 		  			$privs = $out['privs'];
   					$userid = $out['user_id'];
-  					
-		  			if ($privs == 3) {
+
+		  			if (($privs == 3) && (isset($email))&& (isset($realname))) {
 		  				if ($GLOBALS['pixie_user'] == $user_name) {
 		  				echo "\t\t\t\t\t\t<div class=\"auser superuser vcard\"><img src=\"admin/theme/images/icons/user_tie.png\" alt=\"User image\" class=\"aicon\" /><span class=\"uname fn\"><a href=\"mailto:$email\" class=\"email\" title=\"Email $realname\">$realname</a> ($user_name)</span><span class=\"uedit\"><a href=\"?s=$s&amp;x=$x&amp;edit=$userid\">" . $lang['edit'] . "</a></span></div>\n";
 		  				} else {
 		  				echo "\t\t\t\t\t\t<div class=\"auser superuser vcard\"><img src=\"admin/theme/images/icons/user_tie.png\" alt=\"User image\" class=\"aicon\" /><span class=\"uname fn\"><a href=\"mailto:$email\" class=\"email\" title=\"Email $realname\">$realname</a> ($user_name)</span><span class=\"suser\">Super User</span></div>\n";
 		  				}
+
 		  			} else {
 		  			echo "\t\t\t\t\t\t<div class=\"auser vcard\"><img src=\"admin/theme/images/icons/user_tie.png\" alt=\"User image\" class=\"aicon\" /><span class=\"uname fn\"><a href=\"mailto:$email\" class=\"email\" title=\"Email $realname\">$realname</a> ($user_name)</span><span class=\"uedit\"><a href=\"?s=$s&amp;x=$x&amp;edit=$userid\">" . $lang['edit'] . "</a></span><span class=\"udelete\"><a href=\"?s=$s&amp;x=$x&amp;del=$userid\" onclick=\"return confirm('" . $lang['user_delete_confirm'] . " $realname?')\">" . $lang['delete'] . "</a></span></div>\n";
 		  			}
@@ -321,7 +324,9 @@ echo "					<form action=\"?s=$s&amp;x=users\" method=\"post\">
 		  			$privs = $out['privs'];
   					$userid = $out['user_id'];
 
+					if ((isset($email)) && (isset($realname))) {
 		  			echo "\t\t\t\t\t\t<div class=\"auser vcard\"><img src=\"admin/theme/images/icons/user.png\" alt=\"User image\" class=\"aicon\" /><span class=\"uname fn\"><a href=\"mailto:$email\" class=\"email\" title=\"Email $realname\">$realname</a> ($user_name)</span><span class=\"uedit\"><a href=\"?s=$s&amp;x=$x&amp;edit=$userid\">" . $lang['edit'] . "</a></span><span class=\"udelete\"><a href=\"?s=$s&amp;x=$x&amp;del=$userid\" onclick=\"return confirm('" . $lang['user_delete_confirm'] . " $realname?')\">" . $lang['delete'] . "</a></span></div>\n";
+					}
 
 					$i ++;
 					}
@@ -345,7 +350,9 @@ echo "					<form action=\"?s=$s&amp;x=users\" method=\"post\">
 		  			$privs = $out['privs'];
   					$userid = $out['user_id'];
 
+					if ((isset($email)) && (isset($realname))) {
 		  			echo "\t\t\t\t\t\t<div class=\"auser vcard\"><img src=\"admin/theme/images/icons/user.png\" alt=\"User image\" class=\"aicon\" /><span class=\"uname fn\"><a href=\"mailto:$email\" class=\"email\" title=\"Email $realname\">$realname</a> ($user_name)</span><span class=\"uedit\"><a href=\"?s=$s&amp;x=$x&amp;edit=$userid\">" . $lang['edit'] . "</a></span><span class=\"udelete\"><a href=\"?s=$s&amp;x=$x&amp;del=$userid\" onclick=\"return confirm('" . $lang['user_delete_confirm'] . " $realname?')\">" . $lang['delete'] . "</a></span></div>\n";
+					}
 
 					$i ++;
 					}

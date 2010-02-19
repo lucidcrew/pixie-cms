@@ -42,12 +42,12 @@ switch ($do) {
   	// admin of module
 	case 'admin':
 	
-	   $module_name= 'rss';																
-	   $table_name = 'pixie_module_rss';														
-	   $order_by = 'feed_display_name';		  													
-	   $asc_desc = 'asc';        														
-	   $view_exclude = array('rss_id');			
-	   $edit_exclude = array('rss_id');														
+	   $module_name= 'rss';
+	   $table_name = 'pixie_module_rss';
+	   $order_by = 'feed_display_name';
+	   $asc_desc = 'asc';
+	   $view_exclude = array('rss_id');
+	   $edit_exclude = array('rss_id');
 	   $tags_support = 'no';
 	   
 	   admin_module($module_name, $table_name, $order_by, $asc_desc, $view_exclude, $edit_exclude, 15, $tags);
@@ -56,8 +56,10 @@ switch ($do) {
 
   	// show module
 	default :
+	  if (isset($s)) {
 	  extract(safe_row('*', 'pixie_core', "page_name = '$s'"));
-	  echo "<div id=\"$s\">
+	  }
+	  echo "<div "; if (isset($s)) { echo "id=\"$s\""; } echo ">
 	  	\t\t\t<h3>$page_display_name</h3>
 	  				<h4>Whats all this then?</h4>
 	  				<p>RSS or Really Simple Syndication, is a way of reading new content from websites. It allows you to keep informed of the latest developments

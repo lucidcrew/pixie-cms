@@ -7,7 +7,8 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 // Title: Language File (Latvian).				   //  
 // Translation by Rihards 'dExIT' Mantejs                          //
 //*****************************************************************//
-
+if (!isset($delete)) { $delete = NULL; }
+if (!isset($username)) { $username = NULL; }
 $lang = array(
 	// system
 	'skip_to' => 'Pāriet uz rakstu',
