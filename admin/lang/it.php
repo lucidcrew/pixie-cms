@@ -354,6 +354,7 @@ $lang = array(
 	'comment_name_error' => 'Per favore inserisci il nome.',
 	'comment_email_error' => 'Per favore inserisci un indirizzo e-mail valido.',
 	'comment_web_error' => 'Per favore inserisci un sito Internet valido.',
+	'comment_throttle_error' => 'Stai postando commenti troppo in fretta, rallentare.',
 	'comment_comment_error' => 'Per favore lascia il tuo commento.',	
 	'comment_save_log' => 'Commento su: ',
 	'tagged' => 'Etichette',

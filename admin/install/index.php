@@ -1160,6 +1160,24 @@ padding-top: 2em;
 		switch($pixie_step) {
 			case 4 :
 				global $site_url;
+                                /** Checking Dir Permissions **/
+				$warn_flag = false;
+                                if ($handle = opendir('../../files')) {
+                                        while (false !== ($file = readdir($handle))) {
+						$path = "../../files/$file";
+                                                if ($file != '.' && $file != '..') {
+							
+                                                        if (is_dir($path) && !(is_writable($path))) {
+							$warn_flag = true;
+                                                                echo "<font size='-1'>Directory files/$file is not writable.</font><br>\n";
+							}
+                                                }
+                                        }
+                                        closedir($handle);
+                                }
+				if ($warn_flag) {
+				    echo "<p><font color=red>Warning</font> The permissions of the directories above should be set to 777 (drwxrwxrwx) for uploads and caching to be enabled</p><hr>\n";
+				}
 		?>
 		<div class="center" id="c-top"><br /><b>Congratulations!</b></div><br />
 		<div class="center"><img id="pixieicon" src="<?php print $site_url . 'files/images/apple_touch_icon.jpg'; ?>" alt="Pixie Logo jpg" /></div>

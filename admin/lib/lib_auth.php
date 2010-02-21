@@ -55,13 +55,13 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 		
 		global $lang;
 		
-		$username = sterilise($username, true);
-		$password = sterilise($password, true);
-		$remember = sterilise($remember, true);
+		$username = sterilise_txt($username, true);
+		$password = sterilise_txt($password, true);
+		$remember = sterilise_txt($remember, true);
 	
-		$howmany = count(safe_rows('*', 'pixie_log', "log_message = '" . $lang['failed_login'] . "' and user_ip = '" . $_SERVER["REMOTE_ADDR"] . "' and log_time < now() and log_time > DATE_ADD(now(), INTERVAL -1 DAY)"));
+		$howmany = count(safe_rows('*', 'pixie_log', "log_message = '" . $lang['failed_login'] . "' and user_ip = '" . $_SERVER["REMOTE_ADDR"] . "' and log_time < utc_timestamp() and log_time > DATE_ADD(utc_timestamp(), INTERVAL -1 DAY)"));
 		
-		sleep(3);																																    // should halt dictionary attacks
+		sleep(1);																																    // should halt dictionary attacks
 		
 		// no more logins than 3 in 24 hours
 		if ($howmany > 3) {
@@ -75,7 +75,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 
 			if ($r) {
 				$user_hits = safe_field('user_hits', 'pixie_users', "user_name='$username'");
-				safe_update('pixie_users', 'last_access = now()', "user_name = '$username'");
+				safe_update('pixie_users', 'last_access = utc_timestamp()', "user_name = '$username'");
 				safe_update('pixie_users', "user_hits  = $user_hits + 1", "user_name = '$username'");
 
         $nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");

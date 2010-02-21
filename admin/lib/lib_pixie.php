@@ -68,13 +68,13 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 			$rel_path = './';
 		}
 
-		if ((!isset($s)) || (!$s)) {
-			$last = $default_page{strlen($default_page)-1};
+		if ((!isset($s)) || (!$s)) { /* Maybe part of the permalink in other languages problem */
+			$last = $default_page { strlen($default_page) - 1 };
 			$default = explode('/', $default_page);
-			$s = sterilise($default['0']);
-			$m = sterilise($default['1']);
-			$x = sterilise($default['2']);
-			$p = sterilise($default['3']);
+			$s = sterilise_txt($default['0']);
+			$m = sterilise_txt($default['1']);
+			$x = sterilise_txt($default['2']);
+			$p = sterilise_txt($default['3']);
 		}
 		
 		$s = public_check_404($s);
@@ -209,7 +209,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 				echo "
 	<div id=\"admin_header\">
 		<h1>Hello "; if (isset($realname)) { echo firstword($realname); } echo "</h1>
-		<div id=\"admin_header_text\"><p>" . safe_strftime($date_format, time()) . ". Currently your site has $user_count visitor(s) online.</p></div>
+		<div id=\"admin_header_text\"><p>" . safe_strftime($date_format, time() + tz_offset()) . ". Currently your site has $user_count visitor(s) online.</p></div>
 		<div id=\"admin_header_controls\"><p><a href=\"" . $site_url . "admin/\" title=\"Goto Pixie\">Pixie</a><a href=\"" . $site_url . "admin/?s=logout\" title=\"Logout of pixie\">Logout</a></p></div>
 	</div>\n";
 			}

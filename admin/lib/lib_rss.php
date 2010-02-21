@@ -77,7 +77,7 @@ echo ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		if ($rss) {
 
 			$max = $posts_per_page;
-			$data = safe_rows('*', 'pixie_dynamic_posts', "public = 'yes' and page_id = '$page_id' and posted < now() order by posted desc");
+			$data = safe_rows('*', 'pixie_dynamic_posts', "public = 'yes' and page_id = '$page_id' and posted < utc_timestamp() order by posted desc");
 			$total = count($data);
 			
 			if ($total) {

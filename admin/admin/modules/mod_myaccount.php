@@ -17,8 +17,8 @@ if (isset($GLOBALS['pixie_user'])) {
 		if ($rs) {
 
 			// clear logs past $log_expire days
-			safe_delete('pixie_log', '`log_time` < date_sub(now(),interval ' . $GLOBALS['logs_expire'] . ' day)');
-			safe_delete('pixie_bad_behavior', '`date` < date_sub(now(),interval ' . $GLOBALS['logs_expire'] . ' day)');
+			safe_delete('pixie_log', '`log_time` < date_sub(utc_timestamp(),interval ' . $GLOBALS['logs_expire'] . ' day)');
+			safe_delete('pixie_bad_behavior', '`date` < date_sub(utc_timestamp(),interval ' . $GLOBALS['logs_expire'] . ' day)');
 			safe_optimize('pixie_log');
 			safe_repair('pixie_log');
 			safe_optimize('pixie_bad_behavior');
@@ -141,14 +141,14 @@ if (isset($GLOBALS['pixie_user'])) {
 					";
 		}
 
-		safe_delete('pixie_log', "`log_time` < date_sub(now(),interval " . $GLOBALS['logs_expire'] . ' day)');
+		safe_delete('pixie_log', "`log_time` < date_sub(utc_timestamp(),interval " . $GLOBALS['logs_expire'] . ' day)');
 		safe_optimize('pixie_log');
 		safe_repair('pixie_log');
 
 		if (isset($do) && $do == 'referral') {
-			$rs = safe_rows_start('*, unix_timestamp(log_time) as stamp', 'pixie_log', "log_type = 'referral' AND log_time < now() order by log_time desc limit 30");
+			$rs = safe_rows_start('*, unix_timestamp(log_time) as stamp', 'pixie_log', "log_type = 'referral' AND log_time < utc_timestamp() order by log_time desc limit 30");
 		} else {
-			$rs = safe_rows_start('*, unix_timestamp(log_time) as stamp', 'pixie_log', "log_type = 'system' AND log_time < now() order by log_time desc limit 30");
+			$rs = safe_rows_start('*, unix_timestamp(log_time) as stamp', 'pixie_log', "log_type = 'system' AND log_time < utc_timestamp() order by log_time desc limit 30");
 		}
 
 		if ($rs) {

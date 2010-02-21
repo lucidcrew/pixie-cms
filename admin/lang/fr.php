@@ -353,6 +353,7 @@ $lang = array(
 	'comment_name_error' => 'Veuillez indiquer votre nom.',
 	'comment_email_error' => 'Veuillez indiquer une adresse email valide.',
 	'comment_web_error' => 'Veuillez indiquer un site web valide.',
+	'comment_throttle_error' => 'Vous êtes de poster des commentaires trop vite, ralentis.',
 	'comment_comment_error' => 'Veuillez compl&egrave;ter votre commentaire.',	
 	'comment_save_log' => 'Commentaire pour : ',
 	'tagged' => 'Tagg&eacute;',

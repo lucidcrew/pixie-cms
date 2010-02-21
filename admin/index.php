@@ -236,7 +236,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }							/* s
 
 	<?php if ($message) { if ($GLOBALS['system_message'] != $message) { ?>
 	    pixieErrorMessage(); <?php } else { ?> pixieOkMessage(); <?php } ?>
-	<?php } else if (isset($messageok)) { safe_update('pixie_settings', "value = now()", "name = 'dbupdatetime'"); ?> pixieLoginMessage();<?php } ?>
+	<?php } else if (isset($messageok)) { safe_update('pixie_settings', "value = utc_timestamp()", "name = 'dbupdatetime'"); ?> pixieLoginMessage();<?php } ?>
 
 		});  /* End jQuery function */
 

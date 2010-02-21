@@ -88,7 +88,7 @@ function bb2_write_settings($settings) {
 function bb2_install() {
 	$settings = bb2_read_settings();	
 	$ok = safe_query(bb2_table_structure($settings['log_table']));
-    if($ok) safe_query("UPDATE `" . PFX . "pixie_settings` SET `bb2_installed`='yes'");
+	if ($ok) { safe_query("UPDATE `" . PFX . "pixie_settings` SET `bb2_installed`='yes'"); }
 }
 
 // Screener
@@ -125,6 +125,6 @@ function bb2_relative_path() {
 // Calls inward to Bad Behavor itself.
 require_once(BB2_CWD . '/bad-behavior/version.inc.php');
 require_once(BB2_CWD . '/bad-behavior/core.inc.php');
-if($bb2_installed == 'no') bb2_install();
+if ($bb2_installed == 'no') { bb2_install(); }
 bb2_start(bb2_read_settings());
 ?>

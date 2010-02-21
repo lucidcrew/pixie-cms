@@ -354,6 +354,7 @@ $lang = array(
 	'comment_name_error' => 'Proszę podaj swoje imię.',
 	'comment_email_error' => 'Proszę podaj poprawny adres Email.',
 	'comment_web_error' => 'Proszę podaj poprawny adres www.',
+	'comment_throttle_error' => 'Piszesz komentarze zbyt szybko, zwolnij.',
 	'comment_comment_error' => 'Proszę napisz komentarz.',	
 	'comment_save_log' => 'Komentowany: ',
 	'tagged' => 'Tagi',
