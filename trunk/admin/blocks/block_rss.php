@@ -16,7 +16,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 							<?php
 							echo "\n";
 							// Enter the URL of your RSS feed here:
-							$feed = new SimplePie('http://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml');
+							$feed = new SimplePie('http://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml', 'files/cache', 900);
 							$feed->handle_content_type();
 							foreach ($feed->get_items() as $item):
 								$itemlink = $item->get_permalink();

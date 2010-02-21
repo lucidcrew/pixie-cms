@@ -46,15 +46,16 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 		}
 		$ip = $_SERVER['REMOTE_ADDR'];
 
-		$uname = sterilise($uname, true);
-		$ip = sterilise($ip, true);
-		$referral = sterilise($referral, true); 
+		$uname = sterilise_txt($uname, true);
+		if (!preg_match('/^[0-9\.]+$/', $ip)) {
+		$ip = sterilise($ip, true); $referral = sterilise($referral, true);
+		}
 
 		if (($referral) and (!strstr($referral, $domain))) {
 			safe_insert('pixie_log', 
 									"user_id = '$uname',  
 									 user_ip = '$ip', 
-								 	 log_time = now(),
+								 	 log_time = utc_timestamp(),
 								 	 log_type = 'referral',
 								 	 log_icon = 'referral',
 								 	 log_message = '$referral'");
@@ -76,7 +77,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 		safe_insert('pixie_log', 
 								"user_id = '$uname',  
 								 user_ip = '$ip', 
-							 	 log_time = now(),
+							 	 log_time = utc_timestamp(),
 							 	 log_type = 'system',
 							 	 log_message = '$message',
 							 	 log_icon = '$icon',

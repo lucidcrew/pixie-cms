@@ -523,6 +523,13 @@ function globalSec($page_location, $sec_check)
 		return array('main' => $main, 'extended' => $extended);
 	}
 //-------------------------------------------------------------------
+// Don't call sterilise unless necessary
+        function sterilise_txt($txt, $is_sql = false) {
+           if (!preg_match('/^[a-zA-Z0-9\_]+$/', $txt))
+              return sterilise($txt, $is_sql);
+           return $txt;
+        }
+//-------------------------------------------------------------------
 // steralise user input, security against XSS etc
 	function sterilise($val, $is_sql = false) {
 

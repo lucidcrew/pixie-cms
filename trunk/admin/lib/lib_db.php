@@ -14,11 +14,16 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 
 //------------------------------------------------------------------
 
-if (!empty($pixieconfig['table_prefix'])) {
-	define ('PFX', $pixieconfig['table_prefix']); } else { if (!defined('PFX')) { define ('PFX', ''); }
-					  }
+if (!empty($pixieconfig['table_prefix'])) { define ('PFX', $pixieconfig['table_prefix']); }
+else { if (!defined('PFX')) { define ('PFX', ''); } }
 
 class DB {
+
+    function getTzdiff() {
+         extract(getdate());
+         $serveroffset = gmmktime(0, 0, 0, $mon, $mday, $year) - mktime(0, 0, 0, $mon, $mday, $year);
+         return $serveroffset / 3600;
+    }
 
 	function DB() {
 		global $pixieconfig;
@@ -32,6 +37,10 @@ class DB {
 		} else $GLOBALS['connected'] = true;
 		mysql_select_db($this->db) or die(db_down()); /* Connect to the database */
 		mysql_query("set names 'utf8'"); /* Set the charset to utf8 */
+         $diff = $this->getTzdiff();
+         if ($diff >= 0)
+                $diff = '+'.$diff;
+         mysql_query("set time_zone = '"."$diff:00'");
 	}
 }
 

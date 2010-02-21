@@ -21,7 +21,7 @@ if (is_readable('../../../../lib/geshi.php')) {
 
 <head><meta http-equiv="content-type" content="text/html; charset=utf-8" /><title>GeSHi</title>
 <style type="text/css">
-body{font-family:'Lucida Grande',Verdana,Arial,Sans-Serif;font-size:11pt;line-height:14pt;padding-top:-1%;padding-bottom:-1%;padding-left:1%;padding-right:1%;}
+body{font-family:'Lucida Grande',Verdana,Arial,Sans-Serif;font-size:11pt;line-height:14pt;padding-left:1%;padding-right:1%;}
 #center{text-align:center;}#right{text-align:right;}
 </style>
 </head>
@@ -107,7 +107,7 @@ CKEDITOR.dialog.getCurrent().on("ok", okListener);
     if (($_POST['style_type']) == 2) { echo $geshi->get_stylesheet(true); }
     }
     ?>
-body{font-family:Arial,'Lucida Grande',Verdana,Sans-Serif;font-size:12px;padding-top:-1%;padding-bottom:-1%;padding-left:1%;padding-right:1%;color:#676666;}
+body{font-family:Arial,'Lucida Grande',Verdana,Sans-Serif;font-size:12px;padding-left:1%;padding-right:1%;color:#676666;}
 h3{margin:0;color:#676666;font-weight: normal;max-width:59%;}
 #footer{text-align:center;font-size: 80%;color:#BBBABA;clear:both;padding-top:16px;}
 a{color: #0497D3;text-decoration:none;}
