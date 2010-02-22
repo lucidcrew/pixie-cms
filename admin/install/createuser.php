@@ -14,6 +14,7 @@ if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important
 	include '../lib/lib_db.php';       																				// load libraries order is important
 
 	if (strnatcmp(phpversion(),'5.1.0') >= 0) { if (!isset($server_timezone)) { $server_timezone = 'Europe/London'; } date_default_timezone_set("$server_timezone"); }	/* New! Built in php function. Tell php what the server timezone is so that we can use php's rewritten time and date functions with the correct time and without error messages  */
+	define('TZ', "$timezone");	/* timezone fix (php 5.1.0 or newer will set it's server timezone using function date_default_timezone_set!) */
 	if (isset($do)) { print ($do); }
 
 	if ($debug == 'yes') {
@@ -273,8 +274,10 @@ password: $password
 				</form>
  			</div>
  		</div>
+
   <?php if ($debug == 'yes') {
   /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>';
   phpinfo();
   } ?>
+
 </body> 	

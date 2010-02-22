@@ -11,6 +11,8 @@
 
 	error_reporting(0);	// Turns off error reporting
 
+if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important to set this first, so that we can use the new config.php */
+	define('TZ', "$timezone");	/* timezone fix (php 5.1.0 or newer will set it's server timezone using function date_default_timezone_set!) */
 	if ($debug == 'yes') {
 		error_reporting(E_ALL & ~E_DEPRECATED);
 		$show_vars = get_defined_vars();
@@ -54,20 +56,18 @@
 	// php uses this setting in scripts to get the correct server time. Not user local time.
 	// It must be set to not bog php down with errors.
 
-	if (strnatcmp(phpversion(),'5.1.0') >= 0) 
-	{
-		date_default_timezone_set("$pixie_server_timezone");	/* If php 5.10 set php server time zone */
-	}
+	/* If php version 5.10 or newer, set php server time zone */
+
+	if (strnatcmp(phpversion(),'5.1.0') >= 0) { date_default_timezone_set("$pixie_server_timezone"); }
 
 	// globalSec('Pixie Installer index.php', 1);
 
-	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie'); // access to form vars if register globals is off
+	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie'); /* Access to form vars */
 
 	switch($pixie_step) {
 
 		// step 2
-		// create the config file, chmod the correct directories and install basic db stucture 
-		case 2 :
+		case 2 : /*create the config file, chmod the correct directories and install basic db stucture */
 
 			if ($pixie_prefix == 'pixie_') { $pixie_prefix = 'pixie__'; }		// Prevent pixie_ being used as the prefix, causes bug
 
@@ -80,7 +80,6 @@
 			}
 
 			if ($pixie_reinstall == 'Yes') {
-				if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important to set this first, so that we can use the new config.php */
 				include '../config.php'; // load configuration
 				$pixie_database  =  $pixieconfig['db'];
 				$pixie_username  =  $pixieconfig['user'];
@@ -93,15 +92,17 @@
 			$conn = mysql_connect($pixie_host, $pixie_username, $pixie_password);
 			
 			if (!$conn) {
-				if ($pixie_dropolddata == 'Yes') { $pixie_step = 1; 	$error = 'Pixie could not connect to your database, check your details below.'; break; }
-				$error = 'Pixie could not connect to your database, check your details below.';
+				$error = 'Pixie could not connect to your database, check your details below.'; $pixie_step = 1; break;
 
 			} else {
+
 				$checkdb = mysql_select_db($pixie_database);
+				mysql_query("set names 'utf8'"); /* Set the charset to utf8 */
+
 				if (!$checkdb) {
 
-				if ($_REQUEST['database'] == NULL) { $have_you_even_provided_a_database_name = '<br />Please provide the correct name of your database.'; } else { $have_you_even_provided_a_database_name = "<br />Make sure you have created a database with the name <b><u>$pixie_database</u></b>"; }
-					$error = "Pixie could not connect to your database! $have_you_even_provided_a_database_name";
+				if (!$_REQUEST['database']) { $have_you_even_provided_a_database_name = '<br />Please provide the correct name of your database.'; } else { $have_you_even_provided_a_database_name = "<br />Make sure you have created a database with the name <b><u>$pixie_database</u></b>"; }
+					$error = "Pixie could not connect to your database! $have_you_even_provided_a_database_name"; $pixie_step = 1; break;
 
 				} else {
 					
@@ -116,10 +117,9 @@
 						if ($result = mysql_query($sql)) {
 							/* add table name to array */
 							while ($row = mysql_fetch_row($result)){
-								$found_tables[]=$row[0];
+								$found_tables[] = $row[0];
 							}
-						}
-						else {
+						} else {
 							$pixie_step = 1;
 							$error = 'Error, could not the list tables. MySQL Error: ' . mysql_error();
 							break;
@@ -129,17 +129,18 @@
 							$sql = "DROP TABLE $pixie_database.$table_name_delete";
 							if ($result = mysql_query($sql)){
 								// We could echo a sucess message here if we wanted
-							}
-							else {
+							} else {
 								$pixie_step = 1;
-								$error = "Error deleting $table_name_delete. MySQL Error: " . mysql_error() . "";
+								$error = "Error deleting $table_name_delete . MySQL Error : " . mysql_error() . "";
 								break;
 							}
 						}
 
 					}
-					// write data to config file
-					if ($fh = fopen('../config.php', 'a')) {
+
+					/* Write out Pixie's config file */
+
+					if ( $fh = fopen('../config.php', 'a') ) {
 						$data = 
 						"<?php
 if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
@@ -168,7 +169,6 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 						chmod('../config.php', 0640);
 
 						// load in the required libraries
-						if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important to set this first, so that we can use the new config.php */
 						include '../config.php';
 						include '../lib/lib_db.php';
 
@@ -424,19 +424,18 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 			}
 
 			if ($pixie_dropolddata == 'Yes') {
-				$pixie_step = 2;
+			$pixie_step = 2;
 			} else {
-				if (!isset($error)) {
-					$pixie_step = 2;
+				if (!$error) {
+				$pixie_step = 2;
 				} else {
-					$pixie_step = 1;
+				$pixie_step = 1;
 				}
 			}
 
 		break;
 
 		case 3 :
-			if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); } /* very important to set this first, so that we can use the new config.php */
 			include '../config.php'; // load configuration
 			include '../lib/lib_db.php';// load libraries order is important
 			include '../lang/' . $pixie_langu . '.php'; // get the language file
@@ -470,7 +469,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 			$err = explode('|', $error);
 			$error = $err[0];
 
-			if (!isset($error)) {
+			if ( (!$error) ) {
 				if ($site_url_last != '/') {
 					$pixie_url = $pixie_url . '/';
 				}
@@ -498,7 +497,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 
 				// create .htaccess for clean URLs
 				$fh = fopen('../../.htaccess', 'a');
-				$clean = str_replace("/admin/install/index.php", "", $_SERVER["REQUEST_URI"]);
+				$clean = str_replace('/admin/install/index.php', "", $_SERVER["REQUEST_URI"]);
 				if (!$clean) {
 					$clean = '/';
 				}
@@ -684,7 +683,7 @@ fwrite($temp, "$data");
 			chmod('../../files/other/', 0777);
 			chmod('../../files/sqlbackups/', 0777);
 
-			if (!isset($error)) {
+			if (!$error) {
 				$pixie_step = 3;
 			} else {
 				$pixie_step = 2;
@@ -694,7 +693,6 @@ fwrite($temp, "$data");
 		
 		// step 4 - finish 
 		case 4 :
-			if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }/* very important to set this first, so that we can use the new config.php */
 			include '../config.php';           		// load configuration
 			include '../lib/lib_db.php';       		// load libraries order is important
 			
@@ -724,7 +722,7 @@ fwrite($temp, "$data");
 			$error = $err[0];
 						}
 
-			if (!isset($error)) {	
+			if (!$error) {	
 			$check_result_number = $check_result_number + 1;
 					}
 
@@ -736,7 +734,7 @@ fwrite($temp, "$data");
 			$error = $err[0];
 						}
 
-			if (!isset($error)) {
+			if (!$error) {
 			$check_result_number = $check_result_number + 1;
 					}
 
@@ -749,7 +747,7 @@ fwrite($temp, "$data");
 
 						}
 
-			if (!isset($error)) {
+			if (!$error) {
 			$check_result_number = $check_result_number + 1;
 					}
 
@@ -759,7 +757,7 @@ fwrite($temp, "$data");
 			$error = $err[0];
 						}
 
-			if (!isset($error)) {
+			if (!$error) {
 			$check_result_number = $check_result_number + 1;
 					}
 
@@ -825,7 +823,7 @@ www.getpixie.co.uk
 				mail($pixie_email, $subject, $emessage);
 			}
 
-			if (!isset($error)) {
+			if (!$error) {
 				$pixie_step = 4;
 			} else {
 				$pixie_step = 3;
@@ -1275,10 +1273,32 @@ padding-top: 2em;
 				<div class="form_row">
 					<div class="form_label"><label for="type">Site type <span class="form_required">*</span></label><span class="form_help">What type of site are you after?</span></div>
 					<div class="form_item_drop">
+						<?php $type_desc_0 = 'An empty one... I will start a fresh.'; ?>
+						<?php $type_desc_1 = 'Just a blog please (recommended).'; ?>
+						<?php $type_desc_2 = 'Install everything... I want to try it all!'; ?>
+
 						<select class="form_select" name="type" id="type">
-							<option value="0">An empty one... I will start afresh.</option>
-							<option selected="selected" value="1">Just a blog please (recommended).</option>
-							<option value="2">Install everything... I want to try it all!</option>
+							<?php if ( (isset($pixie_type)) && ($pixie_type) ) { ?>
+
+							<?php if ($pixie_type == 0) { ?><option selected="selected" value="<?php print $pixie_type; ?>"><?php print $type_desc; ?></option>
+							<?php } else { ?>
+							<option value="0"><?php print $type_desc_0; ?></option>
+							<?php } ?>
+							<?php if ($pixie_type == 1) { ?><option selected="selected" value="<?php print $pixie_type; ?>"><?php print $type_desc; ?></option>
+							<?php } else { ?>
+							<option value="1"><?php print $type_desc_1; ?></option>
+							<?php } ?>
+							<?php if ($pixie_type == 2) { ?><option selected="selected" value="<?php print $pixie_type; ?>"><?php print $type_desc; ?></option>
+							<?php } else { ?>
+							<option value="2"><?php print $type_desc_2; ?></option>
+							<?php } ?>
+
+							<?php } else { ?>
+							<option value="0"><?php print $type_desc_0; ?></option>
+							<option value="1"><?php print $type_desc_1; ?></option>
+							<option selected="selected" value="2"><?php print $type_desc_2; ?></option>
+							<?php } ?>
+
 						</select>
 					</div>
 				</div>

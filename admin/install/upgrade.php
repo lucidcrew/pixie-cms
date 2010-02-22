@@ -9,8 +9,9 @@ if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important
 	globalSec('Pixie Installer upgrade.php', 1);
 
 	require '../config.php';
-	include '../lib/lib_db.php';  
-
+	include '../lib/lib_db.php';
+	if (strnatcmp(phpversion(),'5.1.0') >= 0) { if (!isset($server_timezone)) { $server_timezone = 'Europe/London'; } date_default_timezone_set("$server_timezone"); }	/* New! Built in php function. Tell php what the server timezone is so that we can use php's rewritten time and date functions with the correct time and without error messages  */ 
+	define('TZ', "$timezone");	/* timezone fix (php 5.1.0 or newer will set it's server timezone using function date_default_timezone_set!) */
   /* This should become a core function in the admin area as part of an auto updater. Wdyt? */
 include '../lib/lib_date.php';			//
 include '../lib/lib_validate.php'; 		// 

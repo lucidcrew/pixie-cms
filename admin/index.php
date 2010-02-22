@@ -40,10 +40,10 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }							/* s
 	include_once 'lib/lib_db.php';											/* import the database function library */
 	$prefs = get_prefs();												/* turn the prefs into an array */
 	extract($prefs);												/* add prefs to globals using php's extract function */
-	define('TZ', "$timezone");											/* timezone fix (php 5.1.0 or newer will set it's server timezone using function date_default_timezone_set!) */
 	if (strnatcmp(phpversion(),'5.1.0') >= 0) {
 	if (!isset($server_timezone)) { $server_timezone = 'Europe/London'; }
 	date_default_timezone_set("$server_timezone"); }								/* New! Built in php function. Tell php what the server timezone is so that we can use php 5's rewritten time and date functions to set the correct time without error messages */
+	define('TZ', "$timezone");											/* timezone fix (php 5.1.0 or newer will set it's server timezone using function date_default_timezone_set!) */
 	include_once 'lib/lib_logs.php'; pagetime('init');								/* start the runtime clock */
 	include_once 'lang/' . $language . '.php';									/* get the language file */
 	include_once 'lib/lib_date.php';										/* import the date library */
@@ -61,7 +61,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }							/* s
 	include_once 'lib/lib_simplepie_php5.php'; } else {								/* Load the php5 version of simplepie if you are running php5 */
 	include_once 'lib/lib_simplepie.php'; }										/* because pie should be simple */
   	if (!file_exists( 'settings.php' ) || filesize( 'settings.php') < 10) {						/* check for settings.php */
-	$gzip_admin = 'no';}												/* ensure $gzip_admin not unset */
+	$gzip_admin = 'no'; }												/* ensure $gzip_admin not unset */
   	if (file_exists( 'settings.php' ) || filesize( 'settings.php' ) < 10) {						/* check for settings.php */
 	include_once 'settings.php';}											/* load settings.php, if found */
 
