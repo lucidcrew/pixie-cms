@@ -81,7 +81,8 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }								/* 
 	echo '<p><pre class="showvars">The prefs array contains : ';
 	htmlspecialchars(print_r($show_vars["prefs"]));
 	echo '</pre></p>'; }
-	if ((isset($s)) && ($s == 'contact')) { session_start(); } /* Retrieve the value of the hidden field in the contact module */
+	if ((isset($s)) && ($s == 'contact')) { if (session_id() != 'contact') {
+	session_id('contact'); session_cache_limiter('nocache'); session_start(); } }						/* Retrieve the value of the hidden field in the contact module */
 	if (file_exists('admin/themes/' . $site_theme . '/theme.php')) {
 	include_once ('admin/themes/' . $site_theme . '/theme.php'); }								/* New! Your custom theme file must be named theme.php instead of index.php */ /* Theme Override Super Feature */
 	else { 
@@ -127,7 +128,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }								/* 
 	<meta name="generator" content="Pixie <?php print $version; ?> - Copyright (C) 2006 - <?php print date('Y');?>." /> 
 
 	<!-- title -->
-	<title><?php if (isset($ptitle)) { build_title($ptitle); } ?></title>
+	<title><?php if ( (isset($ptitle)) && ($ptitle) ) { echo $ptitle; } else { build_title(); } ?></title>
 
 	<?php if (!isset($theme_jquery_google_apis)) { $theme_jquery_google_apis = 'no'; } if (!isset($theme_jquery_google_apis_location)) { $theme_jquery_google_apis_location = NULL; } if (!isset($theme_swfobject_google_apis)) { $theme_swfobject_google_apis = 'no'; } if (!isset($theme_swfobject_google_apis_location)) { $theme_swfobject_google_apis_location = NULL; } ?>
 	<?php /* Chain stuff to load by condition, either yes or no */ if ($theme_swfobject_google_apis == 'yes') { $theme_jquery_google_apis = 'yes'; } if ($theme_jquery_google_apis == 'yes') { $theme_swfobject_google_apis = 'yes'; } if ($theme_jquery_google_apis == 'yes') { $jquery = 'yes'; } if ($theme_swfobject_google_apis == 'yes') { $jquery = 'yes'; } ?>

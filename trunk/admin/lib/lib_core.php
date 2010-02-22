@@ -962,7 +962,7 @@ class ShowTable {
 				//skip it to protect the php code in the admin field
 			} else {     	
 				$value = $_POST[$an[$j]];
-				if ($an[$j] == 'title') { $tit = htmlentities($value, ENT_QUOTES, 'UTF-8'); }
+				if ($an[$j] == 'title') { $tit = $value; }
 				if ($at[$j] == 'varchar') { $value = htmlentities($value, ENT_QUOTES, 'UTF-8'); }
 
 				// check for posts with duplicate title/slug and increment
@@ -1026,7 +1026,7 @@ class ShowTable {
 				}
 	      	
 				// validate and clean input
-				$value = str_replace('|', '&#124;' ,$value);
+				$value = str_replace('|', '&#124;', $value);
 				$nullf = explode(" ", $af[$j]);	      	
 				if ($an[$j] == 'tags') { $value = make_tag($value); }
 				if (get_magic_quotes_gpc() == 0) { $value = addslashes ($value); }
@@ -1062,14 +1062,14 @@ class ShowTable {
 				// if empty int set to 0
 				if( $at[$j] == 'int' ) $value = ($value?$value:0);
 				
-				$sql.= "`" . $an[$j] . "` = '" . $value . "',";
+				$sql .= "`" . $an[$j] . "` = '" . $value . "',";
 
 				if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
 	      	
 			}
 		}
       
-		$sql = substr($sql, 0, (strlen($sql)-1)) . "";
+		$sql = substr($sql, 0, (strlen($sql) - 1)) . "";
 
 		//echo $sql; //view the SQL for current form save
 				

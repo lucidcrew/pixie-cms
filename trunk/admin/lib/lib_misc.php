@@ -79,13 +79,13 @@ $pixie_exit = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
 //
 // ------------------------------------------------------------------
 // Generate a new password
-	function generate_password($length=10)
+	function generate_password($length = 10)
 	{
 		$pass = "";
 		$chars = '023456789bcdfghjkmnpqrstvwxyz'; 
 		$i = 0; 
 		while ($i < $length) {
-			$char = substr($chars, mt_rand(0, strlen($chars)-1), 1);
+			$char = substr($chars, mt_rand(0, strlen($chars) - 1), 1);
 			if (!strstr($pass, $char)) {
 				$pass .= $char;
 				$i++;
@@ -323,7 +323,11 @@ function globalSec($page_location, $sec_check)
 	function make_slug($title)
 	{
 	 $slug = str_replace(" ", "BREAK", $title);
+
 	 $slug = preg_replace("/[^a-zA-Z0-9]/", "", $slug);
+/*	The following should work but does not. The link titles become OK for foreign characters but the link becomes destroyed. */
+/*	 $slug = preg_replace("/[^a-zA-ZĄĆĘŁŃÓŚŹŻVЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮÂÀÁÄÃÊÈÉËÎÍÌÏÔÕÒÓÖÛÙÚÜÇąćęłńóśźżvёйцукенгшщзхъфывапролджэячсмитьбюâàáäãêèéëîíìïôõòóöûùúüç0-9]/", "", $slug); */
+
 	 $slug = str_replace("BREAK", "-", $slug);
 	 $slug = str_replace("--", "-", $slug);
 	 $slug = str_replace("---", "-", $slug);
@@ -424,7 +428,7 @@ function globalSec($page_location, $sec_check)
 			$return = str_replace('///', "", $return);
 			$return = str_replace('////', "", $return);
 			$return = str_replace('http:', 'http://', $return);
-			$last = $return{strlen($return)-1};
+			$last = $return { strlen($return) - 1 };
   		if ($last != '/') {
   			$return = $return . '/';
   		}
