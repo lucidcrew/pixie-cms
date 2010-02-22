@@ -175,7 +175,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }							/* s
 					<ul id="tools_list">
 						<li id="tool_skip"><a href="#pixie_body" title="<?php echo $lang['skip_to']; ?>"><?php echo $lang['skip_to']; ?></a></li>
 						<?php if (isset($s)) { if (isset($GLOBALS['pixie_user'])) { if ($s != 'login') { ?><li id="tool_logout"><a href="?s=logout" title="<?php echo $lang['logout']; ?>"><?php echo $lang['logout']; ?></a></li><?php } print "\n"; } } ?>
-						<li id="tool_view"><a href="<?php print $site_url;?>" title="<?php echo $lang['view_site']; ?>"><?php echo $lang['view_site']; ?></a></li>
+						<li id="tool_view"><a href="<?php print $site_url;?>" target="_blank" title="<?php echo $lang['view_site']; ?>"><?php echo $lang['view_site']; ?></a></li>
 					</ul>	
 				</div>
 	

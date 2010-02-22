@@ -217,17 +217,18 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 	}
 // ------------------------------------------------------------------
 // Build title for current page
-	function build_title($ptitle = '') {
+	function build_title() {
 		global $site_name, $page_display_name, $page_type, $s, $m, $x, $p;
 		
 		// will probably need support for child pages!
 		
-		if (isset($ptitle)) {
-			echo $ptitle;
-		} else {		
 			if ($page_type == 'dynamic' && $m == 'permalink') {
-				$post_title = safe_field('title', 'pixie_dynamic_posts', "post_slug = '$x'"); 
+				$post_title = safe_field('title', 'pixie_dynamic_posts', "post_slug = '$x'");
+				if ($post_title) {
 				echo "$site_name - $page_display_name - $post_title";
+				} else {
+				echo "$site_name"; /* escaping other language characters causes error. */
+				}
 			} else if ($m == 'tag') {
 				if ($p) {
 					echo "$site_name - $page_display_name - Tag - " . simplify(squash_slug($x)) . " - Page $p";
@@ -241,6 +242,5 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 			} else {
 				echo "$site_name - $page_display_name";
 			}
-		}
 	}
 ?>
