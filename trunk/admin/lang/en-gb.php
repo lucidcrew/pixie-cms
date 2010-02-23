@@ -369,6 +369,13 @@ $lang = array(
 	'next_page' => 'Next page',
 	'previous_post' => 'Previous post',
 	'previous_page' => 'Previous page',
-	'dynamic_page' => 'Page'
+	'dynamic_page' => 'Page',
+	'user_name_dup' => 'Error saving new ' . $table_name . ' entry. Possible duplicate user name.',
+	'user_name_save_ok' => 'Saved new user ' . $uname . ', a temporary password has been created (<b>' . $password . '</b>).',
+	'file_del_filemanager_fail' => 'File delete failed. Please manually delete the file.',
+	'upload_filemanager_fail' => 'Upload failed. Please check that the folder is writeable and has the correct permissions set.',
+	'filemanager_max_upload' => 'Your host server will accept uploads for the maximum file size of : ',
+	'ck_select_file' => 'Click on a file by name to create a link.',
+	'ck_toggle_advanced' => 'Toggle advanced Mode',
 );
 ?>

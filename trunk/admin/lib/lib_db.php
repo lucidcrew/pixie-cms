@@ -409,6 +409,7 @@ header('Status: 503 Service Unavailable'); /* 503 status might discourage search
 </body>
 </html>
 eod;
+exit();
 	}
 
 ?>

@@ -11,7 +11,7 @@ include_once 'lib/lib_upload.php';	/* We need function convertBytes here */
 if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 1) {
 
 /* New! pxfinder, use Pixie's builtin file manager to upload and select files in ckeditor dialogues. */
-if ((isset($ck)) && ($ck == 1)) { /* Here the dialogu sends ck=1 in the request url and only if that happens do we do the following : */
+if ((isset($ck)) && ($ck == 1)) { /* Here the dialog sends ck=1 in the request url and only if that happens do we do the following : */
 ?>
 <style type="text/css">
 #nav_level_1,#pixie_title span,#pixie_footer,#admin_block_tags,#tools{display:none;}
@@ -52,7 +52,7 @@ $j(function() {
 <?php
 }
 
-	if ((isset($del)) && ($del)) { 
+	if ((isset($del)) && ($del)) {
 
 		$deldb = safe_delete('pixie_files', "file_name='$del'");
 
@@ -88,7 +88,7 @@ $j(function() {
 
 		/* If the file cannot be deleted, lets not show a success message */
 		$file_upload_check = $dir . $del;
-		if (file_exists($file_upload_check)) { $message = 'File delete failed. Please manually delete the file.'; /* Needs language */ }
+		if (file_exists($file_upload_check)) { $message = $lang['file_del_filemanager_fail']; }
 
 	}
 
@@ -158,7 +158,7 @@ $j(function() {
 
 		// If the folder is not writeable, we need to indicate that to the user
 		$file_upload_success = $dir . $file_name;
-		if (!file_exists($file_upload_success)) { $message = 'Upload failed. Please check that the folder is writeable and has the correct permissions set.'; /* Needs language */ }
+		if (!file_exists($file_upload_success)) { $message = $lang['upload_filemanager_fail']; }
 
 	}
 
@@ -171,7 +171,7 @@ $j(function() {
 							<div class=\"form_row\">
 								<div class=\"form_label\"><label for=\"upload\">" . $lang['form_upload_file'] . " <span class=\"form_required\">" . $lang['form_required'] . "</span></label><span class=\"form_help\">" . $lang['form_help_upload_file'] . " " . $lang['file_manager_info']."</span></div>
 							<div class=\"form_item_file\"><input type=\"file\" class=\"form_text\" name=\"upload[]\" id=\"upload\" size=\"18\" /></div>";
-							echo '<div class=\form_label\><span><small>Your host server will accept uploads for the maximum file size of : ' . convertBytes( ini_get( 'upload_max_filesize' ) ) / 1048576 . 'MB.</small></span></div>';  /* Needs language */
+							echo '<div class=\form_label\><span><small>' . $lang['filemanager_max_upload'] . convertBytes( ini_get( 'upload_max_filesize' ) ) / 1048576 . 'MB.</small></span></div>';
 						echo "</div>
 							<div class=\"form_row\">
 								<div class=\"form_label\"><label for=\"file_tags\">" . $lang['tags'] . " <span class=\"form_required\">" . $lang['form_required'] . "</span></label><span class=\"form_help\">" . $lang['form_help_upload_tags'] . "</span></div>
@@ -210,7 +210,7 @@ $j(function() {
 	echo "
 				<div id=\"pixie_content\" class=\"filemanager\">
 					<h2>" . $lang['nav2_files'] . "</h2>";
-						if ((isset($ck)) && ($ck)) { $messageok = 'Click on a file by name to create a link.'; } /* Needs language */
+						if ((isset($ck)) && ($ck)) { $messageok = $lang['ck_select_file']; }
 	echo "					<div id=\"filemanager_table\">
 						<table class=\"tbl\" summary=\"" . $title . " @ " . str_replace('http://', "", $site_url) . "\">
 						<thead>
@@ -246,7 +246,7 @@ $j(function() {
 							if ((!isset($ck)) || (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
 				echo "			<td class=\"tbl_row\" headers=\"thetags\">"; if (isset($tags)) { echo $tags; } echo "</td>
 							<td class=\"tbl_row tbl_edit\" headers=\"thefile_view\"><a href=\"../files/images/$file_name\" class=\"thickbox\">" . $lang['view'] . "</a></td>
-							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>
+							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x"; if ((isset($ck)) && ($ck)) { echo "&amp;ckFuncNumReturn=$CKEditorFuncNum"; } if ((isset($ck)) && ($ck)) { echo '&amp;ck=1'; } if ((isset($ckfile)) && ($ckfile)) { echo '&amp;ckfile=1'; } if ((isset($ckimage)) && ($ckimage)) { echo '&amp;ckimage=1'; } echo "&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>
 						</tr>";
 			}
 
@@ -262,7 +262,7 @@ $j(function() {
 							if ((!isset($ck)) || (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
 				echo "			<td class=\"tbl_row\" headers=\"thetags\">"; if (isset($tags)) { echo $tags; } echo "</td>
 							<td class=\"tbl_row tbl_edit\" headers=\"thefile_view\"><a href=\"../files/images/$file_name\" class=\"thickbox\">" . $lang['view'] . "</a></td>
-							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>
+							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x"; if ((isset($ck)) && ($ck)) { echo "&amp;ckFuncNumReturn=$CKEditorFuncNum"; } if ((isset($ck)) && ($ck)) { echo '&amp;ck=1'; } if ((isset($ckfile)) && ($ckfile)) { echo '&amp;ckfile=1'; } if ((isset($ckimage)) && ($ckimage)) { echo '&amp;ckimage=1'; } echo "&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>
 						</tr>";
 			} else if ($file_type == 'Audio') {
 				$last_modified = filemtime('../files/audio/' . $file_name);
@@ -273,7 +273,7 @@ $j(function() {
 							if ((!isset($ck)) || (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
 				echo "			<td class=\"tbl_row\" headers=\"thetags\">"; if (isset($tags)) { echo $tags; } echo "</td>
 							<td class=\"tbl_row tbl_edit\" headers=\"thefile_view\"><a href=\"../files/audio/$file_name\">" . $lang['download'] . "</a></td>
-							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>
+							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x"; if ((isset($ck)) && ($ck)) { echo "&amp;ckFuncNumReturn=$CKEditorFuncNum"; } if ((isset($ck)) && ($ck)) { echo '&amp;ck=1'; } if ((isset($ckfile)) && ($ckfile)) { echo '&amp;ckfile=1'; } if ((isset($ckimage)) && ($ckimage)) { echo '&amp;ckimage=1'; } echo "&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>
 						</tr>";
 			} else if ($file_type == 'Video') {		  		
 				$last_modified = filemtime('../files/video/' . $file_name);
@@ -284,7 +284,7 @@ $j(function() {
 							if ((isset($ck)) || (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
 				echo "			<td class=\"tbl_row\" headers=\"thetags\">"; if (isset($tags)) { echo $tags; } echo "</td>
 							<td class=\"tbl_row tbl_edit\" headers=\"thefile_view\"><a href=\"../files/video/$file_name\">" . $lang['download'] . "</a></td>
-							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>
+							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x"; if ((isset($ck)) && ($ck)) { echo "&amp;ckFuncNumReturn=$CKEditorFuncNum"; } if ((isset($ck)) && ($ck)) { echo '&amp;ck=1'; } if ((isset($ckfile)) && ($ckfile)) { echo '&amp;ckfile=1'; } if ((isset($ckimage)) && ($ckimage)) { echo '&amp;ckimage=1'; } echo "&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>
 						</tr>";
 
 			} else {
@@ -302,7 +302,7 @@ $j(function() {
 							if ((!isset($ck)) || (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
 				echo "			<td class=\"tbl_row\" headers=\"thetags\">"; if (isset($tags)) { echo $tags; } echo "</td>
 							<td class=\"tbl_row tbl_edit\" headers=\"thefile_view\"><a href=\"../files/other/$file_name\">" . $lang['download'] . "</a></td>
-							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>
+							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x"; if ((isset($ck)) && ($ck)) { echo "&amp;ckFuncNumReturn=$CKEditorFuncNum"; } if ((isset($ck)) && ($ck)) { echo '&amp;ck=1'; } if ((isset($ckfile)) && ($ckfile)) { echo '&amp;ckfile=1'; } if ((isset($ckimage)) && ($ckimage)) { echo '&amp;ckimage=1'; } echo "&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>
 						</tr>";										
 			}
 
@@ -311,6 +311,7 @@ $j(function() {
 			$counter++;
 		}
 	}
+
 	echo "\n\t\t\t\t\t\t</tbody>\n\t\t\t\t\t\t</table>\n\t\t\t\t\t</div>\n\t\t\t\t</div>";
 }
 ?>

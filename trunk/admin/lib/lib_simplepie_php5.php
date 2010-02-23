@@ -1,4 +1,5 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 /**
  * SimplePie
  *
@@ -14592,3 +14593,5 @@ class SimplePie_Sanitize
 		}
 	}
 }
+
+?>

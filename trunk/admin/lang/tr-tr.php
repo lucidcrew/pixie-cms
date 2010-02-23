@@ -370,6 +370,13 @@ $lang = array(
 	'next_page' => 'Sıradaki sayfa',
 	'previous_post' => 'Önceki yazı',
 	'previous_page' => 'Önceki sayfa',
-	'dynamic_page' => 'Sayfa'
+	'dynamic_page' => 'Sayfa',
+	'user_name_dup' => 'Hata tasarrufu yeni ' . $table_name . ' girişi. Olası yinelenen kullanıcı ismi.',
+	'user_name_save_ok' => 'Kayıtlı yeni kullanıcı ' . $uname . ', bir temp şifre oluşturuldu (<b>' . $password . '</b>).',
+	'file_del_filemanager_fail' => 'Dosya silme başarısız oldu. Lütfen el dosyasını silin.',
+	'upload_filemanager_fail' => 'Yükleme başarısız. Lütfen klasörü yazılabilir ve doğru izinleri belirledi.',
+	'filemanager_max_upload' => 'Ana bilgisayar sunucu maksimum dosya boyutu için yüklenenler kabul eder : ',
+	'ck_select_file' => 'Adında bir dosya tıklayın bir bağlantı oluşturmak için.',
+	'ck_toggle_advanced' => 'Toggle Modu ileri',
 );
 ?>

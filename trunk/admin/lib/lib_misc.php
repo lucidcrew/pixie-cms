@@ -21,7 +21,8 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 	function pixieExit()                                          
 	{
 header('Status: 503 Service Unavailable');  /* 503 status might discourage search engines from indexing or caching the error message */
-$pixie_exit = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
+		return <<<eod
+<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
 		\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
 <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">
 <head>
@@ -66,9 +67,9 @@ $pixie_exit = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
 		<p><a href=\"http://www.getpixie.co.uk\" alt=\"Get Pixie!\">Pixie</a> has blocked your request to this site due to security concerns. The site administrator has been notified of your details. Please try to visit this site again later if you have recieved this message in error.</p>
 	</div>
 </body>
-</html>";
-	exit($pixie_exit);
-
+</html>
+eod;
+exit();
 	}
 //
 //	WE SHOULD NOT BE OFFERING A POTENTIAL ATTACKER A GET OUT OF A DEAD END LINK SO THAT THEY CAN TRY AGAIN! ---------------

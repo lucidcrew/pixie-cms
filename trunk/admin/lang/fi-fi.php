@@ -369,6 +369,13 @@ $lang = array(
 	'next_page' => 'Seuraava merkint&#228;',
 	'previous_post' => 'Edellinen sivu',
 	'previous_page' => 'Seuraava sivu',
-	'dynamic_page' => 'Sivu'
+	'dynamic_page' => 'Sivu',
+	'user_name_dup' => 'Virhe uusi ' . $table_name . ' merkintä. Mahdollisia kahtena käyttäjätunnus.',
+	'user_name_save_ok' => 'Tallennetaan uusi käyttäjä ' . $uname . ', temp salasana on luotu (<b>' . $password . '</b>).',
+	'file_del_filemanager_fail' => 'Tiedoston poisto epäonnistui. Ole hyvä manuaalisesti poistaa tiedoston.',
+	'upload_filemanager_fail' => 'Lataus epäonnistui. Tarkista, että kansio on kirjoitettava, ja on oikeat käyttöoikeudet asetettu.',
+	'filemanager_max_upload' => 'Sinun palvelukeskuksen hyväksyy lisätty ja suurin tiedostokoko : ',
+	'ck_select_file' => 'Napsauta tiedostoa, jonka nimi luoda linkin.',
+	'ck_toggle_advanced' => 'Vaihda Advanced Mode',
 );
 ?>

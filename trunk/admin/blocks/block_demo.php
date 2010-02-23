@@ -21,4 +21,3 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 						</div>
 						<div class="block_footer"></div>		
 					</div>
-

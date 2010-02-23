@@ -370,6 +370,13 @@ $lang = array(
     'next_page' => 'Seguinte paxina',
     'previous_post' => 'Entrada anterior',
     'previous_page' => 'Paxina anterior',
-    'dynamic_page' => 'Paxina'
+    'dynamic_page' => 'Paxina',
+	'user_name_dup' => 'Erro ao gardar entrada ' . $table_name . ' novo. Nome de usuario pode duplicar.',
+	'user_name_save_ok' => 'Saved novo usuario ' . $uname . ', unha contrasinal temporal foi creada (<b>' . $password . '</b>).',
+	'file_del_filemanager_fail' => 'File delete failed. Por favor, borrar o ficheiro de xeito manual.',
+	'upload_filemanager_fail' => 'Fallo na subida. Por favor, verifique que a pasta é gravadora e ten os permisos correctas definidas.',
+	'filemanager_max_upload' => 'O seu servidor de acollida aceptará subidos para o tamaño máximo de arquivo : ',
+	'ck_select_file' => 'Prema nun arquivo de nome para crear unha ligazón.',
+	'ck_toggle_advanced' => 'Toggle advanced Mode',
 );
 ?>

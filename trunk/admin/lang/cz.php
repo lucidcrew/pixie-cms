@@ -370,6 +370,13 @@ $lang = array(
 	'next_page' => 'Další stránka',
 	'previous_post' => 'Předchozí článek',
 	'previous_page' => 'Předchozí stránka',
-	'dynamic_page' => 'Stránka'
+	'dynamic_page' => 'Stránka',
+	'user_name_dup' => 'Chyba při ukládání nového ' . $table_name . ' vstup. Možné duplicitní uživatelské jméno.',
+	'user_name_save_ok' => 'Uložené nový uživatel ' . $uname . ', dočasné heslo byl vytvořen (<b>' . $password . '</b>).',
+	'file_del_filemanager_fail' => 'Soubor smazat nepodařilo. Prosím, ručně odstranit soubor.',
+	'upload_filemanager_fail' => 'Nahrávání selhalo. Zkontrolujte, že složka je zapisovat a má správná oprávnění nastavit.',
+	'filemanager_max_upload' => 'Váš hostitelský server bude přijímat obrázky pro maximální velikost souboru : ',
+	'ck_select_file' => 'Klikněte na název souboru pro vytvoření odkazu.',
+	'ck_toggle_advanced' => 'Přepnout pokročilý režim',
 );
 ?>

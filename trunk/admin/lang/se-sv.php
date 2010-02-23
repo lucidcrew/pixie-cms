@@ -369,6 +369,13 @@ $lang = array(
 	'next_page' => 'N&auml;sta sida',
 	'previous_post' => 'F&ouml;reg&aring;ende inl&auml;gg',
 	'previous_page' => 'F&ouml;reg&aring;ende sida',
-	'dynamic_page' => 'Sida'
+	'dynamic_page' => 'Sida',
+	'user_name_dup' => 'Fel vid sparande av nya ' . $table_name . ' inträde. Möjliga duplikat användarnamn.',
+	'user_name_save_ok' => 'Sparade ny användare ' . $uname . ', en temp lösenord har skapats (<b>' . $password . '</b>).',
+	'file_del_filemanager_fail' => 'Borttagning av fil misslyckades. Vänligen manuellt ta bort filen.',
+	'upload_filemanager_fail' => 'Uppladdningen misslyckades. Kontrollera att mappen är skrivbar och har rätt inställda.',
+	'filemanager_max_upload' => 'Din datacentrumet kommer att acceptera inlagda för den maximala filstorleken för : ',
+	'ck_select_file' => 'Klicka på en fil med namn för att skapa en länk.',
+	'ck_toggle_advanced' => 'Toggle advanced Mode',
 );
 ?>
