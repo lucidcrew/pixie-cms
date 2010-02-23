@@ -184,10 +184,12 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }								/* 
 	<!-- rss feeds-->
 	<?php build_rss(); ?>
 	
-	<?php $do = 'head'; if ($page_type == 'module') { if (isset($s)) { include ('admin/modules/' . $s . '.php'); } } ?>
+	<?php $do = 'head'; if (($page_type == 'module') && (isset($s))) { include ('admin/modules/' . $s . '.php'); } ?>
 
 </head>
+
   <?php ob_flush(); flush(); /* Send the head so that the browser has something to do whilst it waits */ ?>
+
 <body id="pixie" class="pixie <?php $date_array = getdate(); print 'y' . $date_array['year'] . " "; print 'm' . $date_array['mon'] . " "; print 'd' . $date_array['mday'] . " "; print 'h' . $date_array['hours'] . " "; if ((isset($s)) && ($s)) { print 's_' . $s . " "; } if ($m) { print 'm_' . $m . " "; } if ($x) { print 'x_' . $x . " "; } if ($p) { print 'p_' . $p; } ?>">
 
 	<?php build_head(); ?>

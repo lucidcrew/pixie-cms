@@ -167,11 +167,11 @@ class ShowTable {
 			
 			if(!$cancel) {
 			
-				$Nams = explode('|', substr($this->Nam, 0, (strlen($this->Nam)-1)));
-				$Type = explode('|', substr($this->Typ, 0, (strlen($this->Typ)-1)));
-				$Leng = explode('|', substr($this->Len, 0, (strlen($this->Len)-1)));
-				$Flag = explode('|', substr($this->Flg, 0, (strlen($this->Flg)-1)));
-				$Fild = explode('|', substr($this->Res, 0, (strlen($this->Res)-1)));
+				$Nams = explode( '|', substr($this->Nam, 0, (strlen( $this->Nam ) - 1)) );
+				$Type = explode( '|', substr($this->Typ, 0, (strlen( $this->Typ ) - 1)) );
+				$Leng = explode( '|', substr($this->Len, 0, (strlen( $this->Len ) - 1)) );
+				$Flag = explode( '|', substr($this->Flg, 0, (strlen( $this->Flg ) - 1)) );
+				$Fild = explode( '|', substr($this->Res, 0, (strlen( $this->Res ) - 1)) );
 		
 				if (!$page) { $page = 1; }
 
@@ -256,9 +256,10 @@ class ShowTable {
 	   				}
 
 					if ($GLOBALS['rich_text_editor'] == 1) {
-	   					$containsphp = strpos(strtolower($Fild[$j]), "<?php");
+	   					$containsphp = strlen(stristr(utf8_decode( ($Fild[$j]) ), '<?php')) > 0;
+
 	   					if ($containsphp) {
-	   						$form_help .= " <span class=\"alert\">" . $lang['form_php_warning'] . "</span>";
+	   						$form_help .= " <span class=\"alert\">" . $lang['form_php_warning'] . '</span>';
 	   					}
 	   				}
 		  

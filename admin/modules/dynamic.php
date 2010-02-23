@@ -225,7 +225,7 @@ switch ($do) {
 			$fullname = safe_field('realname', 'pixie_users', "user_name='$author'");
 
 			if (public_page_exists('profiles')) {
-				$mauthor = "<a href=\"" . createURL("profiles", $author) . "\" class=\"url fn\" title=\"" . $lang['view'] . " $fullname's " . $lang['profile'] . "\">$fullname</a>";
+				$mauthor = "<a href=\"" . createURL('profiles', $author) . "\" class=\"url fn\" title=\"" . $lang['view'] . " $fullname's " . $lang['profile'] . "\">$fullname</a>";
 			} else {
 				$mauthor = "<a href=\"$site_url\" class=\"url fn\" title=\"$site_url\">$fullname</a>";
 			}
