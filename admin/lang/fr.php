@@ -369,6 +369,13 @@ $lang = array(
 	'next_page' => 'Page suivante',
 	'previous_post' => 'Article pr&eacute;c&eacute;dent',
 	'previous_page' => 'Page pr&eacute;c&eacute;dente',
-	'dynamic_page' => 'Page'
+	'dynamic_page' => 'Page',
+	'user_name_dup' => 'Erreur d\'enregistrement du nouvel ' . $table_name . ' entrée. Possible, le nom d\'utilisateur en double.',
+	'user_name_save_ok' => 'Enregistrée nouvel utilisateur ' . $uname . ', un mot de passe temporaire a été créé (<b>' . $password . '</b>).',
+	'file_del_filemanager_fail' => 'De suppression de fichiers a échoué. S\'il vous plaît supprimer manuellement le fichier.',
+	'upload_filemanager_fail' => 'Échec de l\'envoi. S\'il vous plaît vérifier que le dossier est accessible en écriture et possède les autorisations correctes fixés.',
+	'filemanager_max_upload' => 'Votre serveur hôte acceptera d\'ajouts pour la taille maximale des fichiers : ',
+	'ck_select_file' => 'Cliquez sur un fichier par son nom pour créer un lien.',
+	'ck_toggle_advanced' => 'Basculer en mode avancé',
 );
 ?>

@@ -371,6 +371,13 @@ $lang = array(
     'next_page' => 'Siguiente página',
     'previous_post' => 'Entrada anterior',
     'previous_page' => 'página anterior',
-    'dynamic_page' => 'página'
+    'dynamic_page' => 'página',
+	'user_name_dup' => 'Error al guardar el entrada ' . $table_name . ' nuevo. Posible, el nombre de usuario duplicados.',
+	'user_name_save_ok' => 'Guardadas por el usuario nuevo ' . $uname . ', una contraseña temporal se ha creado (<b>' . $password . '</b>).',
+	'file_del_filemanager_fail' => 'Eliminación de archivos no. Por favor, elimine manualmente el archivo.',
+	'upload_filemanager_fail' => 'Error de subida. Por favor, compruebe que la carpeta es de escritura y tiene los permisos correctos conjunto.',
+	'filemanager_max_upload' => 'El servidor de acogida aceptará que se suban para el tamaño máximo de archivo de : ',
+	'ck_select_file' => 'Haga clic en un archivo por su nombre para crear un vínculo.',
+	'ck_toggle_advanced' => 'Activar modo avanzado',
 );
 ?>

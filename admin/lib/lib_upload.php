@@ -315,4 +315,5 @@ class muli_files extends file_upload {
 		}
 	}
 }
+
 ?>

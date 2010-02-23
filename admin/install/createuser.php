@@ -39,7 +39,7 @@ if ((isset($user_new)) && ($user_new)) {
 		$ok = safe_insert($table_name, $sql);
 
 		if (!$ok) {
-			$message = "Error saving new $table_name entry. Possible duplicate user name."; /* Needs language */
+			$message = $lang['user_name_dup'];
 		} else {
 			// send email
 			
@@ -54,11 +54,11 @@ password: $password
 			$subject = 'Pixie account information';
 			mail($email, $subject, $emessage);
 			
-			$messageok = "Saved new user $uname, a temp password has been created (<b>$password</b>).";
+			$messageok = $lang['user_name_save_ok'];
 		}
 		
 	} else {
-		$err = explode("|",$error);
+		$err = explode("|", $error);
 		$message = $err[0];
 	}
 } 
@@ -280,4 +280,5 @@ password: $password
   phpinfo();
   } ?>
 
-</body> 	
+</body>
+</html>

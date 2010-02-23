@@ -370,6 +370,13 @@ $lang = array(
 	'next_page' => 'Nākamā lapa',
 	'previous_post' => 'Iepriekšējais ieraksts',
 	'previous_page' => 'Iepriekšējā lapa',
-	'dynamic_page' => 'Lapa'
+	'dynamic_page' => 'Lapa',
+	'user_name_dup' => 'Kļūda atverot jaunas ' . $table_name . ' ierakstu. Iespējams dublēt lietotāja vārdu.',
+	'user_name_save_ok' => 'Saved jaunu lietotāju ' . $uname . ', temp parole ir izveidots (<b>' . $password . '</b>).',
+	'file_del_filemanager_fail' => 'Failu dzēšana neizdevās. Lūdzu manuāli izdzēst failu.',
+	'upload_filemanager_fail' => 'Augšupielāde neizdevās. Lūdzu pārbaudiet, vai mape ir writeable un ir pareizs permissions set.',
+	'filemanager_max_upload' => 'Jūsu resursservera pieņems attēli ar maksimālo faila lielumu : ',
+	'ck_select_file' => 'Noklikšķiniet uz faila nosaukuma, lai izveidotu saikni.',
+	'ck_toggle_advanced' => 'Toggle advanced Mode',
 );
 ?>

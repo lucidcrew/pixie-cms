@@ -369,6 +369,13 @@ $lang = array(
 	'next_page' => 'N&auml;chste Seite',
 	'previous_post' => 'Vorheriger Post',
 	'previous_page' => 'Vorherige Seite',
-	'dynamic_page' => 'Seite'
+	'dynamic_page' => 'Seite',
+	'user_name_dup' => 'Fehler beim Speichern der neuen ' . $table_name . ' Eintrag. Mögliche doppelte Benutzernamen.',
+	'user_name_save_ok' => 'Gespeichert neuen Benutzer ' . $uname . ', ein temporäres Passwort wurde erstellt (<b>' . $password . '</b>).',
+	'file_del_filemanager_fail' => 'Löschen der Datei fehlgeschlagen. Bitte löschen Sie die Datei manuell.',
+	'upload_filemanager_fail' => 'Hochladen fehlgeschlagen. Bitte überprüfen Sie, dass der Ordner ist beschreibbar und hat die richtigen Berechtigungen gesetzt.',
+	'filemanager_max_upload' => 'Ihr Host-Server akzeptiert Uploads für die maximale Dateigröße von : ',
+	'ck_select_file' => 'Klicken Sie auf eine Datei mit Namen einen Link erstellen.',
+	'ck_toggle_advanced' => 'Toggle erweiterten Modus',
 );
 ?>

@@ -370,6 +370,13 @@ $lang = array(
 	'next_page' => 'Pagina seguente',
 	'previous_post' => 'Articolo precedente',
 	'previous_page' => 'Pagina precedente',
-	'dynamic_page' => 'Pagina'
+	'dynamic_page' => 'Pagina',
+	'user_name_dup' => 'Errore di salvataggio del nuovo ' . $table_name . ' Registrazione. Possibile il nome utente duplicato.',
+	'user_name_save_ok' => 'Saved nuovo utente ' . $uname . ', una password temporanea è stato creato (<b>' . $password . '</b>).',
+	'file_del_filemanager_fail' => 'Elimina file non riuscita. Si prega di eliminare il file manualmente.',
+	'upload_filemanager_fail' => 'Caricamento non riuscito. Si prega di verificare che la cartella è scrivibile ed ha le autorizzazioni corrette set.',
+	'filemanager_max_upload' => 'Il server host accetterà upload per la dimensione massima del file di : ',
+	'ck_select_file' => 'Fare clic su un file con nome per creare un collegamento.',
+	'ck_toggle_advanced' => 'Toggle advanced Mode',
 );
 ?>

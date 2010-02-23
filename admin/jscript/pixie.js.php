@@ -209,7 +209,7 @@ function useCkeditor() {
 /* A function to apply an advanced toolbar toggle switch to the top right right of ckeditor */
 function ckToolbarSlider() {
 
-    $j('.form_item_textarea_ckeditor').prepend('<a class=\"advanced-cke-toggle\" href=\"javascript:void(0);\" title=\"Toggle advanced Mode\">&#43;</a>'); /* Needs language for the title tooltip. */
+    $j('.form_item_textarea_ckeditor').prepend('<a class=\"advanced-cke-toggle\" href=\"javascript:void(0);\" title=\"<?php print $pixie_advmode; ?>\">&#43;</a>');
     $j('.advanced-cke-toggle').css('float', 'left').css('position', 'absolute').css('right', '4%').css('margin-top', '5px');
     $j('.advanced-cke-toggle').click(function(event) { 
 	event.preventDefault();

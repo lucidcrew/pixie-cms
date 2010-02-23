@@ -27,4 +27,3 @@ foreach($file_content as $sql_line){
 			  		
 print '<p>database upgrades completed!</p>'; /* This should be way more intuiative than that */
 ?>
-

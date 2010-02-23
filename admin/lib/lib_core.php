@@ -232,7 +232,9 @@ class ShowTable {
 
 	   				if ($nullf[0] == 'not_null') { // label required fields
 	   					if ($lang['form_' . $Nams[$j]]) {
+						/* if ( ($Nams[$j] != 'page_name') ) {	*/	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
 	   						$displayname = $lang['form_' . $Nams[$j]] . " <span class=\"form_required\">" . $lang['form_required'] . "</span>";
+						/* } */
 	   					} else {
 	   						$displayname = simplify($Nams[$j]) . " <span class=\"form_required\">" . $lang['form_required'] . "</span>";
 	   					}
@@ -246,7 +248,9 @@ class ShowTable {
 
 	   				// check language file for any form help
 	   				if ($lang['form_help_' . $Nams[$j]]) {
+						/* if ( ($Nams[$j] != 'page_name') ) {	*/	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
 	   					$form_help = "<span class=\"form_help\">" . $lang['form_help_' . $Nams[$j]] . "</span>";
+						/* } */
 	   				} else {
 	   					$form_help = "";
 	   				}
@@ -312,7 +316,7 @@ class ShowTable {
 	   				} else if ($Nams[$j] == 'tags') {
 	   					$tableid = 0;
 						$condition = $tableid . " >= '0'"; 
-						form_tag($this->tablename,$condition);
+						form_tag($this->tablename, $condition);
 	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"$Fild[$j]\" size=\"$ln\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 	   				} else if ($Nams[$j] == "page_blocks") {
 	   					form_blocks();
@@ -330,7 +334,10 @@ class ShowTable {
 									</select>
 	   							</div>\n\t\t\t\t\t\t\t</div>\n";
 	   				} else {
+						/* if ( ($Nams[$j] != 'page_name') ) {	*/	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
 	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"" . htmlentities($Fild[$j], ENT_QUOTES, 'UTF-8') . "\" size=\"$ln\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+						/* } */
+
 	   				} 
 
 					//other field types still to come: File uploads...?

@@ -369,6 +369,13 @@ $lang = array(
 	'next_page' => 'Volgende pagina',
 	'previous_post' => 'Vorige post',
 	'previous_page' => 'Vorige pagina',
-	'dynamic_page' => 'Pagina'
+	'dynamic_page' => 'Pagina',
+	'user_name_dup' => 'Fout bij het opslaan van nieuwe ' . $table_name . ' binnenkomst. Mogelijke dubbele gebruikersnaam.',
+	'user_name_save_ok' => 'Opgeslagen nieuwe gebruiker ' . $uname . ', een tijdelijk wachtwoord is aangemaakt (<b>' . $password . '</b>).',
+	'file_del_filemanager_fail' => 'Bestand te verwijderen is mislukt. Gelieve handmatig verwijderen van het bestand.',
+	'upload_filemanager_fail' => 'Uploaden is mislukt. Controleer of de map is beschrijfbaar en heeft de juiste machtigingen ingesteld.',
+	'filemanager_max_upload' => 'Uw gastheer server zal accepteren upload voor de maximale bestandsgrootte van : ',
+	'ck_select_file' => 'Klik op een bestand met naam om een link.',
+	'ck_toggle_advanced' => 'Toggle advanced Mode',
 );
 ?>
