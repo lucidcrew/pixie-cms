@@ -270,7 +270,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }								/* 
 
 	</div>
 
-  <?php if (PIXIE_DEBUG == 'yes') { /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>'; phpinfo(); } ?>
+  <?php if (PIXIE_DEBUG == 'yes') { /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), TRUE)) . '</pre>'; phpinfo(); } ?>
 
 </body>
 </html>

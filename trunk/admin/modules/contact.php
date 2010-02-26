@@ -46,12 +46,12 @@ switch ($do) {
 		if (isset($contact_sub)) {
 		
 			// lets check to see if the refferal is from the current site
-			if (strpos($_SERVER['HTTP_REFERER'], $site_url) != false) { die(); }
+			if ( strpos($_SERVER['HTTP_REFERER'], $site_url) != FALSE ) { die(); }
 			
 			// lets check to see if our bot catcher has been filled in
 			if ($iam) { die(); }
 			
-			if (isset($uemail)) {
+			if ( isset($uemail) ) {
 
 				$domain = explode('@', $uemail);
 				if (preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $uemail) && checkdnsrr($domain[1])) {
@@ -107,7 +107,7 @@ switch ($do) {
 	// Show Module
 	default :
 
-		$secret = sha1(uniqid(rand(), true)); /* Create a sha1 checksum to help verify that we are only sending the mail once */
+		$secret = sha1(uniqid( rand(), TRUE) ); /* Create a sha1 checksum to help verify that we are only sending the mail once */
 		$_SESSION['FORM_SECRET'] = $secret; /* FORM_SECRET in $_SESSION['FORM_SECRET'] must be unique if you reuse this technique in other forms like the comments form for example */
 
 		extract(safe_row('*', 'pixie_module_contact_settings', "contact_id='1'")); /* get the settings for this page */

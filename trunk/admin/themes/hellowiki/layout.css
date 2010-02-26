@@ -47,7 +47,7 @@ body
 	padding: 15px 15px 0px 0px;
 	margin-bottom: 25px;
 	}
-	
+
 #footer
 	{
 	clear: both;
@@ -72,6 +72,8 @@ body
 	margin-right: 20px;
 	font-size: 0.9em;
 	}
+
+.section{margin-bottom:15px;}
 
 /* Block styles */
 /*///////////////////////////////////////////////////////*/

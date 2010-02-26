@@ -376,6 +376,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Hochladen fehlgeschlagen. Bitte überprüfen Sie, dass der Ordner ist beschreibbar und hat die richtigen Berechtigungen gesetzt.',
 	'filemanager_max_upload' => 'Ihr Host-Server akzeptiert Uploads für die maximale Dateigröße von : ',
 	'ck_select_file' => 'Klicken Sie auf eine Datei mit Namen einen Link erstellen.',
-	'ck_toggle_advanced' => 'Toggle erweiterten Modus',
+	'ck_toggle_advanced' => 'Toggle erweiterten Modus'
 );
 ?>

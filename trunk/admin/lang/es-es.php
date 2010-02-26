@@ -378,6 +378,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Error de subida. Por favor, compruebe que la carpeta es de escritura y tiene los permisos correctos conjunto.',
 	'filemanager_max_upload' => 'El servidor de acogida aceptará que se suban para el tamaño máximo de archivo de : ',
 	'ck_select_file' => 'Haga clic en un archivo por su nombre para crear un vínculo.',
-	'ck_toggle_advanced' => 'Activar modo avanzado',
+	'ck_toggle_advanced' => 'Activar modo avanzado'
 );
 ?>

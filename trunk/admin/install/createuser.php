@@ -31,7 +31,7 @@ if ((isset($user_new)) && ($user_new)) {
 	if (!isset($error)) {
 
 		$password = generate_password(6);
-		$nonce = md5( uniqid( rand(), true ) );
+		$nonce = md5( uniqid( rand(), TRUE ) );
 		if ((isset($realname)) && (isset($uname))) {
 		$sql = "user_name = '$uname', realname = '$realname', email = '$email', pass = password(lower('$password')), nonce = '$nonce', privs = '$privs', biography =''";
 		}
@@ -276,7 +276,7 @@ password: $password
  		</div>
 
   <?php if ($debug == 'yes') {
-  /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>';
+  /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), TRUE)) . '</pre>';
   phpinfo();
   } ?>
 

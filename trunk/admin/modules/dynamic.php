@@ -165,7 +165,7 @@ switch ($do) {
 
 	case 'tag':
 		if ($p) {
-		  	$start = $posts_per_page*($p-1);
+		  	$start = $posts_per_page * ($p - 1);
   			$mtitle = "$page_display_name (" . $lang['tag'] . ": $x, " . $lang['dynamic_page'] . " $p)";
 	  		$rs = safe_rows_start('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp() and tags REGEXP '[[:<:]]" . $x . "[[:>:]]' order by posted desc limit $start, $posts_per_page");
 	  		show_all($rs);

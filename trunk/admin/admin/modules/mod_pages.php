@@ -161,7 +161,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 							if (is_dir($dir)) {
 								$fd = @opendir($dir);
 								if($fd) {
-								while (($part = @readdir($fd)) == true) {
+								while (($part = @readdir($fd)) == TRUE) {
 									if ($part != '.' && $part != '..') {
 									if ($part != 'index.php' && preg_match('/^[A-Za-z].*\.php$/', $part)) {
 									if (last_word($part) != 'functions.php') {	
@@ -174,7 +174,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 											} else {
 												$do = 'info';
 												include "modules/$part";
-												$mfound = true; 
+												$mfound = TRUE; 
 												echo "\t\t\t\t\t\t\t<div class=\"amodule\"><input type=\"radio\" name=\"modplug\" value=\"$pname\"><h3><img src=\"admin/theme/images/icons/page_" . $m_type . ".png\" alt=\"$m_type\" /> $m_name</h3> $m_description <span class=\"m_credits\"><b>Author:</b> <a href=\"$m_url\" title=\"$m_author\">$m_author</a> <b>Version:</b> v$m_version</span></div>\n";
 											} 
 										}
@@ -247,7 +247,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 					<?php
 					$rs = safe_rows('*', 'pixie_core', "public = 'yes' and in_navigation = 'yes' order by page_order asc");
 					if ($rs) {
-					$found = true;	
+					$found = TRUE;	
 					?>
 <h3><?php print $lang['pages_in_navigation']; ?></h3>
 					<p class="smallerp"><?php print $lang['pages_in_navigation_info']; ?></p>
@@ -279,7 +279,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 					
 					$rs = safe_rows('*', 'pixie_core', "public = 'yes' and in_navigation = 'no' and page_name != '404' and page_type != 'plugin' order by page_name asc");
 					if ($rs) {
-					$found = true;	
+					$found = TRUE;	
 					?>
 					
 					<h3><?php print $lang['pages_outside_navigation']; ?></h3>
@@ -311,7 +311,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 					
 					$rs = safe_rows('*', 'pixie_core', "page_type = 'plugin' order by page_name asc");
 					if ($rs) {
-					$found = true;	
+					$found = TRUE;	
 					?>
 
 					<h3><?php print $lang['plugins']; ?></h3>
@@ -338,7 +338,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 
 					$rs = safe_rows('*', 'pixie_core', "public = 'no' and page_type != 'plugin' order by page_name asc");
 					if ($rs) {
-					$found = true;	
+					$found = TRUE;	
 					?>
 					<h3><?php print $lang['pages_disabled']; ?></h3>
 					<p class="smallerp"><?php print $lang['pages_disabled_info']; ?></p>

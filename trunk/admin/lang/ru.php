@@ -372,6 +372,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Сбой при загрузке. Пожалуйста, убедитесь, что папка записываемые и правильный набор разрешений.',
 	'filemanager_max_upload' => 'Хост-сервера будут принимать закачек для максимального размера файла : ',
 	'ck_select_file' => 'Нажмите на имя файла, чтобы создать ссылку.',
-	'ck_toggle_advanced' => 'Toggle advanced Mode',
+	'ck_toggle_advanced' => 'Toggle advanced Mode'
     );
 ?>

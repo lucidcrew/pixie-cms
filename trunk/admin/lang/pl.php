@@ -377,6 +377,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Nie udało się załadować. Sprawdź, czy folder jest zapisywalny i ustawić odpowiednie uprawnienia.',
 	'filemanager_max_upload' => 'Serwera hosta zaakceptuje przesłane do maksymalnego rozmiaru pliku : ',
 	'ck_select_file' => 'Kliknij na nazwę pliku, aby utworzyć łącze.',
-	'ck_toggle_advanced' => 'Przełączanie trybu zaawansowanego',
+	'ck_toggle_advanced' => 'Przełączanie trybu zaawansowanego'
 );
 ?>

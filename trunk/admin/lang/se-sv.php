@@ -376,6 +376,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Uppladdningen misslyckades. Kontrollera att mappen är skrivbar och har rätt inställda.',
 	'filemanager_max_upload' => 'Din datacentrumet kommer att acceptera inlagda för den maximala filstorleken för : ',
 	'ck_select_file' => 'Klicka på en fil med namn för att skapa en länk.',
-	'ck_toggle_advanced' => 'Toggle advanced Mode',
+	'ck_toggle_advanced' => 'Toggle advanced Mode'
 );
 ?>

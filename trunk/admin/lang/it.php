@@ -377,6 +377,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Caricamento non riuscito. Si prega di verificare che la cartella è scrivibile ed ha le autorizzazioni corrette set.',
 	'filemanager_max_upload' => 'Il server host accetterà upload per la dimensione massima del file di : ',
 	'ck_select_file' => 'Fare clic su un file con nome per creare un collegamento.',
-	'ck_toggle_advanced' => 'Toggle advanced Mode',
+	'ck_toggle_advanced' => 'Toggle advanced Mode'
 );
 ?>

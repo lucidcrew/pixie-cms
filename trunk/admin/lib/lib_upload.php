@@ -59,11 +59,11 @@ class file_upload {
 	var $rename_file;
 	var $file_copy; 
 	var $message = array();
-	var $create_directory = true;
+	var $create_directory = TRUE;
 	
 	function file_upload() {
 		$this->language = 'en';
-		$this->rename_file = false;
+		$this->rename_file = FALSE;
 		$this->ext_string = "";
 	}
 	function show_error_string() {
@@ -92,41 +92,41 @@ class file_upload {
 					if ($this->move_upload($this->the_temp_file, $this->file_copy)) {
 						$this->message[] = $this->error_text($this->http_error);
 						if ($this->rename_file) $this->message[] = $this->error_text(16);
-						return true;
+						return TRUE;
 					}
 				} else {
 					$this->message[] = $this->error_text($this->http_error);
-					return false;
+					return FALSE;
 				}
 			} else {
 				$this->show_extensions();
 				$this->message[] = $this->error_text(11);
-				return false;
+				return FALSE;
 			}
 		} else {
-			return false;
+			return FALSE;
 		}
 	}
 	function check_file_name($the_name) {
 		if ($the_name != "") {
 			if (strlen($the_name) > $this->max_length_filename) {
 				$this->message[] = $this->error_text(13);
-				return false;
+				return FALSE;
 			} else {
 				if ($this->do_filename_check == 'y') {
 					if (preg_match("/^[^<>:\"\/\\|\?\*]*$/i", $the_name)) {
-						return true;
+						return TRUE;
 					} else {
 						$this->message[] = $this->error_text(12);
-						return false;
+						return FALSE;
 					}
 				} else {
-					return true;
+					return TRUE;
 				}
 			}
 		} else {
 			$this->message[] = $this->error_text(10);
-			return false;
+			return FALSE;
 		}
 	}
 	function get_extension($from_file) {
@@ -137,9 +137,9 @@ class file_upload {
 		$extension = $this->get_extension($this->the_file);
 		$ext_array = $this->extensions;
 		if (in_array($extension, $ext_array)) { 
-			return true;
+			return TRUE;
 		} else {
-			return false;
+			return FALSE;
 		}
 	}
 	function show_extensions() {
@@ -158,17 +158,17 @@ class file_upload {
 						// system("chmod 0755 $newfile");
 						chmod($newfile , 0755);
 					}
-					return true;
+					return TRUE;
 				} else {
-					return false;
+					return FALSE;
 				}
 			} else {
 				$this->message[] = $this->error_text(14);
-				return false;
+				return FALSE;
 			}
 		} else {
 			$this->message[] = $this->error_text(15);
-			return false;
+			return FALSE;
 		}
 	}
 	function check_dir($directory) {
@@ -176,22 +176,22 @@ class file_upload {
 			if ($this->create_directory) {
 				umask(0);
 				mkdir($directory, 0777);
-				return true;
+				return TRUE;
 			} else {
-				return false;
+				return FALSE;
 			}
 		} else {
-			return true;
+			return TRUE;
 		}
 	}
 	function existing_file($file_name) {
 		if ($this->replace == 'y') {
-			return true;
+			return TRUE;
 		} else {
 			if (file_exists($this->upload_dir . $file_name)) {
-				return false;
+				return FALSE;
 			} else {
-				return true;
+				return TRUE;
 			}
 		}
 	}
@@ -271,9 +271,9 @@ class muli_files extends file_upload {
 			}
 		}
 		if ($this->number_of_files > 0) {
-			return true;
+			return TRUE;
 		} else {
-			return false;
+			return FALSE;
 		} 
 	}
 	function upload_multi_files () {

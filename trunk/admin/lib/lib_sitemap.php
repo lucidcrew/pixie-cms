@@ -36,7 +36,7 @@ class google_sitemap
    *@access public
    *@return [void|string]
    */
-  function build( $file_name = null )
+  function build( $file_name = NULL )
   {
     $map = $this->header . "\n";
 

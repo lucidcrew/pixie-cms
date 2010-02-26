@@ -19,16 +19,16 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 		$backup_obj->password = $pixieconfig['pass'];
 		$backup_obj->database = $pixieconfig['db'];
 		$backup_obj->tables = array();
-		$backup_obj->drop_tables = true;
-		$backup_obj->struct_only = false;
-		$backup_obj->comments = true;
+		$backup_obj->drop_tables = TRUE;
+		$backup_obj->struct_only = FALSE;
+		$backup_obj->comments = TRUE;
 		$backup_obj->backup_dir = '../files/sqlbackups/';
 		$backup_obj->fname_format = 'd_m_Y-H-i-s';
 
 
 		$filename = date('d_m_Y-H-i-s') . '.sql.gz';
 		$task = MSB_SAVE;
-		$use_gzip = true;
+		$use_gzip = TRUE;
 
 		if (!$backup_obj->Execute($task, '', $use_gzip)) {
 			$message = $backup_obj->error;
@@ -91,7 +91,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
   		if (is_dir($dir)) {
   			$fd = @opendir($dir);
     		if($fd) {
-      		while (($part = @readdir($fd)) == true) {
+      		while (($part = @readdir($fd)) == TRUE) {
         		if ($part != '.' && $part != '..') {
         		if ($part != 'index.php') {
         			if ($part == $last_backup) {

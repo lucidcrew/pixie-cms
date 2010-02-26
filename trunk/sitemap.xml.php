@@ -6,11 +6,11 @@
 // Title: Sitemap Generation                                       //
 //*****************************************************************//
 
-		include 'admin/config.php';           																				
-		include 'admin/lib/lib_db.php';       																				
-		include 'admin/lib/lib_misc.php';     																				
-		include 'admin/lib/lib_date.php';																					
-		include 'admin/lib/lib_tags.php';																					
+		include_once 'admin/config.php';           																				
+		include_once 'admin/lib/lib_db.php';       																				
+		include_once 'admin/lib/lib_misc.php';     																				
+		include_once 'admin/lib/lib_date.php';																					
+		include_once 'admin/lib/lib_tags.php';																					
 	
 		$prefs = get_prefs();           																				
 		extract($prefs);  
@@ -143,13 +143,13 @@
 			$i++;
 		}
 
-    $site_map_container =& new google_sitemap();
+    $site_map_container = new google_sitemap();
 
     for ( $i=0; $i < count( $cats ); $i++ )
     {
         $value = $cats[ $i ];
 
-        $site_map_item =& new google_sitemap_item( $value[ 'loc' ], $value[ 'lastmod'], $value[ 'changefreq' ], '0.7');
+        $site_map_item = new google_sitemap_item( $value[ 'loc' ], $value[ 'lastmod'], $value[ 'changefreq' ], '0.7');
 
         $site_map_container->add_item( $site_map_item );
     }
@@ -158,7 +158,7 @@
 header() must be called before any actual output is sent, either by normal HTML tags, blank lines in a file, or from PHP.
 There must be no spaces or empty lines that are output before header() is called. What's happening here then? */
 /* I think we should use goto for this */
-header( "Content-type: application/xml; charset=\"" . $site_map_container->charset . "\"", true );
+header( "Content-type: application/xml; charset=\"" . $site_map_container->charset . "\"", TRUE );
 header( 'Pragma: no-cache' );
 
     print $site_map_container->build();

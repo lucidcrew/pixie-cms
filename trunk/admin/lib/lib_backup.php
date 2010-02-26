@@ -28,21 +28,21 @@ class MySQL_Backup
   var $password = '';
   var $database = '';
   var $link_id = -1;
-  var $connected = false;
+  var $connected = FALSE;
   var $tables = array();
-  var $drop_tables = true;
-  var $struct_only = false;
-  var $comments = true;
+  var $drop_tables = TRUE;
+  var $struct_only = FALSE;
+  var $comments = TRUE;
   var $backup_dir = '';
   var $fname_format = 'd_m_y__H_i_s';
   var $error = '';
 
 
-  function Execute($task = MSB_STRING, $fname = '', $compress = false)
+  function Execute($task = MSB_STRING, $fname = '', $compress = FALSE)
   {
     if (!($sql = $this->_Retrieve()))
     {
-      return false;
+      return FALSE;
     }
     if ($task == MSB_SAVE)
     {
@@ -72,7 +72,7 @@ class MySQL_Backup
 
   function _Connect()
   {
-    $value = false;
+    $value = FALSE;
     if (!$this->connected)
     {
       $host = $this->server . ':' . $this->port;
@@ -82,7 +82,7 @@ class MySQL_Backup
     {
       if (empty($this->database))
       {
-        $value = true;
+        $value = TRUE;
       }
       elseif ($this->link_id !== -1)
       {
@@ -124,7 +124,7 @@ class MySQL_Backup
     $value = array();
     if (!($result = $this->_Query('SHOW TABLES')))
     {
-      return false;
+      return FALSE;
     }
     while ($row = mysql_fetch_row($result))
     {
@@ -136,7 +136,7 @@ class MySQL_Backup
     if (!sizeof($value))
     {
       $this->error = 'No tables found in database.';
-      return false;
+      return FALSE;
     }
     return $value;
   }
@@ -158,7 +158,7 @@ class MySQL_Backup
     }
     if (!($result = $this->_Query('SHOW CREATE TABLE ' . $table)))
     {
-      return false;
+      return FALSE;
     }
     $row = mysql_fetch_assoc($result);
     $value .= str_replace("\n", MSB_NL, $row['Create Table']) . ';';
@@ -184,7 +184,7 @@ class MySQL_Backup
     $value = '';
     if (!($result = $this->_Query('SELECT * FROM ' . $table)))
     {
-      return false;
+      return FALSE;
     }
     while ($row = mysql_fetch_row($result))
     {
@@ -205,7 +205,7 @@ class MySQL_Backup
     $value = '';
     if (!$this->_Connect())
     {
-      return false;
+      return FALSE;
     }
     if ($this->comments)
     {
@@ -226,14 +226,14 @@ class MySQL_Backup
     }
     if (!($tables = $this->_GetTables()))
     {
-      return false;
+      return FALSE;
     }
     foreach ($tables as $table)
     {
       if (!($table_dump = $this->_DumpTable($table)))
       {
         $this->error = mysql_error();
-        return false;
+        return FALSE;
       }
       $value .= $table_dump;
     }
@@ -248,7 +248,7 @@ class MySQL_Backup
       if (!($zf = gzopen($fname, 'w9')))
       {
         $this->error = 'Can\'t create the output file.';
-        return false;
+        return FALSE;
       }
       gzwrite($zf, $sql);
       gzclose($zf);
@@ -258,12 +258,12 @@ class MySQL_Backup
       if (!($f = fopen($fname, 'w')))
       {
         $this->error = 'Can\'t create the output file.';
-        return false;
+        return FALSE;
       }
       fwrite($f, $sql);
       fclose($f);
     }
-    return true;
+    return TRUE;
   }
 
 
@@ -274,7 +274,7 @@ class MySQL_Backup
     header('Pragma: no-cache');
     header('Expires: 0');
     echo ($compress ? gzencode($sql) : $sql);
-    return true;
+    return TRUE;
   }
 
 }

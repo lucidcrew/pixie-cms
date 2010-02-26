@@ -26,6 +26,7 @@ class DB {
     }
 
 	function DB() {
+
 		global $pixieconfig;
 		$this->host = $pixieconfig['host'];
 		$this->db   = $pixieconfig['db'];
@@ -33,15 +34,20 @@ class DB {
 		$this->pass = $pixieconfig['pass'];
 		$this->link = mysql_connect($this->host, $this->user, $this->pass);
 		if (!$this->link) {
-			$GLOBALS['connected'] = false;
-		} else $GLOBALS['connected'] = true;
+			$GLOBALS['connected'] = FALSE;
+		} else $GLOBALS['connected'] = TRUE;
 		mysql_select_db($this->db) or die(db_down()); /* Connect to the database */
+
+		if ( (isset($pixieconfig['utf_8_db'])) && ($pixieconfig['utf_8_db'] === 'yes') ) {
 		mysql_query("set names 'utf8'"); /* Set the charset to utf8 */
+		}
+
          $diff = $this->getTzdiff();
          if ($diff >= 0)
                 $diff = '+'.$diff;
          mysql_query("set time_zone = '"."$diff:00'");
 	}
+
 }
 
 $DB = new DB;
@@ -57,7 +63,7 @@ $DB = new DB;
 	{
 		global $DB, $pixieconfig, $message, $dst, $tzHM;
 		$method = (!$unbuf) ? 'mysql_query' : 'mysql_unbuffered_query'; /* To use mysql_unbuffered_query() while multiple database connections are open, you must specify the optional parameter link_identifier to identify which connection you want to use. */ /* resource mysql_unbuffered_query ( string $query [, resource $link_identifier ] ) */ /* http://php.net/manual/en/function.mysql-unbuffered-query.php */
-		if (!$q) return false;
+		if (!$q) return FALSE;
 		if ($debug) { 
 			$message = 'MySQL Query: ' . $q . '<br/>MySQL Error : ' . mysql_error() . "";
 		}
@@ -83,7 +89,7 @@ $DB = new DB;
 		
 		$result = $method($q, $DB->link);
 
-		if(!$result) return false;
+		if(!$result) return FALSE;
 		return $result;
 	}
 //------------------------------------------------------------------
@@ -92,9 +98,9 @@ $DB = new DB;
 		$table = adjust_prefix($table);
 		$q = "delete from $table where $where";
 		if ($r = safe_query($q, $debug)) {
-			return true;
+			return TRUE;
 		} else {
-			return false;
+			return FALSE;
 		}
 	}
 
@@ -104,9 +110,9 @@ $DB = new DB;
 		$table = adjust_prefix($table);
 		$q = "update $table set $set where $where";
 		if ($r = safe_query($q, $debug)) {
-			return true;
+			return TRUE;
 		} else {
-			return false;
+			return FALSE;
 		}		
 	}
 
@@ -118,9 +124,9 @@ $DB = new DB;
 		$q = "insert into $table set $set";
 		if ($r = safe_query($q, $debug)) {
 			$id = mysql_insert_id($DB->link);
-			return ($id === 0 ? true : $id);
+			return ($id === 0 ? TRUE : $id);
 		}
-		return false;
+		return FALSE;
 	}
 
 //------------------------------------------------------------------
@@ -129,9 +135,9 @@ $DB = new DB;
 		$table = adjust_prefix($table);
 		$q = "alter table $table $alter";
 		if ($r = safe_query($q, $debug)) {
-			return true;
+			return TRUE;
 		}
-		return false;
+		return FALSE;
 	}
 	
 //------------------------------------------------------------------
@@ -140,9 +146,9 @@ $DB = new DB;
 		$table = adjust_prefix($table);
 		$q = "optimize table $table";
 		if ($r = safe_query($q, $debug)) {
-			return true;
+			return TRUE;
 		}
-		return false;
+		return FALSE;
 	}
 
 //------------------------------------------------------------------
@@ -151,9 +157,9 @@ $DB = new DB;
 		$table = adjust_prefix($table);
 		$q = "repair table $table";
 		if ($r = safe_query($q, $debug)) {
-			return true;
+			return TRUE;
 		}
-		return false;
+		return FALSE;
 	}
 
 //------------------------------------------------------------------
@@ -165,7 +171,7 @@ $DB = new DB;
 		if (@mysql_num_rows($r) > 0) {
 			return mysql_result($r, 0);
 		}
-		return false;
+		return FALSE;
 	}
 
 //------------------------------------------------------------------
@@ -231,16 +237,16 @@ $DB = new DB;
 		if ($r = safe_query($q, $debug)) {
 			return (mysql_num_rows($r) > 0) ? mysql_result($r, 0) : '';
 		}
-		return false;
+		return FALSE;
 	}
 
 //------------------------------------------------------------------
 	function getRow($query, $debug='') 
 	{
 		if ($r = safe_query($query, $debug)) {
-			return (mysql_num_rows($r) > 0) ? mysql_fetch_assoc($r) : false;
+			return (mysql_num_rows($r) > 0) ? mysql_fetch_assoc($r) : FALSE;
 		}
-		return false;
+		return FALSE;
 	}
 
 //------------------------------------------------------------------
@@ -252,7 +258,7 @@ $DB = new DB;
 				return $out;
 			}
 		}
-		return false;
+		return FALSE;
 	}
 
 //------------------------------------------------------------------
@@ -273,7 +279,7 @@ $DB = new DB;
 		if ($r = safe_query($query, $debug)) {
 			return (mysql_num_rows($r) != 0) ? mysql_result($r, 0) : '';
 		}
-		return false;
+		return FALSE;
 	}
 
 //------------------------------------------------------------------
@@ -301,7 +307,7 @@ $DB = new DB;
 		if ($r) {
 			return $r;
 		}
-		return false;
+		return FALSE;
 	}
 //------------------------------------------------------------------
 // Creates a drop down menu box from a db
@@ -352,9 +358,9 @@ $DB = new DB;
 		}
 
 		if ((isset($rs)) && ($rs)) {
-		return true;
+		return TRUE;
 		} else {
-		return false;
+		return FALSE;
 		}
 
 	}

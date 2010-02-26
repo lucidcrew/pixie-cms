@@ -29,7 +29,7 @@ require_once '../../lib/lib_misc.php';										/* perform basic sanity checks *
 	extract($_REQUEST);		// access to form vars if register globals is off // note : NOT setting a prefix yet, not looked at it yet
 	$prefs = get_prefs();
 	extract($prefs);
-	include '../../lang/' . $language . '.php';
+	include_once '../../lang/' . $language . '.php';
 	
 	// rebuild new form field
 	if ($form) {
@@ -119,4 +119,5 @@ require_once '../../lib/lib_misc.php';										/* perform basic sanity checks *
 	print $message;
 
 }
+/* This file should be merged as an include or merged directly into another file instead of it being directly accessed like this. */
 ?>

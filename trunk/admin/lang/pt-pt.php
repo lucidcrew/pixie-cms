@@ -376,6 +376,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Falha no upload. Por favor, verifique que a pasta é gravável e tem as permissões correctas definidas.',
 	'filemanager_max_upload' => 'Seu servidor de acolhimento aceitará uploads para o tamanho máximo de arquivo : ',
 	'ck_select_file' => 'Clique em um arquivo de nome para criar um link.',
-	'ck_toggle_advanced' => 'Toggle advanced Mode',
+	'ck_toggle_advanced' => 'Toggle advanced Mode'
 );
 ?>

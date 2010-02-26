@@ -13,7 +13,7 @@ $gzip_admin = 'no';
 // http://code.google.com/apis/ajaxlibs/documentation/#AjaxLibraries
 $jquery_google_apis_load = 'no';
 // The version of jQuery to load from google apis
-$googleapis_jquery_load_location = 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js';
+$googleapis_jquery_load_location = 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js';
 
 // more settings may appear in the future, please let us know if you have
 // any suggestions as to how we could bring slightly more customisation 

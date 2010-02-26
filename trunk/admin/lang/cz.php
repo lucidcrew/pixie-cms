@@ -377,6 +377,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Nahrávání selhalo. Zkontrolujte, že složka je zapisovat a má správná oprávnění nastavit.',
 	'filemanager_max_upload' => 'Váš hostitelský server bude přijímat obrázky pro maximální velikost souboru : ',
 	'ck_select_file' => 'Klikněte na název souboru pro vytvoření odkazu.',
-	'ck_toggle_advanced' => 'Přepnout pokročilý režim',
+	'ck_toggle_advanced' => 'Přepnout pokročilý režim'
 );
 ?>

@@ -51,23 +51,23 @@ if (isset($GLOBALS['pixie_user'])) {
 				if (!isset($error)) {
 				
 					// clean the input
-					$realname = sterilise($realname, true);
-					$email = sterilise($email, true);
+					$realname = sterilise($realname, TRUE);
+					$email = sterilise($email, TRUE);
 					$biography = mysql_real_escape_string($biography);
-					$link_1 = sterilise($link_1, true);
-					$link_2 = sterilise($link_2, true);
-					$link_3 = sterilise($link_3, true);
-					$occupation = sterilise($occupation, true);
-					$website = sterilise($website, true);
-					$street = sterilise($street, true);
-					$town = sterilise($town, true);
-					$street = sterilise($street, true);
-					$town = sterilise($town, true);
-					$county = sterilise($county, true);
-					$country = sterilise($country, true);
-					$post_code = sterilise($post_code, true);
-					$telephone = sterilise($telephone, true);
-					$user_id = sterilise($user_id, true);
+					$link_1 = sterilise($link_1, TRUE);
+					$link_2 = sterilise($link_2, TRUE);
+					$link_3 = sterilise($link_3, TRUE);
+					$occupation = sterilise($occupation, TRUE);
+					$website = sterilise($website, TRUE);
+					$street = sterilise($street, TRUE);
+					$town = sterilise($town, TRUE);
+					$street = sterilise($street, TRUE);
+					$town = sterilise($town, TRUE);
+					$county = sterilise($county, TRUE);
+					$country = sterilise($country, TRUE);
+					$post_code = sterilise($post_code, TRUE);
+					$telephone = sterilise($telephone, TRUE);
+					$user_id = sterilise($user_id, TRUE);
 
 					$sql = "realname = '$realname', email = '$email', biography = '$biography', link_1 = '$link_1', link_2 = '$link_2', 
 					link_3 = '$link_3', occupation = '$occupation', website = '$website', street = '$street', town = '$town', 

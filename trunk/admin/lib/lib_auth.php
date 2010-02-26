@@ -55,9 +55,9 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 		
 		global $lang;
 		
-		$username = sterilise_txt($username, true);
-		$password = sterilise_txt($password, true);
-		$remember = sterilise_txt($remember, true);
+		$username = sterilise_txt($username, TRUE);
+		$password = sterilise_txt($password, TRUE);
+		$remember = sterilise_txt($remember, TRUE);
 	
 		$howmany = count(safe_rows('*', 'pixie_log', "log_message = '" . $lang['failed_login'] . "' and user_ip = '" . $_SERVER["REMOTE_ADDR"] . "' and log_time < utc_timestamp() and log_time > DATE_ADD(utc_timestamp(), INTERVAL -1 DAY)"));
 		

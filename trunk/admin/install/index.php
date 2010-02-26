@@ -151,16 +151,18 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 // Title: Configuration settings.                                  //
 //*****************************************************************//
 
-// MySQL settings //
+/* MySQL settings */
 \$pixieconfig['db'] = '$pixie_database';
 \$pixieconfig['user'] = '$pixie_username';
 \$pixieconfig['pass'] = '$pixie_password';
 \$pixieconfig['host'] = '$pixie_host';
 \$pixieconfig['table_prefix'] = '$pixie_prefix';
 
-// Timezone //
-// This timezone setting is the server time zone //
+/* Timezone - (Server time zone) */
 \$pixieconfig['server_timezone'] = '$pixie_server_timezone';
+
+/* Foreign language database bug fix */
+\$pixieconfig['utf_8_db'] = 'yes';
 ?>";
 						fwrite($fh, $data);
 						fclose($fh);
@@ -772,7 +774,7 @@ fwrite($temp, "$data");
 				safe_update('pixie_users', $sql, "user_id ='1'");
 				$sql = "email = '$pixie_email'"; 
 				safe_update('pixie_users', $sql, "user_id ='1'");
-				$nonce = md5( uniqid( rand(), true ) ); // Could we use sha1 instead? sha1( uniqid( rand(), true ) );	// http://www.php.net/manual/en/function.sha1.php
+				$nonce = md5( uniqid( rand(), TRUE ) ); // Could we use sha1 instead? sha1( uniqid( rand(), TRUE ) );	// http://www.php.net/manual/en/function.sha1.php
 				$sql = "pass = password(lower('$pixie_password')), nonce = '$nonce', privs = '3', link_1 = 'http://www.toggle.uk.com', link_2 = 'http://www.getpixie.co.uk', link_3 = 'http://www.iwouldlikeawebsite.com', website='$site_url', `biography`=''"; 
 				safe_update('pixie_users', $sql, "user_id ='1'");
 
@@ -1158,15 +1160,15 @@ padding-top: 2em;
 		switch($pixie_step) {
 			case 4 :
 				global $site_url;
-                                /** Checking Dir Permissions **/
-				$warn_flag = false;
+                                /* Checking Dir Permissions */
+				$warn_flag = FALSE;
                                 if ($handle = opendir('../../files')) {
-                                        while (false !== ($file = readdir($handle))) {
+                                        while (FALSE !== ($file = readdir($handle))) {
 						$path = "../../files/$file";
                                                 if ($file != '.' && $file != '..') {
 							
                                                         if (is_dir($path) && !(is_writable($path))) {
-							$warn_flag = true;
+							$warn_flag = TRUE;
                                                                 echo "<font size='-1'>Directory files/$file is not writable.</font><br>\n";
 							}
                                                 }
@@ -1539,7 +1541,7 @@ $zonelist = array('Pacific/Midway',
   </div>
 
 	<?php if ($debug == 'yes') {
-	/* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>';
+	/* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), TRUE)) . '</pre>';
 	phpinfo();
 	} ?>
 
@@ -1609,7 +1611,7 @@ $j('.error').slideDown();
 $j('.error-text').fadeOut(1000).replaceWith("<div class=\"error-text\">Please correct the error and then try again.<br/><br/></div>").fadeIn(2500);
       });
       });
-    return true; 
+    return TRUE; 
     };
 	loadPage();
 
