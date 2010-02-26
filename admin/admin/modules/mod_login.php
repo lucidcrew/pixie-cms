@@ -13,7 +13,7 @@ if (isset($login_forgotten)) {
 
 	if (!isset($username)) { $username = NULL; }
 
-	$username = sterilise($username, true);
+	$username = sterilise($username, TRUE);
 	
 	$r1 = safe_field('email', 'pixie_users', "email='$username'");	
 	$r2 = safe_field('user_name', 'pixie_users', "user_name='$username'");
@@ -27,7 +27,7 @@ if (isset($login_forgotten)) {
 
 		if ($rs) {
 			$password = generate_password(8);
-			$nonce = md5( uniqid( rand(), true ) );
+			$nonce = md5( uniqid( rand(), TRUE ) );
 			$sql = "pass = password(lower('$password')), nonce = '$nonce'";
 			$ok = safe_update('pixie_users', "$sql", "email = '$rs'");
 			

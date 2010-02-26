@@ -18,11 +18,12 @@ if(isset($_COOKIE['pixie_login'])) {
 		$privs = safe_field('privs', 'pixie_users', "user_name='$username'");		
 		if ($privs >= 2) {
 			if (file_exists("admin/modules/mod_$x.php")) {
-				include("admin/modules/mod_$x.php");
+				include_once("admin/modules/mod_$x.php");
 			} else {
 				$message = "Admin module $x has been removed from the admin modules folder.";
 			}
 		}
 	}
 }
+
 ?>

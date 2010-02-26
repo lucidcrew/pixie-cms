@@ -16,17 +16,17 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 		$request = $_SERVER['REQUEST_URI'];
 
 		if ($style) {
-			$request = str_replace('?style=' . $style, "", $request);
+			$request = str_replace("?style={$style}", "", $request);
 		}
 
-		$site_url_last = $site_url{strlen($site_url)-1};
+		$site_url_last = $site_url { strlen($site_url) - 1 };
 		if ($site_url_last != '/') {
 			$site_url = $site_url . '/';
 		}
 
 		if ($clean_urls == 'yes') {
 			// if the request contains a ? then this person is accessing with a dirty URL and is handled accordingly 
-			if (strpos($request, '?s=') !== false) {
+			if (strpos($request, '?s=') !== FALSE) {
 				$rel_path = './';
 			} else {
 				//this is directory level of your installation. check autofind works!?!?
@@ -40,23 +40,23 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 				if ($dir_level < 0) {
 					$dir_level = 0;
 				}
-				
-				$s = strtolower($url[$dir_level+1]);
-				$m = strtolower($url[$dir_level+2]);
-				$x = strtolower($url[$dir_level+3]);
-				$p = strtolower($url[$dir_level+4]);
+
+				$s = strtolower($url[$dir_level + 1]);
+				$m = strtolower($url[$dir_level + 2]);
+				$x = strtolower($url[$dir_level + 3]);
+				$p = strtolower($url[$dir_level + 4]);
 
 				switch($count) {
-					case $dir_level+3: 
+					case $dir_level + 3: 
 						$rel_path = '../';
 					break;
-					case $dir_level+4:
+					case $dir_level + 4:
 						$rel_path = '../../';
 					break;
-					case $dir_level+5:
+					case $dir_level + 5:
 						$rel_path = '../../../';
 					break;
-					case $dir_level+6:
+					case $dir_level + 6:
 						$rel_path = '../../../../';
 					break;
 					default:
@@ -68,7 +68,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 			$rel_path = './';
 		}
 
-		if ((!isset($s)) || (!$s)) { /* Maybe part of the permalink in other languages problem */
+		if ((!isset($s)) || (!$s)) {
 			$last = $default_page { strlen($default_page) - 1 };
 			$default = explode('/', $default_page);
 			$s = sterilise_txt($default['0']);
@@ -111,18 +111,18 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 			$style = $s;
 		}
 
-		$s = str_replace("-", "BREAK", $s);
-		$m = str_replace("-", "BREAK", $m);
-		$x = str_replace("-", "BREAK", $x);
-		$p = str_replace("-", "BREAK", $p);
-		$s = preg_replace("/[^a-zA-Z0-9]/", "", $s);
-		$m = preg_replace("/[^a-zA-Z0-9]/", "", $m);
-		$x = preg_replace("/[^a-zA-Z0-9]/", "", $x);
-		$p = preg_replace("/[^a-zA-Z0-9]/", "", $p);
-		$s = str_replace("BREAK", "-", $s);
-		$m = str_replace("BREAK", "-", $m);
-		$x = str_replace("BREAK", "-", $x);
-		$p = str_replace("BREAK", "-", $p);
+		function resolver($string) {
+
+		    $string = str_replace('-', 'BREAK', $string);
+		    $string = preg_replace('/[^a-zA-Z0-9]/', "", $string);
+		    $string = str_replace('BREAK', '-', $string);
+		    return $string;
+		}
+
+		$s = resolver($s);
+		$m = resolver($m);
+		$x = resolver($x);
+		$p = resolver($p);
 
 		$page_id = get_page_id($s);
 		$page_hits = safe_field('page_views', 'pixie_core', "page_name='$s'");
@@ -141,30 +141,30 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 
 		echo '<h3>' . $lang['navigation'] . "</h3>\n\t\t\t\t<ul id=\"navigation_1\">\n";
 		$i = 0;
-		$first = true; // first link
-		$last = false; // last link
+		$first = TRUE; // first link
+		$last = FALSE; // last link
 		while ($i < $num) {
 			$out = $check_pages[$i];
 			$page_display_name = $out['page_display_name'];
 			$page_name = $out['page_name'];
 			$page_type = $out['page_type'];
-			if($i == ($num - 1)) $last = true;
+			if($i == ($num - 1)) $last = TRUE;
 			if ($s == $page_name) {
 				if ($page_type == 'dynamic') {
 					$includestr = 'dynamic';
 				} else {
 					$includestr = $page_name;
 				}
-				if (($nested_nav == 'yes') && (file_exists('admin/blocks/block_' . $includestr . '_nav.php'))) {
+				if (($nested_nav == 'yes') && (file_exists("admin/blocks/block_{$includestr}_nav.php"))) {
 					echo "\t\t\t\t\t<li id=\"li_1_$page_name\"><a href=\"" . createURL($page_name) . "\" title=\"$page_display_name\" id=\"navigation_1_$page_name\" class=\"nav_current_1 replace\">$page_display_name<span></span></a>\n";
 					include('admin/blocks/block_' . $includestr . '_nav.php');
 				} else {
-					echo "\t\t\t\t\t<li id=\"li_1_$page_name\" class=\"nav_current_li_1" . ($first ? ' first' : "").($last ? ' last' : "") . "\"><a href=\"" . createURL($page_name) . "\" title=\"$page_display_name\" id=\"navigation_1_$page_name\" class=\"nav_current_1 replace\">$page_display_name<span></span></a></li>\n";
-					$first = false;
+					echo "\t\t\t\t\t<li id=\"li_1_$page_name\" class=\"nav_current_li_1" . ($first ? ' first' : "") . ($last ? ' last' : "") . "\"><a href=\"" . createURL($page_name) . "\" title=\"$page_display_name\" id=\"navigation_1_$page_name\" class=\"nav_current_1 replace\">$page_display_name<span></span></a></li>\n";
+					$first = FALSE;
 				}
 			} else {
 				echo "\t\t\t\t\t<li id=\"li_1_$page_name\"" . ($first ? " class=\"first\"" : "") . ($last ? " class=\"last\"" : "") . "><a href=\"" . createURL($page_name) . "\" title=\"$page_display_name\" id=\"navigation_1_$page_name\" class=\"replace\">$page_display_name<span></span></a></li>\n";
-				$first = false;
+				$first = FALSE;
 			}
 			$i++;
 		}
@@ -184,8 +184,8 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 			$current = $blocks[$count];
 			$current = str_replace(" ", "", $current);
 
-			if (file_exists('admin/blocks/block_' . $current . '.php')) { 
-				include('admin/blocks/block_' . $current . '.php');
+			if (file_exists("admin/blocks/block_{$current}.php")) { 
+				include("admin/blocks/block_{$current}.php");
 				echo "\n";
 			}
 		}
@@ -206,12 +206,11 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 				$user_count = mysql_num_rows(safe_query('select * from ' . PFX . 'pixie_log_users_online'));
 				$user_count = $user_count - 1;
 
-				echo "
-	<div id=\"admin_header\">
+				echo "<div id=\"admin_header\">
 		<h1>Hello "; if (isset($realname)) { echo firstword($realname); } echo "</h1>
 		<div id=\"admin_header_text\"><p>" . safe_strftime($date_format, time() + tz_offset()) . ". Currently your site has $user_count visitor(s) online.</p></div>
 		<div id=\"admin_header_controls\"><p><a href=\"" . $site_url . "admin/\" title=\"Goto Pixie\">Pixie</a><a href=\"" . $site_url . "admin/?s=logout\" title=\"Logout of pixie\">Logout</a></p></div>
-	</div>\n";
+	</div>\n"; /* Needs language */
 			}
 		}
 	}
@@ -227,7 +226,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 				if ($post_title) {
 				echo "$site_name - $page_display_name - $post_title";
 				} else {
-				echo "$site_name"; /* escaping other language characters causes error. */
+				echo "$site_name"; /* escaping other language characters can cause an error. */
 				}
 			} else if ($m == 'tag') {
 				if ($p) {

@@ -377,6 +377,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Yükleme başarısız. Lütfen klasörü yazılabilir ve doğru izinleri belirledi.',
 	'filemanager_max_upload' => 'Ana bilgisayar sunucu maksimum dosya boyutu için yüklenenler kabul eder : ',
 	'ck_select_file' => 'Adında bir dosya tıklayın bir bağlantı oluşturmak için.',
-	'ck_toggle_advanced' => 'Toggle Modu ileri',
+	'ck_toggle_advanced' => 'Toggle Modu ileri'
 );
 ?>

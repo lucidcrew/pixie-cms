@@ -377,6 +377,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Fallo na subida. Por favor, verifique que a pasta é gravadora e ten os permisos correctas definidas.',
 	'filemanager_max_upload' => 'O seu servidor de acollida aceptará subidos para o tamaño máximo de arquivo : ',
 	'ck_select_file' => 'Prema nun arquivo de nome para crear unha ligazón.',
-	'ck_toggle_advanced' => 'Toggle advanced Mode',
+	'ck_toggle_advanced' => 'Toggle advanced Mode'
 );
 ?>

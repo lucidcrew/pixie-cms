@@ -376,6 +376,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Upload failed. Please check that the folder is writeable and has the correct permissions set.',
 	'filemanager_max_upload' => 'Your host server will accept uploads for the maximum file size of : ',
 	'ck_select_file' => 'Click on a file by name to create a link.',
-	'ck_toggle_advanced' => 'Toggle advanced Mode',
+	'ck_toggle_advanced' => 'Toggle advanced Mode'
 );
 ?>

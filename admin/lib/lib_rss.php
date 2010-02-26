@@ -171,9 +171,9 @@ echo ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		extract(safe_row('*', 'pixie_core', "page_name='$page_name' limit 0,1"));
 		extract(safe_row('*', 'pixie_dynamic_settings', "page_id='$page_id' limit 0,1"));
 		if ($rss == 'yes') {
-			return true;
+			return TRUE;
 		} else {
-			return false;
+			return FALSE;
 		}
 	}
 // ------------------------------------------------------------------

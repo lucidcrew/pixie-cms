@@ -16,10 +16,10 @@ define('BB2_CWD', dirname(__FILE__));
 // Most of these are unused in non-database mode.
 $bb2_settings_defaults = array(
 	'log_table' => $pixieconfig['table_prefix'].'pixie_bad_behavior',
-	'display_stats' => true,
-	'strict' => false,
-	'verbose' => false,
-	'logging' => true,
+	'display_stats' => TRUE,
+	'strict' => FALSE,
+	'verbose' => FALSE,
+	'logging' => TRUE,
 	'httpbl_key' => '',
 	'httpbl_threat' => 25,
 	'httpbl_maxage' => 30,
@@ -81,7 +81,7 @@ function bb2_read_settings() {
 
 // write settings to database
 function bb2_write_settings($settings) {
-	return false;
+	return FALSE;
 }
 
 // installation
@@ -101,7 +101,7 @@ function bb2_insert_head() {
 }
 
 // Display stats? This is optional.
-function bb2_insert_stats($force = false) {
+function bb2_insert_stats($force = FALSE) {
 	$settings = bb2_read_settings();
 
 	if ($force || $settings['display_stats']) {

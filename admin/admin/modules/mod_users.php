@@ -95,7 +95,7 @@ if ((isset($user_new)) && ($user_new)) {
 	if (!isset($error)) {
 
 		$password = generate_password(6);
-		$nonce = md5(uniqid(rand(), true ));
+		$nonce = md5(uniqid(rand(), TRUE ));
 		$sql = "user_name = '$uname', realname = '$realname', email = '$email', pass = password(lower('$password')), nonce = '$nonce', privs = '$privilege', link_1 = 'http://www.toggle.uk.com', link_2 = 'http://www.getpixie.co.uk', link_3 = 'http://www.iwouldlikeawebsite.com', biography=''"; 
 
 		if (isset($table_name)) { $ok = safe_insert($table_name, $sql); }
@@ -118,7 +118,7 @@ visit: " . $site_url . "admin to login.";
 			$subject = $lang['email_account_new_subject'];
 			if (!isset($subject)) { $subject = NULL; }
 			mail($email, $subject, $emessage);
-			$messageok = $lang['user_new_ok'] . " ". $realname . '.';
+			$messageok = $lang['user_new_ok'] . " " . $realname . '.';
 			logme($messageok, 'no', 'user');
 		}
 	} else {
@@ -362,4 +362,5 @@ echo "					<form accept-charset=\"UTF-8\" action=\"?s=$s&amp;x=users\" method=\"
 				echo "\n\t\t\t\t</div>";
  			}
 }
+
 ?>

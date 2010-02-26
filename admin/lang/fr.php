@@ -376,6 +376,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Échec de l\'envoi. S\'il vous plaît vérifier que le dossier est accessible en écriture et possède les autorisations correctes fixés.',
 	'filemanager_max_upload' => 'Votre serveur hôte acceptera d\'ajouts pour la taille maximale des fichiers : ',
 	'ck_select_file' => 'Cliquez sur un fichier par son nom pour créer un lien.',
-	'ck_toggle_advanced' => 'Basculer en mode avancé',
+	'ck_toggle_advanced' => 'Basculer en mode avancé'
 );
 ?>

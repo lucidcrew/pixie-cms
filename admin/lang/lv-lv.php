@@ -377,6 +377,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Augšupielāde neizdevās. Lūdzu pārbaudiet, vai mape ir writeable un ir pareizs permissions set.',
 	'filemanager_max_upload' => 'Jūsu resursservera pieņems attēli ar maksimālo faila lielumu : ',
 	'ck_select_file' => 'Noklikšķiniet uz faila nosaukuma, lai izveidotu saikni.',
-	'ck_toggle_advanced' => 'Toggle advanced Mode',
+	'ck_toggle_advanced' => 'Toggle advanced Mode'
 );
 ?>

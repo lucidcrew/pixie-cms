@@ -1,4 +1,16 @@
 <?php
+//*****************************************************************//
+// Pixie: The Small, Simple, Site Maker.                           //
+// ----------------------------------------------------------------//
+// Licence: GNU General Public License v3                   	   //
+// Title: Public JavaScript                                        //
+//*****************************************************************//
+
+if (defined('DIRECT_ACCESS')) { require_once '../lib/lib_misc.php'; pixieExit(); exit(); }
+define('DIRECT_ACCESS', 1);
+require_once '../lib/lib_misc.php';										/* perform basic sanity checks */
+	bombShelter();                  									/* check URL size */
+
 	error_reporting(0);
 
 	/* Please note : We do not need to specify the header type of this document using php because

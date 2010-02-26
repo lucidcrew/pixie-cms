@@ -376,6 +376,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Lataus epäonnistui. Tarkista, että kansio on kirjoitettava, ja on oikeat käyttöoikeudet asetettu.',
 	'filemanager_max_upload' => 'Sinun palvelukeskuksen hyväksyy lisätty ja suurin tiedostokoko : ',
 	'ck_select_file' => 'Napsauta tiedostoa, jonka nimi luoda linkin.',
-	'ck_toggle_advanced' => 'Vaihda Advanced Mode',
+	'ck_toggle_advanced' => 'Vaihda Advanced Mode'
 );
 ?>

@@ -19,10 +19,10 @@ class Validator {
     function validateTextOnly($theinput, $description = ''){
         $result = ereg ('^[A-Za-z0-9\ ]+$', $theinput );
         if ($result){
-            return true;
+            return TRUE;
         }else{
             $this->errors[] = $description;
-            return false;
+            return FALSE;
         }
     }
 
@@ -30,10 +30,10 @@ class Validator {
     function validateTextOnlyNoSpaces($theinput, $description = ''){
         $result = ereg ('^[A-Za-z0-9]+$', $theinput );
         if ($result){
-            return true;
+            return TRUE;
         }else{
             $this->errors[] = $description;
-            return false;
+            return FALSE;
         }
     }
         
@@ -41,10 +41,10 @@ class Validator {
     function validateEmail($themail, $description = ''){
         $result = ereg ('^[^@ ]+@[^@ ]+\.[^@ \.]+$', $themail );
         if ($result){
-            return true;
+            return TRUE;
         }else{
             $this->errors[] = $description;
-            return false;
+            return FALSE;
         }
             
     }
@@ -53,30 +53,30 @@ class Validator {
     function validateURL($url, $description = '') {
     	$result = preg_match ('/^[a-zA-Z]+[:\/\/]+[A-Za-z0-9\-_]+\\.+[A-Za-z0-9\.\/%&=\?\-_]+$/i', $url);
     	if ($result) {
-    		return true;
+    		return TRUE;
     	} else {
     		$this->errors[] = $description;
-    		return false;
+    		return FALSE;
     	}
     }
     
     // Validate numbers only
     function validateNumber($theinput, $description = ''){
         if (is_numeric($theinput)) {
-            return true; // The value is numeric, return true
+            return TRUE; // The value is numeric, return TRUE
         }else{
             $this->errors[] = $description; // Value not numeric! Add error description to list of errors
-            return false; // Return false
+            return FALSE; // Return FALSE
         }
     }
     
-    // Check whether any errors have been found (i.e. validation has returned false)
+    // Check whether any errors have been found (i.e. validation has returned FALSE)
     // since the object was created
     function foundErrors() {
         if (count($this->errors) > 0){
-            return true;
+            return TRUE;
         }else{
-            return false;
+            return FALSE;
         }
     }
 

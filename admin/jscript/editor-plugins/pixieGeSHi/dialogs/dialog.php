@@ -18,11 +18,11 @@ if (is_readable('../../../../lib/geshi.php')) {
 } else { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-
 <head><meta http-equiv="content-type" content="text/html; charset=utf-8" /><title>GeSHi</title>
 <style type="text/css">
 body{font-family:'Lucida Grande',Verdana,Arial,Sans-Serif;font-size:11pt;line-height:14pt;padding-left:1%;padding-right:1%;}
-#center{text-align:center;}#right{text-align:right;}
+#center{text-align:center;}
+#right{text-align:right;}
 </style>
 </head>
 <body>
@@ -45,7 +45,7 @@ body{font-family:'Lucida Grande',Verdana,Arial,Sans-Serif;font-size:11pt;line-he
 }
 
 require_once $path . 'geshi.php';
-$fill_source = false;
+$fill_source = FALSE;
 
 if (isset($_POST['submit'])) {
     if (get_magic_quotes_gpc()) { $_POST['source'] = stripslashes($_POST['source']); }
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
         $_POST['language'] = preg_replace('#[^a-zA-Z0-9\-_]#', '', $_POST['language']);
         $_POST['source'] = implode('', @file($path . 'geshi/' . $_POST['language'] . '.php'));
         $_POST['language'] = 'php';
-    } else { $fill_source = true; }
+    } else { $fill_source = TRUE; }
 
     /* Set GeSHi options */
 
@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
     }
     if (($_POST['line_numbers']) == 2) {
     $geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS, 2);
-    $geshi->set_line_style('background: #F0F5FE;', 'background: #FFFFFF;', true);
+    $geshi->set_line_style('background: #F0F5FE;', 'background: #FFFFFF;', TRUE);
     }
     if (($_POST['line_numbers']) == 3) {
     $geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
@@ -78,7 +78,7 @@ if (isset($_POST['submit'])) {
     if (isset($_POST['submit'])) {
     $geshi_out = $geshi->parse_code();
     }
-} else { /* Don't pre-select any language */ $_POST['language'] = null; }
+} else { /* Don't pre-select any language */ $_POST['language'] = NULL; }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
@@ -100,34 +100,27 @@ CKEDITOR.dialog.getCurrent().on("ok", okListener);
 <?php } ?>
 
 <style type="text/css">
-    <!--
-    <?php
-    if (isset($_POST['submit'])) {
-        /* Output the stylesheet. Note it doesn't output the <style> tag */
-    if (($_POST['style_type']) == 2) { echo $geshi->get_stylesheet(true); }
-    }
-    ?>
 body{font-family:Arial,'Lucida Grande',Verdana,Sans-Serif;font-size:12px;padding-left:1%;padding-right:1%;color:#676666;}
-h3{margin:0;color:#676666;font-weight: normal;max-width:59%;}
-#footer{text-align:center;font-size: 80%;color:#BBBABA;clear:both;padding-top:16px;}
-a{color: #0497D3;text-decoration:none;}
-a:hover{color: #191919;}
-textarea{border: 1px solid #BBBABA;font-size: 90%;color:#676666;width:53%;margin-bottom:6px;}
+h3{color:#676666;font-weight:400;max-width:59%;margin:0;}
+#footer{text-align:center;font-size:80%;color:#BBBABA;clear:both;padding-top:16px;}
+a{color:#0497D3;text-decoration:none;}
+a:hover{color:#191919;}
+textarea{border:1px solid #BBBABA;font-size:90%;color:#676666;width:53%;margin-bottom:6px;}
 p{font-size:90%;}
 #clear{text-align:right;width:100px;float:left;padding-right:1%;}
 #submit{width:100px;float:left;}
-#style-radio{float:right;margin:0;padding-right:2%;}
-#language{text-align:left;width:31%;color:#676666;background-color:#FFFFFF;border:1px solid #BBBABA;height:24px;margin-bottom:12px;}
-.ui_button{padding:4px 12px;font-size:12px;text-align:center;width:86px;border:1px solid #BBBABA;color:#4F4E4E;background-color:#FFFFFF;background-image:url(../../../../admin/theme/ckPixie/images/sprites.gif);background-position:-27px -765px;}
+#style-radio{float:right;padding-right:2%;margin:0;}
+#language{text-align:left;width:31%;color:#676666;background-color:#FFF;border:1px solid #BBBABA;height:24px;margin-bottom:12px;}
+.ui_button{font-size:12px;text-align:center;width:86px;border:1px solid #BBBABA;color:#4F4E4E;background-color:#FFF;background-image:url(../../../../admin/theme/ckPixie/images/sprites.gif);background-position:-27px -765px;padding:4px 12px;}
 .ui_button:hover{background-color:#DBDADA;background-image:none;}
-
-    -->
+<?php if ( (isset($_POST['submit'])) && ($_POST['style_type'] === 2) ) {
+      /* Output the stylesheet. Note it doesn't output the <style> tag */
+      echo $geshi->get_stylesheet(TRUE); } ?>
 </style>
 </head>
 <body>
-<?php if (isset($_POST['submit'])) { print $geshi_out; } ?>
-
-<?php if (!(isset($_POST['submit']))) { ?>
+<?php if (isset($_POST['submit'])) { print $geshi_out; }
+      if (!(isset($_POST['submit']))) { ?>
 <form accept-charset="UTF-8" action="<?php echo basename($_SERVER['PHP_SELF']); ?>" method="post">
 <h3 id="lang">Choose a language *</h3>
 <p>
@@ -140,10 +133,11 @@ p{font-size:90%;}
 
 $languages = array();
 while ($file = readdir($dir)) {
-    if ( $file[0] == '.' || strpos($file, '.', 1) === false) { continue; }
+    if ( $file[0] == '.' || strpos($file, '.', 1) === FALSE) { continue; }
     $lang = substr($file, 0,  strpos($file, '.'));
     $languages[] = $lang;
 }
+
 closedir($dir);
 sort($languages);
 echo "<option selected=\"selected\" value=\"javascript\">javascript</option>";

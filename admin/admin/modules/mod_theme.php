@@ -33,7 +33,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
   	if (is_dir($dir)) {
   		$fd = @opendir($dir);
     	if($fd) {
-      	while (($part = @readdir($fd)) == true) {
+      	while (($part = @readdir($fd)) == TRUE) {
         	if ($part != '.' && $part != '..') {
          		$newdir = $dir.$part;   
          		if (is_dir($newdir) && preg_match('/^[A-Za-z].*[A-Za-z]$/', $part)) {

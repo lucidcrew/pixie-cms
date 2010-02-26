@@ -25,7 +25,7 @@ $jquery = 'yes';
 // http://code.google.com/apis/ajaxlibs/documentation/#AjaxLibraries
 $theme_jquery_google_apis = 'no';
 // The version of jQuery to load from google apis
-$theme_jquery_google_apis_location = 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js';
+$theme_jquery_google_apis_location = 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js';
 
 // Would you like to load the swfobject javascript library from google apis, it may speed up your site? (yes or no) - (default: no).
 // http://code.google.com/apis/ajaxlibs/documentation/#AjaxLibraries

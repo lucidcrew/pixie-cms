@@ -161,7 +161,7 @@ class ShowTable {
 			if ((isset($edit)) && ($edit) && ($m == 'static')) {
 				if ($edit != $checkid) {
 					echo "<div class=\"helper\"><h3>" . $lang['help'] . "</h3><p>" . $lang['unknown_edit_url'] . "</p></div>";
-					$cancel = true;
+					$cancel = TRUE;
 				}
 			}
 			
@@ -232,9 +232,11 @@ class ShowTable {
 
 	   				if ($nullf[0] == 'not_null') { // label required fields
 	   					if ($lang['form_' . $Nams[$j]]) {
-						/* if ( ($Nams[$j] != 'page_name') ) {	*/	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
+						if ( ($Nams[$j] != 'page_name')  or ($type == 'static') or (!isset($edit)) or (!$edit) ) {	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
 	   						$displayname = $lang['form_' . $Nams[$j]] . " <span class=\"form_required\">" . $lang['form_required'] . "</span>";
-						/* } */
+						} else {
+	   						$displayname = " <span style=\"display:none\" class=\"form_required\">" . $lang['form_required'] . "</span>";
+						}
 	   					} else {
 	   						$displayname = simplify($Nams[$j]) . " <span class=\"form_required\">" . $lang['form_required'] . "</span>";
 	   					}
@@ -248,9 +250,11 @@ class ShowTable {
 
 	   				// check language file for any form help
 	   				if ($lang['form_help_' . $Nams[$j]]) {
-						/* if ( ($Nams[$j] != 'page_name') ) {	*/	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
+						if ( ($Nams[$j] != 'page_name')  or ($type == 'static') or (!isset($edit)) or (!$edit) ) {	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
 	   					$form_help = "<span class=\"form_help\">" . $lang['form_help_' . $Nams[$j]] . "</span>";
-						/* } */
+	   				} else {
+	   					$form_help = "<span style=\"display:none\" class=\"form_help\">" . $lang['form_help_' . $Nams[$j]] . "</span>";
+						}
 	   				} else {
 	   					$form_help = "";
 	   				}
@@ -286,7 +290,7 @@ class ShowTable {
 	   					} else {
 	   						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_no_ckeditor\">" . htmlspecialchars($Fild[$j], ENT_QUOTES, 'UTF-8') . "</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
 	   					}
-	   				} else if ($Type[$j] == "set'yes','no'" || $Flag[$j] == "not_null set") {
+	   				} else if ($Type[$j] == "set'yes','no'" || $Flag[$j] == 'not_null set') {
 	   					if ($Fild[$j] == 'no') {
 	   						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_radio\">\n\t\t\t\t\t\t\t\tYes<input type=\"radio\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" class=\"form_radio\" value=\"yes\" />
 	   						     	No<input checked=\"checked\" type=\"radio\" name=\"$Nams[$j]\" class=\"form_radio\" value=\"$Fild[$j]\" />\n\t\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t</div>\n";
@@ -335,10 +339,12 @@ class ShowTable {
 									</select>
 	   							</div>\n\t\t\t\t\t\t\t</div>\n";
 	   				} else {
-						/* if ( ($Nams[$j] != 'page_name') ) {	*/	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
-	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"" . htmlentities($Fild[$j], ENT_QUOTES, 'UTF-8') . "\" size=\"$ln\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
-						/* } */
-
+						if ( ($Nams[$j] != 'page_name')  or ($type == 'static') or (!isset($edit)) or (!$edit) ) {	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"" . htmlentities($Fild[$j], ENT_QUOTES, 'UTF-8') . "\" size=\"$ln\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>";
+						} else {
+	   					echo "\t\t\t\t\t\t\t\t<div style=\"display:none\" class=\"form_item\">\n\t\t\t\t\t\t\t\t<input style=\"display:none\" type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"" . htmlentities($Fild[$j], ENT_QUOTES, 'UTF-8') . "\" size=\"$ln\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>";
+						}
+	   					echo "\n\t\t\t\t\t\t\t</div>\n";
 	   				} 
 
 					//other field types still to come: File uploads...?
@@ -498,7 +504,7 @@ class ShowTable {
 		}
 			
 		if (($search_submit) && (isset($table_name))) {
-			$searchwords = sterilise($searchwords, false);
+			$searchwords = sterilise($searchwords, FALSE);
 			//build search sql
 			$r2 = safe_query("show fields from $table_name");
 			for ($j = 0; $j < mysql_num_rows($r2); $j++) {

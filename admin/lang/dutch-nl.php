@@ -376,6 +376,6 @@ $lang = array(
 	'upload_filemanager_fail' => 'Uploaden is mislukt. Controleer of de map is beschrijfbaar en heeft de juiste machtigingen ingesteld.',
 	'filemanager_max_upload' => 'Uw gastheer server zal accepteren upload voor de maximale bestandsgrootte van : ',
 	'ck_select_file' => 'Klik op een bestand met naam om een link.',
-	'ck_toggle_advanced' => 'Toggle advanced Mode',
+	'ck_toggle_advanced' => 'Toggle advanced Mode'
 );
 ?>

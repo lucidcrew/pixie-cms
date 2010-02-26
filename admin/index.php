@@ -248,7 +248,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(E_ALL & ~E_DEPRECATED); }							/* s
 	<?php if ((isset($s)) && ($s != 'login')) { ?><?php if ($s == 'publish' || 'settings') { ?><script type="text/javascript" src="jscript/thickbox.js"></script><?php } ?><?php } ?>
 	<?php if ((isset($s)) && ($s != 'login')) { ?><?php if (($s == 'publish' || 'settings') || ($x == 'myprofile')) { ?><script type="text/javascript" src="jscript/ckeditor/ckeditor.js"></script><?php } ?><?php } ?>
 	<script type="text/javascript" src="jscript/pixie.js.php?<?php if (isset($s)) { print 's=' . $s; } if (isset($x)) { print '&amp;x=' . $x; } if (isset($lang['ck_toggle_advanced'])) { print '&amp;advmode=' . $lang['ck_toggle_advanced']; } ?>"></script>
-  <?php if (PIXIE_DEBUG == 'yes') { /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), true)) . '</pre>'; phpinfo(); } ?>
+  <?php if (PIXIE_DEBUG == 'yes') { /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), TRUE)) . '</pre>'; phpinfo(); } ?>
 	<!-- bad behavior -->
 	<?php bb2_insert_head(); ?>
 	<!-- If javascript is disabled show more of the carousel and display the ckeditor textareas -->

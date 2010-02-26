@@ -46,9 +46,9 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 		}
 		$ip = $_SERVER['REMOTE_ADDR'];
 
-		$uname = sterilise_txt($uname, true);
+		$uname = sterilise_txt($uname, TRUE);
 		if (!preg_match('/^[0-9\.]+$/', $ip)) {
-		$ip = sterilise($ip, true); $referral = sterilise($referral, true);
+		$ip = sterilise($ip, TRUE); $referral = sterilise($referral, TRUE);
 		}
 
 		if (($referral) and (!strstr($referral, $domain))) {

@@ -16,12 +16,15 @@ switch ($do) {
 			$type = 'static';
 			$table_name = 'pixie_core';
 			$edit_id = 'page_id';
+
 			if ((!isset($edit)) || (!$edit)) {
 				$edit = safe_field('page_id', 'pixie_core', "page_name='$x'");
 			}
+
 			admin_carousel($x);		
 			admin_head();	
 			admin_edit($table_name, $edit_id, $edit, $edit_exclude = array('page_id', 'page_type', 'page_name', 'page_description', 'page_display_name', 'page_blocks', 'admin', 'page_views', 'public', 'publish', 'hidden', 'searchable', 'page_order', 'last_modified', 'page_parent', 'in_navigation', 'privs'));
+
 		}
 	break;
 
