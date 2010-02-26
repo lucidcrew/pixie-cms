@@ -340,9 +340,9 @@ class ShowTable {
 	   							</div>\n\t\t\t\t\t\t\t</div>\n";
 	   				} else {
 						if ( ($Nams[$j] != 'page_name')  or ($type == 'static') or (!isset($edit)) or (!$edit) ) {	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
-	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"" . htmlentities($Fild[$j], ENT_QUOTES, 'UTF-8') . "\" size=\"$ln\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>";
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"" . htmlspecialchars($Fild[$j], ENT_QUOTES, 'UTF-8') . "\" size=\"$ln\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>";
 						} else {
-	   					echo "\t\t\t\t\t\t\t\t<div style=\"display:none\" class=\"form_item\">\n\t\t\t\t\t\t\t\t<input style=\"display:none\" type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"" . htmlentities($Fild[$j], ENT_QUOTES, 'UTF-8') . "\" size=\"$ln\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>";
+	   					echo "\t\t\t\t\t\t\t\t<div style=\"display:none\" class=\"form_item\">\n\t\t\t\t\t\t\t\t<input style=\"display:none\" type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"" . htmlspecialchars($Fild[$j], ENT_QUOTES, 'UTF-8') . "\" size=\"$ln\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>";
 						}
 	   					echo "\n\t\t\t\t\t\t\t</div>\n";
 	   				} 
@@ -977,7 +977,7 @@ class ShowTable {
 			} else {     	
 				$value = $_POST[$an[$j]];
 				if ($an[$j] == 'title') { $tit = $value; }
-				if ($at[$j] == 'varchar') { $value = htmlentities($value, ENT_QUOTES, 'UTF-8'); }
+				if ($at[$j] == 'varchar') { $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); }
 
 				// check for posts with duplicate title/slug and increment
 				if ($an[$j] == 'post_slug') {
