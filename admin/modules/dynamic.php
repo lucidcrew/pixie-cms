@@ -91,12 +91,10 @@ switch ($do) {
 				$check = new Validator ();
 				if (!$check->validateEmail($email, $lang['comment_email_error'] . ' ')) { $scream[] = 'email'; }
 
-				if (preg_match('/localhost/i', $prefs['site_url'])) {	/* This prevents an error if you are developing locally */
-				} else {
-				if (preg_match('/127.0.0./', $prefs['site_url'])) {	/* This prevents an error if you are developing locally */
-				} else {
-				if ($web) { if (!$check->validateURL($web, $lang['comment_web_error'] . ' ')) { $scream[] = 'web'; } }
-				}
+				if ( (!preg_match('/localhost/', $prefs['site_url'])) && (!preg_match('/127.0.0./', $prefs['site_url'])) ) {
+
+				    if ( ($web) && (!$check->validateURL($web, $lang['comment_web_error'] . ' ')) ) { $scream[] = 'web'; }
+
 				}
 
 				if ($comment !== NULL) {

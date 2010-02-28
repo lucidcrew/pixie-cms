@@ -19,13 +19,11 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 
 				if ($url) {
 
-				if (preg_match('/localhost/i', $url)) {	/* This prevents an error if you are developing locally */
-				} else {
-				if (preg_match('/127.0.0./', $url)) {	/* This prevents an error if you are developing locally */
-				} else {
-				if (!$check->validateURL($url, $lang['site_url_error'] . ' ')) { $scream[] = 'url'; }
-				}
-				}
+				    if ( (!preg_match('/localhost/', $url)) && (!preg_match('/127.0.0./', $url)) ) {
+
+					if (!$check->validateURL($url, $lang['site_url_error'] . ' ')) { $scream[] = 'url'; }
+
+				    }
 
 				}
 
@@ -35,7 +33,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 			$sitename = htmlentities($sitename);	/* Same as above */
 
 			$table_name = 'pixie_settings';
-			$site_url_last = $url{strlen($url)-1};
+			$site_url_last = $url { strlen($url) - 1 };
 			
   		if ($site_url_last != '/') {
   			$url = $url . '/';

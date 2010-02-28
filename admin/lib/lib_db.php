@@ -36,16 +36,17 @@ class DB {
 		if (!$this->link) {
 			$GLOBALS['connected'] = FALSE;
 		} else $GLOBALS['connected'] = TRUE;
-		mysql_select_db($this->db) or die(db_down()); /* Connect to the database */
+		mysql_select_db($this->db) or die( db_down() ); /* Connect to the database */
 
-		if ( (isset($pixieconfig['utf_8_db'])) && ($pixieconfig['utf_8_db'] === 'yes') ) {
-		mysql_query("set names 'utf8'"); /* Set the charset to utf8 */
+		if ( (isset($pixieconfig['site_charset'])) && ($pixieconfig['site_charset']) ) {
+		$charset = strtolower( str_replace('-', '', $pixieconfig['site_charset']) );
+		mysql_query("set names '{$charset}'") or die( db_down() ); /* Set the character set for database connection */
 		}
 
          $diff = $this->getTzdiff();
          if ($diff >= 0)
-                $diff = '+'.$diff;
-         mysql_query("set time_zone = '"."$diff:00'");
+                $diff = "+{$diff}";
+         mysql_query("set time_zone = '"."$diff:00'") or die( db_down() );
 	}
 
 }

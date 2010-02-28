@@ -24,13 +24,11 @@ if (isset($GLOBALS['pixie_user'])) {
 				
 				if ($website) {
 
-				if (preg_match('/localhost/i', $website)) {	/* This prevents an error if you are developing locally */
-				} else {
-				if (preg_match('/127.0.0./', $website)) {	/* This prevents an error if you are developing locally */
-				} else {
-				if (!$check->validateURL($website, $lang['profile_web_error'] . ' ')) { $scream[] = 'website'; }
-				}
-				}
+				    if ( (!preg_match('/localhost/', $website)) && (!preg_match('/127.0.0./', $website)) ) {
+
+					if (!$check->validateURL($website, $lang['profile_web_error'] . ' ')) { $scream[] = 'website'; }
+
+				    }
 
 				}
 

@@ -16,6 +16,8 @@ body .cke_dialog{visibility:visible;}
 .cke_skin_ckPixie .cke_dialog_mr{background-position:-16px 0;right:0;}
 .cke_skin_ckPixie .cke_browser_iequirks .cke_dialog_ml,.cke_skin_ckPixie .cke_browser_iequirks .cke_dialog_mr{margin-top:3px;}
 .cke_skin_ckPixie .cke_dialog_title{background-image:url(images/sprites.gif);background-position:0 -680px;background-repeat:repeat-x;font-weight:700;font-size:14pt;color:transparent;background-color:#191919;cursor:move;position:relative;min-height:19px;padding:2px 10px 26px;}
+.cke_skin_ckPixie .cke_dialog_close_button span{padding-left:35px;padding-right:35px;padding-top:14px;padding-bottom:14px;background-image:url(../images/pixielogo.gif);background-repeat:no-repeat;background-position:center center;color:transparent;}
+.cke_skin_ckPixie .cke_dialog_close_button span:hover{cursor:pointer}
 .cke_skin_ckPixie .cke_browser_ie.cke_rtl .cke_dialog_title{position:static!important;unicode-bidi:bidi-override;}
 .cke_skin_ckPixie .cke_dialog_contents{background-color:#fff;overflow:auto;background-image:url(images/sprites.gif);background-position:-27px -1412px;background-repeat:repeat-x;padding:40px 20px 5px;}
 .cke_skin_ckPixie .cke_dialog_footer{background-color:#fff;text-align:right;padding-bottom:12px;background-image:url(images/logo-ckeditor.gif);background-position:bottom left;background-repeat:no-repeat;min-height:34px;}
@@ -37,14 +39,14 @@ body .cke_dialog{visibility:visible;}
 .cke_skin_ckPixie .cke_rtl .cke_dialog_ui_hbox_first,.cke_skin_ckPixie .cke_rtl .cke_dialog_ui_hbox_child{padding-left:10px;}
 .cke_skin_ckPixie a.cke_dialog_ui_button{border-collapse:separate;cursor:default;}
 .cke_skin_ckPixie span.cke_dialog_ui_button{background-image:url(images/sprites.gif);background-position:-27px -765px;background-repeat:repeat-x;border:#BBBABA 1px solid;text-align:center;color:#4F4E4E;background-color:#fff;display:inline-block;cursor:default;padding:4px 12px;}
-.cke_skin_ckPixie span.cke_dialog_ui_button:hover{background-color:#DBDADA;background-image:none;}
+.cke_skin_ckPixie span.cke_dialog_ui_button:hover{background-color:#DBDADA;background-image:none;cursor:pointer;}
 .cke_skin_ckPixie a.cke_dialog_ui_button span.cke_disabled{border:#898980 1px solid;color:#5e5e55;background-color:#c5c5b3;}
 .cke_skin_ckPixie a:focus span.cke_dialog_ui_button,.cke_skin_ckPixie a:active span.cke_dialog_ui_button{background-color:#DBDADA;}
 .cke_skin_ckPixie .cke_dialog_footer_buttons{display:inline-table;margin-right:25px;margin-left:25px;width:auto;position:relative;}
 .cke_skin_ckPixie .cke_browser_gecko18 .cke_dialog_footer_buttons{display:inline;}
 .cke_skin_ckPixie .cke_dialog_footer_buttons span.cke_dialog_ui_button{width:60px;margin:7px 0;}
 .cke_skin_ckPixie strong{font-weight:700;}
-.cke_skin_ckPixie .cke_dialog_close_button{background-image:url(../images/pixielogo.gif);background-repeat:no-repeat;background-position:center center;position:absolute;cursor:pointer;text-align:center;height:28px;width:70px;top:4px;}
+.cke_skin_ckPixie .cke_dialog_close_button{position:absolute;cursor:pointer;text-align:center;top:4px;}
 .cke_skin_ckPixie .cke_rtl .cke_dialog_close_button{left:10px;}
 .cke_skin_ckPixie .cke_browser_ie6.cke_rtl .cke_dialog_close_button{position:relative;float:left;margin-top:-55px;margin-left:-7px;}
 .cke_skin_ckPixie .cke_browser_iequirks.cke_rtl.cke_single_page .cke_dialog_close_button{margin-top:-32px;}
@@ -52,7 +54,7 @@ body .cke_dialog{visibility:visible;}
 .cke_skin_ckPixie .cke_dialog_ui_input_select{border:1px solid #BBBABA;background-color:#FFF;height:24px;}
 .cke_skin_ckPixie iframe.cke_dialog_ui_input_file{width:100%;height:25px;}
 .cke_skin_ckPixie .cke_dialog .cke_dark_background{background-position:-27px -763px;background-repeat:repeat-x;text-align:center;font-size:14px;border:transparent 1px solid;}
-.cke_skin_ckPixie .cke_dialog .cke_dark_background:hover{border:#0398D3 1px solid;cursor:pointer;}
+.cke_skin_ckPixie .cke_dialog .cke_dark_background:hover{background-color:#0398D3;}
 .cke_skin_ckPixie .cke_dialog .cke_hand{cursor:pointer;}
 .cke_skin_ckPixie .cke_dialog a.cke_btn_reset{float:left;background-position:0 -36px;background-image:url(images/mini.jpg);width:24px;height:24px;background-repeat:no-repeat;border:1px none;font-size:1px;}
 .cke_skin_ckPixie .cke_rtl .cke_dialog a.cke_btn_reset{float:left;}
@@ -70,8 +72,8 @@ body .cke_dialog{visibility:visible;}
 .cke_skin_ckPixie .cke_hc .cke_dialog_close_button span{display:inline;cursor:pointer;font-weight:700;position:relative;top:3px;}
 .cke_skin_ckPixie .cke_hc a.cke_btn_locked,.cke_skin_ckPixie .cke_hc a.cke_btn_unlocked,.cke_skin_ckPixie .cke_hc a.cke_btn_reset{border-style:solid;}
 .cke_skin_ckPixie table.cke_dialog.cke_browser_gecko,.cke_skin_ckPixie .cke_browser_gecko18 .cke_dialog_footer_buttons span.cke_dialog_ui_button{display:block;}
-.cke_skin_ckPixie .cke_rtl .cke_dialog_tabs,.cke_skin_ckPixie .cke_ltr .cke_dialog_close_button{left:26px;margin-top:10px;}
-.cke_skin_ckPixie .cke_single_page .cke_dialog_tabs,.cke_skin_ckPixie .cke_dialog_close_button span{display:none;}
+.cke_skin_ckPixie .cke_rtl .cke_dialog_tabs,.cke_skin_ckPixie .cke_ltr .cke_dialog_close_button{left:20px;margin-top:17px;}
+.cke_skin_ckPixie .cke_single_page .cke_dialog_tabs{display:none;}
 .cke_skin_ckPixie div.cke_dialog_ui_input_text,.cke_skin_ckPixie div.cke_dialog_ui_input_password,.cke_skin_ckPixie div.cke_dialog_ui_input_textarea{background-color:#FFF;border:1px solid #BBBABA;margin-bottom:4px;padding:1px 0;}
 .cke_dialog_ui_labeled_label{padding-right:20px;}
 #hicolor,#selhicolor{margin-bottom:2px;color:#BBBABA;border-color:#BBBABA;}
