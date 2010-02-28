@@ -110,9 +110,10 @@ p{font-size:90%;}
 #clear{text-align:right;width:100px;float:left;padding-right:1%;}
 #submit{width:100px;float:left;}
 #style-radio{float:right;padding-right:2%;margin:0;}
+#style-radio input:hover{cursor:pointer;}
 #language{text-align:left;width:31%;color:#676666;background-color:#FFF;border:1px solid #BBBABA;height:24px;margin-bottom:12px;}
 .ui_button{font-size:12px;text-align:center;width:86px;border:1px solid #BBBABA;color:#4F4E4E;background-color:#FFF;background-image:url(../../../../admin/theme/ckPixie/images/sprites.gif);background-position:-27px -765px;padding:4px 12px;}
-.ui_button:hover{background-color:#DBDADA;background-image:none;}
+.ui_button:hover{background-color:#DBDADA;background-image:none;cursor:pointer;}
 <?php if ( (isset($_POST['submit'])) && ($_POST['style_type'] === 2) ) {
       /* Output the stylesheet. Note it doesn't output the <style> tag */
       echo $geshi->get_stylesheet(TRUE); } ?>

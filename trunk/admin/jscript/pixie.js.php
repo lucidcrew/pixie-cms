@@ -225,7 +225,7 @@ function ckToolbarSlider() {
     $j('.advanced-cke-toggle').css('float', 'left').css('position', 'absolute').css('right', '4%').css('margin-top', '5px');
     $j('.advanced-cke-toggle').click(function(event) { 
 	event.preventDefault();
-	$j('.cke_skin_ckPixie .cke_toolbar:first-child').toggle();
+	$j('.cke_skin_ckPixie .cke_toolbox span:first-child+span[class$=toolbar]').toggle(); /* http://www.smashingmagazine.com/2009/08/17/taming-advanced-css-selectors/ */ /* If you want to learn about advanced css selectors */
     });
 
 

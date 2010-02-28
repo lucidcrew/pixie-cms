@@ -1,5 +1,7 @@
-.cke_skin_ckPixie .cke_toolbar:first-child{display:none;}
+#btnLockSizes .cke_label,#btnResetSize .cke_label,#cke_content_arialbl,.cke_voice_label,.cke_skin_ckPixie .cke_toolbox span:first-child+span[class$=toolbar]{display:none;}
+a.cke_smile img:hover{cursor:pointer;}
 .cke_skin_ckPixie *,.cke_skin_ckPixie a:hover,.cke_skin_ckPixie a:link,.cke_skin_ckPixie a:visited,.cke_skin_ckPixie a:active{border:0;background:transparent;text-decoration:none;font:normal normal normal 100% Sans-Serif;width:auto;height:auto;border-collapse:collapse;text-align:left;vertical-align:baseline;white-space:nowrap;cursor:auto;color:#676666;font-size:12px;font-family:Arial,'Lucida Grande',Verdana,Sans-Serif;margin:0;padding:0;}
+.cke_skin_ckPixie a:hover,.cke_skin_ckPixie a:link,.cke_skin_ckPixie a:visited,.cke_skin_ckPixie a:active{cursor:pointer;}
 .cke_skin_ckPixie .cke_rtl *,.cke_skin_ckPixie .cke_rtl a:hover,.cke_skin_ckPixie .cke_rtl a:link,.cke_skin_ckPixie .cke_rtl a:visited,.cke_skin_ckPixie .cke_rtl a:active,.cke_rtl .cke_skin_ckPixie *,.cke_rtl .cke_skin_ckPixie a:hover,.cke_rtl .cke_skin_ckPixie a:link,.cke_rtl .cke_skin_ckPixie a:visited,.cke_rtl .cke_skin_ckPixie a:active{text-align:right;}
 .cke_skin_ckPixie textarea{white-space:pre;}
 .cke_skin_ckPixie .cke_editor{display:inline-table;width:100%;}
