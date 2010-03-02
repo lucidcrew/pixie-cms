@@ -72,7 +72,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 										$sign = ($z >= 0 ? '+' : '');
 										$label = sprintf('GMT %s%02d:%02d', $sign, $z, abs($z - (int)$z) * 60);
 										$vals[sprintf('%s%d', $sign, $z * 3600)] = $label;
-										$value = "$sign".($z * 3600);
+										$value = "$sign" . ($z * 3600);
 										if ($timezone == $value) {
 											print "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"$value\">$label</option>\n";
 										} else {

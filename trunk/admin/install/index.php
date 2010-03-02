@@ -17,15 +17,6 @@
     global $timezone;
     define('TZ', "$timezone");	/* Time zone fix (php 5.1.0 or newer will set it's server time zone using function date_default_timezone_set!) */
 
-	if ($debug === 'yes') {
-
-	    error_reporting(E_ALL & ~E_DEPRECATED);
-	    $show_vars = get_defined_vars();
-	    echo '<p><pre class="showvars">The _REQUEST array contains : ';
-	    htmlspecialchars(print_r($show_vars["_REQUEST"]));
-	    echo '</pre></p>';
-	}
-
     /* Vars that need to be defined first */
 
     $pixie_version = '1.04'; /* You can define the version number for Pixie releases here */
@@ -43,6 +34,23 @@
 	if (strnatcmp(phpversion(),'5.1.0') >= 0) { date_default_timezone_set("$pixie_server_timezone"); }
 
     extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie'); /* Access to form vars */
+
+
+	if ($debug === 'yes') {
+
+	    error_reporting(-1);
+	    $show_vars = get_defined_vars();
+	    echo '<p><pre class="showvars">The _REQUEST array contains : ';
+	    htmlspecialchars(print_r($show_vars["_REQUEST"]));
+	    echo '</pre></p>';
+	    echo '<p><pre class="showvars">The prefs array contains : ';
+	    htmlspecialchars(print_r($show_vars["prefs"]));
+	    echo '</pre></p>';
+	    echo '<p><pre class="showvars">The php_errormsg message array contains : ';
+	    if ( isset($show_vars["php_errormsg"]) ) { htmlspecialchars(print_r($show_vars["php_errormsg"])); }
+	    echo '</pre></p>';
+	}
+
 
 	switch ($pixie_step) {
 
@@ -139,7 +147,7 @@
 				break;
 		}
 
-		if ( (isset($conn)) && ($conn == TRUE) && (isset($pixie_database)) && ($pixie_database) ) {
+		if ( (isset($conn)) && ($conn === TRUE) && (isset($pixie_database)) && ($pixie_database) ) {
 
 		    if ( ($pixie_dropolddata === 'yes') && ($pixie_reinstall === 'yes') ) { @chmod('../config.php', 0777); $do_the_drop = 'yes'; } /* chmod doesn't work here but it might for you! */
 

@@ -18,9 +18,9 @@ if (isset($GLOBALS['pixie_user'])) {
 				$table_name = 'pixie_users';
 				$check = new Validator ();
 
-				if ((!isset($realname)) || ($realname == "")) { $error .= $lang['profile_name_error'] . ' '; $scream[] = 'realname'; }
+				if ((!isset($realname)) or ($realname == "")) { $error .= $lang['profile_name_error'] . ' '; $scream[] = 'realname'; }
 
-				if ((!isset($email)) || (!$check->validateEmail($email, $lang['profile_email_error'] . ' '))) { $scream[] = 'email'; }
+				if ((!isset($email)) or (!$check->validateEmail($email, $lang['profile_email_error'] . ' '))) { $scream[] = 'email'; }
 				
 				if ($website) {
 

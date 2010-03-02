@@ -41,10 +41,14 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 					$dir_level = 0;
 				}
 
-				$s = strtolower($url[$dir_level + 1]);
-				$m = strtolower($url[$dir_level + 2]);
-				$x = strtolower($url[$dir_level + 3]);
-				$p = strtolower($url[$dir_level + 4]);
+				if ( isset($url[$dir_level + 1]) ) { $s = strtolower($url[$dir_level + 1]); }
+				else { $s = NULL; }
+				if ( isset($url[$dir_level + 2]) ) { $m = strtolower($url[$dir_level + 2]); }
+				else { $m = NULL; }
+				if ( isset($url[$dir_level + 3]) ) { $x = strtolower($url[$dir_level + 3]); }
+				else { $x = NULL; }
+				if ( isset($url[$dir_level + 4]) ) { $p = strtolower($url[$dir_level + 4]); }
+				else { $p = NULL; }
 
 				switch($count) {
 					case $dir_level + 3: 
@@ -68,13 +72,18 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 			$rel_path = './';
 		}
 
-		if ((!isset($s)) || (!$s)) {
+		if ((!isset($s)) or (!$s)) {
 			$last = $default_page { strlen($default_page) - 1 };
 			$default = explode('/', $default_page);
-			$s = sterilise_txt($default['0']);
-			$m = sterilise_txt($default['1']);
-			$x = sterilise_txt($default['2']);
-			$p = sterilise_txt($default['3']);
+
+			    if ( isset($default['0']) ) { $s = sterilise_txt($default['0']); }
+			    else { $s = NULL; }
+			    if ( isset($default['1']) ) { $m = sterilise_txt($default['1']); }
+			    else { $m = NULL; }
+			    if ( isset($default['2']) ) { $x = sterilise_txt($default['2']); }
+			    else { $x = NULL; }
+			    if ( isset($default['3']) ) { $p = sterilise_txt($default['3']); }
+			    else { $p = NULL; }
 		}
 		
 		$s = public_check_404($s);

@@ -20,9 +20,18 @@ else { if (!defined('PFX')) { define ('PFX', ''); } }
 class DB {
 
     function getTzdiff() {
-         extract(getdate());
-         $serveroffset = gmmktime(0, 0, 0, $mon, $mday, $year) - mktime(0, 0, 0, $mon, $mday, $year);
-         return $serveroffset / 3600;
+
+	if (strnatcmp(phpversion(),'5.1.0') <= 0) {
+	    extract(getdate());
+	    $serveroffset = gmmktime(0, 0, 0, $mon, $mday, $year) - mktime(0, 0, 0, $mon, $mday, $year);
+	    return $serveroffset / 3600;
+
+	} else {
+
+	    return 0;
+
+	}
+
     }
 
 	function DB() {
@@ -40,13 +49,14 @@ class DB {
 
 		if ( (isset($pixieconfig['site_charset'])) && ($pixieconfig['site_charset']) ) {
 		$charset = strtolower( str_replace('-', '', $pixieconfig['site_charset']) );
-		mysql_query("set names '{$charset}'") or die( db_down() ); /* Set the character set for database connection */
+		$query = "set names '{$charset}'";
+		$set_db_charset = mysql_query($query); /* Set the character set for database connection */
 		}
 
          $diff = $this->getTzdiff();
          if ($diff >= 0)
                 $diff = "+{$diff}";
-         mysql_query("set time_zone = '"."$diff:00'") or die( db_down() );
+         mysql_query("set time_zone = '"."$diff:00'");
 	}
 
 }
@@ -70,12 +80,12 @@ $DB = new DB;
 		}
 		if(!isset($tzHM))
 		{
-			// get time zone
-			$tz = TZ;
+			/* Get time zone */
+			if (defined('TZ')) { $tz = TZ; } else { $tz = 0; }
 			// calculate hours from the TZ constant - works only if time zone set as +3600, +7200 etc
-			if(is_numeric($tz))
+			if (is_numeric($tz))
 			{
-				$hours = ($tz/3600 % 3600);
+				$hours = ($tz / 3600 % 3600);
 				$mins = ($tz % 3600 / 60);
 				// if daylight saving time
 				if($dst == 'yes' && date('I') != 0)
@@ -83,15 +93,16 @@ $DB = new DB;
 					$hours++;
 				}
 				// if $hours < 0 then prepend -, otherwise prepend +
-				$tzHM = (($hours<0)?"-":"+") . "$hours:$mins";
+				$tzHM = (($hours < 0) ? "-":"+") . "$hours:$mins";
 				$method("SET SESSION time_zone='$tzHM';",$DB->link);
 			}
 		}
 		
 		$result = $method($q, $DB->link);
 
-		if(!$result) return FALSE;
-		return $result;
+		    if (!$result) { return FALSE; } else { return $result; }
+
+
 	}
 //------------------------------------------------------------------
 	function safe_delete($table, $where, $debug='')
@@ -324,7 +335,7 @@ $DB = new DB;
 		echo "\t\t\t\t\t\t\t\t<select class=\"form_select\" name=\"$name\" id=\"$name\">\n";
 		if ((!$current) && (isset($go)) && ($go == 'new')) {
 			echo "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"NULL\">-</option>\n";
-		} else if (($current == NULL) && (isset($edit)) && ($edit)) {
+		} else if (($current === NULL) && (isset($edit)) && ($edit)) {
 			echo "\t\t\t\t\t\t\t\t\t<option selected=\"selected\" value=\"NULL\">-</option>\n";
 		} else if ((isset($edit)) && ($edit)) {
 			echo "\t\t\t\t\t\t\t\t\t<option value=\"NULL\">-</option>\n";	 	

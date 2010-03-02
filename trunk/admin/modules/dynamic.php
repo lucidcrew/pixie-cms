@@ -232,7 +232,7 @@ switch ($do) {
 				$all_tags = strip_tags($tags);
 					$all_tags = str_replace('&quot;', "", $tags);
 					$tags_array_temp = explode(" ", $all_tags);
-	
+
 					for ($count = 0; $count < (count($tags_array_temp)); $count++) {
 						$current = $tags_array_temp[$count];
 						$first = $current { strlen($current) - strlen($current) };
@@ -240,12 +240,12 @@ switch ($do) {
 							$current = substr($current, 1, strlen($current) - 1);
 						}
 						$ncurrent = make_slug($current);
-						if (isset($s)) {
-						$tag_list .= "<a href=\"" . createURL($s, 'tag', $ncurrent) . "\" title=\"" . $lang['view'] . " " . $lang['all_posts_tagged'] . ': ' . $current . "\" rel=\"tag\" >" . $current . "</a>, ";
-						}
-						if ($ncurrent != "") {
-							$class_list .= "tag_$ncurrent ";
-						}
+						if ( (isset($s)) && (isset($current)) ) {
+						if (!isset($tag_list)) { $tag_list = NULL; } $tag_list .= "<a href=\"" . createURL($s, 'tag', $ncurrent) . "\" title=\"{$lang['view']} {$lang['all_posts_tagged']}: {$current}\" rel=\"tag\" >{$current}</a>, ";
+						} else { $tag_list = NULL; }
+						if ( (isset($ncurrent)) && ($ncurrent != "") ) {
+							if (!isset($class_list)) { $class_list = NULL; } $class_list .= "tag_$ncurrent ";
+						} else { $class_list = NULL; }
 					}
 					$tag_list  = substr($tag_list , 0, (strlen($tag_list) - 2)) . "";
 			}
@@ -273,14 +273,14 @@ switch ($do) {
 							<li class=\"post_date\"><abbr class=\"published\" title=\"$microformat\">$date</abbr></li>
 							<li class=\"post_permalink\"><a href=\"$permalink\" title=\"" . $lang['permalink_to'] . ": $title\">" . $lang['permalink'] . "</a></li>";
 						if (public_page_exists('comments')){
-						if (($comments == 'yes') || ($no_comms)) {
+						if (($comments == 'yes') or ($no_comms)) {
 							echo "\n\t\t\t\t\t\t\t<li class=\"post_comments\"><a href=\"$permalink#comments\" title=\"" . $lang['comments'] . "\">" . $lang['comments'] . "</a> ($no_comms)</li>";
 						}
 						}
 						if(isset($_COOKIE['pixie_login'])) {
 							list($username, $cookie_hash) = explode(',', $_COOKIE['pixie_login']);
 							$nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
-							if (md5($username.$nonce) == $cookie_hash) {
+							if (md5($username . $nonce) == $cookie_hash) {
 								$privs = safe_field('privs', 'pixie_users', "user_name='$username'");		
 								if ($privs >= 1) {
 									echo "\n\t\t\t\t\t\t\t<li class=\"post_edit\"><a href=\"" . $site_url . "admin/?s=publish&amp;m=dynamic"; if (isset($s)) { echo '&amp;x=' . $s; } echo "&amp;edit=$post_id\" title=\"" . $lang['edit_post'] . "\">" . $lang['edit_post'] . "</a></li>";
@@ -311,15 +311,17 @@ switch ($do) {
 		
 		echo "\t\t\t\t\t<div id=\"nav_pages\" class=\"dynamic_bottom_nav\">\n";
 				
-		if ((!$m) || ($m == 'page')) {
+		if ((!$m) or ($m == 'page') ) {
 		   	
 			// how many posts do we have in total?
-			$totalposts = count(safe_rows('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp()"));
+			if (isset($page_id)) {
+			    $totalposts = count(safe_rows('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp()"));
+			} else { $totalposts = 0; }
 			
 			if ($m == 'page') {
 				$currentnum = $posts_per_page*$x;
-				$nextpage = $x+1;
-				$previouspage = $x-1;
+				$nextpage = $x + 1;
+				$previouspage = $x - 1;
 			} else {
 				$nextpage = 2;
 				$currentnum = $posts_per_page;
@@ -413,7 +415,7 @@ switch ($do) {
 						$current = substr($current, 1, strlen($current) - 1);
 					}
 					$ncurrent = make_slug($current);
-					if (isset($s)) {
+					if ( (isset($s)) && (isset($ncurrent)) ) {
 					$tag_list .= "<a href=\"" . createURL($s,'tag', $ncurrent) . "\" title=\"" . $lang['view'] . " " . $lang['all_posts_tagged'] . ": " . $current . "\"  rel=\"tag\" >" . $current . "</a>, ";
 					}
 					if ($ncurrent != "") {
@@ -495,7 +497,7 @@ switch ($do) {
 				// fix to remove commenting when plug in is removed
 				if (public_page_exists('comments')){
 
-				if (($comments == 'yes') || ($comms)) {
+				if (($comments == 'yes') or ($comms)) {
 				echo "\n\t\t\t\t\t<div id=\"comments\">
 						<h4 id=\"comments_title\">" . $lang['comments'] . "</h4>";
 
@@ -514,11 +516,11 @@ switch ($do) {
 						$i = 0;
 						while ($i < $no_comms){
 							extract($r2[$i]);
-							$default = $site_url . 'files/images/no_grav.jpg';
+							$default = "{$site_url}files/images/no_grav.jpg";
 							if (isset($email)) {
 							$grav_url = 'http://www.gravatar.com/avatar.php?gravatar_id=' . md5($email) . '&amp;default=' . urlencode($default) . '&amp;size=40';
 							}
-							$hash = $i+1;
+							$hash = $i + 1;
 							if ($url) {
 								$namepr = "<span class=\"message_name author\"><a href=\"$permalink#comment_$hash\" rel=\"bookmark\" class=\"comment_permalink\">#$hash</a> <a href=\"" . htmlentities($url) . "\" rel=\"external nofollow\" class=\"url fn\">$name</a></span>";
 							} else {
@@ -616,11 +618,11 @@ switch ($do) {
 									<div class=\"form_label\"><label for=\"comment_email\">" . $lang['comment_email'] . " <span class=\"form_required\">" . $lang['form_required'] . "</span></label></div>
 									<div class=\"form_item\"><input type=\"text\" tabindex=\"2\" name=\"email\" class=\"form_text\" id=\"comment_email\" value=\"$semail\" /></div>
 								</div>
-								<div class=\"form_row $web_style\">
+								<div class=\"form_row "; if (isset($web_style)) { echo $web_style; } echo "\">
 									<div class=\"form_label\"><label for=\"comment_web\">" . $lang['comment_web'] . " <span class=\"form_optional\">" . $lang['form_optional'] . "</span></label></div>
 									<div class=\"form_item\"><input type=\"text\" tabindex=\"2\" name=\"web\" class=\"form_text\" id=\"comment_web\" value=\"$sweb\" /></div>
 								</div>
-								<div class=\"form_row $comment_style\">
+								<div class=\"form_row "; if (isset($comment_style)) { echo $comment_style; } echo "\">
 									<div class=\"form_label\"><label for=\"comment\">" . $lang['comment'] . " <span class=\"form_required\">" . $lang['form_required'] . "</span></label></div>
 									<div class=\"form_item\"><textarea name=\"comment\" tabindex=\"3\" id=\"comment\" class=\"form_text_area\" cols=\"25\" rows=\"5\">$scomment</textarea></div>
 								</div>

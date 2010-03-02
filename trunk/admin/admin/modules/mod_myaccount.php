@@ -64,8 +64,8 @@ if (isset($GLOBALS['pixie_user'])) {
 				if ($page_type == 'dynamic') { echo "\t\t\t\t\t\t\t<li><a href=\"" . $site_url . "admin/?s=publish&amp;m=dynamic&amp;x=$page_name&amp;go=new\" title=\"" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "\">" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "</a></li>\n"; }
 				extract(safe_row('*', 'pixie_core', "page_type = 'static' order by page_views desc limit 0,1"));
 				if ($page_type == 'static') { echo "\t\t\t\t\t\t\t<li><a href=\"" . $site_url . "admin/?s=publish&amp;m=static&amp;x=$page_name&amp;edit=$page_id\" title=\"" . $lang['edit'] . "$page_display_name " . $lang['page']."\">" . $lang['edit'] . "$page_display_name " . $lang['page'] . "</a></li>\n"; }
-				extract(safe_row('*', 'pixie_core', "page_type = 'module' order by page_views desc limit 0,1"));
-				if ($page_type == "module") { echo "\t\t\t\t\t\t\t<li><a href=\"" . $site_url . "admin/?s=publish&amp;m=module&amp;x=$page_name&amp;go=new\" title=\"" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "\">" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "</a></li>\n"; }
+				extract(safe_row('*', 'pixie_core', "page_type = 'module' order by page_id desc limit 0,1")); /* Adding a new contact entry broke this as a list most used link feature, now it just goes for the newest thing you installed */
+				if ($page_type == 'module') { echo "\t\t\t\t\t\t\t<li><a href=\"" . $site_url . "admin/?s=publish&amp;m=module&amp;x=$page_name&amp;go=new\" title=\"" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "\">" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "</a></li>\n"; }
 			}
 
 			echo "\t\t\t\t\t\t\t<li class=\"linkspixie\"><a href=\"http://www.getpixie.co.uk/blog/\" title=\"Pixie " . $lang['blog'] . "\">Pixie " . $lang['blog'] . "</a></li>\n";

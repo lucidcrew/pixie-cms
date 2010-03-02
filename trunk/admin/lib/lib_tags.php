@@ -14,29 +14,35 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 		$rs = safe_rows('*', $table, $condition);
 		$num = count($rs);
 		$tags_array = array();
+		$first = NULL;
+		$last = NULL;
 
-		if ($rs) {
+		    if ( isset($out['tags']) ) { } else { $out['tags'] = NULL; }
+
+		if ( ($rs) ) {
 			$i = 0;
 			while ($i < $num){
 	  		$out = $rs[$i];
+
 	  		$all_tags = $out['tags'];
 				$all_tags = strip_tags($all_tags);
 				$all_tags = str_replace('&quot;', "", $all_tags);
-	  		$last = $all_tags{strlen($all_tags) - 1};
-	  		$first = $all_tags{strlen($all_tags) - strlen($all_tags)};
+	  		if ( ($all_tags != 0) ) { $last = $all_tags { strlen($all_tags) - 1 }; }
+	  		if ( ($all_tags != 0) ) { $first = $all_tags{ strlen($all_tags) - strlen($all_tags) }; }
 
 	  		if ($last != " ") {
 	  			$all_tags = $all_tags." ";
 				}
 				if ($first != " ") {
-	  			$all_tags = " " . $all_tags;
+	  			$all_tags = " {$all_tags}";
 				}
+
 	  		$tags_array_temp = explode(" ", $all_tags);
 
 				for ($count = 0; $count < (count($tags_array_temp)); $count++) {
 					$current = $tags_array_temp[$count];
-					$first = $current { strlen($current) - strlen($current) };
-					$last = $current { strlen($current) - 1 };
+					if ($current != 0) { $first = $current { strlen($current) - strlen($current) }; }
+					if ($current != 0) { $last = $current { strlen($current) - 1 }; }
 					if ($first == " ") {
 						$current = substr($current, 1, strlen($current) - 1);
 					}
@@ -71,7 +77,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 					$min = $total;
 				}
 			}
-			
+			$cloud = NULL;
 			sort($tags_array);
 			for ($final = 1; $final < (count($tags_array)); $final++) {
 				$current = $tags_array[$final];
@@ -92,11 +98,11 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 				}
 
 				$link = str_replace(" ", '-', $current);
-				if (isset($s)) {
+				if ( (isset($s)) && (isset($current)) ) {
 				$cloud .= "\t\t\t\t\t\t\t<a href=\"" . createURL($s, 'tag', $link) . "\" title=\"" . $lang['view'] . " " . $lang['all_posts_tagged'] . ": " . $current . "\" class=\"$tag_class\" rel=\"tag\">" . $current . "</a>,\n";
 				}
 			}
-		$cloud  = substr($cloud, 0, (strlen($cloud)-2)) . "";
+		$cloud  = substr($cloud, 0, (strlen($cloud) - 2)) . "";
 		echo "$cloud\n";
 		}
 	}
@@ -144,7 +150,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 					$inc = floor(($total * 10) / $max); 					
 					$tag_class = 'tag_' . $inc;
 				}
-				if (isset($s)) {
+				if ( (isset($s)) && (isset($current)) ) {
 				$cloud .= "\t\t\t\t\t\t<a href=\"?s=$s&amp;m=$m&amp;x=$x&amp;tag=" . make_slug($current) . "\" title=\"" . $lang['view'] . " " . $lang['all_posts_tagged'] . ": " . $current . "\" class=\"$tag_class\" rel=\"tag\">" . $current . "($total)</a>\n";
 				}
 			}

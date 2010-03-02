@@ -12,7 +12,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 /* Set up debugging */
 // ------------------------------------------------------------------
     if (defined('PIXIE_DEBUG')) { pixieExit(); exit(); }
-    define('PIXIE_DEBUG', 'no'); /* Set debug to yes to debug and see all the global vars coming into the file */
+    define('PIXIE_DEBUG', 'yes'); /* Set debug to yes to debug and see all the global vars coming into the file */
 // ------------------------------------------------------------------
 /* An exit on error function */
 // ------------------------------------------------------------------
@@ -428,7 +428,8 @@ function build_admin_title() {
 	if ((isset($s)) && ($s == 'settings') && ($m == 'theme')) { $title = $lang['nav1_settings'] . ' - ' . $lang['nav2_theme']; }
 	if ((isset($s)) && ($s == 'settings') && ($m == 'users')) { $title = $lang['nav1_settings'] . ' - ' . $lang['nav2_users']; }
 	if ((isset($s)) && ($s == 'settings') && ($x == 'dbtools')) { $title = $lang['nav1_settings'] . ' - ' . $lang['nav2_backup']; }
-    echo "Pixie v{$version} : {$title}";
+	if ( (isset($version)) && (isset($title)) ) { echo "Pixie v{$version} : {$title}"; }
+	else {  echo "Pixie v{$version}"; }
 
 }
 //-------------------------------------------------------------------
@@ -496,7 +497,7 @@ function form_blocks() {
 
 		if($fd) {
 
-		    while (($part = @readdir($fd)) == TRUE) {
+		    while (($part = @readdir($fd)) === TRUE) {
 
 			if ($part != '.' && $part != '..') {
 
@@ -511,10 +512,13 @@ function form_blocks() {
 		}
 	}
 
-	$cloud  = substr($cloud , 0, (strlen($cloud) - 1)) . "";
-	echo "\t\t\t\t\t\t\t\t<div class=\"form_block_suggestions\" id=\"form_block_list\">";
-	echo "<span class=\"form_block_suggestions_text\">" . $lang['form_help_current_blocks'] . "</span>\n $cloud\n";
-	echo "\t\t\t\t\t\t\t\t</div>\n";
+	if ( (isset($cloud)) && ($cloud) ) {
+
+	    $cloud  = substr($cloud , 0, (strlen($cloud) - 1)) . "";
+	    echo "\t\t\t\t\t\t\t\t<div class=\"form_block_suggestions\" id=\"form_block_list\">";
+	    echo "<span class=\"form_block_suggestions_text\">" . $lang['form_help_current_blocks'] . "</span>\n $cloud\n";
+	    echo "\t\t\t\t\t\t\t\t</div>\n";
+	}
 
 }
 //-------------------------------------------------------------------

@@ -60,11 +60,11 @@ $j(function() {
 			$file_ext = substr(strrchr($del, '.'), 1);
 			$file_ext = strtolower($file_ext);
 			
-			if (($file_ext == 'jpg') || ($file_ext == 'gif') || ($file_ext == 'png')) {
+			if (($file_ext == 'jpg') or ($file_ext == 'gif') or ($file_ext == 'png')) {
 				$dir = '../files/images/';
-			} else if (($file_ext == 'mov') || ($file_ext == 'flv') || ($file_ext == 'avi') || ($file_ext == 'm4v') || ($file_ext == 'mp4') || ($file_ext == 'mkv')|| ($file_ext == 'ogv')) {
+			} else if (($file_ext == 'mov') or ($file_ext == 'flv') or ($file_ext == 'avi') or ($file_ext == 'm4v') or ($file_ext == 'mp4') or ($file_ext == 'mkv')or ($file_ext == 'ogv')) {
 				$dir = '../files/video/';	
-			} else if (($file_ext == 'mp3') || ($file_ext == 'flac') || ($file_ext == 'ogg') || ($file_ext == 'wav') || ($file_ext == 'pls') || ($file_ext == 'm4a') || ($file_ext == 'xspf')) {
+			} else if (($file_ext == 'mp3') or ($file_ext == 'flac') or ($file_ext == 'ogg') or ($file_ext == 'wav') or ($file_ext == 'pls') or ($file_ext == 'm4a') or ($file_ext == 'xspf')) {
 				$dir = '../files/audio/';	
 			} else {
 				$dir = '../files/other/';
@@ -103,13 +103,13 @@ $j(function() {
 			$file_ext = substr(strrchr($file_name, '.'), 1);
 			$file_ext = strtolower($file_ext);
 			
-			if (($file_ext == 'jpg') || ($file_ext == 'gif') || ($file_ext == 'png')) {
+			if (($file_ext == 'jpg') or ($file_ext == 'gif') or ($file_ext == 'png')) {
 				$dir = '../files/images/';
 				$file_type = 'Image';
-			} else if (($file_ext == 'mov') || ($file_ext == 'flv') || ($file_ext == 'avi') || ($file_ext == 'm4v') || ($file_ext == 'mp4') || ($file_ext == 'mkv')|| ($file_ext == 'ogv')) {
+			} else if (($file_ext == 'mov') or ($file_ext == 'flv') or ($file_ext == 'avi') or ($file_ext == 'm4v') or ($file_ext == 'mp4') or ($file_ext == 'mkv')or ($file_ext == 'ogv')) {
 				$dir = '../files/video/';
 				$file_type = "Video";
-			} else if (($file_ext == 'mp3') || ($file_ext == 'flac') || ($file_ext == 'ogg') || ($file_ext == 'wav') || ($file_ext == 'pls') || ($file_ext == 'm4a') || ($file_ext == 'xspf')) {
+			} else if (($file_ext == 'mp3') or ($file_ext == 'flac') or ($file_ext == 'ogg') or ($file_ext == 'wav') or ($file_ext == 'pls') or ($file_ext == 'm4a') or ($file_ext == 'xspf')) {
 				$dir = '../files/audio/';
 				$file_type = "Audio";
 			} else {
@@ -217,7 +217,7 @@ $j(function() {
 							<tr>
 								<th class=\"tbl_heading\" id=\"theicon\"></th>
 								<th class=\"tbl_heading\" id=\"thefilename\">" . $lang['filename'] . "</th>";
-								if ((!isset($ck)) || (!$ck)) { echo "<th class=\"tbl_heading\" id=\"thedatestamp\">" . $lang['filedate'] . "</th>"; }
+								if ((!isset($ck)) or (!$ck)) { echo "<th class=\"tbl_heading\" id=\"thedatestamp\">" . $lang['filedate'] . "</th>"; }
 	echo "							<th class=\"tbl_heading\" id=\"thetags\">" . $lang['tags'] . "</th>
 								<th class=\"tbl_heading\" id=\"thefile_view\"></th>
 								<th class=\"tbl_heading\" id=\"thefile_delete\"></th>
@@ -241,9 +241,9 @@ $j(function() {
 				echo "
 						<tr class=\"$trclass\">
 							<td class=\"tbl_row\" headers=\"theicon\"><img src=\"admin/theme/images/icons/image.png\" alt=\"$file_extension\" /></td>";
-							if ((!isset($ck)) || (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thefilename\"><a href=\"../files/images/$file_name\" class=\"thickbox\" alt=\"/images/$file_name\">" . $file_name . "</a></td>"; }
+							if ((!isset($ck)) or (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thefilename\"><a href=\"../files/images/$file_name\" class=\"thickbox\" alt=\"/images/$file_name\">" . $file_name . "</a></td>"; }
 							if ((isset($ck)) && ($ck)) { echo "<td class=\"tbl_row\" headers=\"thefilename\"><a href=\"../files/images/$file_name\" class=\"pxfinder\" alt=\"/images/$file_name\">" . $file_name . "</a></td>"; }
-							if ((!isset($ck)) || (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
+							if ((!isset($ck)) or (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
 				echo "			<td class=\"tbl_row\" headers=\"thetags\">"; if (isset($tags)) { echo $tags; } echo "</td>
 							<td class=\"tbl_row tbl_edit\" headers=\"thefile_view\"><a href=\"../files/images/$file_name\" class=\"thickbox\">" . $lang['view'] . "</a></td>
 							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x"; if ((isset($ck)) && ($ck)) { echo "&amp;ckFuncNumReturn=$CKEditorFuncNum"; } if ((isset($ck)) && ($ck)) { echo '&amp;ck=1'; } if ((isset($ckfile)) && ($ckfile)) { echo '&amp;ckfile=1'; } if ((isset($ckimage)) && ($ckimage)) { echo '&amp;ckimage=1'; } echo "&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>
@@ -257,9 +257,9 @@ $j(function() {
 				echo "
 						<tr class=\"$trclass\">
 							<td class=\"tbl_row\" headers=\"theicon\"><img src=\"admin/theme/images/icons/image.png\" alt=\"$file_extension\" /></td>";
-							if ((!isset($ck)) || (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thefilename\"><a href=\"../files/images/$file_name\" class=\"thickbox\" alt=\"/images/$file_name\">" . $file_name . "</a></td>"; }
+							if ((!isset($ck)) or (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thefilename\"><a href=\"../files/images/$file_name\" class=\"thickbox\" alt=\"/images/$file_name\">" . $file_name . "</a></td>"; }
 							if ((isset($ck)) && ($ck)) { echo "<td class=\"tbl_row\" headers=\"thefilename\"><a href=\"../files/images/$file_name\" class=\"pxfinder\" alt=\"/images/$file_name\">" . $file_name . "</a></td>"; }
-							if ((!isset($ck)) || (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
+							if ((!isset($ck)) or (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
 				echo "			<td class=\"tbl_row\" headers=\"thetags\">"; if (isset($tags)) { echo $tags; } echo "</td>
 							<td class=\"tbl_row tbl_edit\" headers=\"thefile_view\"><a href=\"../files/images/$file_name\" class=\"thickbox\">" . $lang['view'] . "</a></td>
 							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x"; if ((isset($ck)) && ($ck)) { echo "&amp;ckFuncNumReturn=$CKEditorFuncNum"; } if ((isset($ck)) && ($ck)) { echo '&amp;ck=1'; } if ((isset($ckfile)) && ($ckfile)) { echo '&amp;ckfile=1'; } if ((isset($ckimage)) && ($ckimage)) { echo '&amp;ckimage=1'; } echo "&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>
@@ -270,7 +270,7 @@ $j(function() {
 						<tr class=\"$trclass\">
 							<td class=\"tbl_row\" headers=\"theicon\"><img src=\"admin/theme/images/icons/audio.png\" alt=\"$file_extension\" /></td>
 							<td class=\"tbl_row\" headers=\"thefilename\"><a href=\"../files/audio/$file_name\" class=\"pxfinder\" alt=\"/audio/$file_name\">" . $file_name . "</a></td>";
-							if ((!isset($ck)) || (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
+							if ((!isset($ck)) or (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
 				echo "			<td class=\"tbl_row\" headers=\"thetags\">"; if (isset($tags)) { echo $tags; } echo "</td>
 							<td class=\"tbl_row tbl_edit\" headers=\"thefile_view\"><a href=\"../files/audio/$file_name\">" . $lang['download'] . "</a></td>
 							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x"; if ((isset($ck)) && ($ck)) { echo "&amp;ckFuncNumReturn=$CKEditorFuncNum"; } if ((isset($ck)) && ($ck)) { echo '&amp;ck=1'; } if ((isset($ckfile)) && ($ckfile)) { echo '&amp;ckfile=1'; } if ((isset($ckimage)) && ($ckimage)) { echo '&amp;ckimage=1'; } echo "&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>
@@ -281,7 +281,7 @@ $j(function() {
 						<tr class=\"$trclass\">
 							<td class=\"tbl_row\" headers=\"theicon\"><img src=\"admin/theme/images/icons/film.png\" alt=\"$file_extension\" /></td>
 							<td class=\"tbl_row\" headers=\"thefilename\"><a href=\"../files/video/$file_name\" class=\"pxfinder\" alt=\"/video/$file_name\">" . $file_name . "</a></td>";
-							if ((isset($ck)) || (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
+							if ((isset($ck)) or (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
 				echo "			<td class=\"tbl_row\" headers=\"thetags\">"; if (isset($tags)) { echo $tags; } echo "</td>
 							<td class=\"tbl_row tbl_edit\" headers=\"thefile_view\"><a href=\"../files/video/$file_name\">" . $lang['download'] . "</a></td>
 							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x"; if ((isset($ck)) && ($ck)) { echo "&amp;ckFuncNumReturn=$CKEditorFuncNum"; } if ((isset($ck)) && ($ck)) { echo '&amp;ck=1'; } if ((isset($ckfile)) && ($ckfile)) { echo '&amp;ckfile=1'; } if ((isset($ckimage)) && ($ckimage)) { echo '&amp;ckimage=1'; } echo "&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>
@@ -299,7 +299,7 @@ $j(function() {
 						<tr class=\"$trclass\">
 							<td class=\"tbl_row\" headers=\"theicon\"><img src=\"$img\" alt=\"$file_extension\" /></td>
 							<td class=\"tbl_row\" headers=\"thefilename\"><a href=\"../files/other/$file_name\" class=\"pxfinder\" alt=\"/other/$file_name\">" . $file_name . "</a></td>";
-							if ((!isset($ck)) || (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
+							if ((!isset($ck)) or (!$ck)) { echo "<td class=\"tbl_row\" headers=\"thedatestamp\">" . safe_strftime($date_format, $last_modified) . "</td>"; }
 				echo "			<td class=\"tbl_row\" headers=\"thetags\">"; if (isset($tags)) { echo $tags; } echo "</td>
 							<td class=\"tbl_row tbl_edit\" headers=\"thefile_view\"><a href=\"../files/other/$file_name\">" . $lang['download'] . "</a></td>
 							<td class=\"tbl_row tbl_delete\" headers=\"thefile_delete\"><a href=\"?s=$s&amp;x=$x"; if ((isset($ck)) && ($ck)) { echo "&amp;ckFuncNumReturn=$CKEditorFuncNum"; } if ((isset($ck)) && ($ck)) { echo '&amp;ck=1'; } if ((isset($ckfile)) && ($ckfile)) { echo '&amp;ckfile=1'; } if ((isset($ckimage)) && ($ckimage)) { echo '&amp;ckimage=1'; } echo "&amp;del=$file_name\" onclick=\"return confirm('" . $lang['delete_file'] . " ($file_name)')\">" . $lang['delete'] . "</a></td>

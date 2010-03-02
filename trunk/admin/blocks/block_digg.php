@@ -7,35 +7,49 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 // Title: Digg RSS Feed                                            //
 //*****************************************************************//
 
-	// add your digg user name here
-	$digg_username = 'kevinrose';
-	
-?>
+    $number_of_items = 24; /* Set the maximum number of items here */
 
-					<div id="block_digg" class="block">
-						<div class="block_header">
-							<h4>I Digg:</h4>
-						</div>
-						<div class="block_body">
-						<ul>
-							<?php
-							echo "\n";
-							// Enter the URL of your RSS feed here:
-							$feed = new SimplePie('http://digg.com/users/' . $digg_username.  '/history.rss', 'files/cache', 900);
-							$feed->handle_content_type();
-							$i = 1;
-							foreach ($feed->get_items() as $item):
-								if ($i <= 10) {
-								$itemlink = $item->get_permalink();
-								echo "\t\t\t\t\t\t\t<li><a href=\"" . $item->get_permalink() . "\">" . $item->get_title() . "</a></li>\n";
-								}
-								$i++;
-							endforeach;
-							echo "\n";
-							echo "<li style=\"display:none;\"></li>";	// Prevents invalid markup if the list is empty
-							?>
-						</ul>
-						</div>
-						<div class="block_footer">
-						</div>
-					</div>
+    $digg_username = 'kevinrose'; /* Add your digg user name here */
+
+?>
+    <div id="block_digg" class="block">
+	<div class="block_header">
+	    <h4>I Digg:</h4>
+	</div>
+	    <div class="block_body">
+		<ul>
+
+		    <?php
+
+			echo "\n";
+
+			$feed = new SimplePie();
+			$feed->set_feed_url("http://digg.com/users/{$digg_username}/history.rss");
+			$feed->enable_cache(TRUE);
+			$feed->set_cache_location('files/cache');
+			$feed->set_item_limit($number_of_items);
+			$feed->set_timeout(30);
+			$feed->set_cache_duration(900);
+			$feed->init();
+			$feed->handle_content_type();
+
+			$i = 1;
+
+			    foreach ($feed->get_items() as $item) :
+
+				if ($i <= $number_of_items) {
+
+				    $itemlink = $item->get_permalink();
+				    echo "\t\t\t\t\t\t\t<li><a href=\"" . $item->get_permalink() . "\">" . $item->get_title() . "</a></li>\n";
+				}
+				$i++;
+
+			    endforeach;
+
+			echo "<li style=\"display:none;\"></li>\n"; /* Prevents invalid markup if the list is empty */
+
+?>
+		</ul>
+	    </div>
+	<div class="block_footer"></div>
+    </div>

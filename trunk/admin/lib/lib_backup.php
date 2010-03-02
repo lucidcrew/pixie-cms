@@ -128,7 +128,7 @@ class MySQL_Backup
     }
     while ($row = mysql_fetch_row($result))
     {
-      if (empty($this->tables) || in_array($row[0], $this->tables))
+      if (empty($this->tables) or in_array($row[0], $this->tables))
       {
         $value[] = $row[0];
       }

@@ -104,7 +104,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
   								$module_display_name = $out['page_display_name'];
   								$module_name = $out['page_name'];
   								$page_type = $out['page_type'];
-								if (($module_name == 404) || ($module_name == 'navigation') || ($module_name == 'rss')) {
+								if (($module_name == 404) or ($module_name == 'navigation') or ($module_name == 'rss')) {
   									//	do nothing
   								} else if ($page_type == 'plugin') {
   									// do nothing again

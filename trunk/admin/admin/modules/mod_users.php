@@ -40,10 +40,10 @@ if ((isset($user_edit)) && ($user_edit)) {
 	$table_name = 'pixie_users';
 	$check = new Validator ();
 	
-	if ((!isset($uname)) || ($uname == "")) { $error .= $lang['user_name_missing'] . ' '; $scream[] = 'uname'; }
+	if ((!isset($uname)) or ($uname == "")) { $error .= $lang['user_name_missing'] . ' '; $scream[] = 'uname'; }
 	if (!isset($uname)) { $uname = str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($uname))); }
-	if ((!isset($realname)) || ($realname == "")) { $error .= $lang['user_realname_missing'] . ' '; $scream[] = "realname"; }
-	if ((!isset($email)) || (!$check->validateEmail($email, $lang['user_email_error'] . ' '))) { $scream[] = 'email'; }
+	if ((!isset($realname)) or ($realname == "")) { $error .= $lang['user_realname_missing'] . ' '; $scream[] = "realname"; }
+	if ((!isset($email)) or (!$check->validateEmail($email, $lang['user_email_error'] . ' '))) { $scream[] = 'email'; }
 	if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
 
 	if (!isset($error)) {
@@ -86,10 +86,10 @@ if ((isset($user_new)) && ($user_new)) {
 	$table_name = 'pixie_users';
 	$check = new Validator ();
 
-	if ((!isset($uname)) || ($uname == "")) { $error .= $lang['user_name_missing'] . ' '; $scream[] = 'uname'; }
+	if ((!isset($uname)) or ($uname == "")) { $error .= $lang['user_name_missing'] . ' '; $scream[] = 'uname'; }
 	if (isset($uname)) { $uname = str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($uname))); }
-	if ((!isset($realname)) || ($realname == "")) { $error .= $lang['user_realname_missing'] . ' '; $scream[] = 'realname'; }
-	if ((!isset($email)) || (!$check->validateEmail($email, $lang['user_email_error'] . ' '))) { $scream[] = 'email'; }
+	if ((!isset($realname)) or ($realname == "")) { $error .= $lang['user_realname_missing'] . ' '; $scream[] = 'realname'; }
+	if ((!isset($email)) or (!$check->validateEmail($email, $lang['user_email_error'] . ' '))) { $scream[] = 'email'; }
 	if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
 
 	if (!isset($error)) {
@@ -130,7 +130,7 @@ visit: " . $site_url . "admin to login.";
 
  			if ((isset($edit)) && ($edit)){
 
- 				if ((!isset($user_edit)) || (!$user_edit)) {
+ 				if ((!isset($user_edit)) or (!$user_edit)) {
  					$rs = safe_row('*', 'pixie_users', "user_id = '$edit' limit 0,1");
  					if ($rs) {
  						extract($rs);
