@@ -18,7 +18,7 @@ if (isset($login_forgotten)) {
 	$r1 = safe_field('email', 'pixie_users', "email='$username'");	
 	$r2 = safe_field('user_name', 'pixie_users', "user_name='$username'");
 
-	if ($r1 || $r2) {
+	if ($r1 or $r2) {
 		if ($r1) {
 			$rs = $r1;
 		} else {

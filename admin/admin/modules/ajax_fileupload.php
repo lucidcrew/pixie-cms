@@ -72,13 +72,13 @@ require_once '../../lib/lib_misc.php';										/* perform basic sanity checks *
 	$file_ext = substr(strrchr($file_name, '.'), 1);
 	$file_ext = strtolower($file_ext);
 	
-	if (($file_ext == 'jpg') || ($file_ext == 'gif') || ($file_ext == 'png')) {
+	if (($file_ext == 'jpg') or ($file_ext == 'gif') or ($file_ext == 'png')) {
 		$dir = '../../../files/images/';
 		$file_type = 'Image';
-	} else if (($file_ext == 'mov') || ($file_ext == 'flv') || ($file_ext == 'avi') || ($file_ext == 'm4v') || ($file_ext == 'mp4') || ($file_ext == 'mkv')|| ($file_ext == 'ogv')) {
+	} else if (($file_ext == 'mov') or ($file_ext == 'flv') or ($file_ext == 'avi') or ($file_ext == 'm4v') or ($file_ext == 'mp4') or ($file_ext == 'mkv')or ($file_ext == 'ogv')) {
 		$dir = '../../../files/video/';
 		$file_type = 'Video';
-	} else if (($file_ext == 'mp3') || ($file_ext == 'flac') || ($file_ext == 'ogg') || ($file_ext == 'wav') || ($file_ext == 'pls') || ($file_ext == 'm4a') || ($file_ext == 'xspf')) {
+	} else if (($file_ext == 'mp3') or ($file_ext == 'flac') or ($file_ext == 'ogg') or ($file_ext == 'wav') or ($file_ext == 'pls') or ($file_ext == 'm4a') or ($file_ext == 'xspf')) {
 		$dir = '../../../files/audio/';
 		$file_type = 'Audio';
 	} else {

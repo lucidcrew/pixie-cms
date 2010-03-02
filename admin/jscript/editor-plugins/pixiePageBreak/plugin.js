@@ -80,7 +80,7 @@ CKEDITOR.plugins.pixiePageBreakCmd =
 	exec : function( editor )
 	{
 		// Create the element that represents a print break.
-		var breakObject = CKEDITOR.dom.element.createFromHtml( '<p class="page-break-p" style="page-break-after: always;"><span  class="page-break-span" style="display: none;">&nbsp;</span><!--more--></p>' );
+		var breakObject = CKEDITOR.dom.element.createFromHtml( '<p class="page-break-p" style="page-break-after: always;"><span class="page-break-span" style="display: none;"><!--more--></span></p><br /><br />' );
 
 		// Creates the fake image used for this element.
 		breakObject = editor.createFakeElement( breakObject, 'cke_pixiePageBreak', 'p' );

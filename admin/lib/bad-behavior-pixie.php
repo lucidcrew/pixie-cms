@@ -104,7 +104,7 @@ function bb2_insert_head() {
 function bb2_insert_stats($force = FALSE) {
 	$settings = bb2_read_settings();
 
-	if ($force || $settings['display_stats']) {
+	if ($force or $settings['display_stats']) {
 		$blocked = safe_rows('*', $settings['log_table'], "`key` NOT LIKE '00000000'");
 		$number = count($blocked);
 		if ($blocked !== FALSE) {

@@ -9,6 +9,9 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 //*****************************************************************//
 if (!isset($delete)) { $delete = NULL; }
 if (!isset($username)) { $username = NULL; }
+if (!isset($uname)) { $uname = NULL; }
+if (!isset($password)) { $password = NULL; }
+if (!isset($table_name)) { $table_name = NULL; }
 $lang = array(
 	// system
 	'skip_to' => 'Skoč na obsah',

@@ -17,7 +17,7 @@ switch ($do) {
 			$table_name = 'pixie_core';
 			$edit_id = 'page_id';
 
-			if ((!isset($edit)) || (!$edit)) {
+			if ((!isset($edit)) or (!$edit)) {
 				$edit = safe_field('page_id', 'pixie_core', "page_name='$x'");
 			}
 

@@ -93,17 +93,17 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 	$months = array('', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
 
 	if (!$date) {
-		$unixtime = time()+tz_offset();
-		$this_day = date(d , $unixtime);
-		$this_month = date(n , $unixtime);
-		$this_year = date(Y , $unixtime);
-		$time = date(H . ':' . i , $unixtime);
+		$unixtime = time() + tz_offset();
+		$this_day = date('d' , $unixtime);
+		$this_month = date('n' , $unixtime);
+		$this_year = date('Y' , $unixtime);
+		$time = date('H' . ':' . 'i' , $unixtime);
 	} else {
 		$unixtime = returnUnixtimestamp($date);
-		$this_day = date(d , $unixtime);
-		$this_month = date(n , $unixtime);
-		$this_year = date(Y , $unixtime);
-		$time = date(H . ':' . i , $unixtime);
+		$this_day = date('d' , $unixtime);
+		$this_month = date('n' , $unixtime);
+		$this_year = date('Y' , $unixtime);
+		$time = date('H' . ':' . 'i' , $unixtime);
 	}
 
 	$max_day = 31;

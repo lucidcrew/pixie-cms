@@ -161,7 +161,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 							if (is_dir($dir)) {
 								$fd = @opendir($dir);
 								if($fd) {
-								while (($part = @readdir($fd)) == TRUE) {
+								while (($part = @readdir($fd)) === TRUE) {
 									if ($part != '.' && $part != '..') {
 									if ($part != 'index.php' && preg_match('/^[A-Za-z].*\.php$/', $part)) {
 									if (last_word($part) != 'functions.php') {	
@@ -169,7 +169,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 										$rs = safe_row('*', 'pixie_core', "page_name = '$pname' order by page_name asc");
 										
 										if (!$rs) {
-											if (($pname == 'dynamic') || ($pname == 'static')) { 	
+											if (($pname == 'dynamic') or ($pname == 'static')) { 	
 												// ignore these pages
 											} else {
 												$do = 'info';
@@ -185,7 +185,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 								}
 							}
 							
-							if ((!isset($mfound)) || (!$mfound)) {
+							if ((!isset($mfound)) or (!$mfound)) {
 								echo "\t\t\t\t\t\t<p>" . $lang['all_installed'] . "</p>";
 							}
 

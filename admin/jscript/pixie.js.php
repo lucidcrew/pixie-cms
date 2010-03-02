@@ -68,7 +68,7 @@ $j(document).ready(function(){
 	$j('.more_upload').show();
 	$j('.image_preview select').bind('change', preview);
     <?php /* End if $pixie_s == settings */ } ?>
-    <?php if ((isset($pixie_s)) && $pixie_s == 'myaccount' || 'publish') { ?>
+    <?php if ((isset($pixie_s)) && $pixie_s == 'myaccount' or 'publish') { ?>
 /* A function to apply the table sorter */
 function applyTablesort() {
 
@@ -116,7 +116,7 @@ function fetchTablesorterJs() {
 
 });  /* End jQuery document ready function */
     <?php /* End if $pixie_s == myaccount or publish */ } ?>
-    <?php if ((isset($pixie_s)) && ($pixie_s == 'publish' || 'settings') || ($pixie_x == 'myprofile')) { ?>
+    <?php if ((isset($pixie_s)) && ($pixie_s == 'publish' or 'settings') or ($pixie_x == 'myprofile')) { ?>
 /* preview image */
 function preview() {
 

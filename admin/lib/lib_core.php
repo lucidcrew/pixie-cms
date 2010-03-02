@@ -56,17 +56,21 @@ class ShowTable {
 
 	  	for ($j = 0; $j < mysql_num_fields($this->Res); $j++) {
 	  		if (!in_array(mysql_field_name($this->Res, $j), $this->exclude))
+			    if ( (isset($arlen)) && (isset($sum)) ) {
 				$arlen[$j] = mysql_field_len($this->Res, $j); $sum += $arlen[$j];
+			    }
 		}
 
 		for ($j = 0; $j < mysql_num_fields($this->Res); $j++) {
 			if (!in_array(mysql_field_name($this->Res, $j), $this->exclude)) {
 				$st3="class=\"tbl_heading\"";
 				$fieldname = simplify(mysql_field_name($this->Res, $j));
-				if ($lang['form_' . mysql_field_name($this->Res, $j)])
-					$fieldname = $lang['form_' . mysql_field_name($this->Res, $j)];
+
+				$fieldname = $lang['form_' . mysql_field_name($this->Res, $j)];
+				if ( (isset($fieldname)) && ($fieldname) )
 				echo "
-									<th $st3 id=\"" . mysql_field_name($this->Res, $j) . "\">$fieldname</th>";
+				<th $st3 id=\"" . mysql_field_name($this->Res, $j) . "\">$fieldname</th>";
+
 			}
 		}
 
@@ -76,12 +80,13 @@ class ShowTable {
 								</tr>
 							</thead>";
 
+
 		if ($this->finalmax)
 			$this->limit = $this->finalmax;
 
 		echo "
 							<tbody>";
-
+		$counter = NULL;
 		while ($counter < $this->limit) {
 			$F = mysql_fetch_array($this->Res);
 			if (is_even($counter))
@@ -154,7 +159,7 @@ class ShowTable {
 		
 		function ShowBody () {
 	 		global $edit, $s, $m, $x, $page, $page_display_name, $lang, $type;
-			
+
 			// check $edit against $x - they need to represent the same page, if not redirect.
 			$checkid = safe_field('page_id', 'pixie_core', "page_name='$x'");
 			
@@ -163,9 +168,9 @@ class ShowTable {
 					echo "<div class=\"helper\"><h3>" . $lang['help'] . "</h3><p>" . $lang['unknown_edit_url'] . "</p></div>";
 					$cancel = TRUE;
 				}
-			}
-			
-			if(!$cancel) {
+			} else { $cancel = FALSE; }
+
+			if (!$cancel) {
 			
 				$Nams = explode( '|', substr($this->Nam, 0, (strlen( $this->Nam ) - 1)) );
 				$Type = explode( '|', substr($this->Typ, 0, (strlen( $this->Typ ) - 1)) );
@@ -208,7 +213,7 @@ class ShowTable {
 		
 				for ($j = 0; $j < count($Nams); $j++) {
 					// clears out the form as some of the fields populate
-					if ((!isset($edit)) || (!$edit)) { 
+					if ((!isset($edit)) or (!$edit)) { 
 					$Fild[$j] = "";
 				}
 
@@ -249,15 +254,18 @@ class ShowTable {
 	   				}
 
 	   				// check language file for any form help
-	   				if ($lang['form_help_' . $Nams[$j]]) {
-						if ( ($Nams[$j] != 'page_name')  or ($type == 'static') or (!isset($edit)) or (!$edit) ) {	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
+	   				if ( (isset($lang['form_help_' . $Nams[$j]])) && ($lang['form_help_' . $Nams[$j]]) ) {
+
+					    if ( ($Nams[$j] != 'page_name')  or ($type == 'static') or (!isset($edit)) or (!$edit) ) {	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
 	   					$form_help = "<span class=\"form_help\">" . $lang['form_help_' . $Nams[$j]] . "</span>";
-	   				} else {
+
+					    } else {
 	   					$form_help = "<span style=\"display:none\" class=\"form_help\">" . $lang['form_help_' . $Nams[$j]] . "</span>";
-						}
-	   				} else {
+					    }
+
+					} else {
 	   					$form_help = "";
-	   				}
+					}
 
 					if ($GLOBALS['rich_text_editor'] == 1) {
 	   					$containsphp = strlen(stristr(utf8_decode( ($Fild[$j]) ), '<?php')) > 0;
@@ -270,7 +278,7 @@ class ShowTable {
 	   			echo "\t\t\t\t\t\t\t<div class=\"form_row\">\n\t\t\t\t\t\t\t\t<div class=\"form_label\">
 					<label for=\"$Nams[$j]\">" . $displayname . "</label>$form_help</div>\n";    //$Type[$j] $Leng[$j] $Flag[$j] for field info
 	   				//echo "$Nams[$j] - $Type[$j] - $Leng[$j] - $Flag[$j]"; // see form field properties
-					if (($Type[$j] == 'timestamp') && (!isset($edit)) && (!$edit)) {
+					if ( ($Type[$j] == 'timestamp') && (!isset($edit)) && (!$edit) ) {
 	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
 	   					date_dropdown($date);
 	   					echo "\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
@@ -280,7 +288,7 @@ class ShowTable {
 	   					echo "\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 	   				//} else if ($Type[$j] == "blob") {
 	   				//	echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_no_ckeditor\">$Fild[$j]</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; 	   				
-	   				} else if ($Type[$j] == 'longtext' || $Leng[$j]>800 || $Type[$j] == 'blob') {
+	   				} else if ($Type[$j] == 'longtext' or $Leng[$j] > 800 or $Type[$j] == 'blob') {
 	   					if ($GLOBALS['rich_text_editor'] == 1) {
 	   						if (!$containsphp) {
 	   							echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea_ckeditor\">\n\t\t\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" id=\"$Nams[$j]\" cols=\"50\" class=\"ck-textarea\" rows=\"10\">" . htmlentities($Fild[$j], ENT_QUOTES, 'UTF-8') . "</textarea>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
@@ -290,7 +298,7 @@ class ShowTable {
 	   					} else {
 	   						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_no_ckeditor\">" . htmlspecialchars($Fild[$j], ENT_QUOTES, 'UTF-8') . "</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
 	   					}
-	   				} else if ($Type[$j] == "set'yes','no'" || $Flag[$j] == 'not_null set') {
+	   				} else if ($Type[$j] == "set'yes','no'" or $Flag[$j] == 'not_null set') {
 	   					if ($Fild[$j] == 'no') {
 	   						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_radio\">\n\t\t\t\t\t\t\t\tYes<input type=\"radio\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" class=\"form_radio\" value=\"yes\" />
 	   						     	No<input checked=\"checked\" type=\"radio\" name=\"$Nams[$j]\" class=\"form_radio\" value=\"$Fild[$j]\" />\n\t\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t</div>\n";
@@ -328,9 +336,9 @@ class ShowTable {
 	 	   				echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"$Fild[$j]\" size=\"$ln\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 	 	   			} else if ($Nams[$j] == 'privs') {
 	 	   				if ($Fild[$j] == 2) {
-	 	   					$adminclass = "selected=\"selected\"";
+	 	   					$adminclass = "selected=\"selected\""; $everyoneclass = NULL;
 	 	   				} else {
-	 	   					$everyoneclass = "selected=\"selected\"";
+	 	   					$everyoneclass = "selected=\"selected\""; $adminclass = NULL;
 	 	   				}
 	 	   				echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">
 									<select class=\"form_select\" name=\"$Nams[$j]\" name=\"$Nams[$j]\">
@@ -454,8 +462,8 @@ class ShowTable {
 				$stitle = $page_display_name;
 			}
 
-			if ((!isset($edit)) || (!$edit)) {
-				if ((!isset($go)) || (!$go)) {
+			if ((!isset($edit)) or (!$edit)) {
+				if ((!isset($go)) or (!$go)) {
 				// do not want people to be able to add to comments in this way
 				if ($x != 'comments') {
 				echo "
@@ -613,19 +621,21 @@ class ShowTable {
    		echo "\n\t\t\t\t\t<div class=\"admin_table_holder pcontent\">\n\t\t\t\t\t";
 	   	$wheream = "?s=$s&amp;m=$m&amp;x=$x&amp;page=$page";
 
-	   	if (($rows) && (isset($table_name))) {
-  			$Table = new ShowTable ($r, $exclude, $table_name, $view_number, $lo, $finalmax, $wheream, $type, $s);
-    		$Table->DrawBody();
+	   	if ( (isset($table_name)) && ($rows) ) {
 
-	    	$loprint = $lo + 1;
-    		echo "\n\t\t\t\t\t\t<div id=\"admin_table_overview\">\n\t\t\t\t\t\t\t<p>" . $lang['total_records'] . ": $total (" . $lang['showing_from_record'] . " $loprint " . $lang['to'] . " $hi) $pages " . $lang['page(s)'] . ".</p>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div id=\"admin_table_pages\">\n\t\t\t\t\t\t\t";
-   			echo "<p>"; 
-   			$a->previousNext($whereami);
-   			echo "</p>";
-				echo "\n\t\t\t\t\t\t</div>";
+		    if ( isset($finalmax) && ($finalmax) ) { } else { $finalmax = NULL; }
+
+		    $Table = new ShowTable ($r, $exclude, $table_name, $view_number, $lo, $finalmax, $wheream, $type, $s);
+		    $Table->DrawBody();
+		    $loprint = $lo + 1;
+		    echo "\n\t\t\t\t\t\t<div id=\"admin_table_overview\">\n\t\t\t\t\t\t\t<p>" . $lang['total_records'] . ": $total (" . $lang['showing_from_record'] . " $loprint " . $lang['to'] . " $hi) $pages " . $lang['page(s)'] . ".</p>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div id=\"admin_table_pages\">\n\t\t\t\t\t\t\t";
+		    echo "<p>"; 
+		    $a->previousNext($whereami);
+		    echo "</p>";
+		    echo "\n\t\t\t\t\t\t</div>";
 	    	
 	   	} else {
-	   		if (($search_submit) || (isset($tag)) && ($tag)) {
+	   		if (($search_submit) or (isset($tag)) && ($tag)) {
  	   			echo "<div class=\"helper\"><h3>" . $lang['help'] . "</h3><p>" . $lang['helper_search'] . "</p></div>";
 	   		} else {
 	   			echo "<div class=\"helper\"><h3>" . $lang['help'] . "</h3><p>" . $lang['helper_nocontent'] . "</p></div>";
@@ -680,7 +690,7 @@ class ShowTable {
 				}
 				if ($m == 'dynamic') {
 					echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page innav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_dynamic.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
-				} else if ($m == "module") {
+				} else if ($m == 'module') {
 				  echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page innav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_module.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
 				} else {
 				  echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page innav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x&amp;edit=$page_id\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_static.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
@@ -716,7 +726,7 @@ class ShowTable {
 				
 				if ($m == 'dynamic') {
 					echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page outnav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_dynamic_white.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
-				} else if ($m == "module") {
+				} else if ($m == 'module') {
 				  echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page outnav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_module_white.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
 				} else {
 				  echo "\t\t\t\t\t<li id=\"c_$page_name\" class=\"page outnav $class\"><a href=\"?s=$s&amp;m=$m&amp;x=$x&amp;edit=$page_id\"><span class=\"page_title\">$page_display_name</span><img src=\"admin/theme/images/icons/page_static_white.png\" alt=\"$m\" class=\"picon\" /></a></li>\n";
@@ -772,6 +782,12 @@ class ShowTable {
 		}
 
 		if ($r2) {
+					$an = NULL;
+					$at = NULL;
+					$al = NULL;
+					$af = NULL;
+					$az = NULL;
+
 			if ($f = mysql_fetch_array($r2))  {
 				for ($j = 0; $j < mysql_num_fields($r2); $j++) {
 					$an .= mysql_field_name($r2, $j) . "|";
@@ -787,6 +803,7 @@ class ShowTable {
 					echo "\n\t\t\t\t<div class=\"admin_form\">\n\n\t\t\t\t\t";
 				}
 				if (isset($table_name)) {
+				    if (!isset($nam)) { $nam = NULL; }
 				$Blank = new ShowBlank($an, $at, $al, $af, $az, $nam, $edit_exclude, $table_name);
 				$Blank->ShowBody();
 				}
@@ -815,7 +832,7 @@ class ShowTable {
 				/* Was : */ /* $at .= ereg_replace('([()0-9]+)', "", $F['Type']) . '|'; */ /* But ereg_replace() is now depreciated. */
 				$at .= preg_replace('([()0-9]+)', "", $F['Type']) . '|';
 			}
-			if (ereg ('([0-9]+)', $F['Type'], $str)) {
+			if (preg_match('([0-9]+)', $F['Type'], $str)) { /* Was if (ereg ('([0-9]+)', $F['Type'], $str)) { */ /* But ereg is depreciated */
 				$al .= $str[0] . '|';
 			} else {
 				$al .= '|';
@@ -917,7 +934,7 @@ class ShowTable {
 // save and edit code	/* This is too much of a mess to add an isset $table_name check. It needs to be cleaned up. */
 	if ((isset($GLOBALS['pixie_user'])) && (isset($GLOBALS['pixie_user_privs'])) && ($GLOBALS['pixie_user_privs'] >= 1)) {
 		
-		if ((isset($submit_edit)) && ($submit_edit) || (isset($submit_new)) && ($submit_new)) {
+		if ((isset($submit_edit)) && ($submit_edit) or (isset($submit_new)) && ($submit_new)) {
 			$rs = safe_row('*', 'pixie_core', "page_name = '$x' limit 0,1");
 			
 			if ($rs) {
@@ -925,7 +942,7 @@ class ShowTable {
 			}
 			
 			foreach ($_POST as $key=>$value) {
-				if (($key == 'day') || ($key == 'month') || ($key == 'year') || ($key == 'time')) {
+				if (($key == 'day') or ($key == 'month') or ($key == 'year') or ($key == 'time')) {
 					$value = str_replace(':', "", $value);
 					
 					if ($key == 'time') {
@@ -1045,7 +1062,7 @@ class ShowTable {
 				if ($an[$j] == 'tags') { $value = make_tag($value); }
 				if (get_magic_quotes_gpc() == 0) { $value = addslashes ($value); }
 				if ($at[$j] == 'varchar') { sterilise(strip_tags($value)); }
-				if (($an[$j] == 'url') || ($an[$j] == 'website')) {
+				if (($an[$j] == 'url') or ($an[$j] == 'website')) {
 					if ($nullf[0] == 'not_null') { 
 						$check->validateURL($value, $lang['url_error'] . ' ' );
 					} else if ($value != "") { 

@@ -35,7 +35,9 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 
 			if ($GLOBALS['pixie_user']) { 
 
-				if ((!isset($s)) && (!$s)) { $s = 'myaccount'; }
+				if ((isset($s)) && ($s)) { /* Then use $s */ }
+
+				else { $s = 'myaccount'; }
 
 			} else { 
 

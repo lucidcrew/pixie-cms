@@ -134,7 +134,7 @@ p{font-size:90%;}
 
 $languages = array();
 while ($file = readdir($dir)) {
-    if ( $file[0] == '.' || strpos($file, '.', 1) === FALSE) { continue; }
+    if ( $file[0] == '.' or strpos($file, '.', 1) === FALSE) { continue; }
     $lang = substr($file, 0,  strpos($file, '.'));
     $languages[] = $lang;
 }
