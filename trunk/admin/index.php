@@ -139,19 +139,19 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }									/* set error reportin
 	$cssie7 = 'admin/theme/ie7.css';
 
 	if (file_exists($cssie)) {
-	echo "\n\t<!--[if IE]><link href=\"{$cssie}\" type=\"text/css\" rel=\"stylesheet\" media=\"screen\" /><![endif]-->\n";
+		echo "\n\t<!--[if IE]><link href=\"{$cssie}\" type=\"text/css\" rel=\"stylesheet\" media=\"screen\" /><![endif]-->\n";
 	}
 	if (file_exists($cssie6)) {
-	echo "\n\t<!--[if IE 6]><link href=\"{$cssie6}\" type=\"text/css\" rel=\"stylesheet\" media=\"screen\" /><![endif]-->\n";
+		echo "\n\t<!--[if IE 6]><link href=\"{$cssie6}\" type=\"text/css\" rel=\"stylesheet\" media=\"screen\" /><![endif]-->\n";
 	}
 	if (file_exists($cssie7)) {
-	echo "\n\t<!--[if IE 7]><link href=\"{$cssie7}\" type=\"text/css\" rel=\"stylesheet\" media=\"screen\" /><![endif]-->\n";
+		echo "\n\t<!--[if IE 7]><link href=\"{$cssie7}\" type=\"text/css\" rel=\"stylesheet\" media=\"screen\" /><![endif]-->\n";
 	}
 
 	/* check for handheld style file */
 	$csshandheld = 'admin/theme/handheld.css';
 	if (file_exists($csshandheld)) {
-	echo "\n\t<link href=\"{$csshandheld}\" rel=\"stylesheet\" media=\"handheld\" />\n";
+		echo "\n\t<link href=\"{$csshandheld}\" rel=\"stylesheet\" media=\"handheld\" />\n";
 	}
 	?>
 	
@@ -166,7 +166,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }									/* set error reportin
 	<?php } ?>
 
 </head>
-    <?php ob_flush(); flush(); /* Send the head so that the browser has something to do whilst it waits */ ?>
+<?php @ob_flush(); flush(); /* Send the head so that the browser has something to do whilst it waits */ ?>
 <body class="pixie <?php $date_array = getdate(); print "y{$date_array['year']}"; print " m{$date_array['mon']}"; print " d{$date_array['mday']}"; print " h{$date_array['hours']}"; if ( (isset($s)) && ($s) ) { print " s_{$s}"; } if ( (isset($m)) && ($m) ) { print " m_{$m}"; } if ( (isset($x)) && ($x) ) { print " x_{$x}"; } if ( (isset($p)) && ($p) ) { print " p_{$p}"; } ?>">
 	<div id="message"></div>
 	<div id="pixie">
