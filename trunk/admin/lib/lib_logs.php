@@ -11,8 +11,8 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 // Two functions to calculate page render times
 	function getmicrotime()
 	{ 
-    list($usec, $sec) = explode(" ", microtime()); 
-    return ((float)$usec + (float)$sec); 
+		list($usec, $sec) = explode(" ", microtime()); 
+		return ((float)$usec + (float)$sec); 
 	} 
 
 	function pagetime($type)
@@ -37,7 +37,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 		if (isset($_SERVER['HTTP_REFERER'])) { 
 			$referral  = $_SERVER['HTTP_REFERER'];
 		} else {
-			$referral = $land['unknown_referrer'];
+			$referral = $lang['unknown_referrer'];
 		}
 		if (isset($GLOBALS['pixie_user'])) {
 			$uname = $GLOBALS['pixie_user'];
