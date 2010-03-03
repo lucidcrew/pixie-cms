@@ -9,6 +9,27 @@ define('BB2_COOKIE', 'bb2_screener_');
 
 require_once(BB2_CORE . "/functions.inc.php");
 
+// Our log table structure
+function bb2_table_structure($name)
+{
+	// It's not paranoia if they really are out to get you.
+	$name_escaped = bb2_db_escape($name);
+	return "CREATE TABLE IF NOT EXISTS `$name_escaped` (
+			`id` INT(11) NOT NULL auto_increment,
+			`ip` TEXT NOT NULL,
+			`date` DATETIME NOT NULL default '0000-00-00 00:00:00',
+			`request_method` TEXT NOT NULL,
+			`request_uri` TEXT NOT NULL,
+			`server_protocol` TEXT NOT NULL,
+			`http_headers` TEXT NOT NULL,
+			`user_agent` TEXT NOT NULL,
+			`request_entity` TEXT NOT NULL,
+			`key` TEXT NOT NULL,
+			INDEX (`ip`(15)),
+			INDEX (`user_agent`(10)),
+			PRIMARY KEY (`id`) );"; // TODO: INDEX might need tuning
+}
+
 // Kill 'em all!
 function bb2_banned($settings, $package, $key, $previous_key=false)
 {
