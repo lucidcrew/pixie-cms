@@ -334,10 +334,10 @@ class ShowTable {
 	   					$tableid = 0;
 						$condition = $tableid . " >= '0'"; 
 						form_tag($this->tablename, $condition);
-	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"$Fild[$j]\" size=\"$ln\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
-	   				} else if ($Nams[$j] == "page_blocks") {
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"$Fild[$j]\" size=\""; if ( (isset($ln)) ) { echo $ln; } else { echo $Leng[$j]; } echo "\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	   				} else if ($Nams[$j] == 'page_blocks') {
 	   					form_blocks();
-	 	   				echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"$Fild[$j]\" size=\"$ln\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	 	   				echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"$Fild[$j]\" size=\""; if ( (isset($ln)) ) { echo $ln; } else { echo $Leng[$j]; } echo "\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 	 	   			} else if ($Nams[$j] == 'privs') {
 	 	   				if ($Fild[$j] == 2) {
 	 	   					$adminclass = "selected=\"selected\""; $everyoneclass = NULL;

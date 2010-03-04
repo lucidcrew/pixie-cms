@@ -507,6 +507,9 @@ function form_blocks() {
 
 				$part = str_replace('block_', "", $part);
 				$part = str_replace('.php', "", $part);
+
+				    if ( isset($cloud) ) { } else { $cloud = NULL; }
+
 				$cloud .= "\t\t\t\t\t\t\t\t\t<a href=\"#\" title=\"Add block: $part\">$part</a>\n";
 			    }
 			}

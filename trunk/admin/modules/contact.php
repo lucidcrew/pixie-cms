@@ -110,7 +110,8 @@ switch ($do) {
 		$secret = sha1(uniqid( rand(), TRUE) ); /* Create a sha1 checksum to help verify that we are only sending the mail once */
 		$_SESSION['FORM_SECRET'] = $secret; /* FORM_SECRET in $_SESSION['FORM_SECRET'] must be unique if you reuse this technique in other forms like the comments form for example */
 
-		extract(safe_row('*', 'pixie_module_contact_settings', "contact_id='1'")); /* get the settings for this page */
+		$sets = safe_row('*', 'pixie_module_contact_settings', "contact_id='1'"); /* Get the settings for this page */
+		extract($sets); /* Extract them */
 
 		echo '<h3>Contact</h3>';
 
