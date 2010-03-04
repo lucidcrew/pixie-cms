@@ -1,0 +1,41 @@
+#summary Guide on working with the Pixie codebase (DRAFT, Work in Progress).
+
+= File / Directory Structure =
+
+  * index.php
+  * admin
+    * admin
+      * modules (modules used by the admin interface)
+      * theme (theme stylesheets for styling the admin interface)
+    * blocks (extra content that can be included on pages - see BlockDevelopment)
+    * install (installs pixie, delete when Pixie is installed)
+    * jscript (JavaScript files used by Pixie)
+      * ckeditor (CKEditor RichText editor)
+      * editor-plugins
+    * lang (language files for translating Pixie - see [Languages])
+    * lib (core libraries used by Pixie and for module / block development)
+      * bad-behavior (spam prevention)
+    * modules (modules for adding extra functionality to Pixie - see ModuleDevelopment)
+    * themes (see 
+  * files (user uploaded files)
+    * audio
+    * cache
+    * images
+    * other
+    * sqlbackups
+    * video
+
+
+= Coding Standards =
+
+== Short Tags `<? ... ?>` ==
+
+Not to be used, since not all web hosts support them. Use `<?php ... ?>` instead.
+
+== Indentation ==
+
+Indent code using tabs, not spaces (perhaps some screenshots of settings to change in popular applications - e.g. Notepad++, Scintilla based apps like Programmers Notepad2?)
+
+== Line Termination ==
+
+Use Linux / Unix style line endings (LF)
