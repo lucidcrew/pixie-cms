@@ -32,7 +32,7 @@ function getUrlParam(paramName) /* Helper function to get parameters from the qu
   return (match && match.length > 1) ? match[1] : '' ;
 }
 <?php
-if ($ckFuncNumReturn) { echo "var funcNum = $ckFuncNumReturn;"; } else {
+if (isset($ckFuncNumReturn)) { echo "var funcNum = $ckFuncNumReturn;"; } else {
 echo "var funcNum = getUrlParam('CKEditorFuncNum');"; }
 ?>
 $j(function() {

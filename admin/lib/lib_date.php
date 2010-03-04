@@ -90,9 +90,9 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 	function date_dropdown($date) 
 	{
 
-	$months = array('', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+	$months = array('', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'); /* Could go in language file? - needs language */
 
-	if (!$date) {
+	if ( (!isset($date)) && (!$date) ) {
 		$unixtime = time() + tz_offset();
 		$this_day = date('d' , $unixtime);
 		$this_month = date('n' , $unixtime);

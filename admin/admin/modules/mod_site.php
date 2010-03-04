@@ -7,41 +7,50 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../../' ); exit(); }
 // Title: Site Settings.                                           //
 //*****************************************************************//
 
-if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
+    if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 	
-		$scream = array();
+	$scream = array();
 
-		if ((isset($settings_edit)) && ($settings_edit)) {
-			
-			$check = new Validator ();
-			if (!$sitename) { $error .= $lang['site_name_error'] . ' '; $scream[] = 'name'; }
-			if (!$url) { $error .= $lang['site_url_error'] . ' '; $scream[] = 'url'; }
+	    if ( (isset($settings_edit)) && ($settings_edit) ) {
 
-				if ($url) {
+		$check = new Validator ();
 
-				    if ( (!preg_match('/localhost/', $url)) && (!preg_match('/127.0.0./', $url)) ) {
+		    if (!$sitename) { $error .= $lang['site_name_error'] . ' '; $scream[] = 'name'; }
 
-					if (!$check->validateURL($url, $lang['site_url_error'] . ' ')) { $scream[] = 'url'; }
+		    if (!$url) { $error .= $lang['site_url_error'] . ' '; $scream[] = 'url'; }
 
-				    }
+		    if ($url) {
 
-				}
+			if ( (!preg_match('/localhost/', $url)) && (!preg_match('/127.0.0./', $url)) ) {
 
-			if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
+			    if (!$check->validateURL($url, $lang['site_url_error'] . ' ')) { $scream[] = 'url'; }
 
-			$sitename = addslashes($sitename);	/* Helps prevents a bug where a ' in a string like : dave's site, errors out the admin interface */
-			$sitename = htmlentities($sitename);	/* Same as above */
+			}
 
-			$table_name = 'pixie_settings';
-			$site_url_last = $url { strlen($url) - 1 };
-			
-  		if ($site_url_last != '/') {
-  			$url = $url . '/';
-  		}
+		    }
 
-  		$err = explode('|', $error);
+		    if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
 
-  		if (!isset($error)) {
+		    if ( (isset($sitename)) ) {
+
+			$sitename = addslashes($sitename);
+			$sitename = htmlspecialchars($sitename, ENT_QUOTES, 'UTF-8');
+
+		    } else {
+
+			$sitename = $lang['form_site_name'];
+
+		    }
+
+		$table_name = 'pixie_settings';
+		$site_url_last = $url { strlen($url) - 1 };
+
+		    if ($site_url_last != '/') {
+
+			$url = $url . '/';
+		    }
+
+  		if ( (isset($error)) ) { $err = explode('|', $error); } else {
 				$ok = safe_update('pixie_settings', 
 									"site_name = '$sitename', 
 									site_url = '$url', 
@@ -58,13 +67,16 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 				if (!$message) {
 			  	$message = $lang['error_save_settings'];
 				}
+
 				$site_name = $sitename;
 				$site_url = $url;
 				$site_keywords = $keywords;
 				$site_author = $site_auth;
 				$site_copyright = $site_cright;
 				$default_page = $default;
+
 			} else {
+
 				if (isset($table_name)) { safe_optimize("$table_name"); safe_repair("$table_name"); }
 				$messageok = $lang['ok_save_settings'];
 				$prefs = get_prefs();
@@ -85,7 +97,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
  						<legend>" . $lang['form_legend_site_settings'] . "</legend>
 							<div class=\"form_row "; if (isset($name_style)) { echo $name_style; } echo "\">
 								<div class=\"form_label\"><label for=\"site_name\">" . $lang['form_site_name'] . " <span class=\"form_required\">" . $lang['form_required']."</span></label><span class=\"form_help\">" . $lang['form_help_site_name'] . "</span></div>
-								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"sitename\" value=\"$site_name\" size=\"40\" maxlength=\"80\" id=\"site_name\" /></div>
+								<div class=\"form_item\"><input type=\"text\" class=\"form_text\" name=\"sitename\" value=\""; if (isset($sitename)) { echo $sitename; } else { echo $site_name; } echo "\" size=\"40\" maxlength=\"80\" id=\"site_name\" /></div>
 							</div>
 							<div class=\"form_row "; if (isset($url_style)) { echo $url_style; } echo "\">
 								<div class=\"form_label\"><label for=\"url\">" . $lang['form_site_url'] . " <span class=\"form_required\">" . $lang['form_required'] . "</span></label><span class=\"form_help\">" . $lang['form_help_site_url'] . "</span></div>

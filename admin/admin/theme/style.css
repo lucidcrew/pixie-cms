@@ -1,4 +1,3 @@
-/* pixie css */
 *,body{margin:0;padding:0;}
 img{border:0;}
 #pixie{background-image:url(images/bg_pixie.gif);background-repeat:repeat-x;}
@@ -7,11 +6,9 @@ img{border:0;}
 #message.errormess{background:url(images/bg_message_error.gif) repeat-x;height:17px;}
 #message.okmess{height:17px;background:url(images/bg_message_ok.gif) repeat-x;}
 #message img{vertical-align:-1px;padding-right:5px;}
-/* image replacment */
 #pixie_title{position:absolute;top:-1px;width:70px;height:50px;background-image:url(images/pixielogo.gif);background-repeat:no-repeat;background-position:0 12px;z-index:2;}
 #pixie_title span{display:block;text-indent:-5000px;}
 #pixie_title span a{display:block;width:70px;height:50px;}
-/* end image replacement */
 #pixie_body{font-size:11pt;line-height:14pt;margin:95px 0 0;}
 #pixie_body h2{padding-bottom:5px;}
 #blocks{float:right;width:290px;margin-left:20px;margin-top:28px;}
@@ -20,8 +17,7 @@ img{border:0;}
 #admin_block_help li{padding:5px 0;}
 .linkspixie{padding-top:10px;}
 #pixie_content{margin-right:310px;margin-bottom:0;}
-html{background-color:#191919;} /* !Please do not apply colours to the html tag, it breaks stuff and is a bad habit to get into. */
-/* pixie Typography */
+html{background-color:#191919;}
 body{background:#fff;font-family:Arial, 'Lucida Grande', Verdana, Sans-Serif;color:#333;}
 #pixie_footer{clear:both;background-image:url(images/bg_footer.gif);background-repeat:repeat-x;height:80px;padding:0 30px;}
 #credits{max-width:1300px;min-width:948px;padding-top:60px;font-size:9pt;color:#fff;margin:0 auto;}
@@ -30,7 +26,6 @@ body{background:#fff;font-family:Arial, 'Lucida Grande', Verdana, Sans-Serif;col
 #cred_site{display:inline;float:right;font-weight:700;}
 .helper{position:relative;top:9px;border:5px solid #e1e1e1;clear:left;background-color:#F0F0F0;margin:0 auto 60px;padding:15px;}
 .helper h3{padding-bottom:10px;}
-/* pixie Forms */
 .safclear{clear:both;}
 .form{background-image:url(images/bg_form.gif);background-repeat:repeat-x;background-position:bottom;font-family:'Lucida Grande', Verdana, Arial, Sans-Serif;clear:both;}
 fieldset{border-color:#E4E4E4;border-style:solid;border-width:1px;padding:1em 2em 2em;}
@@ -57,9 +52,8 @@ legend{font-size:11pt;color:#0497d3;padding:5px;}
 .admin_block select{background-color:#fff;}
 #admin_block_filemanager .form_help{padding-bottom:3px;}
 #form_login .form_text,#form_forgotten .form_text{width:300px;}
-/* pixie Tables */
 .tbl{font-size:9pt;clear:left;width:100%;margin-top:10px;border-collapse:collapse;}
-.tbl_heading{background:#191919 url(images/bg_tbl_heading.gif);height:20px;background-repeat:repeat-x;font-weight:700;color:#fff;text-align:left;border-bottom:1px solid #a19f9f;padding:3px 1px 2px 3px;}
+.tbl_heading{background:#191919 url(images/bg_tbl_heading.gif);height:20px;background-repeat:repeat-x;font-weight:700;color:#fff;text-align:left;border-bottom:1px solid #a19f9f;padding:3px 1em 2px;}
 .even{background:#ededed;border-bottom:1px solid #ededed;}
 .odd{background:#f5f5f5;border-bottom:1px solid #f5f5f5;}
 .logimportant{color:#bf0404;}
@@ -67,7 +61,8 @@ legend{font-size:11pt;color:#0497d3;padding:5px;}
 #icon,#theicon{width:10px;}
 .tbl_edit,.tbl_delete{text-align:center;}
 #when,#thedatestamp{width:25%;}
-.tbl_row{line-height:100%;padding:8px 5px 5px;}
+.tbl_row{line-height:100%;overflow:hidden;padding:8px 1em 5px;}
+#posted{width:65pt;}
 table.tbl tr:hover{background-image:url(images/bg_tr.gif);background-repeat:repeat-x;background-color:#cfcfcf;border-bottom:1px solid #a19f9f;}
 #admin_table_overview{float:left;font-size:8pt;padding-top:15px;}
 #admin_table_pages{float:right;padding-top:11px;font-size:8pt;}
@@ -87,10 +82,11 @@ h2{font-size:15pt;}
 .page_title{font-weight:700;}
 #admin_block_tags a{line-height:15pt;}
 .showvars{background-color:#000;color:#0B9BD4;}
-.ck-textarea{width:100%;display:none;} /* textarea replaced by ckeditor hidden by default */
+.ck-textarea{width:100%;display:none;}
 #message a,.tbl_delete a{color:#d70000;}
 #message a:hover,#credits a:hover{color:#fff;}
 #pixie_strapline,#admin_block_search label,.admin_block legend{display:none;}
 .admin_block li,#credits_list{list-style:none;}
 .admin_form,.form_row{margin-bottom:15px;}
 .form_item_check input,#admin_table_holder{width:auto;}
+.admin_table_holder .tbl_row,.admin_table_holder .tbl_heading{max-width:100pt;}

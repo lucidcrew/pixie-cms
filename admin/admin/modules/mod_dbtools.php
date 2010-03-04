@@ -40,7 +40,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 		}
 	}
 
-	if ($del) { 
+	if (isset($del)) { 
 		if (file_exists("../files/sqlbackups/".$del)) { 
 			$current = safe_field('last_backup','pixie_settings',"settings_id='1'");
 			if ($current != $del) {
@@ -94,9 +94,9 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
         		if ($part != "." && $part != "..") {
         		if ($part != "index.php") {
         			if ($part == $last_backup) {
-        				echo "\t\t\t\t\t\t<div class=\"abackup backuplatest\"><img src=\"admin/theme/images/icons/file_sql.png\" alt=\"SQL ".$lang['backup']."\" class=\"aicon\" /><span class=\"backup_fname\">".str_replace(".sql.gz", "", $part)."</span><a href=\"".$site_url."files/sqlbackups/$part\" title=\"".$lang['download'].": $part\" class=\"backup_download\">".$lang['download']."</a></div>\n";
+        				echo "\t\t\t\t\t\t<div class=\"abackup backuplatest\"><img src=\"admin/theme/images/icons/file_sql.png\" alt=\"SQL ".$lang['nav2_backup']."\" class=\"aicon\" /><span class=\"backup_fname\">".str_replace(".sql.gz", "", $part)."</span><a href=\"".$site_url."files/sqlbackups/$part\" title=\"".$lang['download'].": $part\" class=\"backup_download\">".$lang['download']."</a></div>\n";
         			} else {
-	          		echo "\t\t\t\t\t\t<div class=\"abackup\"><img src=\"admin/theme/images/icons/file_sql.png\" alt=\"SQL ".$lang['backup']."\" class=\"aicon\" /><span class=\"backup_fname\">".str_replace(".sql.gz", "", $part)."</span><a href=\"".$site_url."files/sqlbackups/$part\" title=\"".$lang['download'].": $part\" class=\"backup_download\">".$lang['download']."</a> <a href=\"?s=$s&amp;x=$x&amp;del=$part\" title=\"".$lang['delete'].": $part\" onclick=\"return confirm('".$lang['delete_file']." ($part)')\" class=\"backup_delete\">".$lang['delete']."</a></div>\n";
+	          		echo "\t\t\t\t\t\t<div class=\"abackup\"><img src=\"admin/theme/images/icons/file_sql.png\" alt=\"SQL ".$lang['nav2_backup']."\" class=\"aicon\" /><span class=\"backup_fname\">".str_replace(".sql.gz", "", $part)."</span><a href=\"".$site_url."files/sqlbackups/$part\" title=\"".$lang['download'].": $part\" class=\"backup_download\">".$lang['download']."</a> <a href=\"?s=$s&amp;x=$x&amp;del=$part\" title=\"".$lang['delete'].": $part\" onclick=\"return confirm('".$lang['delete_file']." ($part)')\" class=\"backup_delete\">".$lang['delete']."</a></div>\n";
         			}
         		}	
       			}
