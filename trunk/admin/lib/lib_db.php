@@ -73,7 +73,7 @@ $DB = new DB;
 	function safe_query($q='', $debug='', $unbuf='')
 	{
 		global $DB, $pixieconfig, $message, $dst, $tzHM;
-		$method = (!$unbuf) ? 'mysql_query' : 'mysql_unbuffered_query'; /* To use mysql_unbuffered_query() while multiple database connections are open, you must specify the optional parameter link_identifier to identify which connection you want to use. */ /* resource mysql_unbuffered_query ( string $query [, resource $link_identifier ] ) */ /* http://php.net/manual/en/function.mysql-unbuffered-query.php */
+		$method = (!$unbuf) ? 'mysql_query' : 'mysql_unbuffered_query';
 		if (!$q) return FALSE;
 		if ($debug) { 
 			$message = 'MySQL Query: ' . $q . '<br/>MySQL Error : ' . mysql_error() . "";
@@ -100,8 +100,26 @@ $DB = new DB;
 		
 		$result = $method($q, $DB->link);
 
-		    if (!$result) { return FALSE; } else { return $result; }
+		    if (!$result) { return FALSE; } else { 
 
+			$test_resource = $result;
+
+			    if (strnatcmp(phpversion(),'5.0.0') >= 0) {
+
+				if ( (is_resource($test_resource)) && ($unbuf != 'mysql_unbuffered_query') ) {
+
+				    if ( (first_word($q) == 'SELECT' or 'SHOW' or 'EXPLAIN' or 'DESCRIBE') ) {
+
+					mysql_free_result( mysql_query($q) );
+				    }
+
+				}
+
+			    } /* Don't need to do this for php 4 */
+
+			return $result;
+
+		    }
 
 	}
 //------------------------------------------------------------------

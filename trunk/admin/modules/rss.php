@@ -48,7 +48,7 @@ switch ($do) {
 	   $asc_desc = 'asc';
 	   $view_exclude = array('rss_id');
 	   $edit_exclude = array('rss_id');
-	   $tags_support = 'no';
+	   $tags = 'no';
 	   
 	   admin_module($module_name, $table_name, $order_by, $asc_desc, $view_exclude, $edit_exclude, 15, $tags);
 

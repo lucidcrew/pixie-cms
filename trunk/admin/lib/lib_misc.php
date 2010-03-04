@@ -342,9 +342,11 @@ function make_tag($tags) {
 		if ($current != "") {
 
 		    $current = safe_string($current);
+
+			if ( (isset($all_tag)) ) { } else { $all_tag = NULL; }
+
 		    $all_tag .= $current . " ";
 		}
-	    $i++;
 	}
 
 	return rtrim($all_tag);
@@ -491,17 +493,17 @@ function form_blocks() {
     global $s, $m, $x, $site_url, $lang;
     $dir = './blocks';
 
-	if ( is_dir($dir) ) {
+	if ( (is_dir($dir)) ) {
 
 	    $fd = @opendir($dir);
 
 		if($fd) {
 
-		    while (($part = @readdir($fd)) === TRUE) {
+		    while ( ($part = @readdir($fd) ) == TRUE) {
 
-			if ($part != '.' && $part != '..') {
+			if ( ($part != '.') && ($part != '..') ) {
 
-			    if ($part != 'index.php' && preg_match('/^block_.*\.php$/', $part)) {
+			    if ( ($part != 'index.php') && (preg_match('/^block_.*\.php$/', $part)) ) {
 
 				$part = str_replace('block_', "", $part);
 				$part = str_replace('.php', "", $part);

@@ -66,11 +66,11 @@ class ShowTable {
 				$st3="class=\"tbl_heading\"";
 				$fieldname = simplify(mysql_field_name($this->Res, $j));
 
-				$fieldname = $lang['form_' . mysql_field_name($this->Res, $j)];
-				if ( (isset($fieldname)) && ($fieldname) )
-				echo "
-				<th $st3 id=\"" . mysql_field_name($this->Res, $j) . "\">$fieldname</th>";
+				if ( (isset($lang['form_' . mysql_field_name($this->Res, $j)])) && ($lang['form_' . mysql_field_name($this->Res, $j)]) ) {
 
+				    $fieldname = $lang['form_' . mysql_field_name($this->Res, $j)];
+				}
+				    echo "<th $st3 id=\"" . mysql_field_name($this->Res, $j) . "\">$fieldname</th>";
 			}
 		}
 
@@ -168,9 +168,11 @@ class ShowTable {
 					echo "<div class=\"helper\"><h3>" . $lang['help'] . "</h3><p>" . $lang['unknown_edit_url'] . "</p></div>";
 					$cancel = TRUE;
 				}
-			} else { $cancel = FALSE; }
+			}
 
-			if (!$cancel) {
+			if ( isset($cancel) ) { } else { $cancel_not_set = 1; }
+
+			if ($cancel_not_set == 1) {
 			
 				$Nams = explode( '|', substr($this->Nam, 0, (strlen( $this->Nam ) - 1)) );
 				$Type = explode( '|', substr($this->Typ, 0, (strlen( $this->Typ ) - 1)) );
@@ -236,7 +238,7 @@ class ShowTable {
 					$nullf = explode(" ", $Flag[$j]);
 
 	   				if ($nullf[0] == 'not_null') { // label required fields
-	   					if ($lang['form_' . $Nams[$j]]) {
+	   					if ( (isset($lang['form_' . $Nams[$j]])) ) {
 						if ( ($Nams[$j] != 'page_name')  or ($type == 'static') or (!isset($edit)) or (!$edit) ) {	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
 	   						$displayname = $lang['form_' . $Nams[$j]] . " <span class=\"form_required\">" . $lang['form_required'] . "</span>";
 						} else {
@@ -246,7 +248,7 @@ class ShowTable {
 	   						$displayname = simplify($Nams[$j]) . " <span class=\"form_required\">" . $lang['form_required'] . "</span>";
 	   					}
 	   				} else {
-	   					if ($lang['form_' . $Nams[$j]]) {
+	   					if ( (isset($lang['form_' . $Nams[$j]])) && ($lang['form_' . $Nams[$j]]) ) {
 	   						$displayname = $lang['form_' . $Nams[$j]] . " <span class=\"form_optional\">" . $lang['form_optional'] . "</span>";
 	   					} else {
 	   						$displayname = simplify($Nams[$j]) . " <span class=\"form_optional\">" . $lang['form_optional'] . "</span>";
@@ -280,7 +282,9 @@ class ShowTable {
 	   				//echo "$Nams[$j] - $Type[$j] - $Leng[$j] - $Flag[$j]"; // see form field properties
 					if ( ($Type[$j] == 'timestamp') && (!isset($edit)) && (!$edit) ) {
 	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
-	   					date_dropdown($date);
+
+	   					if (isset($date)) { date_dropdown($date); } else { $date = NULL; date_dropdown($date); }
+
 	   					echo "\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 	   				} else if (($Type[$j] == 'timestamp') && (isset($edit)) && ($edit)) {
 	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
@@ -877,19 +881,19 @@ class ShowTable {
 			}
 	
 			if ((isset($del)) && ($del)) {
-				if ((isset($s)) && ($s == 'settings') && ($m == 'dynamic')) {
+				if ( (isset($s)) && (isset($m)) && ($s == 'settings') && ($m == 'dynamic') ) {
 					$page_display_name = safe_field('page_display_name', 'pixie_core', "page_id='$del'");
 					//do not delete the posts as one false click could destroy lots of data. Backup first?
 					//safe_delete("pixie_dynamic_posts", "page_id='$delete'"); 
 					safe_delete('pixie_dynamic_settings', "page_id='$delete'");
 				}
 		
-				if ((isset($s)) && (isset($del)) && ($s == 'settings') && ($m == 'static')) {
+				if ((isset($s)) && (isset($m)) && (isset($del)) && ($s == 'settings') && ($m == 'static')) {
 					$page_display_name = safe_field('page_display_name', 'pixie_core', "page_id='$del'");
 					safe_delete('pixie_static_posts', "page_id='$delete'");
 				}
 		
-				if ((isset($s)) && ($s == 'settings') && ($m == 'module')) {
+				if ((isset($s)) && (isset($m)) && ($s == 'settings') && ($m == 'module')) {
 					$table_mod = PFX . 'pixie_module_' . $page_name;
 					$table_mod_settings = PFX . 'pixie_module_' . $page_name . '_settings';
 					
@@ -956,12 +960,18 @@ class ShowTable {
 				//echo "$key - $value <br>"; //enable to see $_post output
 			}
 			
-			if ($timey && !checkdate($timey[1], $timey[0], $timey[2])) {
+			if ( (isset($timey)) && ($timey) ) {
+
+			    if ( (!checkdate($timey[1], $timey[0], $timey[2])) ) {
+
 				$error .= $lang['date_error'] . ' ';
-			} else {
+
+			    } else {
+
 				$minute = substr($timey[3], 2, 4);
 				$hour = substr($timey[3], 0, 2);
 				$unixtime = mktime($hour, $minute, 00, $timey[1], $timey[0], $timey[2]);
+			    }
 			}
 
 		$r2 = safe_query('show fields from ' . adjust_prefix($table_name));
@@ -979,14 +989,26 @@ class ShowTable {
 	}
 
     for ($j = 0; $j < mysql_num_rows($r2); $j++) {
+
 			$check = new Validator ();
+
 			if ($at[$j] == 'timestamp' && !array_key_exists("$an[$j]", $_POST)) {
-				$check->validateNumber($unixtime, 'invalid time' . ' ');
+
+			    $check->validateNumber($unixtime, 'invalid time' . ' ');
+
+				if ( (isset($sql)) ) { } else { $sql = NULL; }
+
 				$sql .= "" . $an[$j] . " = '" . returnSQLtimestamp($unixtime) . "',";
-			} else if ((last_word($an[$j]) == 'id') && (!$had_id)) {
+
+			} else if ( (last_word($an[$j]) == 'id') ) {
+
+			    if ( (isset($had_id)) ) { } else {
+
 				$had_id = 1;
 				$editid = $_POST[$an[$j]];
 				$idme = $an[$j];
+			    }
+
 			} else if (($an[$j] == 'page_content') && (isset($s)) && ($s == 'settings')) {
 				//skip it to protect the php in the page_content field
 			} else if (($an[$j] == 'admin') && (isset($s)) && ($s == 'settings')) {
@@ -1072,7 +1094,7 @@ class ShowTable {
 	     
 				if ($at[$j] == 'longtext') {
 					// remove para from <!--more-->
-					if ($m == 'dynamic') {
+					if ( (isset($m)) && ($m == 'dynamic') ) {
 						// hacky to try and clean the more
 						$value = str_replace('<p><!--more--></p>', '<!--more-->', $value);
 						$value = str_replace('<p> <!--more--></p>', '<!--more-->', $value);
@@ -1091,16 +1113,20 @@ class ShowTable {
 				if (($nullf[0] == 'not_null') && ($value == "")) { $error .= ucwords($an[$j]) . " " . $lang['is_required'] . ' '; }
 				
 				// if empty int set to 0
-				if( $at[$j] == 'int' ) $value = ($value?$value:0);
-				
-				$sql .= "`" . $an[$j] . "` = '" . $value . "',";
+				if( $at[$j] == 'int' ) $value = ($value ? $value : 0);
+
+				    if ( isset($sql) ) { } else { $sql = NULL; }
+
+					$sql .= "`" . $an[$j] . "` = '" . $value . "',";
 
 				if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
 	      	
 			}
 		}
-      
-		$sql = substr($sql, 0, (strlen($sql) - 1)) . "";
+
+		if ( isset($sql) ) { } else { $sql = NULL; }
+
+		    $sql = substr($sql, 0, (strlen($sql) - 1)) . "";
 
 		//echo $sql; //view the SQL for current form save
 				
