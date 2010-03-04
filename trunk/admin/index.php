@@ -80,8 +80,8 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }									/* set error reportin
 
 	if ( (isset($s)) && (isset($do)) && ($do == 'rss') && ($user) ) { adminrss($s, $user); } else {
 ?>
-<?php if (!isset($gzip_admin)) { $gzip_admin = 'no'; } if ($gzip_admin == 'yes') { if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) if (extension_loaded('zlib')) ob_start('ob_gzhandler'); else ob_start(); ?>
-	<?php } /* Start gzip compression */ ?>
+<?php if ( (isset($gzip_admin)) && ($gzip_admin == 'yes') && (!substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) && (!@extension_loaded('zlib')) && (!@ob_start("ob_gzhandler")) ) /* Start gzip compression */ { if ( !@ob_start() ) { $gzip_admin = 'no'; }
+      } else { $gzip_admin = 'no'; } ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
@@ -166,7 +166,9 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }									/* set error reportin
 	<?php } ?>
 
 </head>
-<?php @ob_flush(); flush(); /* Send the head so that the browser has something to do whilst it waits */ ?>
+
+<?php if ($gzip_admin == 'yes') { @ob_flush(); } flush(); /* Send the head so that the browser has something to do whilst it waits */ ?>
+
 <body class="pixie <?php $date_array = getdate(); print "y{$date_array['year']}"; print " m{$date_array['mon']}"; print " d{$date_array['mday']}"; print " h{$date_array['hours']}"; if ( (isset($s)) && ($s) ) { print " s_{$s}"; } if ( (isset($m)) && ($m) ) { print " m_{$m}"; } if ( (isset($x)) && ($x) ) { print " x_{$x}"; } if ( (isset($p)) && ($p) ) { print " p_{$p}"; } ?>">
 	<div id="message"></div>
 	<div id="pixie">
@@ -258,10 +260,9 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }									/* set error reportin
 	<noscript><style type="text/css">.jcarousel-skin-tango{max-height:100%;}.ck-textarea{display:block;}</style></noscript>
 </body>
 </html>
-<!-- page generated in: <?php pagetime('print');?> -->
-	<?php if ($gzip_admin == 'yes') { ?>
-	<?php if (extension_loaded('zlib')) ob_end_flush(); ?>
-	<?php } /* End gzip compression */ ?>
+	<!-- page generated in: <?php pagetime('print');?> -->
+	<?php if ($gzip_admin == 'yes') { @ob_end_flush(); } ?>
+
 <?php
 	}
 ?>
