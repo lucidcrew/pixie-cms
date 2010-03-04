@@ -415,12 +415,20 @@ switch ($do) {
 						$current = substr($current, 1, strlen($current) - 1);
 					}
 					$ncurrent = make_slug($current);
-					if ( (isset($s)) && (isset($ncurrent)) ) {
-					$tag_list .= "<a href=\"" . createURL($s,'tag', $ncurrent) . "\" title=\"" . $lang['view'] . " " . $lang['all_posts_tagged'] . ": " . $current . "\"  rel=\"tag\" >" . $current . "</a>, ";
-					}
-					if ($ncurrent != "") {
+
+					    if ( (isset($s)) && (isset($ncurrent)) ) {
+
+						if ( (isset($tag_list)) ) { } else { $tag_list = NULL; }
+
+						$tag_list .= "<a href=\"" . createURL($s,'tag', $ncurrent) . "\" title=\"" . $lang['view'] . " " . $lang['all_posts_tagged'] . ": " . $current . "\"  rel=\"tag\" >" . $current . "</a>, ";
+					    }
+
+					    if ($ncurrent != "") {
+
+						if ( (isset($class_list)) ) { } else { $class_list = NULL; }
+
 						$class_list .= "tag_$ncurrent ";
-					}
+					    }
 				}
 				$tag_list  = substr($tag_list, 0, (strlen($tag_list) - 2)) . "";
 			}
