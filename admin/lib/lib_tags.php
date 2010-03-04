@@ -3,7 +3,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 //*****************************************************************//
 // Pixie: The Small, Simple, Site Maker.                           //
 // ----------------------------------------------------------------//
-// Licence: GNU General Public License v3                          //
+// Licence: GNU General Public License v3                   	   //
 // Title: lib_tags.                                                //
 //*****************************************************************//
 
@@ -17,27 +17,27 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 		$first = NULL;
 		$last = NULL;
 
-		if ( isset($out['tags']) ) { } else { $out['tags'] = NULL; }
-
 		if ( ($rs) ) {
 			$i = 0;
-			while ($i < $num) {
-				$out = $rs[$i];
+			while ($i < $num){
+	  		$out = $rs[$i];
 
-				$all_tags = $out['tags'];
+			    if ( isset($out['tags']) ) { } else { $out['tags'] = NULL; }
+
+	  		$all_tags = $out['tags'];
 				$all_tags = strip_tags($all_tags);
 				$all_tags = str_replace('&quot;', "", $all_tags);
-				if ( ($all_tags != 0) ) { $last = $all_tags { strlen($all_tags) - 1 }; }
-				if ( ($all_tags != 0) ) { $first = $all_tags{ strlen($all_tags) - strlen($all_tags) }; }
+	  		if ( ($all_tags != 0) ) { $last = $all_tags { strlen($all_tags) - 1 }; }
+	  		if ( ($all_tags != 0) ) { $first = $all_tags{ strlen($all_tags) - strlen($all_tags) }; }
 
-				if ($last != " ") {
-					$all_tags = $all_tags." ";
+	  		if ($last != " ") {
+	  			$all_tags = $all_tags." ";
 				}
 				if ($first != " ") {
-					$all_tags = " {$all_tags}";
+	  			$all_tags = " {$all_tags}";
 				}
 
-				$tags_array_temp = explode(" ", $all_tags);
+	  		$tags_array_temp = explode(" ", $all_tags);
 
 				for ($count = 0; $count < (count($tags_array_temp)); $count++) {
 					$current = $tags_array_temp[$count];
@@ -99,7 +99,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 
 				$link = str_replace(" ", '-', $current);
 				if ( (isset($s)) && (isset($current)) ) {
-					$cloud .= "\t\t\t\t\t\t\t<a href=\"" . createURL($s, 'tag', $link) . "\" title=\"" . $lang['view'] . " " . $lang['all_posts_tagged'] . ": " . $current . "\" class=\"$tag_class\" rel=\"tag\">" . $current . "</a>,\n";
+				$cloud .= "\t\t\t\t\t\t\t<a href=\"" . createURL($s, 'tag', $link) . "\" title=\"" . $lang['view'] . " " . $lang['all_posts_tagged'] . ": " . $current . "\" class=\"$tag_class\" rel=\"tag\">" . $current . "</a>,\n";
 				}
 			}
 		$cloud  = substr($cloud, 0, (strlen($cloud) - 2)) . "";
@@ -120,7 +120,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 
 
 			$max = 0;
-			$min = 1;
+			$min = 1;			
 			for ($findmax = 1; $findmax < (count($tags_array)); $findmax++) {
 				$current = $tags_array[$findmax];
 				$rz = safe_rows('*', $table, $condition . " AND tags REGEXP '[[:<:]]" . $current . "[[:>:]]'");
@@ -134,7 +134,6 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 			}
 		
 			sort($tags_array);
-			$cloud = ''; // tag cloud
 			for ($final = 1; $final < (count($tags_array)); $final++) {
 				$current = $tags_array[$final];
 				$rz = safe_rows('*', $table, $condition . " AND tags REGEXP '[[:<:]]" . $current . "[[:>:]]'");
@@ -148,45 +147,53 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 				} else if ($total == $min) {
 					$tag_class = 'tag_min';
 				} else {
-					$inc = floor(($total * 10) / $max); 					
+					$inc = floor(($total * 10) / $max);
 					$tag_class = 'tag_' . $inc;
 				}
 				if ( (isset($s)) && (isset($current)) ) {
-					$cloud .= "\t\t\t\t\t\t<a href=\"?s=$s&amp;m=$m&amp;x=$x&amp;tag=" . make_slug($current) . "\" title=\"" . $lang['view'] . " " . $lang['all_posts_tagged'] . ": " . $current . "\" class=\"$tag_class\" rel=\"tag\">" . $current . "($total)</a>\n";
+
+				    if ( (isset($cloud)) ) { } else { $cloud = NULL; }
+
+				    $cloud .= "\t\t\t\t\t\t<a href=\"?s=$s&amp;m=$m&amp;x=$x&amp;tag=" . make_slug($current) . "\" title=\"" . $lang['view'] . " " . $lang['all_posts_tagged'] . ": " . $current . "\" class=\"$tag_class\" rel=\"tag\">" . $current . "($total)</a>\n";
 				}
 			}
 			$cloud  = substr($cloud, 0, (strlen($cloud)-1)) . "";
 			echo "$cloud\n";
 			echo "\n\t\t\t\t\t</div>\n";
-		}
+		}	
 	}
 // ------------------------------------------------------------------
 // creates a form tag adder
 	function form_tag($table, $condition) 
 	{
 		global $s, $m, $x, $site_url, $lang;
-		$tags_array = all_tags($table, $condition);	
+		$tags_array = all_tags($table, $condition);
 	
 		if (count($tags_array) != 0) {
 
 			$max = 0;
-			for ($findmax = 1; $findmax < (count($tags_array)); $findmax++) {
-				$current = $tags_array[$final];
+
+			for ($findmax = 1; $findmax < ( count($tags_array) ); $findmax++) {
+
+				$current = $tags_array[$findmax];
 				$rz = safe_rows('*', $table, $condition . " AND tags REGEXP '[[:<:]]" . $current . "[[:>:]]'");
 				$total = count($rz);
-				if ($total > $max) {
+
+				    if ($total > $max) {
+
 					$max = $total;
-				}
+				    }
 				$max = $max - 1;
 				$min = 1;
 			}
-		
+
 			sort($tags_array);
-			$cloud = ''; // tag cloud
 			for ($final = 1; $final < (count($tags_array)); $final++) {
 				$current = $tags_array[$final];
 				$rz = safe_rows('*', $table, $condition . " AND tags REGEXP '[[:<:]]" . $current . "[[:>:]]'");
 				$total = count($rz);	
+
+				    if (isset($cloud)) { } else { $cloud = NULL; }
 
 				$cloud .= "\t\t\t\t\t\t\t\t\t<a href=\"#\" rel=\"tag\" onclick=\"return false;\" title=\"Add tag " . $current."\">" . $current . "</a>\n";
 			}

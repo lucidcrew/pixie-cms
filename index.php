@@ -91,10 +91,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }										/* set error reporti
 	include_once ("admin/themes/{$site_theme}/theme.php"); }								/* New! Your custom theme file must be named theme.php instead of index.php */ /* Theme Override Super Feature */
 	else { 
 ?>
-
-<?php if (!isset($gzip_theme_output)) { $gzip_theme_output = 'no'; } if ($gzip_theme_output == 'yes') {
-      if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) if (extension_loaded('zlib')) ob_start('ob_gzhandler');
-      else ob_start();			} /* Start gzip compression */ ?>
+<?php if ( (isset($gzip_theme_output)) && ($gzip_theme_output == 'yes') && (!substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) && (!@extension_loaded('zlib')) && (!@ob_start("ob_gzhandler")) ) /* Start gzip compression */ { if ( !@ob_start() ) { $gzip_theme_output = 'no'; } } else { $gzip_theme_output = 'no'; } ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
@@ -135,7 +132,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }										/* set error reporti
 	<title><?php if ( (isset($ptitle)) && ($ptitle) ) { echo $ptitle; } else { build_title(); } ?></title>
 
 	<?php if (!isset($theme_g_apis_jquery)) { $theme_g_apis_jquery = 'no'; } if (!isset($theme_g_apis_jquery_loc)) { $theme_g_apis_jquery_loc = NULL; } if (!isset($theme_swfobject_g_apis)) { $theme_swfobject_g_apis = 'no'; } if (!isset($theme_swfobject_g_apis_loc)) { $theme_swfobject_g_apis_loc = NULL; } ?>
-	<?php /* Chain stuff to load by condition, either yes or no */ if ($theme_swfobject_g_apis == 'yes') { $theme_g_apis_jquery = 'yes'; } if ($theme_g_apis_jquery == 'yes') { $theme_swfobject_g_apis = 'yes'; } if ($theme_g_apis_jquery == 'yes') { $jquery = 'yes'; } if ($theme_swfobject_g_apis == 'yes') { $jquery = 'yes'; } ?>
+	<?php /* Chain stuff to load by condition, either yes or no */ if ($theme_g_apis_jquery == 'yes') { $jquery = 'yes'; } ?>
 
 	<!-- javascript -->
 	<?php if ($jquery == 'yes') { ?>
@@ -192,7 +189,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }										/* set error reporti
 
 </head>
 
-<?php @ob_flush(); flush(); /* Send the head so that the browser has something to do whilst it waits */ ?>
+<?php if ($gzip_theme_output == 'yes') { @ob_flush(); } flush(); /* Send the head so that the browser has something to do whilst it waits */ ?>
 
 <body id="pixie" class="pixie <?php $date_array = getdate(); print "y{$date_array['year']}"; print " m{$date_array['mon']}"; print " d{$date_array['mday']}"; print " h{$date_array['hours']}"; if ( (isset($s)) && ($s) ) { print " s_{$s}"; } if ($m) { print " m_{$m}"; } if ($x) { print " x_{$x}"; } if ($p) { print " p_{$p}"; } ?>">
 
@@ -278,10 +275,9 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }										/* set error reporti
 
 </body>
 </html>
-<!-- page generated in: <?php pagetime('print'); ?> -->
-	<?php if ($gzip_theme_output == 'yes') { ?>
-	<?php if (extension_loaded('zlib')) ob_end_flush(); ?>
-	<?php } /* End gzip compression */ ?>
+	<!-- page generated in: <?php pagetime('print'); ?> -->
+	<?php if ($gzip_theme_output == 'yes') { @ob_end_flush(); } ?>
+
 <?php 
 	}
 	} 
