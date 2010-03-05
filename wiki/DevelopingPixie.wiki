@@ -28,9 +28,15 @@
 
 = Coding Standards =
 
-== Short Tags `<? ... ?>` ==
-
-Not to be used, since not all web hosts support them. Use `<?php ... ?>` instead.
+== Short Tags ==
+{{{
+<? ... ?>
+}}}
+Not to be used, since not all web hosts support them. Use :
+{{{
+<?php ... ?>
+}}}
+Instead.
 
 == End tags ==
 
@@ -52,9 +58,17 @@ Use Linux / Unix style line endings (LF)
 
 ===(Proposal)===
 
-{{{ /* Style */ Type commenting for informative messages and developer info. }}}
+{{{
+/* Style */
+}}}
+Type commenting for informative messages and developer info.
 
-{{{ // Single line comments for warnings or critical information. }}}
+{{{
+// Single line comments.
+}}}
+For warnings or critical information.
+
+
 
 File content and license descriptors like this :
 {{{
@@ -104,10 +118,60 @@ UTF-8 (Highly recommended as the default.)
 
 Using :
 
-{{{$formtitle = "{$lang['advanced']} {$lang['page_settings']}";}}}
+{{{
+$formtitle = "{$lang['advanced']} {$lang['page_settings']}";
+}}}
 
 instead of :
 
-{{{$formtitle = $lang['advanced'] . " " . $lang['page_settings'];}}}
+{{{
+$formtitle = $lang['advanced'] . " " . $lang['page_settings'];
+}}}
 
 php is much faster when the coupled variables are expressed by wrapping them as one in quotation marks and then wrapping each variable inside the quotation marks individually as an expression (Using curly braces.) Spaces in between variables wrapped in curly braces, which are wrapped by double quotes are verbatim (Exactly as seen.)
+
+== TRUE, FALSE and NULL values ==
+
+===(Proposal)===
+
+Pixie's php code uses TRUE, FALSE and NULL (Must be upper case.)
+
+Pixie's javascript code uses true, false and null (Must be lower case.)
+
+== Variables, indexes and offsets ==
+
+===(Proposal)===
+
+Variables, indexes and offsets must always be defined prior to use.
+And be defined as NULL first if the variable can result in undefined (Unset) Should it's TRUE or FALSE return result in conditional operation and\or expression.
+
+Seeing as :
+
+{{{
+$foo = NULL;
+if ($foo) { /* Do this */ }
+}}}
+
+returns FALSE.
+
+To predefine variables as null, use this type of code :
+
+{{{
+if ( (isset($foo)) && ($foo) ) { /* Do nothing */ } else { $foo = NULL; }
+}}}
+
+Seeing as :
+
+{{{
+if ( (!isset($foo)) && (!$foo) ) { $foo = NULL; }
+}}}
+
+Does not work because php will throw an undefined message due to the fact it can not check and compare nothing against nothing.
+
+And :
+
+{{{
+if ( (isset($foo)) && ($foo) ) { /* Do nothing */ } else { $foo = ''; }
+}}}
+
+is just plain uninformative and can't be checked to see if it's value is NULL.
