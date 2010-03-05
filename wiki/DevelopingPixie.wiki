@@ -1,4 +1,4 @@
-#summary Guide on working with the Pixie codebase (DRAFT, Work in Progress).
+#summary Guide on working with the Pixie codebase (WORKING DRAFT PROPOSAL, Work in Progress).
 
 = File / Directory Structure =
 
@@ -11,7 +11,7 @@
     * install (installs pixie, delete when Pixie is installed)
     * jscript (JavaScript files used by Pixie)
       * ckeditor (CKEditor RichText editor)
-      * editor-plugins
+      * editor-plugins (Pixie's custom CKEditor RichText editor plugins)
     * lang (language files for translating Pixie - see [Languages])
     * lib (core libraries used by Pixie and for module / block development)
       * bad-behavior (spam prevention)
@@ -32,10 +32,82 @@
 
 Not to be used, since not all web hosts support them. Use `<?php ... ?>` instead.
 
+== End tags ==
+
+===(Proposal)===
+
+Document ending php close tags must not have a preceding empty space or line.
+Using document closing tags is not recommended because the php interpreter closes itself at the end of each script regardless.
+
 == Indentation ==
 
 Indent code using tabs, not spaces (perhaps some screenshots of settings to change in popular applications - e.g. Notepad++, Scintilla based apps like Programmers Notepad2?)
+One indentation is a double tab key tap (Double tap.)
 
 == Line Termination ==
 
 Use Linux / Unix style line endings (LF)
+
+== Comments ==
+
+===(Proposal)===
+
+{{{ /* Style */ Type commenting for informative messages and developer info. }}}
+
+{{{ // Single line comments for warnings or critical information. }}}
+
+File content and license descriptors like this :
+{{{
+/**
+ * Pixie: The Small, Simple, Site Maker.
+ * 
+ * Licence: GNU General Public License v3
+ * Copyright (C) 2008, Scott Evans
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/
+ *
+ * Title: Index
+ *
+ * @package Pixie
+ * @copyright 2008-2010 Scott Evans
+ * @author Scott Evans
+ * @author Sam Collett
+ * @author Tony White
+ * @link http://www.getpixie.co.uk
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3
+ * @todo loads of debugging!
+ *
+ */
+}}}
+At the top of every file, so that ide(s) such as kdevelop, (http://www.kdevelop.org/) netbeans, (http://netbeans.org/features/php/) Eclipse for PHP Developers (http://www.eclipse.org/) Or any syntax highlighting enabled text editor can understand them better.
+Anyone who edits the file adds their name to an @author statement, so it's easy to spot who has been working on it.
+
+== File type encoding, character set, database connection & storage collation ==
+
+===(Proposal)===
+UTF-8 (Highly recommended as the default.)
+
+== Variable coupling (Chaining) ==
+
+===(Proposal)===
+
+Using :
+
+{{{$formtitle = "{$lang['advanced']} {$lang['page_settings']}";}}}
+
+instead of :
+
+{{{$formtitle = $lang['advanced'] . " " . $lang['page_settings'];}}}
+
+php is much faster when the coupled variables are expressed by wrapping them as one in quotation marks and then wrapping each variable inside the quotation marks individually as an expression (Using curly braces.) Spaces in between variables wrapped in curly braces, which are wrapped by double quotes are verbatim (Exactly as seen.)
