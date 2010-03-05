@@ -18,13 +18,14 @@ switch ($do) {
 		$m_version = '1.1';
 		$m_type = 'module';
 		$m_publish = 'no';
+		$m_in_navigation = 'yes';
 
 	break;
 
 	// Install
 	case 'install' :
 		$execute = "CREATE TABLE IF NOT EXISTS `pixie_module_contact_settings` (`contact_id` mediumint(1) NOT NULL auto_increment,`show_profile_information` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',`show_vcard_link` set('yes','no') collate utf8_unicode_ci NOT NULL default 'no',PRIMARY KEY  (`contact_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;";
-		$execute1 = "INSERT INTO `pixie_module_contact_settings` (`contact_id`, `show_profile_information`, `show_vcard_link`) VALUES (1, 'yes', 'yes');";
+		$execute1 = "INSERT INTO `pixie_module_contact_settings` (`contact_id`, `show_profile_information`, `show_vcard_link`) VALUES (1, 'no', 'no');";
 	break;
 
 	// The administration of the module (add, edit, delete)

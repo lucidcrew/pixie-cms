@@ -52,7 +52,7 @@ if (isset($GLOBALS['pixie_user'])) {
 							<ul>
 								<li><b>$visitors</b> " . $lang['site_visitors'] . "</li>
 								<li><b>$pageviews</b> " . $lang['page_views'] . "</li>
-								<li><b>$badbcount</b> <a href=\"http://www.bad-behavior.ioerror.us/\" title=\"Spam protection by Bad Behavior\">" . $lang['spam_attacks'] . "</a>.</li>
+								<li><b>$badbcount</b> <a href=\"http://www.bad-behavior.ioerror.us/\" title=\"Spam protection by Bad Behavior\" target=\"_blank\">" . $lang['spam_attacks'] . "</a>.</li>
 							</ul>
 							<p class=\"plogin\">" . $lang['last_login_on'] . "<br/>$logindate.</p>
 						</div>\n";
@@ -61,16 +61,16 @@ if (isset($GLOBALS['pixie_user'])) {
 			echo "\t\t\t\t\t\n\t\t\t\t\t\t<h3 class=\"qlinks\">" . $lang['quick'] . " " . $lang['links'] . "</h3>\n\t\t\t\t\t\t<ul>\n";	
 			if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 1) {
 				extract(safe_row('*', 'pixie_core', "page_type = 'dynamic' order by page_views desc limit 0,1"));
-				if ($page_type == 'dynamic') { echo "\t\t\t\t\t\t\t<li><a href=\"" . $site_url . "admin/?s=publish&amp;m=dynamic&amp;x=$page_name&amp;go=new\" title=\"" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "\">" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "</a></li>\n"; }
+				if ($page_type == 'dynamic') { echo "\t\t\t\t\t\t\t<li><a href=\"" . $site_url . "admin/?s=publish&amp;m=dynamic&amp;x=$page_name&amp;go=new\" title=\"" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "\" >" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "</a></li>\n"; }
 				extract(safe_row('*', 'pixie_core', "page_type = 'static' order by page_views desc limit 0,1"));
-				if ($page_type == 'static') { echo "\t\t\t\t\t\t\t<li><a href=\"" . $site_url . "admin/?s=publish&amp;m=static&amp;x=$page_name&amp;edit=$page_id\" title=\"" . $lang['edit'] . "$page_display_name " . $lang['page']."\">" . $lang['edit'] . "$page_display_name " . $lang['page'] . "</a></li>\n"; }
-				extract(safe_row('*', 'pixie_core', "page_type = 'module' order by page_id desc limit 0,1")); /* Adding a new contact entry broke this as a list most used link feature, now it just goes for the newest thing you installed */
-				if ($page_type == 'module') { echo "\t\t\t\t\t\t\t<li><a href=\"" . $site_url . "admin/?s=publish&amp;m=module&amp;x=$page_name&amp;go=new\" title=\"" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "\">" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "</a></li>\n"; }
+				if ($page_type == 'static') { echo "\t\t\t\t\t\t\t<li><a href=\"" . $site_url . "admin/?s=publish&amp;m=static&amp;x=$page_name&amp;edit=$page_id\" title=\"" . $lang['edit'] . "$page_display_name " . $lang['page'] . "\" >" . $lang['edit'] . "$page_display_name " . $lang['page'] . "</a></li>\n"; }
+				extract(safe_row('*', 'pixie_core', "page_type = 'module' order by page_id desc limit 0,1"));
+				if ( ($page_type == 'module') && ($page_name != 'contact') ) { echo "\t\t\t\t\t\t\t<li><a href=\"" . $site_url . "admin/?s=publish&amp;m=module&amp;x=$page_name&amp;go=new\" title=\"" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "\" >" . $lang['new_entry'] . "$page_display_name " . $lang['entry'] . "</a></li>\n"; }
 			}
 
-			echo "\t\t\t\t\t\t\t<li class=\"linkspixie\"><a href=\"http://www.getpixie.co.uk/blog/\" title=\"Pixie " . $lang['blog'] . "\">Pixie " . $lang['blog'] . "</a></li>\n";
-			echo "\t\t\t\t\t\t\t<li><a href=\"http://www.getpixie.co.uk/forums/\" title=\"Pixie " . $lang['forums'] . "\">Pixie " . $lang['forums'] . "</a></li>\n";
-			echo "\t\t\t\t\t\t\t<li><a href=\"http://www.getpixie.co.uk/downloads/\" title=\"Pixie " . $lang['downloads'] . "\">Pixie " . $lang['downloads'] . "</a></li>\n\t\t\t\t\t\t</ul>\n";
+			echo "\t\t\t\t\t\t\t<li class=\"linkspixie\"><a href=\"http://www.getpixie.co.uk/blog/\" title=\"Pixie " . $lang['blog'] . "\" target=\"_blank\">Pixie " . $lang['blog'] . "</a></li>\n";
+			echo "\t\t\t\t\t\t\t<li><a href=\"http://www.getpixie.co.uk/forums/\" title=\"Pixie " . $lang['forums'] . "\" target=\"_blank\">Pixie " . $lang['forums'] . "</a></li>\n";
+			echo "\t\t\t\t\t\t\t<li><a href=\"http://www.getpixie.co.uk/downloads/\" title=\"Pixie " . $lang['downloads'] . "\" target=\"_blank\">Pixie " . $lang['downloads'] . "</a></li>\n\t\t\t\t\t\t</ul>\n";
 		}
 
 		echo "\t\t\t\t\t</div>\n";
@@ -78,9 +78,9 @@ if (isset($GLOBALS['pixie_user'])) {
 		extract($rs);
 		echo "\t\t\t\t\t<div class=\"admin_block\" id=\"admin_block_my_links\">";
 		echo "\n\t\t\t\t\t\t<h3 class=\"plinks\">" . firstword($GLOBALS['pixie_real_name']) . "'s " . $lang['links'] . "</h3>\n\t\t\t\t\t\t<ul>\n";
-		echo "\t\t\t\t\t\t\t<li><a href=\"$link_1\" title=\"Visit $link_1\">" . str_replace('http://', "", $link_1)."</a></li>\n";
-		echo "\t\t\t\t\t\t\t<li><a href=\"$link_2\" title=\"Visit $link_2\">" . str_replace('http://', "", $link_2)."</a></li>\n";
-		echo "\t\t\t\t\t\t\t<li><a href=\"$link_3\" title=\"Visit $link_3\">" . str_replace('http://', "", $link_3)."</a></li>\n";
+		echo "\t\t\t\t\t\t\t<li><a href=\"$link_1\" title=\"Visit $link_1\" target=\"_blank\">" . str_replace('http://', "", $link_1)."</a></li>\n";
+		echo "\t\t\t\t\t\t\t<li><a href=\"$link_2\" title=\"Visit $link_2\" target=\"_blank\">" . str_replace('http://', "", $link_2)."</a></li>\n";
+		echo "\t\t\t\t\t\t\t<li><a href=\"$link_3\" title=\"Visit $link_3\" target=\"_blank\">" . str_replace('http://', "", $link_3)."</a></li>\n";
 		echo "\t\t\t\t\t\t</ul>\n";
 		echo "\t\t\t\t\t</div>\n";
 
@@ -185,7 +185,7 @@ if (isset($GLOBALS['pixie_user'])) {
 								<tr class=\"$trclass\">
 									<td class=\"tbl_row\" headers=\"icon\"><img src=\"admin/theme/images/icons/$log_icon.png\" alt=\"$log_icon icon\" /></td>
 									<td class=\"tbl_row\" headers=\"when\">$time</td>
-									<td class=\"tbl_row\" headers=\"who\"><a href=\"http://network-tools.com/default.asp?prog=lookup&amp;host=$user_ip\" title=\"Lookup IP: $user_ip\">$user_ip</a> </td>
+									<td class=\"tbl_row\" headers=\"who\"><a href=\"http://network-tools.com/default.asp?prog=lookup&amp;host=$user_ip\" title=\"Lookup IP: $user_ip\" target=\"_blank\">$user_ip</a> </td>
 									<td class=\"tbl_row\" headers=\"from\">$from</a></td>
 								</tr>";
 				} else {
@@ -193,7 +193,7 @@ if (isset($GLOBALS['pixie_user'])) {
 								<tr class=\"$trclass\">
 									<td class=\"tbl_row\" headers=\"icon\"><img src=\"admin/theme/images/icons/$log_icon.png\" alt=\"$log_icon icon\" /></td>
 									<td class=\"tbl_row\" headers=\"when\">$time</td>
-									<td class=\"tbl_row\" headers=\"who\"><a href=\"http://network-tools.com/default.asp?prog=lookup&amp;host=$user_ip\" title=\"Lookup IP: $user_ip\">$user_id</a> </td>
+									<td class=\"tbl_row\" headers=\"who\"><a href=\"http://network-tools.com/default.asp?prog=lookup&amp;host=$user_ip\" title=\"Lookup IP: $user_ip\" target=\"_blank\">$user_id</a> </td>
 									<td class=\"tbl_row\" headers=\"what\">$log_message</td>
 								</tr>";
 				}

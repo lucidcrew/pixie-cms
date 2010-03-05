@@ -29,6 +29,8 @@ switch ($do) {
 		$m_type = 'module';
 		// Is this a module that needs publishing to?
 		$m_publish = 'yes';
+		// Put this module in the navigation by default?
+		$m_in_navigation = 'yes';
 
 	break;
 

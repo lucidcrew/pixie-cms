@@ -11,7 +11,7 @@
     /* To find error messages, search the page for php_errormsg if you turn this debug feature on */
 
     error_reporting(0); /* Turns off error reporting */
-
+    error_reporting(-1); /* Turns off error reporting */
 	if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); } /* very important to set this first, so that we can use the new config.php */
 
     global $timezone;
@@ -22,6 +22,7 @@
     $pixie_version = '1.04'; /* You can define the version number for Pixie releases here */
     $pixie_user = 'Pixie Installer'; /* The name on the first log */
     $pixie_server_timezone = 'Europe/London'; /* Hosted server timezone */
+    $pixie_charset = 'UTF-8';
     $pixie_step = 1;
     $pixie_dropolddata = 'no'; /* This feature currently doesn't work. No urgency to fix, it's only a debug feature. */
     $pixie_reinstall = 'no'; /* This feature currently doesn't work. No urgency to fix, it's only a debug feature. */
@@ -58,7 +59,7 @@
 
 		/* Step 2 - Create the config file, chmod the correct directories and install basic db stucture */
 
-		if ( (isset($pixie_prefix)) && ($pixie_prefix === 'pixie_') ) { $pixie_prefix = 'pixie__'; } /* Prevent pixie_ being used as the prefix */
+		if ( (isset($pixie_prefix)) && ($pixie_prefix === 'pixie_') ) { $pixie_prefix = 'data_'; } /* Prevent pixie_ being used as the prefix. Also note that the module installer string replaces pixie_ from the table name. */
 
 		if ( ($pixie_reinstall === 'yes') && ($pixie_dropolddata === 'yes') ) {
 
@@ -126,7 +127,7 @@
 
 			if ( (isset($pixie_database)) && ($pixie_database) ) {
 
-			    if (!mysql_query("CREATE DATABASE {$pixie_database}")) {
+			    if ( !mysql_query("CREATE DATABASE {$pixie_database} CHARACTER SET utf8 COLLATE utf8_unicode_ci") ) {
 
 				$error = "Error creating the database." . mysql_error(); /* Needs language */
 				$pixie_step = 1;
@@ -189,7 +190,7 @@
 				/* Write out Pixie's config file */
 			if ( (!isset($pixie_prefix)) && (!$pixie_prefix) ) { $pixie_prefix = NULL; }
 
-			    $db_selected = mysql_select_db($pixie_database);
+			    $db_selected = mysql_select_db($pixie_database); /* Select the database using the php function to do so */
 
 				if (!$db_selected) {
 
@@ -197,6 +198,15 @@
 				    $pixie_step = 1;
 
 				    break;
+
+				} else {
+
+				    $charset_to_lower = strtolower( str_replace('-', '', $pixie_charset) );
+				    $query_names = "SET NAMES '{$charset_to_lower}'";
+				    $set_db_names_charset = mysql_query($query_names); /* Set the name character set for database connection */
+				    $query_char = "SET CHARACTER SET '{$charset_to_lower}'";
+				    $set_db_charset = mysql_query($query_char); /* Set the character set for database connection */
+
 				}
 
 			if ( (filesize('../config.php') < 10) && (isset($pixie_database)) && ($pixie_database) ) {
@@ -223,7 +233,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../' ); exit(); }
 \$pixieconfig['server_timezone'] = '$pixie_server_timezone';
 
 /* Foreign language database bug fix */
-\$pixieconfig['site_charset'] = 'UTF-8';
+\$pixieconfig['site_charset'] = '$pixie_charset';
 ?>";
 
 				fwrite($fh, $data);
@@ -439,7 +449,6 @@ CREATE TABLE IF NOT EXISTS `{$pixie_prefix}pixie_settings` (
 `rich_text_editor` tinyint(1) NOT NULL default '0',
 `system_message` tinytext collate utf8_unicode_ci NOT NULL,
 `last_backup` varchar(120) collate utf8_unicode_ci NOT NULL default '',
-`bb2_installed` SET('yes','no') collate utf8_unicode_ci NOT NULL DEFAULT 'no',
 PRIMARY KEY  (`settings_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 		    ";
@@ -802,8 +811,10 @@ fwrite($temp, "$data");
 
 	    case 4 : /* Step 4 - Create the default admin user account and bring up the big finish */
 
-		if ( (!isset($pixie_install_complete)) && ($pixie_install_complete != 'Complete!') ) {
+		if ( (isset($pixie_install_complete)) ) { } else { $pixie_install_complete = NULL; }
+		if ($pixie_install_complete != 'Complete!') {
 
+		    include '../lib/lib_misc.php';			/* Libraries load order is important */
 		    include '../config.php'; 				/* Load the configuration */
 		    include '../lib/lib_db.php';			/* Libraries load order is important */
 		    $prefs = get_prefs(); 				/* create the prefs as an array */
@@ -1081,7 +1092,7 @@ www.getpixie.co.uk
 
     <?php }
 
-	  switch($pixie_step) {
+	  switch ($pixie_step) {
 
 	  case 4 :
 
@@ -1099,7 +1110,7 @@ www.getpixie.co.uk
 
 			  if ($file != '.' && $file != '..') {
 							
-			      if (is_dir($path) && !(is_writable($path))) {
+			      if ( is_dir($path) && !(is_writable($path)) ) {
 
 				  $warn_flag = TRUE;
 				  echo "<font size='-1'>Directory files/$file is not writable.</font><br>\n";

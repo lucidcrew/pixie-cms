@@ -13,6 +13,7 @@ if (!isset($username)) { $username = NULL; }
 if (!isset($uname)) { $uname = NULL; }
 if (!isset($password)) { $password = NULL; }
 if (!isset($table_name)) { $table_name = NULL; }
+if (!isset($site_url)) { $site_url = NULL; }
 $lang = array(
     /* System */
     'skip_to' => 'перейти к содержимому',
