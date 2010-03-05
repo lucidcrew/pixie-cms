@@ -92,7 +92,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 		}
 	
 		
-	} else if (isset($do) && $do == 'newpage') {
+	} else if ( (isset($do)) && ($do == 'newpage') ) {
 		if ($type == 'dynamic') {
 			echo "<div id=\"page_header\">
 				<h2>" . $lang['settings_page_new'] . " $type " . $lang['settings_page'] . "</h2>
@@ -109,41 +109,41 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 					$message = $lang['no_module_selected'];
 				} else {
 					/* Lets install */
-					/* Was : */ /* $do = install; */
-					/* Should it not be this : */ $do = 'install'; /* ? */
+					$do = 'install';
 					include('modules/' . $modplug . '.php');
 					
 					if ($execute) {
-						$execute =  str_replace('pixie_', $pixieconfig['table_prefix'] . "pixie_", $execute);
+						$execute =  str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $execute);
 						safe_query($execute);
 					} 
 					if ($execute1) {
-						$execute1 =  str_replace('pixie_', $pixieconfig['table_prefix'] . "pixie_", $execute1);
+						$execute1 =  str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $execute1);
 						safe_query($execute1);
 					}
 					if ($execute2) {
-						$execute2 =  str_replace('pixie_', $pixieconfig['table_prefix'] . "pixie_", $execute2);
+						$execute2 =  str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $execute2);
 						safe_query($execute2);
 					} 
 					if ($execute3) {
-						$execute3 =  str_replace('pixie_', $pixieconfig['table_prefix'] . "pixie_", $execute3);
+						$execute3 =  str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $execute3);
 						safe_query($execute3);
 					} 
 					if ($execute4) {
-						$execute4 =  str_replace('pixie_', $pixieconfig['table_prefix'] . "pixie_", $execute4);
+						$execute4 =  str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $execute4);
 						safe_query($execute4);
 					}
-					/* Was : */ /* $do = info; */
-					/* Should it not be this : */ $do = 'info'; /* ? */
+					$do = 'info';
 					include('modules/' . $modplug . '.php');
 
+					    if (isset($m_in_navigation)) { } else { $m_in_navigation = 'no'; }
+
 					// make a safe reference in core, not public etc
-					$sql = "page_type = '$m_type', page_name = '$modplug', page_display_name = '$m_name', page_description = '$m_description', privs = '2', publish = '$m_publish', public = 'yes', in_navigation = 'no', searchable = 'no'"; 
+					$sql = "page_type = '$m_type', page_name = '$modplug', page_display_name = '$m_name', page_description = '$m_description', privs = '2', publish = '$m_publish', public = 'yes', in_navigation = '$m_in_navigation', searchable = 'no'"; 
 					$coreok = safe_insert('pixie_core', $sql);
 					
 					if ($coreok) {
-						$messageok = $m_name." " . $lang['install_module_ok'];
-						logme($messageok, 'no', 'site'); 				  	
+						$messageok = $m_name . " " . $lang['install_module_ok'];
+						logme($messageok, 'no', 'site');
 					}
 				}
 			}
@@ -161,10 +161,10 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 							if (is_dir($dir)) {
 								$fd = @opendir($dir);
 								if($fd) {
-								while (($part = @readdir($fd)) === TRUE) {
+								while (($part = @readdir($fd)) == TRUE) {
 									if ($part != '.' && $part != '..') {
 									if ($part != 'index.php' && preg_match('/^[A-Za-z].*\.php$/', $part)) {
-									if (last_word($part) != 'functions.php') {	
+									if (last_word($part) != 'functions.php') {
 										$pname = str_replace('.php', "", $part);
 										$rs = safe_row('*', 'pixie_core', "page_name = '$pname' order by page_name asc");
 										
@@ -247,7 +247,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 					<?php
 					$rs = safe_rows('*', 'pixie_core', "public = 'yes' and in_navigation = 'yes' order by page_order asc");
 					if ($rs) {
-					$found = TRUE;	
+					$found = TRUE;
 					?>
 <h3><?php print $lang['pages_in_navigation']; ?></h3>
 					<p class="smallerp"><?php print $lang['pages_in_navigation_info']; ?></p>
@@ -295,7 +295,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 		  			$page_display_name = $out['page_display_name'];
 		  			$page_name = $out['page_name'];
 		  			$page_type = $out['page_type'];
-		  			$page_id = $out['page_id'];		
+		  			$page_id = $out['page_id'];
 		  		  if ($page_name == str_replace('/',"", $default_page)) {
 		  				$homestyle = 'phome';
 		  			} else {
@@ -326,7 +326,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 		  			$page_display_name = $out['page_display_name'];
 		  			$page_name = $out['page_name'];
 		  			$page_type = $out['page_type'];
-		  			$page_id = $out['page_id'];				  			
+		  			$page_id = $out['page_id'];
 
 		  			echo "\t\t\t\t\t\t<li id=\"$page_name\" class=\"page\"><span class=\"page_title\">$page_display_name</span><div class=\"page_tools\"><a href=\"?s=$s&amp;x=$x&amp;edit=$page_id\" class=\"page_settings\">" . $lang['nav2_settings'] . "</a></div></li>\n";
 
@@ -352,11 +352,11 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 		  			$page_display_name = $out['page_display_name'];
 		  			$page_name = $out['page_name'];
 		  			$page_type = $out['page_type'];
-		  			$page_id = $out['page_id'];				  	
-		  					
+		  			$page_id = $out['page_id'];
+
 		  			$homestyle = $page_type;
 
-		  			echo "\t\t\t\t\t\t<li id=\"$page_name\" class=\"page $homestyle\"><span class=\"page_title\">$page_display_name</span><div class=\"page_tools\"><a href=\"?s=$s&amp;x=$x&amp;edit=$page_id\" class=\"page_settings\">" . $lang['nav2_settings']."</a></div></li>\n";
+		  			echo "\t\t\t\t\t\t<li id=\"$page_name\" class=\"page $homestyle\"><span class=\"page_title\">$page_display_name</span><div class=\"page_tools\"><a href=\"?s=$s&amp;x=$x&amp;edit=$page_id\" class=\"page_settings\">" . $lang['nav2_settings'] . "</a></div></li>\n";
 
 		  		$i++;
 					}

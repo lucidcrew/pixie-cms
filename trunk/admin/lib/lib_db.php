@@ -49,8 +49,10 @@ class DB {
 
 		if ( (isset($pixieconfig['site_charset'])) && ($pixieconfig['site_charset']) ) {
 		$charset = strtolower( str_replace('-', '', $pixieconfig['site_charset']) );
-		$query = "set names '{$charset}'";
-		$set_db_charset = mysql_query($query); /* Set the character set for database connection */
+		$query_names = "SET NAMES '{$charset}'";
+		$set_db_names_charset = mysql_query($query_names); /* Set the name character set for database connection */
+		$query_char = "SET CHARACTER SET '{$charset}'";
+		$set_db_charset = mysql_query($query_char); /* Set the character set for database connection */
 		}
 
          $diff = $this->getTzdiff();

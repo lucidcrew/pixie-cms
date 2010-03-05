@@ -211,9 +211,9 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }									/* set error reportin
 		<div id="pixie_footer">
 			<div id="credits">
 				<ul id="credits_list">
-					<li id="cred_pixie"><a href="http://www.getpixie.co.uk/" title="Get Pixie">Pixie Powered.</a></li>
-					<li id="cred_licence"><?php print $lang['license']; ?> <a href="<?php print "{$site_url}license.txt"; ?>" title="<?php print $lang['license']; ?> GNU General Public License v3" rel="license">GNU General Public License v3</a>.</li>
-					<li id="cred_site"><a href="<?php print $site_url; ?>" title="<?php echo $lang['view_site']; ?>"><?php $site = strtolower(str_replace('http://', "", $site_url)); print $site; ?></a></li>
+					<li id="cred_pixie"><a href="http://www.getpixie.co.uk/" title="Get Pixie" target="_blank">Pixie Powered.</a></li>
+					<li id="cred_licence"><?php print $lang['license']; ?> <a href="<?php print "{$site_url}license.txt"; ?>" title="<?php print $lang['license']; ?> GNU General Public License v3" rel="license" target="_blank">GNU General Public License v3</a>.</li>
+					<li id="cred_site"><a href="<?php print $site_url; ?>" title="<?php echo $lang['view_site']; ?>" target="_blank"><?php $site = strtolower(str_replace('http://', "", $site_url)); print $site; ?></a></li>
 				</ul>
 			</div>
 		</div>
