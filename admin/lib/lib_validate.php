@@ -16,8 +16,9 @@ class Validator {
     var $errors; // A variable to store a list of error messages
     
     // Validate text only
-    function validateTextOnly($theinput, $description = ''){
-        $result = ereg ('^[A-Za-z0-9\ ]+$', $theinput );
+    function validateTextOnly($theinput, $description = '') {
+	/* Was : */ /* $result = ereg ('^[A-Za-z0-9\ ]+$', $theinput ); */ /* But ereg is now depreciated. */
+        $result = preg_match('^[A-Za-z0-9\ ]+$', $theinput );
         if ($result){
             return TRUE;
         }else{
@@ -27,8 +28,9 @@ class Validator {
     }
 
     // Validate text only, no spaces allowed
-    function validateTextOnlyNoSpaces($theinput, $description = ''){
-        $result = ereg ('^[A-Za-z0-9]+$', $theinput );
+    function validateTextOnlyNoSpaces($theinput, $description = '') {
+	/* Was : */ /* $result = ereg ('^[A-Za-z0-9]+$', $theinput ); */ /* But ereg is now depreciated. */
+        $result = preg_match('^[A-Za-z0-9]+$', $theinput );
         if ($result){
             return TRUE;
         }else{
@@ -38,8 +40,9 @@ class Validator {
     }
         
     // Validate email address
-    function validateEmail($themail, $description = ''){
-        $result = ereg ('^[^@ ]+@[^@ ]+\.[^@ \.]+$', $themail );
+    function validateEmail($themail, $description = '') {
+	/* Was : */ /* ereg ('^[^@ ]+@[^@ ]+\.[^@ \.]+$', $themail ); */ /* But ereg is now depreciated. */
+        $result = preg_match('^[^@ ]+@[^@ ]+\.[^@ \.]+$', $themail );
         if ($result){
             return TRUE;
         }else{

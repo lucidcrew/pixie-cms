@@ -10,8 +10,8 @@
 
     /* To find error messages, search the page for php_errormsg if you turn this debug feature on */
 
-    error_reporting(0); /* Turns off error reporting */
-    error_reporting(-1); /* Turns off error reporting */
+    error_reporting(0); /* Turns off error reporting */ error_reporting(-1); /* Turns on error reporting */
+
 	if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); } /* very important to set this first, so that we can use the new config.php */
 
     global $timezone;
@@ -23,35 +23,19 @@
     $pixie_user = 'Pixie Installer'; /* The name on the first log */
     $pixie_server_timezone = 'Europe/London'; /* Hosted server timezone */
     $pixie_charset = 'UTF-8';
-    $pixie_step = 1;
     $pixie_dropolddata = 'no'; /* This feature currently doesn't work. No urgency to fix, it's only a debug feature. */
     $pixie_reinstall = 'no'; /* This feature currently doesn't work. No urgency to fix, it's only a debug feature. */
     $pixie_url = str_replace('admin/install/index.php', "", "http://{$_SERVER["SERVER_NAME"]}{$_SERVER["REQUEST_URI"]}");
     $error = NULL; /* Holding php's hand for it until it learns what the difference between NULL and undefined. */
     $password = NULL; /* Don't know how php is creating this variable. It is not used. */
 
+	if ( isset($pixie_step) ) { } else { $pixie_step = 1; }
+
 	/* If php version 5.10 or newer, set php server time zone */
 
 	if (strnatcmp(phpversion(),'5.1.0') >= 0) { date_default_timezone_set("$pixie_server_timezone"); }
 
     extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie'); /* Access to form vars */
-
-
-	if ($debug === 'yes') {
-
-	    error_reporting(-1);
-	    $show_vars = get_defined_vars();
-	    echo '<p><pre class="showvars">The _REQUEST array contains : ';
-	    htmlspecialchars(print_r($show_vars["_REQUEST"]));
-	    echo '</pre></p>';
-	    echo '<p><pre class="showvars">The prefs array contains : ';
-	    htmlspecialchars(print_r($show_vars["prefs"]));
-	    echo '</pre></p>';
-	    echo '<p><pre class="showvars">The php_errormsg message array contains : ';
-	    if ( isset($show_vars["php_errormsg"]) ) { htmlspecialchars(print_r($show_vars["php_errormsg"])); }
-	    echo '</pre></p>';
-	}
-
 
 	switch ($pixie_step) {
 
@@ -452,6 +436,8 @@ CREATE TABLE IF NOT EXISTS `{$pixie_prefix}pixie_settings` (
 PRIMARY KEY  (`settings_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 		    ";
+
+/* `bb2_installed` SET('yes','no') collate utf8_unicode_ci NOT NULL DEFAULT 'no', */ /* Is already in upgrade.sql */
 
 		    $ok = safe_query($sql10);
 
@@ -1477,12 +1463,6 @@ www.getpixie.co.uk
 	      </div>
 	</div>
   </div>
-
-<?php if ($debug === 'yes') {
-	/* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), TRUE)) . '</pre>';
-	phpinfo();
-} ?>
-
 	<!-- If javascript is disabled -->
 	<noscript><style type="text/css">#bg-wrap{display:block;}.extra{display:block;}</style></noscript>
 	<!-- javascript -->

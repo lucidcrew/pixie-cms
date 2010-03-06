@@ -112,23 +112,23 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 2) {
 					$do = 'install';
 					include('modules/' . $modplug . '.php');
 					
-					if ($execute) {
+					if ( (isset($execute)) && ($execute) ) {
 						$execute =  str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $execute);
 						safe_query($execute);
 					} 
-					if ($execute1) {
+					if ( (isset($execute1)) && ($execute1) ) {
 						$execute1 =  str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $execute1);
 						safe_query($execute1);
 					}
-					if ($execute2) {
+					if ( (isset($execute2)) && ($execute2) ) {
 						$execute2 =  str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $execute2);
 						safe_query($execute2);
 					} 
-					if ($execute3) {
+					if ( (isset($execute3)) && ($execute3) ) {
 						$execute3 =  str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $execute3);
 						safe_query($execute3);
 					} 
-					if ($execute4) {
+					if ( (isset($execute4)) && ($execute4) ) {
 						$execute4 =  str_replace('pixie_', $pixieconfig['table_prefix'] . 'pixie_', $execute4);
 						safe_query($execute4);
 					}

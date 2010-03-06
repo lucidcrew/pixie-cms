@@ -1,5 +1,4 @@
 <?php
-if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 /*
 Bad Behavior - detects and blocks unwanted Web accesses
 Copyright (C) 2005-2006 Michael Hampton
@@ -15,7 +14,7 @@ define('BB2_CWD', dirname(__FILE__));
 // Settings you can adjust for Bad Behavior.
 // Most of these are unused in non-database mode.
 $bb2_settings_defaults = array(
-	'log_table' => $pixieconfig['table_prefix'].'pixie_bad_behavior',
+	'log_table' => "{$pixieconfig['table_prefix']}pixie_bad_behavior",
 	'display_stats' => TRUE,
 	'strict' => FALSE,
 	'verbose' => FALSE,
@@ -38,6 +37,27 @@ function bb2_db_affected_rows($result) {
 // Escape a string for database usage
 function bb2_db_escape($string) {
 	return mysql_real_escape_string($string);
+}
+
+// Our log table structure
+function bb2_table_structure($name)
+{
+	// It's not paranoia if they really are out to get you.
+	$name_escaped = bb2_db_escape($name);
+	return "CREATE TABLE IF NOT EXISTS `$name_escaped` (
+			`id` INT(11) NOT NULL auto_increment,
+			`ip` TEXT NOT NULL,
+			`date` DATETIME NOT NULL default '0000-00-00 00:00:00',
+			`request_method` TEXT NOT NULL,
+			`request_uri` TEXT NOT NULL,
+			`server_protocol` TEXT NOT NULL,
+			`http_headers` TEXT NOT NULL,
+			`user_agent` TEXT NOT NULL,
+			`request_entity` TEXT NOT NULL,
+			`key` TEXT NOT NULL,
+			INDEX (`ip`(15)),
+			INDEX (`user_agent`(10)),
+			PRIMARY KEY (`id`) );"; // TODO: INDEX might need tuning
 }
 
 // Return the number of rows in a particular query.
@@ -122,7 +142,7 @@ function bb2_relative_path() {
 	return '/';
 }
 
-// Calls inward to Bad Behavor itself.
+// Calls inward to Bad Behavior itself.
 require_once(BB2_CWD . '/bad-behavior/version.inc.php');
 require_once(BB2_CWD . '/bad-behavior/core.inc.php');
 if ($bb2_installed == 'no') { bb2_install(); }
