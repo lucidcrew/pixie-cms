@@ -24,7 +24,7 @@ switch ($do) {
 		// What is the URL of your homepage
 		$m_url = 'http://www.toggle.uk.com';
 		// What version is this?
-		$m_version = 1;
+		$m_version = 1.1;
 		// Can be set to module or plugin.
 		$m_type = 'module';
 		// Is this a module that needs publishing to?
@@ -39,6 +39,7 @@ switch ($do) {
 	case 'install' :
 		// Create any required tables
 		$execute = "CREATE TABLE IF NOT EXISTS `pixie_module_links` (`links_id` int(4) NOT NULL auto_increment,`link_title` varchar(150) collate utf8_unicode_ci NOT NULL default '',`tags` varchar(200) collate utf8_unicode_ci NOT NULL default '',`url` varchar(255) collate utf8_unicode_ci NOT NULL default '',PRIMARY KEY  (`links_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;";
+		$execute1 = "CREATE TABLE IF NOT EXISTS `pixie_module_links_settings` (`links_id` mediumint(1) NOT NULL auto_increment,PRIMARY KEY  (`links_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;";
 	break;
 
 	// The administration of the module (add, edit, delete)

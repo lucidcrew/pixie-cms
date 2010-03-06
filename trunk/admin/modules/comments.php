@@ -17,7 +17,7 @@ switch ($do) {
 	   $m_description = 'This plugin will allow visitors to leave a comment on any post in a dynamic page.';
 	   $m_author = 'Scott Evans';
 	   $m_url = 'http://www.toggle.uk.com';
-	   $m_version = 1;
+	   $m_version = 1.1;
 	   $m_type = 'plugin';
 	   $m_publish = 'yes';
 
@@ -30,16 +30,16 @@ switch ($do) {
   	// admin of module
 	case 'admin':
 	
-	   $module_name= 'comments';																			
-	   $table_name = 'pixie_module_comments';														
-	   $order_by = 'posted';		  																
-	   $asc_desc = 'desc';        																	
+	   $module_name= 'comments';
+	   $table_name = 'pixie_module_comments';
+	   $order_by = 'posted';
+	   $asc_desc = 'desc';
 	   $view_exclude = array('comments_id', 'post_id', 'page_id', 'url', 'admin_user');
 	   $edit_exclude = array('comments_id', 'post_id');
-	   $view_number = '20';	
+	   $view_number = '20';
 	   $tags = 'no';
 	   
-	   admin_module($module_name, $table_name, $order_by,$asc_desc, $view_exclude, $edit_exclude, $view_number, $tags);
+	   admin_module($module_name, $table_name, $order_by, $asc_desc, $view_exclude, $edit_exclude, $view_number, $tags);
 
 	break;
 

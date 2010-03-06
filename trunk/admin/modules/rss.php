@@ -17,7 +17,7 @@ switch ($do) {
 	   $m_description = 'Allows you to have control over the RSS feeds that are available to your visitors.';
 	   $m_author = 'Scott Evans';
 	   $m_url = 'http://www.toggle.uk.com/';
-	   $m_version = 1;
+	   $m_version = 1.1;
 	   $m_type = 'plugin';
 	   $m_publish = 'yes';
 	   
@@ -27,6 +27,7 @@ switch ($do) {
 	case 'install' :
 		// create any required tables
 		$execute = "CREATE TABLE IF NOT EXISTS `pixie_module_rss` (`rss_id` tinyint(2) NOT NULL auto_increment,`feed_display_name` varchar(80) collate utf8_unicode_ci NOT NULL default '',`url` varchar(80) collate utf8_unicode_ci NOT NULL default '',PRIMARY KEY  (`rss_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;";
+		$execute1 = "CREATE TABLE IF NOT EXISTS `pixie_module_rss_settings` (`rss_id` mediumint(1) NOT NULL auto_increment,PRIMARY KEY  (`rss_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;";
 	break;
  
 	// pre (to be run before page load)

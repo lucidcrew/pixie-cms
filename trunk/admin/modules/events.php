@@ -22,7 +22,7 @@ switch ($do) {
 		// What is the URL of your homepage
 		$m_url = 'http://www.toggle.uk.com';
 		// What version is this?
-		$m_version = '1';
+		$m_version = '1.1';
 		// Can be set to module or plugin.
 		$m_type = 'module';
 		// Is this a module that needs publishing to?

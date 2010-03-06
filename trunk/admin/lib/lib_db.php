@@ -100,9 +100,9 @@ $DB = new DB;
 			}
 		}
 		
-		$result = $method($q, $DB->link);
+		    if ($q != '' or NULL) { $result = $method($q, $DB->link); }
 
-		    if (!$result) { return FALSE; } else { 
+		    if ( (isset($result)) && ($result) ) {
 
 			$test_resource = $result;
 
@@ -120,6 +120,10 @@ $DB = new DB;
 			    } /* Don't need to do this for php 4 */
 
 			return $result;
+
+		    } else {
+
+			return FALSE;
 
 		    }
 

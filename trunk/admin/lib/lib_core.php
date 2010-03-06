@@ -277,7 +277,7 @@ class ShowTable {
 	   					}
 	   				}
 		  
-	   			echo "\t\t\t\t\t\t\t<div class=\"form_row\">\n\t\t\t\t\t\t\t\t<div class=\"form_label\">
+					echo "\t\t\t\t\t\t\t<div class=\"form_row\">\n\t\t\t\t\t\t\t\t<div class=\"form_label\">
 					<label for=\"$Nams[$j]\">" . $displayname . "</label>$form_help</div>\n";    //$Type[$j] $Leng[$j] $Flag[$j] for field info
 	   				//echo "$Nams[$j] - $Type[$j] - $Leng[$j] - $Flag[$j]"; // see form field properties
 					if ( ($Type[$j] == 'timestamp') && (!isset($edit)) && (!$edit) ) {
@@ -584,7 +584,7 @@ class ShowTable {
 				}
 			} else if (isset($table_name)) {
 				$lo = ($page - 1) * $view_number;
-				if ($search_submit)	{
+				if ($search_submit) {
 					if ($m == 'dynamic') {
 						$page_id = get_page_id($x);
 						$r = safe_query("select * from $table_name where page_id = '$page_id' and (" . $search_sql . ") order by $order_by $asc_desc");
@@ -593,7 +593,7 @@ class ShowTable {
 					}
 				} else if ((isset($tag)) && ($tag)) {
 					$r = safe_query("select * from $table_name where tags REGEXP '[[:<:]]" . $tag . "[[:>:]]' order by $order_by $asc_desc");				
-				} else {	
+				} else {
 					$r = safe_query("select * from $table_name $condition order by $order_by $asc_desc limit $lo,$view_number");
 				}
 			}
@@ -673,7 +673,7 @@ class ShowTable {
 		if (isset($GLOBALS['pixie_user_privs'])) {
 		$rs = safe_rows('*', 'pixie_core', "public = 'yes' and in_navigation = 'yes' and publish = 'yes' and page_type != 'plugin' and privs <= '" . $GLOBALS['pixie_user_privs'] . "' order by page_order asc");
 		}
-		if ($rs) {	
+		if ($rs) {
 			$num = count($rs);
 			$i = 0;
 			while ($i < $num){
@@ -681,7 +681,7 @@ class ShowTable {
 				$page_display_name = $out['page_display_name'];
 				$page_name = $out['page_name'];
 				$page_type = $out['page_type'];
-				$page_id = $out['page_id'];		
+				$page_id = $out['page_id'];
 
 				$m = $page_type;
 				$x = $page_name;
@@ -992,6 +992,8 @@ class ShowTable {
 
 			$check = new Validator ();
 
+			    if (isset($had_id)) { } else { $had_id = NULL; }
+
 			if ($at[$j] == 'timestamp' && !array_key_exists("$an[$j]", $_POST)) {
 
 			    $check->validateNumber($unixtime, 'invalid time' . ' ');
@@ -1000,14 +1002,12 @@ class ShowTable {
 
 				$sql .= "" . $an[$j] . " = '" . returnSQLtimestamp($unixtime) . "',";
 
-			} else if ( (last_word($an[$j]) == 'id') ) {
-
-			    if ( (isset($had_id)) ) { } else {
+			} else if ( (last_word($an[$j]) == 'id') && ($had_id === NULL) ) {
 
 				$had_id = 1;
 				$editid = $_POST[$an[$j]];
 				$idme = $an[$j];
-			    }
+			  
 
 			} else if (($an[$j] == 'page_content') && (isset($s)) && ($s == 'settings')) {
 				//skip it to protect the php in the page_content field

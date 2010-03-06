@@ -86,7 +86,13 @@ switch ($do) {
 				if (isset($email)) { $semail = sterilise($email); }
 
 				$scream = array();
-				if (!$name) { $error .= $lang['comment_name_error'] . ' '; $scream[] = 'name'; }
+				if (!$name) { 
+
+				    if ( isset($error) ) { } else { $error = NULL; }
+
+				    $error .= $lang['comment_name_error'] . ' '; $scream[] = 'name';
+
+				}
 				if (!$comment) { $error .= $lang['comment_comment_error'] . ' '; $scream[] = 'comment'; }
 				$check = new Validator ();
 				if (!$check->validateEmail($email, $lang['comment_email_error'] . ' ')) { $scream[] = 'email'; }
@@ -105,7 +111,12 @@ switch ($do) {
   				if (strcasecmp($comment, $last_comment) === 0) { $duplicate = 1; }
 				}
 
-				if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
+				if ($check->foundErrors()) {
+
+				    if ( isset($error) ) { } else { $error = NULL; }
+
+				    $error .= $check->listErrors('x');
+				}
 				
 				$commentson = safe_field('comments', 'pixie_dynamic_posts', "post_id ='$post'");
 
@@ -113,11 +124,11 @@ switch ($do) {
 				
 						// PROBABLY NEED TO SAVE DATE ON COMMENT MANUALLY
 
-				if (!isset($error)) {
+				    if ( isset($error) ) { sleep(6); // slow spammers down  } else {
 
 			if ($duplicate !== 1) {
 
-						if ($admin_user) {
+						if ( (isset($admin_user)) && ($admin_user) ) {
 							$admin_user = strip_tags($admin_user);
 							$sql = "comment = '$comment', name = '$name', email = '$email', url = '$web', post_id = '$post', admin_user = 'yes'";
 						} else {
@@ -136,9 +147,6 @@ switch ($do) {
 						$err = explode('|', $error);
 						$error = $err[0];
 					}
-				} else {
-					/* logme($lang['comment_spam'], 'yes', 'comment_error'); */ /* No need to log something we can't action */
-					sleep(10); // slow spammers down
 				}
 			}
 

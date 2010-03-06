@@ -18,7 +18,8 @@ UPDATE `pixie_settings` SET `site_theme` = 'itheme' WHERE `pixie_settings`.`sett
 -- setup the other modules pixie ships with (contact, events, RSS, links)
 INSERT INTO `pixie_core` (`page_id`, `page_type`, `page_name`, `page_display_name`, `page_description`, `page_blocks`, `page_content`, `page_views`, `page_parent`, `privs`, `publish`, `public`, `in_navigation`, `page_order`, `searchable`, `last_modified`) VALUES (5, 'module', 'contact', 'Contact', '<p>A simple contact form for your website with hCard/vCard Microformats.</p>', 'demo flickr_badge', '', 0, '', 2, 'no', 'yes', 'yes', 5, 'no', '2008-04-25 10:33:42'), (6, 'plugin', 'rss', 'RSS Plugin', 'Allows you to have control over the RSS feeds that are available to your visitors.', '', '', 0, '', 0, 'yes', 'yes', 'no', 0, 'no', '2008-04-22 18:32:36'), (7, 'module', 'events', 'Events', '<p>Events module with support for hCalendar microformat, archives and Google calendar links.</p>', 'digg tagcloud', '', 0, '', 2, 'yes', 'yes', 'yes', 3, 'no', '2008-04-25 10:33:39'), (8, 'module', 'links', 'Links', 'Store a collection of links on your website and group them by tag.', 'digg tagcloud', NULL, 0, NULL, 2, 'yes', 'yes', 'yes', 0, 'no', '2008-04-25 11:05:07');
 
--- contact table
+-- contact tables
+CREATE TABLE IF NOT EXISTS `pixie_module_contact` (`contact_id` mediumint(1) NOT NULL auto_increment,PRIMARY KEY  (`contact_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 CREATE TABLE IF NOT EXISTS `pixie_module_contact_settings` (`contact_id` mediumint(1) NOT NULL auto_increment,`show_profile_information` set('yes','no') collate utf8_unicode_ci NOT NULL default 'yes',`show_vcard_link` set('yes','no') collate utf8_unicode_ci NOT NULL default 'no',PRIMARY KEY  (`contact_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 -- events tables
@@ -28,8 +29,15 @@ CREATE TABLE IF NOT EXISTS `pixie_module_events_settings` (`events_id` mediumint
 -- events settings
 INSERT INTO `pixie_module_events_settings` (`events_id`, `google_calendar_links`, `number_of_events`) VALUES (1, 'yes', '10');
 
+-- create pixie_module_comments_settings table
+CREATE TABLE IF NOT EXISTS `pixie_module_comments_settings` (`comments_id` mediumint(1) NOT NULL auto_increment,PRIMARY KEY  (`comments_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+-- create pixie_module_links_settings table
+CREATE TABLE IF NOT EXISTS `pixie_module_links_settings` (`links_id` mediumint(1) NOT NULL auto_increment,PRIMARY KEY  (`links_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
 -- RSS table
 CREATE TABLE IF NOT EXISTS `pixie_module_rss` (`rss_id` tinyint(2) NOT NULL auto_increment,`feed_display_name` varchar(80) collate utf8_unicode_ci NOT NULL default '', `url` varchar(80) collate utf8_unicode_ci NOT NULL default '', PRIMARY KEY  (`rss_id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `pixie_module_rss_settings` (`rss_id` mediumint(1) NOT NULL auto_increment,PRIMARY KEY  (`rss_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 -- links table
 CREATE TABLE IF NOT EXISTS `pixie_module_links` (`links_id` int(4) NOT NULL auto_increment,`link_title` varchar(150) collate utf8_unicode_ci NOT NULL default '',`tags` varchar(200) collate utf8_unicode_ci NOT NULL default '',`url` varchar(300) collate utf8_unicode_ci NOT NULL default '',PRIMARY KEY  (`links_id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
