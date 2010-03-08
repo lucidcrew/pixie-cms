@@ -10,6 +10,6 @@ ALTER TABLE `pixie_settings` CHANGE `site_url` `site_url` VARCHAR( 255 ) CHARACT
 -- add new setting for tracking bad behaviour install
 ALTER TABLE `pixie_settings` ADD COLUMN `bb2_installed` SET( 'yes', 'no' ) NOT NULL DEFAULT 'no' AFTER `last_backup` ;
 
--- v1.04
+-- v1.04a
 -- set version number
-UPDATE `pixie_settings` SET `version` = '1.04' WHERE `pixie_settings`.`settings_id` = 1 LIMIT 1 ;
+UPDATE `pixie_settings` SET `version` = '1.04a' WHERE `pixie_settings`.`settings_id` = 1 LIMIT 1 ;

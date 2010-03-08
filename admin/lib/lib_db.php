@@ -100,24 +100,24 @@ $DB = new DB;
 			}
 		}
 		
-		    if ($q != '' or NULL) { $result = $method($q, $DB->link); }
+		    if ( (isset($q)) && ( $q != '' or NULL) ) { $result = $method($q, $DB->link); }
 
 		    if ( (isset($result)) && ($result) ) {
 
-			$test_resource = $result;
+//			    if (strnatcmp(phpversion(),'5.0.0') >= 0) {
 
-			    if (strnatcmp(phpversion(),'5.0.0') >= 0) {
+//			    $test_resource = $result;
 
-				if ( (is_resource($test_resource)) && ($unbuf != 'mysql_unbuffered_query') ) {
+//				if ( (is_resource($test_resource)) && ($unbuf != 'mysql_unbuffered_query') ) {
 
-				    if ( (first_word($q) == 'SELECT' or 'SHOW' or 'EXPLAIN' or 'DESCRIBE') ) {
+//				    if ( (first_word($q) == 'SELECT' or 'SHOW' or 'EXPLAIN' or 'DESCRIBE') ) {
 
-					mysql_free_result( mysql_query($q) );
-				    }
+//					mysql_free_result( mysql_query($q) );
+//				    }
 
-				}
+//				}
 
-			    } /* Don't need to do this for php 4 */
+//			    } /* Don't need to do this for php 4 */ /* While this works, something else is causing an Unknown: 1 result set(s) not freed. Use mysql_free_result to free result sets which were requested using mysql_query() in Unknown on line 0 error */
 
 			return $result;
 
@@ -400,6 +400,15 @@ $DB = new DB;
 		}
 
 	}
+//------------------------------------------------------------------
+function getSqlVersion() { 
+
+   $output = @shell_exec('mysql -V'); 
+   preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $version);
+
+      if ( isset($version[0]) ) { return $version[0]; } else { return FALSE; }
+
+}
 //------------------------------------------------------------------
 	function db_down() 
 	{

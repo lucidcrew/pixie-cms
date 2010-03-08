@@ -155,15 +155,14 @@ class ShowTable {
 			$this->Pkn = $Pkn;
 			$this->exclude = $edit_exclude;
 			$this->tablename = $table_name;
-			$this->fields = safe_query("SHOW fields from `$table_name`");
 		}
-
+		
 		function ShowBody () {
 	 		global $edit, $s, $m, $x, $page, $page_display_name, $lang, $type;
 
 			// check $edit against $x - they need to represent the same page, if not redirect.
 			$checkid = safe_field('page_id', 'pixie_core', "page_name='$x'");
-
+			
 			if ((isset($edit)) && ($edit) && ($m == 'static')) {
 				if ($edit != $checkid) {
 					echo "<div class=\"helper\"><h3>" . $lang['help'] . "</h3><p>" . $lang['unknown_edit_url'] . "</p></div>";
@@ -180,7 +179,7 @@ class ShowTable {
 				$Leng = explode( '|', substr($this->Len, 0, (strlen( $this->Len ) - 1)) );
 				$Flag = explode( '|', substr($this->Flg, 0, (strlen( $this->Flg ) - 1)) );
 				$Fild = explode( '|', substr($this->Res, 0, (strlen( $this->Res ) - 1)) );
-
+		
 				if (!$page) { $page = 1; }
 
 				if ((isset($s)) && ($s == 'settings')) {
@@ -238,143 +237,131 @@ class ShowTable {
 
 					$nullf = explode(" ", $Flag[$j]);
 
-					if ($nullf[0] == 'not_null') { // label required fields
-						if ( (isset($lang['form_' . $Nams[$j]])) ) {
+	   				if ($nullf[0] == 'not_null') { // label required fields
+	   					if ( (isset($lang['form_' . $Nams[$j]])) ) {
 						if ( ($Nams[$j] != 'page_name')  or ($type == 'static') or (!isset($edit)) or (!$edit) ) {	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
-							$displayname = $lang['form_' . $Nams[$j]] . " <span class=\"form_required\">" . $lang['form_required'] . "</span>";
+	   						$displayname = $lang['form_' . $Nams[$j]] . " <span class=\"form_required\">" . $lang['form_required'] . "</span>";
 						} else {
-							$displayname = " <span style=\"display:none\" class=\"form_required\">" . $lang['form_required'] . "</span>";
+	   						$displayname = " <span style=\"display:none\" class=\"form_required\">" . $lang['form_required'] . "</span>";
 						}
-						} else {
-							$displayname = simplify($Nams[$j]) . " <span class=\"form_required\">" . $lang['form_required'] . "</span>";
-						}
-					} else {
-						if ( (isset($lang['form_' . $Nams[$j]])) && ($lang['form_' . $Nams[$j]]) ) {
-							$displayname = $lang['form_' . $Nams[$j]] . " <span class=\"form_optional\">" . $lang['form_optional'] . "</span>";
-						} else {
-							$displayname = simplify($Nams[$j]) . " <span class=\"form_optional\">" . $lang['form_optional'] . "</span>";
-						}
-					}
+	   					} else {
+	   						$displayname = simplify($Nams[$j]) . " <span class=\"form_required\">" . $lang['form_required'] . "</span>";
+	   					}
+	   				} else {
+	   					if ( (isset($lang['form_' . $Nams[$j]])) && ($lang['form_' . $Nams[$j]]) ) {
+	   						$displayname = $lang['form_' . $Nams[$j]] . " <span class=\"form_optional\">" . $lang['form_optional'] . "</span>";
+	   					} else {
+	   						$displayname = simplify($Nams[$j]) . " <span class=\"form_optional\">" . $lang['form_optional'] . "</span>";
+	   					}
+	   				}
 
-					// check language file for any form help
-					if ( (isset($lang['form_help_' . $Nams[$j]])) && ($lang['form_help_' . $Nams[$j]]) ) {
-						if ( ($Nams[$j] != 'page_name')  or ($type == 'static') or (!isset($edit)) or (!$edit) ) {	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
-							$form_help = "<span class=\"form_help\">" . $lang['form_help_' . $Nams[$j]] . "</span>";
-						} else {
-							$form_help = "<span style=\"display:none\" class=\"form_help\">" . $lang['form_help_' . $Nams[$j]] . "</span>";
-						}
+	   				// check language file for any form help
+	   				if ( (isset($lang['form_help_' . $Nams[$j]])) && ($lang['form_help_' . $Nams[$j]]) ) {
+
+					    if ( ($Nams[$j] != 'page_name')  or ($type == 'static') or (!isset($edit)) or (!$edit) ) {	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
+	   					$form_help = "<span class=\"form_help\">" . $lang['form_help_' . $Nams[$j]] . "</span>";
+
+					    } else {
+	   					$form_help = "<span style=\"display:none\" class=\"form_help\">" . $lang['form_help_' . $Nams[$j]] . "</span>";
+					    }
+
 					} else {
-						$form_help = "";
+	   					$form_help = "";
 					}
 
 					if ($GLOBALS['rich_text_editor'] == 1) {
-						$containsphp = strlen(stristr(utf8_decode( ($Fild[$j]) ), '<?php')) > 0;
+	   					$containsphp = strlen(stristr(utf8_decode( ($Fild[$j]) ), '<?php')) > 0;
 
-						if ($containsphp) {
-							$form_help .= " <span class=\"alert\">" . $lang['form_php_warning'] . '</span>';
-						}
-					}
-
+	   					if ($containsphp) {
+	   						$form_help .= " <span class=\"alert\">" . $lang['form_php_warning'] . '</span>';
+	   					}
+	   				}
+		  
 					echo "\t\t\t\t\t\t\t<div class=\"form_row\">\n\t\t\t\t\t\t\t\t<div class=\"form_label\">
 					<label for=\"$Nams[$j]\">" . $displayname . "</label>$form_help</div>\n";    //$Type[$j] $Leng[$j] $Flag[$j] for field info
-					//echo "$Nams[$j] - $Type[$j] - $Leng[$j] - $Flag[$j]"; // see form field properties
+	   				//echo "$Nams[$j] - $Type[$j] - $Leng[$j] - $Flag[$j]"; // see form field properties
 					if ( ($Type[$j] == 'timestamp') && (!isset($edit)) && (!$edit) ) {
-						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
 
-						if (isset($date)) { date_dropdown($date); } else { $date = NULL; date_dropdown($date); }
+	   					if (isset($date)) { date_dropdown($date); } else { $date = NULL; date_dropdown($date); }
 
-						echo "\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
-					} else if (($Type[$j] == 'timestamp') && (isset($edit)) && ($edit)) {
-						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
-						date_dropdown($Fild[$j]);
-						echo "\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
-					//} else if ($Type[$j] == "blob") {
-					//	echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_no_ckeditor\">$Fild[$j]</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; 	   				
-					} else if ($Type[$j] == 'longtext' or $Leng[$j] > 800 or $Type[$j] == 'blob') {
-						if ($GLOBALS['rich_text_editor'] == 1) {
-							if (!$containsphp) {
-								echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea_ckeditor\">\n\t\t\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" id=\"$Nams[$j]\" cols=\"50\" class=\"ck-textarea\" rows=\"10\">" . htmlentities($Fild[$j], ENT_QUOTES, 'UTF-8') . "</textarea>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
-							} else {
-								echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_no_ckeditor\">" . htmlspecialchars($Fild[$j], ENT_QUOTES, 'UTF-8') . "</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
-							}
-						} else {
-							echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_no_ckeditor\">" . htmlspecialchars($Fild[$j], ENT_QUOTES, 'UTF-8') . "</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
-						}
-					} else if (strpos($Flag[$j], "set") !== false) {
-						$values = NULL;
-						while ($row = mysql_fetch_object($this->fields)) {
-							if ($row->Field == $Nams[$j])  {
-								$values = explode(',', preg_replace('/set\(|\)$/', '', $row->Type));
-								break;
-							}
-						}
-						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_radio\">";
-						foreach ($values as $key => $value) {
-							$val = str_replace("'", "", $value);
-							echo "\n\t\t\t\t\t\t\t\t" . simplify($val) . "<input" . ($val == $Fild[$j] ? " checked=\"checked\"" : "") . " type=\"radio\" name=\"$Nams[$j]\" class=\"form_radio\" value=\"$val\" />";
-						}
-						echo "\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
-						/*if($yesNo) {
-							if ($Fild[$j] == 'no') {
-								echo "\t\t\t\t\t\t\t\t<div class=\"form_item_radio\">\n\t\t\t\t\t\t\t\tYes<input type=\"radio\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" class=\"form_radio\" value=\"yes\" />
-										No<input checked=\"checked\" type=\"radio\" name=\"$Nams[$j]\" class=\"form_radio\" value=\"$Fild[$j]\" />\n\t\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t</div>\n";
-							} else {
-								echo "\t\t\t\t\t\t\t\t<div class=\"form_item_radio\">\n\t\t\t\t\t\t\t\tYes<input checked=\"checked\" type=\"radio\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" class=\"form_radio\" value=\"yes\" />
-										No<input type=\"radio\" name=\"$Nams[$j]\" class=\"form_radio\" value=\"no\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
-							}
-						}*/
-					} else if (first_word($Nams[$j]) == 'image') {
-						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop image_preview\">\n";
-						db_dropdown('pixie_files', $Fild[$j], $Nams[$j], "file_type = 'Image' order by file_id desc");
-						echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $Nams[$j] . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload']) . "...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	   					echo "\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	   				} else if (($Type[$j] == 'timestamp') && (isset($edit)) && ($edit)) {
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
+		   				date_dropdown($Fild[$j]);
+	   					echo "\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	   				//} else if ($Type[$j] == "blob") {
+	   				//	echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_no_ckeditor\">$Fild[$j]</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; 	   				
+	   				} else if ($Type[$j] == 'longtext' or $Leng[$j] > 800 or $Type[$j] == 'blob') {
+	   					if ($GLOBALS['rich_text_editor'] == 1) {
+	   						if (!$containsphp) {
+	   							echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea_ckeditor\">\n\t\t\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" id=\"$Nams[$j]\" cols=\"50\" class=\"ck-textarea\" rows=\"10\">" . htmlentities($Fild[$j], ENT_QUOTES, 'UTF-8') . "</textarea>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
+	   						} else {
+	   							echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_no_ckeditor\">" . htmlspecialchars($Fild[$j], ENT_QUOTES, 'UTF-8') . "</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
+	   						}
+	   					} else {
+	   						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_textarea\">\n\t\t\t\t\t\t\t\t<textarea name=\"$Nams[$j]\" class=\"form_item_textarea_no_ckeditor\">" . htmlspecialchars($Fild[$j], ENT_QUOTES, 'UTF-8') . "</textarea>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n"; // id=\"$Nams[$j]\"
+	   					}
+	   				} else if ($Type[$j] == "set'yes','no'" or $Flag[$j] == 'not_null set') {
+	   					if ($Fild[$j] == 'no') {
+	   						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_radio\">\n\t\t\t\t\t\t\t\tYes<input type=\"radio\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" class=\"form_radio\" value=\"yes\" />
+	   						     	No<input checked=\"checked\" type=\"radio\" name=\"$Nams[$j]\" class=\"form_radio\" value=\"$Fild[$j]\" />\n\t\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t</div>\n";
+	   					} else {
+		   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_radio\">\n\t\t\t\t\t\t\t\tYes<input checked=\"checked\" type=\"radio\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" class=\"form_radio\" value=\"yes\" />
+	   						     	No<input type=\"radio\" name=\"$Nams[$j]\" class=\"form_radio\" value=\"no\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	   					}
+	   				} else if (first_word($Nams[$j]) == 'image') {
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop image_preview\">\n";
+	   					db_dropdown('pixie_files', $Fild[$j], $Nams[$j], "file_type = 'Image' order by file_id desc");
+	   					echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $Nams[$j] . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload']) . "...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 					} else if (first_word($Nams[$j]) == 'document') {
-						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
-						db_dropdown('pixie_files', $Fild[$j], $Nams[$j], "file_type = 'Other' order by file_id desc");
-						echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $Nams[$j] . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload']) . "...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
+	   					db_dropdown('pixie_files', $Fild[$j], $Nams[$j], "file_type = 'Other' order by file_id desc");
+	   					echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $Nams[$j] . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload']) . "...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 					} else if (first_word($Nams[$j]) == 'video') {
-						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
-						db_dropdown('pixie_files', $Fild[$j], $Nams[$j], "file_type = 'Video' order by file_id desc");
-						echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $Nams[$j] . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload']) . "...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
+	   					db_dropdown('pixie_files', $Fild[$j], $Nams[$j], "file_type = 'Video' order by file_id desc");
+	   					echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $Nams[$j] . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload']) . "...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 					} else if (first_word($Nams[$j]) == 'audio') {
-						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
-						db_dropdown('pixie_files', $Fild[$j], $Nams[$j], "file_type = 'Audio' order by file_id desc");
-						echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $Nams[$j] . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload']) . "...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
+	   					db_dropdown('pixie_files', $Fild[$j], $Nams[$j], "file_type = 'Audio' order by file_id desc");
+	   					echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $Nams[$j] . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload']) . "...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
 					} else if (first_word($Nams[$j]) == 'file') {
-						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
-						db_dropdown('pixie_files', $Fild[$j], $Nams[$j], "file_id >= '0' order by file_id desc");
-						echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $Nams[$j] . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload']) . "...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
-					} else if ($Nams[$j] == 'tags') {
-						$tableid = 0;
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">\n";
+	   					db_dropdown('pixie_files', $Fild[$j], $Nams[$j], "file_id >= '0' order by file_id desc");
+	   					echo "\n\t\t\t\t\t\t\t\t<span class=\"more_upload\">or <a href=\"#\" onclick=\"upswitch('" . $Nams[$j] . "'); return false;\" title=\"" . $lang['upload'] . "\">" . strtolower($lang['upload']) . "...</a></span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	   				} else if ($Nams[$j] == 'tags') {
+	   					$tableid = 0;
 						$condition = $tableid . " >= '0'"; 
 						form_tag($this->tablename, $condition);
-						echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"$Fild[$j]\" size=\""; if ( (isset($ln)) ) { echo $ln; } else { $ln = 25; echo $ln; } echo "\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
-					} else if ($Nams[$j] == 'page_blocks') {
-						form_blocks();
-						echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"$Fild[$j]\" size=\""; if ( (isset($ln)) ) { echo $ln; } else { $ln = 25; echo $ln; } echo "\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
-					} else if ($Nams[$j] == 'privs') {
-						if ($Fild[$j] == 2) {
-							$adminclass = "selected=\"selected\""; $everyoneclass = NULL;
-						} else {
-							$everyoneclass = "selected=\"selected\""; $adminclass = NULL;
-						}
-						echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"$Fild[$j]\" size=\""; if ( (isset($ln)) ) { echo $ln; } else { $ln = 25; echo $ln; } echo "\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	   				} else if ($Nams[$j] == 'page_blocks') {
+	   					form_blocks();
+	 	   				echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"$Fild[$j]\" size=\""; if ( (isset($ln)) ) { echo $ln; } else { $ln = 25; echo $ln; } echo "\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n";
+	 	   			} else if ($Nams[$j] == 'privs') {
+	 	   				if ($Fild[$j] == 2) {
+	 	   					$adminclass = "selected=\"selected\""; $everyoneclass = NULL;
+	 	   				} else {
+	 	   					$everyoneclass = "selected=\"selected\""; $adminclass = NULL;
+	 	   				}
+	 	   				echo "\t\t\t\t\t\t\t\t<div class=\"form_item_drop\">
 									<select class=\"form_select\" name=\"$Nams[$j]\" name=\"$Nams[$j]\">
 										<option value=\"2\" $adminclass>Administrators only</option>
 										<option value=\"1\" $everyoneclass>Administrators &amp; Clients</option>
 									</select>
-								</div>\n\t\t\t\t\t\t\t</div>\n";
-					} else {
+	   							</div>\n\t\t\t\t\t\t\t</div>\n";
+	   				} else {
 						if ( ($Nams[$j] != 'page_name')  or ($type == 'static') or (!isset($edit)) or (!$edit) ) {	/* Prevents the editing of page_name which does not work in modules and dynamic pages */
-						echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"" . htmlspecialchars($Fild[$j], ENT_QUOTES, 'UTF-8') . "\" size=\""; if ( (isset($ln)) ) { echo $ln; } else { $ln = 25; echo $ln; } echo "\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>";
+	   					echo "\t\t\t\t\t\t\t\t<div class=\"form_item\">\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"" . htmlspecialchars($Fild[$j], ENT_QUOTES, 'UTF-8') . "\" size=\""; if ( (isset($ln)) ) { echo $ln; } else { $ln = 25; echo $ln; } echo "\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>";
 						} else {
-						echo "\t\t\t\t\t\t\t\t<div style=\"display:none\" class=\"form_item\">\n\t\t\t\t\t\t\t\t<input style=\"display:none\" type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"" . htmlspecialchars($Fild[$j], ENT_QUOTES, 'UTF-8') . "\" size=\""; if ( (isset($ln)) ) { echo $ln; } else { $ln = 25; echo $ln; } echo "\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>";
+	   					echo "\t\t\t\t\t\t\t\t<div style=\"display:none\" class=\"form_item\">\n\t\t\t\t\t\t\t\t<input style=\"display:none\" type=\"text\" class=\"form_text\" name=\"$Nams[$j]\" id=\"$Nams[$j]\" value=\"" . htmlspecialchars($Fild[$j], ENT_QUOTES, 'UTF-8') . "\" size=\""; if ( (isset($ln)) ) { echo $ln; } else { $ln = 25; echo $ln; } echo "\" maxlength=\"" . $Leng[$j] . "\" />\n\t\t\t\t\t\t\t\t</div>";
 						}
-						echo "\n\t\t\t\t\t\t\t</div>\n";
-					} 
+	   					echo "\n\t\t\t\t\t\t\t</div>\n";
+	   				} 
 
 					//other field types still to come: File uploads...?
-
-					//hidden fields populated
+	   				
+	 				//hidden fields populated
 				} else {
 					if ((($Nams[$j] == 'page_id') && (isset($s)) && ($s == 'publish') && ($m == 'dynamic'))) {
 						$page_id = get_page_id($x);
@@ -411,13 +398,13 @@ class ShowTable {
 					}
 				}
 			}
-	
+	 		
 			if ((isset($edit)) && ($edit)) {
 				echo "\t\t\t\t\t\t\t<div class=\"form_row_button\">\n\t\t\t\t\t\t\t\t<input type=\"submit\" name=\"submit_edit\" class=\"form_submit\" value=\"" . $lang['form_button_update'] . "\" />\n\t\t\t\t\t\t\t</div>\n";
 			} else if ((isset($go)) && ($go == 'new')) {
 				// do a save draft and save button button?? - when everything can be saved as a draft and is autosaved using AJAX
-			} else {
-				echo "\t\t\t\t\t\t\t<div class=\"form_row_button\" id=\"form_button\">\n\t\t\t\t\t\t\t\t<input type=\"submit\" name=\"submit_new\" class=\"form_submit\" value=\"" . $lang['form_button_save'] . "\" />\n\t\t\t\t\t\t\t</div>\n";
+				} else {
+			  echo "\t\t\t\t\t\t\t<div class=\"form_row_button\" id=\"form_button\">\n\t\t\t\t\t\t\t\t<input type=\"submit\" name=\"submit_new\" class=\"form_submit\" value=\"" . $lang['form_button_save'] . "\" />\n\t\t\t\t\t\t\t</div>\n";
 			}
 			if ($m != 'static') {
 				echo "\t\t\t\t\t\t\t<div class=\"form_row_button\">\n\t\t\t\t\t\t\t\t<span class=\"form_button_cancel\"><a href=\"?s=$s&amp;m=$m&amp;x=$x\" title=\"" . $lang['form_button_cancel'] . "\">" . $lang['form_button_cancel'] . "</a></span>\n\t\t\t\t\t\t\t</div>\n";
@@ -426,13 +413,13 @@ class ShowTable {
 				echo "\t\t\t\t\t</form>";
 			}
 		}
-	}
+	} 
 // ------------------------------------------------------------------
 // build module page
 	function admin_module($module_name, $table_name, $order_by, $asc_desc, $exclude = array(NULL), $edit_exclude = array(NULL), $view_number, $tags) { 
 	
-		global $type, $go, $page, $message, $s, $m, $x, $edit, $submit_new, $submit_edit, $delete, $messageok, $new, $search_submit, $field, $search_words;
-
+	  global $type, $go, $page, $message, $s, $m, $x, $edit, $submit_new, $submit_edit, $delete, $messageok, $new, $search_submit, $field, $search_words;
+	  
 		if ((isset($GLOBALS['pixie_user_privs'])) && ($GLOBALS['pixie_user_privs'] >= 1)) {
 
 			$type = 'module';
@@ -459,7 +446,7 @@ class ShowTable {
 					admin_overview($table_name, '', $order_by, $asc_desc, $exclude, $view_number, $type);
 				echo "\t\t\t\t</div>\n";
 			}
-		}
+	  }
 	}
 
 // ------------------------------------------------------------------
@@ -558,26 +545,26 @@ class ShowTable {
 
 	if (isset($tag)) { $tag = squash_slug($tag); }
 
-		if (isset($table_name)) { 
+	    if (isset($table_name)) { 
 
-			if ($search_submit)	{
-				if ($m == 'dynamic') {
-					$page_id = get_page_id($x);
-					$r1 = safe_query("select * from $table_name where page_id = '$page_id' and (" . $search_sql . ") order by $order_by $asc_desc");
-				} else {
-					$r1 = safe_query("select * from $table_name where " . $search_sql . " order by $order_by $asc_desc");
-				}
-			} else if ((isset($tag)) && ($tag)) {
-				$r1 = safe_query("select * from $table_name where tags REGEXP '[[:<:]]" . $tag . "[[:>:]]' order by $order_by $asc_desc");
+		if ($search_submit)	{
+			if ($m == 'dynamic') {
+				$page_id = get_page_id($x);
+				$r1 = safe_query("select * from $table_name where page_id = '$page_id' and (" . $search_sql . ") order by $order_by $asc_desc");
 			} else {
-				$r1 = safe_query("select * from $table_name $condition order by $order_by $asc_desc");
+				$r1 = safe_query("select * from $table_name where " . $search_sql . " order by $order_by $asc_desc");
 			}
-
+		} else if ((isset($tag)) && ($tag)) {
+			$r1 = safe_query("select * from $table_name where tags REGEXP '[[:<:]]" . $tag . "[[:>:]]' order by $order_by $asc_desc");
+		} else {
+			$r1 = safe_query("select * from $table_name $condition order by $order_by $asc_desc");
 		}
 
-		if ($r1) {
+	    }
 
-			$total = mysql_num_rows($r1);
+		if ($r1) {  
+
+ 	 	 	$total = mysql_num_rows($r1);
 
 			if ((!isset($page)) && (isset($table_name))) {
 				$lo = 0;
@@ -623,9 +610,9 @@ class ShowTable {
 
 			/* Was : */ /* $a = &new Paginator_html($page, $total); */ /* but it's providing a "Assigning the return value of new by reference is deprecated" message. */
 			$a = new Paginator_html($page, $total);
-			$a->set_Limit($view_number);
-			$a->set_Links(4);
-			$whereami = "?s=$s&amp;m=$m&amp;x=$x";
+   			$a->set_Limit($view_number);
+   			$a->set_Links(4);
+   			$whereami = "?s=$s&amp;m=$m&amp;x=$x";
 
 			if ((isset($tag)) && ($tag)) {
 				$whereami = "?s=$s&amp;m=$m&amp;x=$x&amp;tag=$tag";
@@ -635,34 +622,34 @@ class ShowTable {
 				$whereami = "?s=$s&amp;m=$m&amp;x=$x&amp;search_submit=$searchwords";
 			}
 
-		echo "\n\t\t\t\t\t<div class=\"admin_table_holder pcontent\">\n\t\t\t\t\t";
-		$whereami = "?s=$s&amp;m=$m&amp;x=$x&amp;page=$page";
+   		echo "\n\t\t\t\t\t<div class=\"admin_table_holder pcontent\">\n\t\t\t\t\t";
+	   	$wheream = "?s=$s&amp;m=$m&amp;x=$x&amp;page=$page";
 
-		if ( (isset($table_name)) && ($rows) ) {
+	   	if ( (isset($table_name)) && ($rows) ) {
 
-			if ( isset($finalmax) && ($finalmax) ) { } else { $finalmax = NULL; }
+		    if ( isset($finalmax) && ($finalmax) ) { } else { $finalmax = NULL; }
 
-			$Table = new ShowTable ($r, $exclude, $table_name, $view_number, $lo, $finalmax, $wheream, $type, $s);
-			$Table->DrawBody();
-			$loprint = $lo + 1;
-			echo "\n\t\t\t\t\t\t<div id=\"admin_table_overview\">\n\t\t\t\t\t\t\t<p>" . $lang['total_records'] . ": $total (" . $lang['showing_from_record'] . " $loprint " . $lang['to'] . " $hi) $pages " . $lang['page(s)'] . ".</p>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div id=\"admin_table_pages\">\n\t\t\t\t\t\t\t";
-			echo "<p>"; 
-			$a->previousNext($whereami);
-			echo "</p>";
-			echo "\n\t\t\t\t\t\t</div>";
-
-		} else {
-			if (($search_submit) or (isset($tag)) && ($tag)) {
- 				echo "<div class=\"helper\"><h3>" . $lang['help'] . "</h3><p>" . $lang['helper_search'] . "</p></div>";
-			} else {
-				echo "<div class=\"helper\"><h3>" . $lang['help'] . "</h3><p>" . $lang['helper_nocontent'] . "</p></div>";
-			}
+		    $Table = new ShowTable ($r, $exclude, $table_name, $view_number, $lo, $finalmax, $wheream, $type, $s);
+		    $Table->DrawBody();
+		    $loprint = $lo + 1;
+		    echo "\n\t\t\t\t\t\t<div id=\"admin_table_overview\">\n\t\t\t\t\t\t\t<p>" . $lang['total_records'] . ": $total (" . $lang['showing_from_record'] . " $loprint " . $lang['to'] . " $hi) $pages " . $lang['page(s)'] . ".</p>\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div id=\"admin_table_pages\">\n\t\t\t\t\t\t\t";
+		    echo "<p>"; 
+		    $a->previousNext($whereami);
+		    echo "</p>";
+		    echo "\n\t\t\t\t\t\t</div>";
+	    	
+	   	} else {
+	   		if (($search_submit) or (isset($tag)) && ($tag)) {
+ 	   			echo "<div class=\"helper\"><h3>" . $lang['help'] . "</h3><p>" . $lang['helper_search'] . "</p></div>";
+	   		} else {
+	   			echo "<div class=\"helper\"><h3>" . $lang['help'] . "</h3><p>" . $lang['helper_nocontent'] . "</p></div>";
+	   		}
 				echo "\n\t\t\t\t\t</div>\n"; 
 			}
 			if ($rows) {
 				echo "\n\t\t\t\t\t</div>\n";
 			}
-		}
+  	}
 	}
 // ------------------------------------------------------------------
 // show the page carousel
@@ -676,7 +663,7 @@ class ShowTable {
 
 		if (count($rz) <= 1) {
 				if ((isset($GLOBALS['pixie_user_privs'])) && ($GLOBALS['pixie_user_privs'] >= 2)) {
-				echo "\t\t\t\t<div class=\"helper\"><h3>" . $lang['help'] . "</h3><p>" . $lang['helper_nopages404'] . " " . $lang['helper_nopagesadmin'] . "</p></div>\n";
+	   			echo "\t\t\t\t<div class=\"helper\"><h3>" . $lang['help'] . "</h3><p>" . $lang['helper_nopages404'] . " " . $lang['helper_nopagesadmin'] . "</p></div>\n";
 				} else {
 					echo "\t\t\t\t<div class=\"helper\"><h3>" . $lang['help'] . "</h3><p>" . $lang['helper_nopages404'] . " " . $lang['helper_nopagesuser'] . "</p></div>\n";
 				}
@@ -790,20 +777,20 @@ class ShowTable {
 // ------------------------------------------------------------------
 // edit table entry
 	function admin_edit($table_name, $edit_id, $edit, $edit_exclude) {
-		global $message, $m, $lang;
-
-		if (isset($table_name)) { $table_name = adjust_prefix($table_name); }
+	  global $message, $m, $lang;
+	  
+	  	if (isset($table_name)) { $table_name = adjust_prefix($table_name); }
 		if ((isset($edit)) && (isset($table_name))) {
 		$sql = "select * from $table_name where " . $edit_id . "=" . $edit . "";
 		$r2 = safe_query($sql);
 		}
 
 		if ($r2) {
-			$an = NULL;
-			$at = NULL;
-			$al = NULL;
-			$af = NULL;
-			$az = NULL;
+					$an = NULL;
+					$at = NULL;
+					$al = NULL;
+					$af = NULL;
+					$az = NULL;
 
 			if ($f = mysql_fetch_array($r2))  {
 				for ($j = 0; $j < mysql_num_fields($r2); $j++) {
@@ -820,12 +807,12 @@ class ShowTable {
 					echo "\n\t\t\t\t<div class=\"admin_form\">\n\n\t\t\t\t\t";
 				}
 				if (isset($table_name)) {
-					if (!isset($nam)) { $nam = NULL; }
-					$Blank = new ShowBlank($an, $at, $al, $af, $az, $nam, $edit_exclude, $table_name);
-					$Blank->ShowBody();
+				    if (!isset($nam)) { $nam = NULL; }
+				$Blank = new ShowBlank($an, $at, $al, $af, $az, $nam, $edit_exclude, $table_name);
+				$Blank->ShowBody();
 				}
 				echo "\n\t\t\t\t</div>";
-			}
+	 		}
 		} else {
 			$message = $lang['form_build_fail'];
 		}
@@ -834,39 +821,44 @@ class ShowTable {
 // add new table entry
 	function admin_new($table_name, $edit_exclude) {
 
-		if (isset($table_name)) {
+	    if (isset($table_name)) {
 
-			$an = $at = $af = $az = $al = '';
+		$an = $at = $af = $az = $al = '';
+		
+		$r2 = safe_query('show fields from ' . PFX . "$table_name");	
+		$r3 = safe_query('select * from ' . PFX . "$table_name WHERE 1=0");
+		for ($j = 0; $j < mysql_num_rows($r2); $j++) {  
+			$flags = mysql_field_flags($r3, $j);
+			$af .= $flags . '|';
+		  
+			if ($F = mysql_fetch_array($r2)) {
+				$an .= $F['Field'] . '|';
 
-			$r2 = safe_query('show fields from ' . PFX . "$table_name");	
-			$r3 = safe_query('select * from ' . PFX . "$table_name WHERE 1=0");
-			for ($j = 0; $j < mysql_num_rows($r2); $j++) {  
-				$flags = mysql_field_flags($r3, $j);
-				$af .= $flags . '|';
+				/* Was : */ /* $at .= ereg_replace('([()0-9]+)', "", $F['Type']) . '|'; */ /* But ereg_replace() is now depreciated. */
 
-				if ($F = mysql_fetch_array($r2)) {
-					$an .= $F['Field'] . '|';
-					/* Was : */ /* $at .= ereg_replace('([()0-9]+)', "", $F['Type']) . '|'; */ /* But ereg_replace() is now depreciated. */
-					$at .= preg_replace('([()0-9]+)', "", $F['Type']) . '|';
-				}
-				if (preg_match('([0-9]+)', $F['Type'], $str)) { /* Was if (ereg ('([0-9]+)', $F['Type'], $str)) { */ /* But ereg is depreciated */
-					$al .= $str[0] . '|';
-				} else {
-					$al .= '|';
-					$az .= $F['Default'] . '|';
-				}
-				if ($F['Key'] == "PRI") {
-					$nam = $F['Field'];
-				}
+				$at .= preg_replace('/[^0-9 ]/', "", $F['Type']) . '|'; /* Remove everything apart from numbers in the $F['Type']) variable */
 			}
 
-			echo "\n\t\t\t\t<div id=\"admin_form\">\n\n\t\t\t\t\t";  
-			if (isset($table_name)) {
-				$Blank = new ShowBlank($an, $at, $al, $af, $az, $nam, $edit_exclude, $table_name);
-				$Blank->ShowBody();
+			/* Was if (ereg ('([0-9]+)', $F['Type'], $str)) { */ /* But ereg is depreciated */
+
+			if (preg_match('/[0-9 ]/', $F['Type'], $str)) {  /* match numbers from 0-9 in the $F['Type']) variable */
+				$al .= $str[0] . '|';
+			} else {
+				$al .= '|';
+				$az .= $F['Default'] . '|';
 			}
-			echo "\n\t\t\t\t</div>";
+			if ($F['Key'] == "PRI") {
+				$nam = $F['Field'];
+			}
 		}
+
+	      echo "\n\t\t\t\t<div id=\"admin_form\">\n\n\t\t\t\t\t";  
+	      if (isset($table_name)) {
+	      $Blank = new ShowBlank($an, $at, $al, $af, $az, $nam, $edit_exclude, $table_name);
+	      $Blank->ShowBody();
+	      }
+	      echo "\n\t\t\t\t</div>";
+	    }
 
 	}
 // ------------------------------------------------------------------
@@ -892,7 +884,7 @@ class ShowTable {
 			if ($getdetails) {
 				$del = safe_delete("$table", "$id='$delete'");
 			}
-
+	
 			if ((isset($del)) && ($del)) {
 				if ( (isset($s)) && (isset($m)) && ($s == 'settings') && ($m == 'dynamic') ) {
 					$page_display_name = safe_field('page_display_name', 'pixie_core', "page_id='$del'");
@@ -900,27 +892,27 @@ class ShowTable {
 					//safe_delete("pixie_dynamic_posts", "page_id='$delete'"); 
 					safe_delete('pixie_dynamic_settings', "page_id='$delete'");
 				}
-
+		
 				if ((isset($s)) && (isset($m)) && (isset($del)) && ($s == 'settings') && ($m == 'static')) {
 					$page_display_name = safe_field('page_display_name', 'pixie_core', "page_id='$del'");
 					safe_delete('pixie_static_posts', "page_id='$delete'");
 				}
-
+		
 				if ((isset($s)) && (isset($m)) && ($s == 'settings') && ($m == 'module')) {
 					$table_mod = PFX . 'pixie_module_' . $page_name;
 					$table_mod_settings = PFX . 'pixie_module_' . $page_name . '_settings';
 					
 					$sql = "DROP TABLE IF EXISTS $table_mod";
 					$sql1 = "DROP TABLE IF EXISTS $table_mod_settings";
-
+					
 					//do not drop the tables as one false click could destroy lots of data. Backup first?
 					//safe_query($sql);
 					//safe_query($sql1);
-
+					
 					//do not remove the file as we might want to reinstall at a later date
 					//file_delete("modules/".$page_name.".php");
 				}
-
+		
 				if ($table == PFX . 'pixie_core') {
 					$messageok = $lang['ok_delete_page'] . " " . $page_display_name . " " . $lang['page'];
 					$icon = 'site'; 
@@ -975,40 +967,41 @@ class ShowTable {
 			
 			if ( (isset($timey)) && ($timey) ) {
 
-				if ( (!checkdate($timey[1], $timey[0], $timey[2])) ) {
+			    if ( (!checkdate($timey[1], $timey[0], $timey[2])) ) {
 
 				$error .= $lang['date_error'] . ' ';
 
-				} else {
+			    } else {
 
 				$minute = substr($timey[3], 2, 4);
 				$hour = substr($timey[3], 0, 2);
 				$unixtime = mktime($hour, $minute, 00, $timey[1], $timey[0], $timey[2]);
-				}
+			    }
 			}
 
 		$r2 = safe_query('show fields from ' . adjust_prefix($table_name));
 		$r3 = safe_query('select * from ' . adjust_prefix($table_name) . ' WHERE 1=0');
 		for ($j = 0; $j < mysql_num_rows($r2); $j++) {
-			$flags = mysql_field_flags($r3, $j);
-			$af[$j] = $flags;
-			if ($F = mysql_fetch_array($r2)) {
-				$an[$j] = $F['Field'];
-				/* Was : */ /* $at[$j] = ereg_replace('([()0-9]+)', "", $F['Type']); */ /* But ereg_replace() is now depreciated. */
-				$at[$j] = preg_replace('([()0-9]+)', "", $F['Type']);
-			}
-			//echo $an[$j]."-".$at[$j]."-".$af[$j]."<br>"; //enable to see field properties 
-		}
+		  	$flags = mysql_field_flags($r3, $j);
+		  	$af[$j] = $flags;
+      	if ($F = mysql_fetch_array($r2)) {
+      		$an[$j] = $F['Field'];
+		/* Was : */ /* $at[$j] = ereg_replace('([()0-9]+)', "", $F['Type']); */ /* But ereg_replace() is now depreciated. */
+      		$at[$j] = preg_replace('([()0-9]+)', "", $F['Type']);
+      	}
+      	//echo $an[$j]."-".$at[$j]."-".$af[$j]."<br>"; //enable to see field properties 
 
-		for ($j = 0; $j < mysql_num_rows($r2); $j++) {
+	}
+
+    for ($j = 0; $j < mysql_num_rows($r2); $j++) {
 
 			$check = new Validator ();
 
-			if (isset($had_id)) { } else { $had_id = NULL; }
+			    if (isset($had_id)) { } else { $had_id = NULL; }
 
 			if ($at[$j] == 'timestamp' && !array_key_exists("$an[$j]", $_POST)) {
 
-				$check->validateNumber($unixtime, 'invalid time' . ' ');
+			    $check->validateNumber($unixtime, 'invalid time' . ' ');
 
 				if ( (isset($sql)) ) { } else { $sql = NULL; }
 
@@ -1019,7 +1012,7 @@ class ShowTable {
 				$had_id = 1;
 				$editid = $_POST[$an[$j]];
 				$idme = $an[$j];
-
+			  
 
 			} else if (($an[$j] == 'page_content') && (isset($s)) && ($s == 'settings')) {
 				//skip it to protect the php in the page_content field
@@ -1056,7 +1049,7 @@ class ShowTable {
 					// force the value to be lowercase and without spaces for slug
 					$value = strtolower(str_replace(" ", "", preg_replace('/\s\s+/', ' ', trim($value))));
 				}
-
+	      	
 				// set a page_order, and navigation settings for a newly saved page
 				if ($an[$j] == 'public') {
 					if ($value == 'yes') {
@@ -1089,7 +1082,7 @@ class ShowTable {
 							$value = 0;
 					}
 				}
-
+	      	
 				// validate and clean input
 				$value = str_replace('|', '&#124;', $value);
 				$nullf = explode(" ", $af[$j]);	      	
@@ -1103,7 +1096,7 @@ class ShowTable {
 						$check->validateURL($value, $lang['url_error'] . ' ' );
 					}	
 				}
-
+	     
 				if ($at[$j] == 'longtext') {
 					// remove para from <!--more-->
 					if ( (isset($m)) && ($m == 'dynamic') ) {
@@ -1114,7 +1107,7 @@ class ShowTable {
 						$value = str_replace('<p><!--more-->', '<!--more--><p>', $value);
 					}
 				} 
-
+				
 				if ($an[$j] == 'email') {
 					if ($nullf[0] == 'not_null') {
 						$check->validateEmail($value, $lang['email_error'] . ' ');
@@ -1123,22 +1116,22 @@ class ShowTable {
 					}
 				}
 				if (($nullf[0] == 'not_null') && ($value == "")) { $error .= ucwords($an[$j]) . " " . $lang['is_required'] . ' '; }
-
+				
 				// if empty int set to 0
 				if( $at[$j] == 'int' ) $value = ($value ? $value : 0);
 
-					if ( isset($sql) ) { } else { $sql = NULL; }
+				    if ( isset($sql) ) { } else { $sql = NULL; }
 
 					$sql .= "`" . $an[$j] . "` = '" . $value . "',";
 
 				if ($check->foundErrors()) { $error .= $check->listErrors('x'); }
-
+	      	
 			}
 		}
 
 		if ( isset($sql) ) { } else { $sql = NULL; }
 
-		$sql = substr($sql, 0, (strlen($sql) - 1)) . "";
+		    $sql = substr($sql, 0, (strlen($sql) - 1)) . "";
 
 		//echo $sql; //view the SQL for current form save
 				
@@ -1149,10 +1142,10 @@ class ShowTable {
 				safe_optimize($table_name);
 				safe_repair($table_name);
 				
-				if (!$ok) {
-					$message = $lang['unknown_error'];
-					logme($message, 'no', 'error'); 
-				} else {
+			  if (!$ok) {
+				$message = $lang['unknown_error'];
+				logme($message, 'no', 'error'); 
+			  } else {
 
 					if ((isset($s)) && ($s == 'settings') && ($page_type == 'dynamic')) {
 						$sql = "`page_id` = '$idofsave', `posts_per_page` = '10', `rss` = 'yes'"; 
@@ -1173,7 +1166,7 @@ class ShowTable {
 							$messageok = $lang['saved_new'] . " (#$idofsave) " . $lang['in_the'] . " $output " . $lang['page'];
 						}
 					}
-
+					
 					logme($messageok, 'no', $icon); 
 				}
 			}
@@ -1182,7 +1175,7 @@ class ShowTable {
 				if (!$ok) {
 					$message = $lang['unknown_error'];
 				} else {
-
+				
 					if ((isset($s)) && ($s == 'settings')) {
 						$output = $page_display_name;
 							$icon = 'site';
@@ -1212,12 +1205,12 @@ class ShowTable {
 					}
 					logme($messageok, 'no', $icon); 				  	
 				}
-			}
+			}					
 
 		} else {
 			$err = explode('|', $error);
 			$message = $err[0];
+		}	
 		}
 	}
-}
 ?>

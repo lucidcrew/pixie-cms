@@ -15,6 +15,9 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 
 // This new Pixie function is used by both uploaders to inform the user their max upload file size php setting
 // The failing of a too large file still needs to be logged. Someone please do it. Currently it just fails silently with no error message.
+
+/* This file needs language strings */
+
 /**
  * Convert a shorthand byte value from a PHP configuration directive to an integer value
  * @param    string   $value
@@ -210,7 +213,7 @@ class file_upload {
 		$delete = @unlink($file); 
 		clearstatcache();
 		if (@file_exists($file)) { 
-			$filesys = eregi_replace('/', "\\",$file); 
+			$filesys = str_replace('/', '\\', $file); 
 			$delete = @system("del $filesys");
 			clearstatcache();
 			if (@file_exists($file)) {

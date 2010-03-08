@@ -130,7 +130,7 @@ switch ($do) {
 						echo "
 						<div class=\"vevent\">
 							<h4 class=\"summary\" title=\""; if (isset($title)) { echo $title; } echo "\">"; if (isset($title)) { echo $title; } echo "</h4>
-							<ul class=\"vdetails\">
+							<ul class=\"vdetails\"><p>
 								<li class=\"vtime\">Date: <abbr class=\"dtstart\" title=\"$microformat\">$dateis</abbr></li>\n";
 								if ($location) {
 									echo "\t\t\t\t\t\t\t\t<li class=\"vlocation\">Venue: <span class=\"location\">$location</span></li>\n";
@@ -139,14 +139,17 @@ switch ($do) {
 									echo "\t\t\t\t\t\t\t\t<li class=\"vlink\">Link: <a class=\"url\" href=\"$url\">$url</a></li>\n";
 								}
 								if ($google_calendar_links == 'yes') {
-									echo "\t\t\t\t\t\t\t\t<li class=\"vgoogle\"><a href=\"http://www.google.com/calendar/event?action=TEMPLATE&amp;text="; if (isset($title)) { echo (urlencode($title)); } echo "&amp;dates=$googtime/$googtime&amp;details=" . urlencode(strip_tags($description)) . "&amp;location=" . urlencode($location) . "&amp;trp=false&amp;sprop=$site_url&amp;sprop=name:$site_title\">Add to Google calendar</a></li>\n";	
+
+								    $url_desc = substr($description, 0, 24); /* Limit the description to 24 characters in length, so that a huge url is not sent. */
+
+									echo "\t\t\t\t\t\t\t\t<li class=\"vgoogle\"><a href=\"http://www.google.com/calendar/event?action=TEMPLATE&amp;text="; if (isset($title)) { echo (urlencode($title)); } echo "&amp;dates=$googtime/$googtime&amp;details=" . urlencode(strip_tags($url_desc)) . "&amp;location=" . urlencode($location) . "&amp;trp=false&amp;sprop=$site_url&amp;sprop=name:$site_title\"  target=\"_blank\">Add to Google calendar</a></li>\n";	
 								}
 							echo "	
-							</ul>
-							<div class=\"event_body\">\n";
+							</p></ul>
+							<div class=\"event_body\"><p>";
 								print "\t\t\t\t\t\t\t\t" . str_replace('<p>', "<p class=\"description\">", $description);
 							echo " 
-							</div>
+							</p></div>
 						</div>\n";
 			}
 			
@@ -156,11 +159,11 @@ switch ($do) {
 			
 			if ($m == 'archives') {
 				if (isset($s)) {
-				    echo "\t\t\t\t\t\t<a class=\"view_more_link\" href=\"" . createURL($s) . "\">View upcoming events...</a>\n";
+				    echo "\t\t\t\t\t\t<a class=\"view_more_link\" href=\"" . createURL($s) . "\">View upcoming events...</a>\n"; /* Needs lannguage */
 				}
 			} else {
 				if (isset($s)) {
-				echo "\t\t\t\t\t\t<a class=\"view_more_link\" href=\"" . createURL($s, 'archives') . "\">View the archives...</a>\n";
+				echo "\t\t\t\t\t\t<a class=\"view_more_link\" href=\"" . createURL($s, 'archives') . "\">View the archives...</a>\n"; /* Needs lannguage */
 				}
 			}
 		}
