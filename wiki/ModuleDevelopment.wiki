@@ -40,6 +40,20 @@ The first part of developing your module is creating the database tables. Pixie 
   * *Table name*
   The name of your database table is important, it must always start with `pixie_module_` followed by the module name. For our links page example I create a table called `pixie_module_links`.
 
+  The table name must only include the string `pixie_` only once.
+
+  For example :
+
+  `pixie_module_pixie_dust`
+
+  is incorrect and will not work.
+  Use something similar to :
+
+  `pixie_module_fairy_dust`
+
+  instead.
+
+
 _Tip: You can also create a secondary table with for your module with `_settings` in its name: e.g. `pixie_module_links_settings`. Pixie will automatically look for this table when you are editing the settings of a page. If found pixie will create a form and allow the settings to be changed. 
 
 Next up is the ID field for your table, once again the naming is important:
