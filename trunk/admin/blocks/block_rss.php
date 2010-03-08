@@ -11,6 +11,8 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 
     $rss_url = 'http://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml'; /* Enter the URL of your RSS feed here */
 
+    $show_errors = 'no' /* Block not showing any content? Set this to yes to find out why */ /* If you get a curl error and curl is installed, it's a simplepie bug because unfortunately the simplepie developers insist on using curl unfortunately */
+
 ?>
     <div id="block_rss" class="block">
 	<div class="block_header">
@@ -23,25 +25,22 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 
 			echo "\n";
 			$feed = new SimplePie();
+			$feed->set_timeout(30);
 			$feed->set_feed_url($rss_url);
 			$feed->enable_cache(TRUE);
 			$feed->set_cache_location('files/cache');
 			$feed->set_item_limit($number_of_items);
-			$feed->set_timeout(30);
 			$feed->set_cache_duration(900);
 			$feed->init();
 			$feed->handle_content_type();
+			$feed_items = $feed->get_items(0, $number_of_items);
+			if ( ($show_errors == 'yes') && ($feed->error()) ) { echo $feed->error(); }
 
-			$i = 1;
+			    foreach ($feed_items as $item) :
 
-			    foreach ($feed->get_items() as $item) :
-
-				if ($i <= $number_of_items) {
-
-				    $itemlink = $item->get_permalink();
-				    echo "\t\t\t\t\t\t\t<li><a href=\"" . $item->get_permalink() . "\">" . $item->get_title() . "</a></li>\n";
-				}
-				$i++;
+				    $item_link = $item->get_permalink();
+				    $item_title = $item->get_title();
+				    echo "\t\t\t\t\t\t\t<li><a href=\"{$item_link}\">{$item_title}</a></li>\n";
 
 			    endforeach;
 

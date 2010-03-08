@@ -1,4 +1,5 @@
 <?php
+if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 /*
 Bad Behavior - detects and blocks unwanted Web accesses
 Copyright (C) 2005-2006 Michael Hampton

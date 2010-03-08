@@ -10,7 +10,7 @@
 
     /* To find error messages, search the page for php_errormsg if you turn this debug feature on */
 
-    error_reporting(0); /* Turns off error reporting */ error_reporting(-1); /* Turns on error reporting */
+    error_reporting(0); /* Turns off error reporting */ /* error_reporting(-1); */ /* Turns on error reporting */
 
 	if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); } /* very important to set this first, so that we can use the new config.php */
 
@@ -19,7 +19,7 @@
 
     /* Vars that need to be defined first */
 
-    $pixie_version = '1.04'; /* You can define the version number for Pixie releases here */
+    $pixie_version = '1.04a'; /* You can define the version number for Pixie releases here */
     $pixie_user = 'Pixie Installer'; /* The name on the first log */
     $pixie_server_timezone = 'Europe/London'; /* Hosted server timezone */
     $pixie_charset = 'UTF-8';
@@ -42,6 +42,8 @@
 	    case 2 :
 
 		/* Step 2 - Create the config file, chmod the correct directories and install basic db stucture */
+
+    if (filesize('../config.php') < 10) {
 
 		if ( (isset($pixie_prefix)) && ($pixie_prefix === 'pixie_') ) { $pixie_prefix = 'data_'; } /* Prevent pixie_ being used as the prefix. Also note that the module installer string replaces pixie_ from the table name. */
 
@@ -496,9 +498,7 @@ INSERT INTO `{$pixie_prefix}pixie_settings` (`settings_id`, `site_name`, `site_k
 			    }
 			}
 
-		    if ($pixie_dropolddata === 'yes') { $pixie_step = 2;
-
-		    } else {
+    } /* End if config.php is less than 10kbs */
 
 			if ( (!isset($error)) && (!$error) ) { $pixie_step = 2;
 
@@ -507,7 +507,6 @@ INSERT INTO `{$pixie_prefix}pixie_settings` (`settings_id`, `site_name`, `site_k
 			$pixie_step = 1;
 
 			}
-		    }
 
 	break;
 

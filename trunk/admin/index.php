@@ -21,8 +21,7 @@ header('Content-Type: text/html; charset=UTF-8');
 // ----------------------------------------------------------------------//
 // Title: Admin Index			                                 //
 //***********************************************************************//
-if (defined('DIRECT_ACCESS')) { require_once 'lib/lib_misc.php'; pixieExit(); exit(); }					/* Prevent any kind of predefinition of DIRECT_ACCESS */
-if (defined('PIXIE_DEBUG')) { require_once 'lib/lib_misc.php'; pixieExit(); exit(); }					/* Prevent any kind of predefinition of PIXIE_DEBUG */
+if ( (defined('DIRECT_ACCESS')) or (defined('PIXIE_DEBUG')) ) { require_once 'lib/lib_misc.php'; pixieExit(); exit(); }	/* Prevent any kind of predefinition of DIRECT_ACCESS or PIXIE_DEBUG */
 define('DIRECT_ACCESS', 1);												/* Knock once for yes */
 if (!file_exists('config.php') or filesize('config.php') < 10) {							/* check for config */
 if (file_exists('install/index.php')) { header( 'Location: install/' ); exit(); }					/* redirect to installer */
@@ -31,8 +30,7 @@ if (!file_exists('install/index.php')) { require_once 'lib/lib_db.php'; db_down(
 ini_set('default_charset', 'utf-8');											/* set default php charset */
 require_once 'lib/lib_misc.php';											/* perform basic sanity checks */
 bombShelter();														/* check URL size */
-error_reporting(0);													/* turn off error reporting */
-if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }									/* set error reporting up if debug is enabled */
+if (PIXIE_DEBUG == 'yes') { error_reporting(-1); } else { error_reporting(0); }						/* set error reporting up if debug is enabled */
 
 	globalSec('Admin index.php', 1);										/* prevent superglobal poisoning before extraction */
 	extract($_REQUEST);												/* access to form vars if register globals is off */ /* note : NOT setting a prefix yet, not looked at it yet */
@@ -42,7 +40,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }									/* set error reportin
 	extract($prefs);												/* add prefs to globals using php's extract function */
 	define('TZ', "$timezone");											/* timezone fix (php 5.1.0 or newer will set it's server timezone using function date_default_timezone_set!) */
 	if (strnatcmp(phpversion(),'5.1.0') >= 0) {
-	if (!isset($server_timezone)) { $server_timezone = 'Europe/London'; }
+	if (isset($server_timezone)) { } else { $server_timezone = 'Europe/London'; }
 	date_default_timezone_set("$server_timezone"); }								/* New! Built in php function. Tell php what the server timezone is so that we can use php 5's rewritten time and date functions to set the correct time without error messages */
 	include_once 'lib/lib_logs.php'; pagetime('init');								/* start the runtime clock */
 	include_once "lang/{$language}.php";										/* get the language file */
@@ -56,7 +54,6 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }									/* set error reportin
 	include_once 'lib/lib_tags.php';										/* import the tags library */
 	include_once 'lib/bad-behavior-pixie.php';									/* no spam please */
 	include_once 'lib/lib_backup.php';										/* import the backup library */
-
 	if (strnatcmp(phpversion(),'5.0.0') >= 0) {
 	include_once 'lib/lib_simplepie_php5.php'; } else {								/* Load the php5 version of simplepie if you are running php5 */
 	include_once 'lib/lib_simplepie.php'; }										/* because pie should be simple */
@@ -64,21 +61,9 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }									/* set error reportin
 	$gzip_admin = 'no'; }												/* ensure $gzip_admin not unset */
   	if (file_exists( 'settings.php' ) or filesize( 'settings.php' ) < 10) {						/* check for settings.php */
 	include_once 'settings.php';}											/* load settings.php, if found */
-
 	$s = check_404($s);												/* check section exists */
-
-//	if (PIXIE_DEBUG == 'yes') { $show_vars = get_defined_vars();							/* output important variables to screen if debug is enabled */
-//	echo '<p><pre class="showvars">The _REQUEST array contains : ';
-//	htmlspecialchars(print_r($show_vars["_REQUEST"]));
-//	echo '</pre></p>';
-//	echo '<p><pre class="showvars">The prefs array contains : ';
-//	htmlspecialchars(print_r($show_vars["prefs"]));
-//	echo '</pre></p>';
-//	echo '<p><pre class="showvars">The php_errormsg message array contains : ';
-//	if ( isset($show_vars["php_errormsg"]) ) { htmlspecialchars(print_r($show_vars["php_errormsg"])); }
-//	echo '</pre></p>'; }
-
 	if ( (isset($s)) && (isset($do)) && ($do == 'rss') && ($user) ) { adminrss($s, $user); } else {
+
 ?>
 <?php if ( (isset($gzip_admin)) && ($gzip_admin == 'yes') && (!substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) && (!@extension_loaded('zlib')) && (!@ob_start("ob_gzhandler")) ) /* Start gzip compression */ { if ( !@ob_start() ) { $gzip_admin = 'no'; }
       } else { $gzip_admin = 'no'; } ?>
@@ -134,9 +119,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }									/* set error reportin
 
 	<?php
 	/* check for IE specific style files */
-	$cssie = 'admin/theme/ie.css';
-	$cssie6 = 'admin/theme/ie6.css';
-	$cssie7 = 'admin/theme/ie7.css';
+	$cssie = 'admin/theme/ie.css'; $cssie6 = 'admin/theme/ie6.css'; $cssie7 = 'admin/theme/ie7.css';
 
 	if (file_exists($cssie)) {
 		echo "\n\t<!--[if IE]><link href=\"{$cssie}\" type=\"text/css\" rel=\"stylesheet\" media=\"screen\" /><![endif]-->\n";
@@ -180,7 +163,7 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }									/* set error reportin
 					<ul id="tools_list">
 						<li id="tool_skip"><a href="#pixie_body" title="<?php echo $lang['skip_to']; ?>"><?php echo $lang['skip_to']; ?></a></li>
 						<?php if (isset($s)) { if (isset($GLOBALS['pixie_user'])) { if ($s != 'login') { ?><li id="tool_logout"><a href="?s=logout" title="<?php echo $lang['logout']; ?>"><?php echo $lang['logout']; ?></a></li><?php } print "\n"; } } ?>
-						<li id="tool_view"><a href="<?php print $site_url;?>" target="_blank" title="<?php echo $lang['view_site']; ?>"><?php echo $lang['view_site']; ?></a></li>
+						<li id="tool_view"><a href="<?php print $site_url;?>" title="<?php echo $lang['view_site']; ?>"><?php echo $lang['view_site']; ?></a></li>
 					</ul>	
 				</div>
 	
@@ -253,7 +236,6 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }									/* set error reportin
 	<?php if ((isset($s)) && ($s != 'login')) { ?><?php if ($s == 'publish' or 'settings') { ?><script type="text/javascript" src="jscript/thickbox.js"></script><?php } ?><?php } ?>
 	<?php if ((isset($s)) && ($s != 'login')) { ?><?php if (($s == 'publish' or 'settings') or ($x == 'myprofile')) { ?><script type="text/javascript" src="jscript/ckeditor/ckeditor.js"></script><?php } ?><?php } ?>
 	<script type="text/javascript" src="jscript/pixie.js.php?<?php if (isset($s)) { print "s={$s}"; } if (isset($x)) { print "&amp;x={$x}"; } if (isset($lang['ck_toggle_advanced'])) { print "&amp;advmode={$lang['ck_toggle_advanced']}"; } ?>"></script>
-  <?php if (PIXIE_DEBUG == 'yes') { /* Show the defined global vars */ /* print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), TRUE)) . '</pre>'; phpinfo(); */ } ?>
 	<!-- bad behavior -->
 	<?php bb2_insert_head(); ?>
 	<!-- If javascript is disabled show more of the carousel and display the ckeditor textareas -->
@@ -262,7 +244,6 @@ if (PIXIE_DEBUG == 'yes') { error_reporting(-1); }									/* set error reportin
 </html>
 	<!-- page generated in: <?php pagetime('print');?> -->
 	<?php if ($gzip_admin == 'yes') { @ob_end_flush(); } ?>
-
 <?php
 	}
 ?>
