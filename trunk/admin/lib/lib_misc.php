@@ -12,7 +12,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 /* Set up debugging */
 // ------------------------------------------------------------------
     if (defined('PIXIE_DEBUG')) { pixieExit(); exit(); }
-    define('PIXIE_DEBUG', 'yes'); /* Set debug to yes to debug and see all the global vars coming into the file */
+    define('PIXIE_DEBUG', 'no'); /* Set debug to yes to log errors */
 // ------------------------------------------------------------------
 /* An exit on error function */
 // ------------------------------------------------------------------
