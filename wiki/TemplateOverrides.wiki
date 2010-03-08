@@ -12,7 +12,7 @@ Thus providing a new level of control for site designers.
 
 It is easy to use and to implement this feature onto your Pixie website but it is considered an *advanced feature* ideally suited for web developers who possess skills in xhtml and css.
 
-The single prerequisite for this feature to work is that your site must be running Pixie version 1.03 or greater. Versions older than 1.03 will not work without [http://groups.google.com/group/pixie-cms/browse_thread/thread/7d2eb13f535afda3 this] modification.
+The single prerequisite for this feature to work is that your site must be running Pixie version 1.04 or greater.
 
 *It is highly recommended that you keep your Pixie site up to date.*
 *Version updates contain bug fixes and new features that will help secure and improve your Pixie website.*
@@ -24,12 +24,12 @@ The single prerequisite for this feature to work is that your site must be runni
 ==== Creating and activating the override ====
 
 To create the override you are going to branch some content from Pixie's root index.php 
-file into a new file named index.php, inside the directory containing your template.
+file into a new file named theme.php, inside the directory containing your template.
 
 The whole process is very simple.
 
 Firstly, you create a new file inside your template's directory. Name it 
-index.php and open it in your favourite text editor.
+theme.php and open it in your favourite text editor.
 (For Windows users I can recommend [http://www.scintilla.org/SciTE.html SciTE] instead of notepad.)
 Next, go up three directories to pixie's root folder, where you will 
 see files like sitemap.xml and .htaccess. 
@@ -44,15 +44,14 @@ All the way down the page, down to and including the closing html tag :
 
 And not below it. 
 
-Now copy the highlighted text and then paste it straight into the empty index.php file you created at the beginning.
+Now copy the highlighted text and then paste it straight into the empty theme.php file you created at the beginning.
 
-That's it! Easy. Close the index.php you copied the code from and then save the index.php that you pasted the code into.
-Now make a test modification to the html code in the new index.php which you still 
-have open (Add "It works!" anywhere in the body for example,) clear your web browser's cache (Clearing the cache may not be necessary for all browsers) And then refresh your site as it is displayed in your web browser.
+That's it! Easy. Close the index.php you copied the code from and then save the theme.php file that you pasted the code into.
+Now make a test modification to the html code in the new theme.php file which you should still have open. (Add "It works!" anywhere in the body for example,) clear your web browser's cache (Clearing the cache may not be necessary for all browsers) And then refresh your site as it is displayed in your web browser.
 
-You should now see any modifications you made to the new index.php displayed in front of you.
+You should now see any modifications you made to the new theme.php displayed in front of you.
 
-You now have the flexibility to change any and all code inside the new index.php file and you may now structure and style your site exactly as you wish. Perhaps maybe even add some [http://jquery.com/ javascript]? Or if you're really clever, how about importing a [http://elements.projectdesigns.org/ css framework]?
+You now have the flexibility to change any and all code inside the new theme.php file and you may now structure and style your site exactly as you wish. Perhaps maybe even add some [http://jquery.com/ javascript]? Or if you're really clever, how about importing a [http://elements.projectdesigns.org/ css framework]?
 
 The options for site design and customisation are now wide open for you by incorporating this modification into your template. The only limits are your imagination and the level of the skills in your possession.
 To help you craft and style your own design, a great tool to try is [http://getfirebug.com/ Firebug]. It really helps you to pick out selectors by class, id, etc when you want to add some css style to elements fast.
