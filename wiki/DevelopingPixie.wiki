@@ -110,18 +110,25 @@ Anyone who edits the file adds their name to an @author statement, so it's easy 
 
 == File type encoding, character set, database connection & storage collation ==
 
-===(Proposal)===
+=== (Proposal) ===
 UTF-8 (Highly recommended as the default.)
 
 == TRUE, FALSE and NULL values ==
 
-===(Proposal)===
+=== (Proposal) ===
 
 Pixie's php code uses TRUE, FALSE and NULL (Must be upper case.)
+To check for a TRUE, FALSE and NULL value in a variable, constant or index use the code :
+
+{{{
+if ( $foo === NULL ) { return TRUE; }
+}}}
+
+Notice that the === means exactly (In this case) NULL.
 
 Pixie's javascript code uses true, false and null (Must be lower case.)
 
-== Variables, indexes and offsets ==
+== Variables, constants, indexes and offsets ==
 
 ===(Proposal)===
 
@@ -203,3 +210,30 @@ $formtitle = $lang['advanced'] . " " . $lang['page_settings'];
 }}}
 
 php is much faster when the coupled variables are expressed by wrapping them as one in quotation marks and then wrapping each variable inside the quotation marks individually as an expression (Using curly braces.) Spaces in between variables wrapped in curly braces, which are wrapped by double quotes are verbatim (Exactly as seen.)
+
+== Parenthesis (Brackets) ==
+
+===(Proposal)===
+
+We use spaces between individual conditional statements like this :
+
+{{{
+if ( (isset($foo)) && ($foo) ) { /* Do nothing */ } else { $foo = NULL; }
+}}}
+
+
+Not like this :
+
+{{{
+if ((isset($foo))&&($foo)) { /* Do nothing */ } else { $foo = NULL; }
+}}}
+
+It's much easier to read the first example.
+
+Single conditional statements in a similar manner :
+
+{{{
+if ( (isset($foo)) ) { /* Do nothing */ } else { $foo = NULL; }
+}}}
+
+It makes adding additional conditional statements in future (Like an or, &&, >, /) To each statement easier.
