@@ -98,6 +98,7 @@ File content and license descriptors like this :
  * @author Scott Evans
  * @author Sam Collett
  * @author Tony White
+ * @author Isa Worcs
  * @link http://www.getpixie.co.uk
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3
  * @todo loads of debugging!
