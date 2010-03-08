@@ -105,7 +105,7 @@ Pixie is not out to compete with any other site management tool. Our main goal i
     You can install Pixie on your own server so you have full control over your own site and data. Pixie will work through most major browsers (we recommend [http://www.mozilla-europe.org/en/products/firefox/ Firefox]) giving you control over your site from anywhere in the world.
 
 ==== XHTML compatible rich text editor ====
-    That sounds posh!... and it is. Pixie uses [http://tinymce.moxiecode.com/ TinyMce] to add a simple word processing interface text areas... it makes editing your text simple and familiar. 
+    That sounds posh!... and it is. Pixie uses [http://ckeditor.com/ CKEditor] to add a simple word processing interface text areas... it makes editing your text simple and familiar. 
 
 ----
 
