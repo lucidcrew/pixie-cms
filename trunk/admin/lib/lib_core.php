@@ -836,12 +836,12 @@ class ShowTable {
 
 				/* Was : */ /* $at .= ereg_replace('([()0-9]+)', "", $F['Type']) . '|'; */ /* But ereg_replace() is now depreciated. */
 
-				$at .= preg_replace('/[^0-9 ]/', "", $F['Type']) . '|'; /* Remove everything apart from numbers in the $F['Type']) variable */
+				$at .= preg_replace('/[0-9 ]/', "", $F['Type']) . '|'; /* Remove numbers in the $F['Type']) variable */
 			}
 
 			/* Was if (ereg ('([0-9]+)', $F['Type'], $str)) { */ /* But ereg is depreciated */
 
-			if (preg_match('/[0-9 ]/', $F['Type'], $str)) {  /* match numbers from 0-9 in the $F['Type']) variable */
+			if (preg_match('/[^0-9 ]/', $F['Type'], $str)) {  /* match everything but numbers from 0-9 in the $F['Type']) variable */
 				$al .= $str[0] . '|';
 			} else {
 				$al .= '|';
@@ -987,7 +987,7 @@ class ShowTable {
       	if ($F = mysql_fetch_array($r2)) {
       		$an[$j] = $F['Field'];
 		/* Was : */ /* $at[$j] = ereg_replace('([()0-9]+)', "", $F['Type']); */ /* But ereg_replace() is now depreciated. */
-      		$at[$j] = preg_replace('([()0-9]+)', "", $F['Type']);
+      		$at[$j] = preg_replace('/[0-9 ]/', "", $F['Type']);
       	}
       	//echo $an[$j]."-".$at[$j]."-".$af[$j]."<br>"; //enable to see field properties 
 
