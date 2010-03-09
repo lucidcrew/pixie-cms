@@ -736,7 +736,7 @@ ExpiresByType text/html A1
 
 			    fwrite($fh, $data);
 			    fclose($fh);
-			    @chmod('../../.htaccess', 0640); // Try to chmod the .htaccess file
+			    @chmod('../../.htaccess', 0644); // Try to chmod the .htaccess file
 
 			}
 
