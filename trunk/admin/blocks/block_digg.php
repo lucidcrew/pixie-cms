@@ -39,7 +39,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 			    foreach ($feed_items as $item) :
 
 				    $item_link = $item->get_permalink();
-				    $item_title = $item->get_permalink();
+				    $item_title = $item->get_title();
 				    echo "\t\t\t\t\t\t\t<li><a href=\"{$item_link}\">{$item_title}</a></li>\n";
 
 			    endforeach;
