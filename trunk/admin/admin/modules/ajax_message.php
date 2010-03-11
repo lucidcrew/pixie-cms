@@ -7,11 +7,13 @@ header('Content-Type: text/html; charset=utf-8');
 // Title: Ajax message system.                                     //
 //*****************************************************************//
 
+$refering = NULL;
+$refering = parse_url( ($_SERVER['HTTP_REFERER']) );
+if( ($refering['host'] == $_SERVER['HTTP_HOST']) ) {
 if (defined('DIRECT_ACCESS')) { require_once '../../lib/lib_misc.php'; pixieExit(); exit(); }
 define('DIRECT_ACCESS', 1);
 require_once '../../lib/lib_misc.php';										/* perform basic sanity checks */
 bombShelter();                  										/* check URL size */
-
 error_reporting(0);
 
 if ($_POST['message']) {
@@ -32,4 +34,4 @@ if ($_POST['message']) {
 	";
 }
 /* This file should be merged as an include or merged directly into another file instead of it being directly accessed like this. */
-?>
+} else { header( 'Location: ../../../' ); exit(); } ?>

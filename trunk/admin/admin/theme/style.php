@@ -6,6 +6,10 @@ header('Content-type: text/css');  /* Declare the output of the file as CSS */
 // Licence: GNU General Public License v3                   	   //
 // Title: Admin Style Import.                                      //
 //*****************************************************************//
+
+$refering = NULL;
+$refering = parse_url( ($_SERVER['HTTP_REFERER']) );
+if( ($refering['host'] == $_SERVER['HTTP_HOST']) ) {
 if (defined('DIRECT_ACCESS')) { require_once '../../lib/lib_misc.php'; pixieExit(); exit(); }
 define('DIRECT_ACCESS', 1);
 require_once '../../lib/lib_misc.php';										/* perform basic sanity checks */
@@ -26,4 +30,4 @@ require_once '../../lib/lib_misc.php';										/* perform basic sanity checks *
 	    }
 	}
 /* This file should be merged as an include or merged directly into another file instead of it being directly accessed like this. */
-?>
+} else { header( 'Location: ../../../' ); exit(); } ?>
