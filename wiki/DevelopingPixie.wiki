@@ -161,7 +161,7 @@ Super global and although there are measures in place to prevent an exploit in t
 
 I propose that this very big change in Pixie's variables occurs after this standards guide is approved and the standards are applied to Pixie's code. Therefore, applying the change will be easier and bugs easier to find, if the code is easier to read.
 Yes this must be done to secure Pixie correctly and yes it is a huge problem that could lead to module incompatibilities and all other sorts of trouble.
-An alternative method suggestions are welcome. There doesn't instantly appear to be any other way due to the extremely liberal use of extract and the request super global.
+Alternative method suggestions are welcome. However, there doesn't instantly appear to be any other way to secure Pixie due to the extremely liberal use of extract on the request super global.
 
 Variables, indexes and offsets must always be defined prior to use.
 And be defined as NULL first if the variable can result in undefined (Unset) Should it's TRUE or FALSE return result in conditional operation and\or expression.
