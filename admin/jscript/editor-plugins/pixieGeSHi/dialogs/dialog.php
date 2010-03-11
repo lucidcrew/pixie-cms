@@ -1,19 +1,51 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
-//*****************************************************************//
-// Pixie: The Small, Simple, Site Maker.                           //
-// ----------------------------------------------------------------//
-// Licence: GNU General Public License v3                   	   //
-// Title:   GeSHi CKEditor plugin dialog.			   //
-//*****************************************************************//
-/* GeSHi output parser script */
-/* Original author : Nigel McNie */
-/* Modified by T White */
+/**
+ * Pixie: The Small, Simple, Site Maker.
+ * 
+ * Licence: GNU General Public License v3
+ * Copyright (C) 2010, Scott Evans
+ * 
+ * GeSHi output parser script.
+ * 
+ * Licence: GNU General Public License v3
+ * Copyright (C) 2004, Nigel McNie
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/
+ *
+ * Title: CKEditor GeSHi Dialog
+ *
+ * @package Pixie
+ * @copyright 2008-2010 Scott Evans
+ * @author Nigel McNie
+ * @author T White
+ * @link http://heydojo.co.cc/
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3
+ *
+ */
+if (defined('DIRECT_ACCESS')) { require_once '../../../../lib/lib_misc.php'; pixieExit(); exit(); }
+define('DIRECT_ACCESS', 1);
+require_once '../../../../lib/lib_misc.php';										/* perform basic sanity checks */
+bombShelter();                  									/* check URL size */
+error_reporting(0);
+$refering = NULL;
+$refering = parse_url( ($_SERVER['HTTP_REFERER']) );
+if( ($refering['host'] == $_SERVER['HTTP_HOST']) ) {
 
-/* Check for GeSHi */
-if (is_readable('../../../../lib/geshi.php')) {
+if ( (is_readable('../../../../lib/geshi.php')) ) {
     $path = '../../../../lib/';
-} elseif (is_readable('geshi.php')) {
+} elseif ( (is_readable('geshi.php')) ) {
     $path = './';
 } else { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -44,7 +76,7 @@ body{font-family:'Lucida Grande',Verdana,Arial,Sans-Serif;font-size:11pt;line-he
     <?php die();
 }
 
-require_once $path . 'geshi.php';
+require_once "{$path}geshi.php";
 $fill_source = FALSE;
 
 if (isset($_POST['submit'])) {
@@ -165,3 +197,6 @@ foreach ($languages as $lang) {
 <?php /* End isset post submit */ } ?>
 </body>
 </html>
+
+<?php } else { header( 'Location: ../../../../../' ); exit(); }
+?>

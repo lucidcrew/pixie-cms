@@ -695,12 +695,6 @@ Options -Indexes
 # Make Pixie handle any 404 errors.
 ErrorDocument 404 /index.php
 
-# Force simple error message for requests for non-existent favicon.ico.
-<Files favicon.ico>
-# There is no end quote below, for compatibility with Apache 1.3.
-ErrorDocument 404 \"The requested file favicon.ico was not found.
-</Files>
-
 # Deny access to extension xml files (Comment out to de-activate.) - Start :
 <Files ~ \"\.xml$\">
 Order allow,deny

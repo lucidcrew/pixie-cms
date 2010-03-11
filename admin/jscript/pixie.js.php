@@ -6,6 +6,9 @@
 // Title: Public JavaScript                                        //
 //*****************************************************************//
 
+$refering = NULL;
+$refering = parse_url( ($_SERVER['HTTP_REFERER']) );
+if( ($refering['host'] == $_SERVER['HTTP_HOST']) ) {
 if (defined('DIRECT_ACCESS')) { require_once '../lib/lib_misc.php'; pixieExit(); exit(); }
 define('DIRECT_ACCESS', 1);
 require_once '../lib/lib_misc.php';										/* perform basic sanity checks */
@@ -265,3 +268,6 @@ $j(function() {
 }); /* End jQuery function */
     <?php /* End if $pixie_s == publish */ } ?><?php /* End if not logged in */ } ?>
     //]]>
+
+<?php } else { header( 'Location: ../../../' ); exit(); }
+?>
