@@ -12,7 +12,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 ?>
 					<div id="block_flickr" class="block">
 						<div class="block_header">
-					 		<h4>Flickr</h4>
+					 		<h4><a href="http://www.flickr.com/">Flickr</a></h4>
 					 	</div>
 					 	<div class="block_body">
 						    <script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?count=9&amp;display=latest&amp;size=s&amp;layout=x&amp;source=user&amp;user=<?php print $flickr_id;?>"></script>

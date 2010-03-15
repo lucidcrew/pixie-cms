@@ -16,7 +16,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 ?>
     <div id="block_rss" class="block">
 	<div class="block_header">
-	    <h4>BBC News</h4>
+	    <h4><a href="http://news.bbc.co.uk/">BBC News</a></h4>
 	</div>
 	    <div class="block_body">
 		<ul>
