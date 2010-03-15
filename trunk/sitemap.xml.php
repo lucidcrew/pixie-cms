@@ -6,9 +6,14 @@
 // Title: Sitemap Generation                                       //
 //*****************************************************************//
 
+if (defined('DIRECT_ACCESS')) { require_once 'admin/lib/lib_misc.php'; pixieExit(); exit(); }
+define('DIRECT_ACCESS', 1);
+require_once 'admin/lib/lib_misc.php';										/* perform basic sanity checks */
+	bombShelter();                  									/* check URL size */
+
+	error_reporting(0);
 		include_once 'admin/config.php';           																				
 		include_once 'admin/lib/lib_db.php';       																				
-		include_once 'admin/lib/lib_misc.php';     																				
 		include_once 'admin/lib/lib_date.php';																					
 		include_once 'admin/lib/lib_tags.php';																					
 	

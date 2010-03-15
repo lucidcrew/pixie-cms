@@ -16,7 +16,7 @@ if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
 ?>
     <div id="block_digg" class="block">
 	<div class="block_header">
-	    <h4>I Digg:</h4>
+	    <h4>I <a href="http://digg.com/">Digg</a> :</h4>
 	</div>
 	    <div class="block_body">
 		<ul>

@@ -99,7 +99,7 @@ if (isset($_POST['submit'])) {
     }
     if (($_POST['line_numbers']) == 2) {
     $geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS, 2);
-    $geshi->set_line_style('background: #F0F5FE;', 'background: #FFFFFF;', TRUE);
+    $geshi->set_line_style('background: transparent;', 'background: #F0F5FE;', TRUE);
     }
     if (($_POST['line_numbers']) == 3) {
     $geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);

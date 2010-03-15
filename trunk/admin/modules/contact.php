@@ -162,16 +162,24 @@ switch ($do) {
 							<div class=\"form_row\" id=\"contact_list\">
 								<div class=\"form_label\"><label for=\"contact\">Select Contact <span class=\"form_required\">*</span></label></div>
 								<div class=\"form_item_drop\"><select class=\"form_select\" name=\"contact\" id=\"contact\">";
-								$rs = safe_rows_start('*', 'pixie_users', '1 order by privs desc');
-								while ($a = nextRow($rs)) {
-									extract($a);
-									if((strlen($occupation) > 0) && (isset($realname))) {
-										echo "<option value=\"$user_id\">$realname ($occupation)</option>";
-									}
-									else {
-										echo "<option value=\"$user_id\">$realname</option>";
-									}
-								}
+
+								$rs = safe_rows_start('*', 'pixie_users', '1 order by privs desc'); /* Comment out this line and uncomment the next line below if you want a single user displayed on the contact form */
+								/* $rs = safe_rows_start('*', 'pixie_users', 'user_id=1'); */ /* Look at the pixie_users table in phpmyadmin to find out the correct user id and change user_id=1 to it. eg : user_id=3 */
+
+								    while ( ($a = nextRow($rs)) ) { 
+									extract($a); 
+
+									    if ( (strlen($occupation) > 0) && (isset($realname)) ) { 
+
+										echo "<option value=\"$user_id\">$realname ($occupation)</option>"; 
+
+									    } else { 
+
+										echo "<option value=\"$user_id\">$realname</option>"; 
+
+									    } 
+
+								      }
 
 								if (!isset($subject)) { $subject = NULL; }
 
