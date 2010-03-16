@@ -42,7 +42,7 @@ Indent with : Tabs.
 
 Starting indentation : 0.
 
-Indentation : 2.
+Indentation : 1. (Tried 2 - was too spaced out.)
 
 Align assignments statements nicely : (True.)
 
