@@ -36,7 +36,7 @@ http://beta.phpformatter.com/
 
 Suggest using the following settings :
 
-Indentation style : PEAR Style.
+Indentation style : K&R Style. (Tried PEAR style - found it hard to read.)
 
 Indent with : Tabs.
 
