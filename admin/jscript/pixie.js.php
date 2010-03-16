@@ -1,29 +1,61 @@
 <?php
-//*****************************************************************//
-// Pixie: The Small, Simple, Site Maker.                           //
-// ----------------------------------------------------------------//
-// Licence: GNU General Public License v3                   	   //
-// Title: Public JavaScript                                        //
-//*****************************************************************//
+/**
+ * Pixie: The Small, Simple, Site Maker.
+ * 
+ * Licence: GNU General Public License v3
+ * Copyright (C) 2010, Scott Evans
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/
+ *
+ * Title: Pixie's Core Admin JavaScript
+ *
+ * @package Pixie
+ * @copyright 2008-2010 Scott Evans
+ * @author Scott Evans
+ * @author Sam Collett
+ * @author Tony White
+ * @author Isa Worcs
+ * @link http://www.getpixie.co.uk
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3
+ *
+ */
 
 $refering = NULL;
-$refering = parse_url( ($_SERVER['HTTP_REFERER']) );
-if( ($refering['host'] == $_SERVER['HTTP_HOST']) ) {
-if (defined('DIRECT_ACCESS')) { require_once '../lib/lib_misc.php'; pixieExit(); exit(); }
-define('DIRECT_ACCESS', 1);
-require_once '../lib/lib_misc.php';										/* perform basic sanity checks */
-	bombShelter();                  									/* check URL size */
-
-	error_reporting(0);
-
-	/* Please note : We do not need to specify the header type of this document using php because
-	  index.php already wraps this in a script tag. If we included it instead, we would need to. */
-
-	// Note : If you use this file, any global vars now have the prefix pixie, so what was $s is now $pixie_s
-	/* !IMPORTANT - This file thinks it's being run from admin/ */
-	/* instead of admin/jscript so paths are relative to admin */
-
-	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');
+$refering = parse_url( ( $_SERVER['HTTP_REFERER'] ) );
+if ( ( $refering['host'] == $_SERVER['HTTP_HOST'] ) ) {
+		if ( defined( 'DIRECT_ACCESS' ) ) {
+				require_once '../lib/lib_misc.php';
+				pixieExit();
+				exit();
+		}
+		define( 'DIRECT_ACCESS', 1 );
+		require_once '../lib/lib_misc.php';
+		/* perform basic sanity checks */
+		bombShelter();
+		/* check URL size */
+		
+		error_reporting( 0 );
+		
+		/* Please note : We do not need to specify the header type of this document using php because
+		index.php already wraps this in a script tag. If we included it instead, we would need to. */
+		
+		// Note : If you use this file, any global vars now have the prefix pixie, so what was $s is now $pixie_s
+		
+		/* !IMPORTANT - This file thinks it's being run from admin/ */
+		/* instead of admin/jscript so paths are relative to admin */
+		
+		extract( $_REQUEST, EXTR_PREFIX_ALL, 'pixie' );
 ?>
     //<![CDATA[
     var $j = jQuery.noConflict();
@@ -31,7 +63,9 @@ $j(document).ready(function(){
 	$j('#message').click(function(){ $j(this).slideUp('normal'); $j('#message span').fadeOut('slow'); });
 });  /* End jQuery document ready function */
 
-    <?php if ((isset($pixie_s)) && $pixie_s != 'login') { ?>
+    <?php
+		if ( ( isset( $pixie_s ) ) && $pixie_s != 'login' ) {
+?>
 $j(document).ready(function(){
 
 	var tagselect = { backgroundColor : '#0497d3', color : '#ffffff', padding : '1px 4px 1px 4px' };
@@ -43,7 +77,9 @@ $j(document).ready(function(){
 		$j('#tags').jTagging($j('#form_tags_list'), " ", tagnorm, tagselect, tagnormhover);
 		$j('#page_blocks').jTagging($j('#form_block_list'), " ", tagnorm, tagselect, tagnormhover);
 	}
-    <?php if ((isset($pixie_s)) && $pixie_s == 'settings') { ?>
+    <?php
+				if ( ( isset( $pixie_s ) ) && $pixie_s == 'settings' ) {
+?>
 	$j('#pages').Sortable(
 	{
 		accept : 'page',
@@ -70,8 +106,13 @@ $j(document).ready(function(){
 
 	$j('.more_upload').show();
 	$j('.image_preview select').bind('change', preview);
-    <?php /* End if $pixie_s == settings */ } ?>
-    <?php if ((isset($pixie_s)) && $pixie_s == 'myaccount' or 'publish') { ?>
+    <?php
+						/* End if $pixie_s == settings */
+				}
+?>
+    <?php
+				if ( ( isset( $pixie_s ) ) && $pixie_s == 'myaccount' or 'publish' ) {
+?>
 /* A function to apply the table sorter */
 function applyTablesort() {
 
@@ -118,8 +159,13 @@ function fetchTablesorterJs() {
 	fetchTablesorterJs();
 
 });  /* End jQuery document ready function */
-    <?php /* End if $pixie_s == myaccount or publish */ } ?>
-    <?php if ((isset($pixie_s)) && ($pixie_s == 'publish' or 'settings') or ($pixie_x == 'myprofile')) { ?>
+    <?php
+						/* End if $pixie_s == myaccount or publish */
+				}
+?>
+    <?php
+				if ( ( isset( $pixie_s ) ) && ( $pixie_s == 'publish' or 'settings' ) or ( $pixie_x == 'myprofile' ) ) {
+?>
 /* preview image */
 function preview() {
 
@@ -224,7 +270,9 @@ function useCkeditor() {
 /* A function to apply an advanced toolbar toggle switch to the top right right of ckeditor */
 function ckToolbarSlider() {
 
-    $j('.form_item_textarea_ckeditor').prepend('<a class=\"advanced-cke-toggle\" href=\"javascript:void(0);\" title=\"<?php print $pixie_advmode; ?>\">&#43;</a>');
+    $j('.form_item_textarea_ckeditor').prepend('<a class=\"advanced-cke-toggle\" href=\"javascript:void(0);\" title=\"<?php
+						print $pixie_advmode;
+?>\">&#43;</a>');
     $j('.advanced-cke-toggle').css('float', 'left').css('position', 'absolute').css('right', '4%').css('margin-top', '5px');
     $j('.advanced-cke-toggle').click(function(event) { 
 	event.preventDefault();
@@ -266,8 +314,18 @@ $j(function() {
 	if ($j('#mycarousel').length >= 1) { carouselInit(); } /* If the carousel container is present, load up the carousel... */
 
 }); /* End jQuery function */
-    <?php /* End if $pixie_s == publish */ } ?><?php /* End if not logged in */ } ?>
+    <?php
+						/* End if $pixie_s == publish */
+				}
+?><?php
+				/* End if not logged in */
+		}
+?>
     //]]>
 
-<?php } else { header( 'Location: ../../../' ); exit(); }
+<?php
+} else {
+		header( 'Location: ../../../' );
+		exit();
+}
 ?>
