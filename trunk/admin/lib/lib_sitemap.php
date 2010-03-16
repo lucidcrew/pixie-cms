@@ -1,76 +1,102 @@
 <?php
-if (!defined('DIRECT_ACCESS')) { header( 'Location: ../../' ); exit(); }
-//*****************************************************************//
-// Pixie: The Small, Simple, Site Maker.                           //
-// ----------------------------------------------------------------//
-// Licence: GNU General Public License v3                   	   //
-// Title: lib_sitemap.                                             //
-//*****************************************************************//
-
-// Author: Svetoslav Marinov (svetoslav.marinov@gmail.com)
-// Web: 	 http://devquickref.com
-// Desc: 	 A class for generating simple google sitemaps
+if ( !defined( 'DIRECT_ACCESS' ) ) {
+	header( 'Location: ../../' );
+	exit();
+}
+/**
+ * Pixie: The Small, Simple, Site Maker.
+ * 
+ * Licence: GNU General Public License v3
+ * Copyright (C) 2010, Scott Evans
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/
+ *
+ * Title: lib_sitemap - A class for generating simple google sitemaps
+ *
+ * @package Pixie
+ * @copyright 2008-2010 Scott Evans
+ * @author Scott Evans
+ * @author Sam Collett
+ * @author Tony White
+ * @author Isa Worcs
+ * @author Svetoslav Marinov (svetoslav.marinov@gmail.com)
+ * @link http://www.getpixie.co.uk
+ * @link http://devquickref.com
+ * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3
+ *
+ */
 
 class google_sitemap
 {
-  var $header = "<\x3Fxml version=\"1.0\" encoding=\"UTF-8\"\x3F>\n\t<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\txsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9\n\thttp://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\">";
-  var $charset = 'UTF-8';
-  var $footer = "\t</urlset>\n";
-  var $items = array();
-
-  /** Adds a new item to the channel contents.
-   *@param google_sitemap item $new_item
-   *@access public
-   */
-  function add_item($new_item){
-    //Make sure $new_item is an 'google_sitemap item' object
-    if(!is_a($new_item, "google_sitemap_item")){
-      //Stop execution with an error message
-      trigger_error('Can\'t add a non-google_sitemap_item object to the sitemap items array');
-    }
-    $this->items[] = $new_item;
-  }
-
-  /** Generates the sitemap XML data based on object properties.
-   *@param string $file_name ( optional ) if file name is supplied the XML data is saved in it otherwise returned as a string.
-   *@access public
-   *@return [void|string]
-   */
-  function build( $file_name = NULL )
-  {
-    $map = $this->header . "\n";
-
-    foreach($this->items as $item)
-    {
-		$item->loc = htmlentities($item->loc, ENT_QUOTES);
-      $map .= "\t\t<url>\n\t\t\t<loc>$item->loc</loc>\n";
-
-	  // lastmod
-      if ( !empty( $item->lastmod ) )
-      	$map .= "\t\t\t<lastmod>$item->lastmod</lastmod>\n";
-
-	  // changefreq
-      if ( !empty( $item->changefreq ) )
-      	$map .= "\t\t\t<changefreq>$item->changefreq</changefreq>\n";
-
-	  // priority
-      if ( !empty( $item->priority ) )
-      	$map .= "\t\t\t<priority>$item->priority</priority>\n";
-
-      $map .= "\t\t</url>\n\n";
-    }
-
-    $map .= $this->footer . "\n";
-
-    if(!is_null($file_name)){
-      $fh = fopen($file_name, 'w');
-      fwrite($fh, $map);
-      fclose($fh);
-    }else{
-      return $map;
-    }
-  }
-
+	var $header = "<\x3Fxml version=\"1.0\" encoding=\"UTF-8\"\x3F>\n\t<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\txsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9\n\thttp://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\">";
+	var $charset = 'UTF-8';
+	var $footer = "\t</urlset>\n";
+	var $items = array();
+	
+	/** Adds a new item to the channel contents.
+	 *@param google_sitemap item $new_item
+	 *@access public
+	 */
+	function add_item( $new_item )
+	{
+		//Make sure $new_item is an 'google_sitemap item' object
+		if ( !is_a( $new_item, "google_sitemap_item" ) ) {
+			//Stop execution with an error message
+			trigger_error( 'Can\'t add a non-google_sitemap_item object to the sitemap items array' );
+		}
+		$this->items[] = $new_item;
+	}
+	
+	/** Generates the sitemap XML data based on object properties.
+	 *@param string $file_name ( optional ) if file name is supplied the XML data is saved in it otherwise returned as a string.
+	 *@access public
+	 *@return [void|string]
+	 */
+	function build( $file_name = NULL )
+	{
+		$map = $this->header . "\n";
+		
+		foreach ( $this->items as $item ) {
+			$item->loc = htmlentities( $item->loc, ENT_QUOTES );
+			$map .= "\t\t<url>\n\t\t\t<loc>$item->loc</loc>\n";
+			
+			// lastmod
+			if ( !empty( $item->lastmod ) )
+				$map .= "\t\t\t<lastmod>$item->lastmod</lastmod>\n";
+			
+			// changefreq
+			if ( !empty( $item->changefreq ) )
+				$map .= "\t\t\t<changefreq>$item->changefreq</changefreq>\n";
+			
+			// priority
+			if ( !empty( $item->priority ) )
+				$map .= "\t\t\t<priority>$item->priority</priority>\n";
+			
+			$map .= "\t\t</url>\n\n";
+		}
+		
+		$map .= $this->footer . "\n";
+		
+		if ( !is_null( $file_name ) ) {
+			$fh = fopen( $file_name, 'w' );
+			fwrite( $fh, $map );
+			fclose( $fh );
+		} else {
+			return $map;
+		}
+	}
+	
 }
 
 /** A class for storing google_sitemap items and will be added to google_sitemap objects.
@@ -80,23 +106,23 @@ class google_sitemap
  *@package google_sitemap_item
  *@link http://devquickref.com
  *@version 0.1
-*/
+ */
 class google_sitemap_item
 {
-  /** Assigns constructor parameters to their corresponding object properties.
-   *@access public
-   *@param string $loc location
-   *@param string $lastmod date (optional) format in YYYY-MM-DD or in "ISO 8601" format
-   *@param string $changefreq (optional)( always,hourly,daily,weekly,monthly,yearly,never )
-   *@param string $priority (optional) current link's priority ( 0.0-1.0 )
-   */
-  function google_sitemap_item( $loc, $lastmod = '', $changefreq = '', $priority = '' )
-  {
-    $this->loc = $loc;
-    $this->lastmod = $lastmod;
-    $this->changefreq = $changefreq;
-    $this->priority = $priority;
-  }
+	/** Assigns constructor parameters to their corresponding object properties.
+	 *@access public
+	 *@param string $loc location
+	 *@param string $lastmod date (optional) format in YYYY-MM-DD or in "ISO 8601" format
+	 *@param string $changefreq (optional)( always,hourly,daily,weekly,monthly,yearly,never )
+	 *@param string $priority (optional) current link's priority ( 0.0-1.0 )
+	 */
+	function google_sitemap_item( $loc, $lastmod = '', $changefreq = '', $priority = '' )
+	{
+		$this->loc        = $loc;
+		$this->lastmod    = $lastmod;
+		$this->changefreq = $changefreq;
+		$this->priority   = $priority;
+	}
 }
 
 ?>
