@@ -28,6 +28,30 @@
 
 = Coding Standards =
 
+== Automation ==
+
+Considering the huge immediate benefit of cleaning Pixie's code up, we can trial this on line tool :
+
+http://beta.phpformatter.com/
+
+Suggest using the following settings :
+
+Indentation style : PEAR Style.
+
+Indent with : Tabs.
+
+Starting indentation : 0.
+
+Indentation : 2.
+
+Align assignments statements nicely : (True.)
+
+Space inside brackets - ( ) : (True.)
+
+(No other options selected.)
+
+Initial results are good. It looks to be a very useful tool and will make the bulk of this work much easier.
+
 == Short Tags ==
 {{{
 <? ... ?>
