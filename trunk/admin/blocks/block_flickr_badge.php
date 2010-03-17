@@ -1,7 +1,7 @@
 <?php
-if ( !defined( 'DIRECT_ACCESS' ) ) {
-		header( 'Location: ../../' );
-		exit();
+if (!defined('DIRECT_ACCESS')) {
+	header('Location: ../../');
+	exit();
 }
 /**
  * Pixie: The Small, Simple, Site Maker.
@@ -34,19 +34,17 @@ if ( !defined( 'DIRECT_ACCESS' ) ) {
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3
  *
  */
-
 $flickr_id = '15929559%40N03';
 /* replace @ with %40 */
-
 ?>
-					<div id="block_flickr" class="block">
-						<div class="block_header">
-					 		<h4><a href="http://www.flickr.com/">Flickr</a></h4>
-					 	</div>
-					 	<div class="block_body">
-						    <script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?count=9&amp;display=latest&amp;size=s&amp;layout=x&amp;source=user&amp;user=<?php
+    <div id="block_flickr" class="block">
+	<div class="block_header">
+	    <h4><a href="http://www.flickr.com/">Flickr</a></h4>
+	</div>
+	<div class="block_body">
+	    <script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?count=9&amp;display=latest&amp;size=s&amp;layout=x&amp;source=user&amp;user=<?php
 print $flickr_id;
 ?>"></script>
-						</div>
-						<div class="block_footer"></div>		
-					</div>
+	</div>
+	<div class="block_footer"></div>
+    </div>

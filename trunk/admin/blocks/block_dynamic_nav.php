@@ -1,7 +1,7 @@
 <?php
-if ( !defined( 'DIRECT_ACCESS' ) ) {
-		header( 'Location: ../../' );
-		exit();
+if (!defined('DIRECT_ACCESS')) {
+	header('Location: ../../');
+	exit();
 }
 /**
  * Pixie: The Small, Simple, Site Maker.
@@ -34,95 +34,92 @@ if ( !defined( 'DIRECT_ACCESS' ) ) {
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3
  *
  */
-
 global $s, $m, $x, $site_url, $lang;
-
-if ( $nested_nav == 'yes' ) {
+if ($nested_nav == 'yes') {
 ?>
 					<ul id="sub_navigation_1">
 						<li><a href="<?php
-		echo createURL( $page_name, 'archives' );
+	echo createURL($page_name, 'archives');
 ?>" title="<?php
-		print $page_display_name . ': ' . $lang['archives'];
+	print $page_display_name . ': ' . $lang['archives'];
 ?>"<?php
-		if ( $m == 'archives' ) {
-				print " class=\"sub_nav_current_1 replace\"";
-		} else {
-				print " class=\"replace\"";
-		}
+	if ($m == 'archives') {
+		print " class=\"sub_nav_current_1 replace\"";
+	} else {
+		print " class=\"replace\"";
+	}
 ?>><?php
-		print $lang['archives'];
+	print $lang['archives'];
 ?><span></span></a></li>
 						<li><a href="<?php
-		echo createURL( $page_name, 'popular' );
+	echo createURL($page_name, 'popular');
 ?>" title="<?php
-		print $page_display_name . ': ' . $lang['popular_posts'];
+	print $page_display_name . ': ' . $lang['popular_posts'];
 ?>"<?php
-		if ( $m == 'popular' ) {
-				print " class=\"sub_nav_current_1 replace\"";
-		} else {
-				print " class=\"replace\"";
-		}
+	if ($m == 'popular') {
+		print " class=\"sub_nav_current_1 replace\"";
+	} else {
+		print " class=\"replace\"";
+	}
 ?>><?php
-		print $lang['popular_posts'];
+	print $lang['popular_posts'];
 ?><span></span></a></li>
 						<li><a href="<?php
-		echo createURL( $page_name, 'tags' );
+	echo createURL($page_name, 'tags');
 ?>" title="<?php
-		print $page_display_name . ': ' . $lang['tags'];
+	print $page_display_name . ': ' . $lang['tags'];
 ?>"<?php
-		if ( $m == 'tags' ) {
-				print " class=\"sub_nav_current_1 replace\"";
-		} else {
-				print " class=\"replace\"";
-		}
+	if ($m == 'tags') {
+		print " class=\"sub_nav_current_1 replace\"";
+	} else {
+		print " class=\"replace\"";
+	}
 ?>><?php
-		print $lang['tags'];
+	print $lang['tags'];
 ?><span></span></a></li>
 					</ul>
 					</li>
 <?php
 } else {
-		echo "\t\t\t\t\t<div id=\"block_dynamic_nav\" class=\"block\">\n\t\t\t\t\t\t<div class=\"block_header\">\n\t\t\t\t\t\t\t<h4>Sub Navigation</h4>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"block_body\">\n";
+	echo "\t\t\t\t\t<div id=\"block_dynamic_nav\" class=\"block\">\n\t\t\t\t\t\t<div class=\"block_header\">\n\t\t\t\t\t\t\t<h4>Sub Navigation</h4>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"block_body\">\n";
 ?>
 							<ul id="sub_navigation_1">
 								<li><a href="<?php
-		echo createURL( $page_name, 'archives' );
-		;
+	echo createURL($page_name, 'archives');
+	;
 ?>" title="<?php
-		print $page_display_name . ': ' . $lang['archives'];
+	print $page_display_name . ': ' . $lang['archives'];
 ?>"<?php
-		if ( $m == 'archives' ) {
-				print " class=\"sub_nav_current_1\"";
-		}
+	if ($m == 'archives') {
+		print " class=\"sub_nav_current_1\"";
+	}
 ?>><?php
-		print $lang['archives'];
+	print $lang['archives'];
 ?></a></li>
 								<li><a href="<?php
-		echo createURL( $page_name, 'popular' );
+	echo createURL($page_name, 'popular');
 ?>" title="<?php
-		print $page_display_name . ': ' . $lang['popular_posts'];
+	print $page_display_name . ': ' . $lang['popular_posts'];
 ?>"<?php
-		if ( $m == 'popular' ) {
-				print " class=\"sub_nav_current_1\"";
-		}
+	if ($m == 'popular') {
+		print " class=\"sub_nav_current_1\"";
+	}
 ?>><?php
-		print $lang['popular_posts'];
+	print $lang['popular_posts'];
 ?></a></li>
 								<li><a href="<?php
-		echo createURL( $page_name, 'tags' );
+	echo createURL($page_name, 'tags');
 ?>" title="<?php
-		print $page_display_name . ': ' . $lang['tags'];
+	print $page_display_name . ': ' . $lang['tags'];
 ?>"<?php
-		if ( $m == 'tags' ) {
-				print " class=\"sub_nav_current_1\"";
-		}
+	if ($m == 'tags') {
+		print " class=\"sub_nav_current_1\"";
+	}
 ?>><?php
-		print $lang['tags'];
+	print $lang['tags'];
 ?></a></li>
 							</ul>
 <?php
-		echo "\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"block_footer\"></div>\n\t\t\t\t\t</div>\n";
+	echo "\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"block_footer\"></div>\n\t\t\t\t\t</div>\n";
 }
-
 ?>

@@ -30,32 +30,27 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3
  *
  */
-
 $refering = NULL;
-$refering = parse_url( ( $_SERVER['HTTP_REFERER'] ) );
-if ( ( $refering['host'] == $_SERVER['HTTP_HOST'] ) ) {
-		if ( defined( 'DIRECT_ACCESS' ) ) {
-				require_once '../lib/lib_misc.php';
-				pixieExit();
-				exit();
-		}
-		define( 'DIRECT_ACCESS', 1 );
+$refering = parse_url(($_SERVER['HTTP_REFERER']));
+if (($refering['host'] == $_SERVER['HTTP_HOST'])) {
+	if (defined('DIRECT_ACCESS')) {
 		require_once '../lib/lib_misc.php';
-		/* perform basic sanity checks */
-		bombShelter();
-		/* check URL size */
-		
-		error_reporting( 0 );
-		
-		/* Please note : We do not need to specify the header type of this document using php because
-		index.php already wraps this in a script tag. If we included it instead, we would need to. */
-		
-		// Note : If you use this file, any global vars now have the prefix pixie, so what was $s is now $pixie_s
-		
-		/* !IMPORTANT - This file thinks it's being run from admin/ */
-		/* instead of admin/jscript so paths are relative to admin */
-		
-		extract( $_REQUEST, EXTR_PREFIX_ALL, 'pixie' );
+		pixieExit();
+		exit();
+	}
+	define('DIRECT_ACCESS', 1);
+	require_once '../lib/lib_misc.php';
+	/* perform basic sanity checks */
+	bombShelter();
+	/* check URL size */
+	error_reporting(0);
+	/* Please note : We do not need to specify the header type of this document using php because
+	index.php already wraps this in a script tag. If we included it instead, we would need to. */
+	// Note : If you use this file, any global vars now have the prefix pixie, so what was $s is now $pixie_s
+	
+	/* !IMPORTANT - This file thinks it's being run from admin/ */
+	/* instead of admin/jscript so paths are relative to admin */
+	extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');
 ?>
     //<![CDATA[
     var $j = jQuery.noConflict();
@@ -64,7 +59,7 @@ $j(document).ready(function(){
 });  /* End jQuery document ready function */
 
     <?php
-		if ( ( isset( $pixie_s ) ) && $pixie_s != 'login' ) {
+	if ((isset($pixie_s)) && $pixie_s != 'login') {
 ?>
 $j(document).ready(function(){
 
@@ -78,7 +73,7 @@ $j(document).ready(function(){
 		$j('#page_blocks').jTagging($j('#form_block_list'), " ", tagnorm, tagselect, tagnormhover);
 	}
     <?php
-				if ( ( isset( $pixie_s ) ) && $pixie_s == 'settings' ) {
+		if ((isset($pixie_s)) && $pixie_s == 'settings') {
 ?>
 	$j('#pages').Sortable(
 	{
@@ -107,11 +102,11 @@ $j(document).ready(function(){
 	$j('.more_upload').show();
 	$j('.image_preview select').bind('change', preview);
     <?php
-						/* End if $pixie_s == settings */
-				}
+			/* End if $pixie_s == settings */
+		}
 ?>
     <?php
-				if ( ( isset( $pixie_s ) ) && $pixie_s == 'myaccount' or 'publish' ) {
+		if ((isset($pixie_s)) && $pixie_s == 'myaccount' or 'publish') {
 ?>
 /* A function to apply the table sorter */
 function applyTablesort() {
@@ -160,11 +155,11 @@ function fetchTablesorterJs() {
 
 });  /* End jQuery document ready function */
     <?php
-						/* End if $pixie_s == myaccount or publish */
-				}
+			/* End if $pixie_s == myaccount or publish */
+		}
 ?>
     <?php
-				if ( ( isset( $pixie_s ) ) && ( $pixie_s == 'publish' or 'settings' ) or ( $pixie_x == 'myprofile' ) ) {
+		if ((isset($pixie_s)) && ($pixie_s == 'publish' or 'settings') or ($pixie_x == 'myprofile')) {
 ?>
 /* preview image */
 function preview() {
@@ -271,7 +266,7 @@ function useCkeditor() {
 function ckToolbarSlider() {
 
     $j('.form_item_textarea_ckeditor').prepend('<a class=\"advanced-cke-toggle\" href=\"javascript:void(0);\" title=\"<?php
-						print $pixie_advmode;
+			print $pixie_advmode;
 ?>\">&#43;</a>');
     $j('.advanced-cke-toggle').css('float', 'left').css('position', 'absolute').css('right', '4%').css('margin-top', '5px');
     $j('.advanced-cke-toggle').click(function(event) { 
@@ -315,17 +310,17 @@ $j(function() {
 
 }); /* End jQuery function */
     <?php
-						/* End if $pixie_s == publish */
-				}
-?><?php
-				/* End if not logged in */
+			/* End if $pixie_s == publish */
 		}
+?><?php
+		/* End if not logged in */
+	}
 ?>
     //]]>
 
 <?php
 } else {
-		header( 'Location: ../../../' );
-		exit();
+	header('Location: ../../../');
+	exit();
 }
 ?>

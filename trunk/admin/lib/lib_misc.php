@@ -1,6 +1,6 @@
 <?php
-if ( !defined( 'DIRECT_ACCESS' ) ) {
-	header( 'Location: ../../' );
+if (!defined('DIRECT_ACCESS')) {
+	header('Location: ../../');
 	exit();
 }
 /**
@@ -34,16 +34,15 @@ if ( !defined( 'DIRECT_ACCESS' ) ) {
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3
  *
  */
-
 // ------------------------------------------------------------------
 
 /* Set up debugging */
 // ------------------------------------------------------------------
-if ( defined( 'PIXIE_DEBUG' ) ) {
+if (defined('PIXIE_DEBUG')) {
 	pixieExit();
 	exit();
 }
-define( 'PIXIE_DEBUG', 'no' );
+define('PIXIE_DEBUG', 'no');
 /* Set debug to yes to log errors */
 // ------------------------------------------------------------------
 

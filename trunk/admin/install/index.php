@@ -200,9 +200,9 @@
 			    if ( $fh = fopen('../config.php', 'a') ) {
 
 $data ="<?php
-if ( !defined( 'DIRECT_ACCESS' ) ) {
-		header( 'Location: ../' );
-		exit();
+if (!defined('DIRECT_ACCESS')) {
+	header('Location: ../');
+	exit();
 }
 /**
  * Pixie: The Small, Simple, Site Maker.
@@ -235,17 +235,14 @@ if ( !defined( 'DIRECT_ACCESS' ) ) {
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3
  *
  */
-
 /* MySQL settings */
 \$pixieconfig['db']           = '$pixie_database';
 \$pixieconfig['user']         = '$pixie_db_username';
 \$pixieconfig['pass']         = '$pixie_db_usr_password';
 \$pixieconfig['host']         = '$pixie_host';
 \$pixieconfig['table_prefix'] = '$pixie_prefix';
-
 /* Timezone - (Server time zone) */
 \$pixieconfig['server_timezone'] = '$pixie_server_timezone';
-
 /* Foreign language database bug fix */
 \$pixieconfig['site_charset'] = '$pixie_charset';
 ?>";
@@ -1201,7 +1198,7 @@ www.getpixie.co.uk
 							<option selected="selected" value="en-gb">English</option>
 							<option value="cz">Čeština</option>				<!--	Czech			-->
 							<option value="de">Deutsch</option>				<!--	German			-->
-							<option value="dutch-nl">Nederlandse</option>			<!--	Dutch			-->
+							<option value="nl">Nederlandse</option>				<!--	Dutch			-->
 							<option value="es-cl">Espanyol (català)</option>		<!--	Spanish (Catalan)	-->
 							<option value="es-es">Español</option>				<!--	Spanish			-->
 							<option value="es-gl">Español (Galego)</option>			<!--	Spanish (Galician)	-->
