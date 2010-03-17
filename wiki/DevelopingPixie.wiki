@@ -44,9 +44,9 @@ Starting indentation : 0.
 
 Indentation : 1. (Tried 2 - was too spaced out.)
 
-Align assignments statements nicely : (True.)
+Remove empty lines : (True.)
 
-Space inside brackets - ( ) : (True.)
+Align assignments statements nicely : (True.)
 
 (No other options selected.)
 
