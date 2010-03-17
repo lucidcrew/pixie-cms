@@ -1,7 +1,7 @@
 <?php
 if ( !defined( 'DIRECT_ACCESS' ) ) {
-		header( 'Location: ../' );
-		exit();
+	header( 'Location: ../' );
+	exit();
 }
 /**
  * Pixie: The Small, Simple, Site Maker.

@@ -1,6 +1,6 @@
 <?php
-if ( !defined( 'DIRECT_ACCESS' ) ) {
-	header( 'Location: ../../' );
+if (!defined('DIRECT_ACCESS')) {
+	header('Location: ../../');
 	exit();
 }
 /**
@@ -34,63 +34,54 @@ if ( !defined( 'DIRECT_ACCESS' ) ) {
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3
  *
  */
-
 // ------------------------------------------------------------------
 // set up pixie and let the magic begin
-function pixie()
-{
+function pixie() {
 	global $s, $m, $x, $p, $rel_path, $staticpage, $style, $site_url, $page_display_name, $page_type, $page_id, $syle, $clean_urls, $default_page;
-	
 	$request = $_SERVER['REQUEST_URI'];
-	
-	if ( $style ) {
-		$request = str_replace( "?style={$style}", "", $request );
+	if ($style) {
+		$request = str_replace("?style={$style}", "", $request);
 	}
-	
-	$site_url_last = $site_url{strlen( $site_url ) - 1};
-	if ( $site_url_last != '/' ) {
+	$site_url_last = $site_url{strlen($site_url) - 1};
+	if ($site_url_last != '/') {
 		$site_url = $site_url . '/';
 	}
-	
-	if ( $clean_urls == 'yes' ) {
+	if ($clean_urls == 'yes') {
 		// if the request contains a ? then this person is accessing with a dirty URL and is handled accordingly 
-		if ( strpos( $request, '?s=' ) !== FALSE ) {
+		if (strpos($request, '?s=') !== FALSE) {
 			$rel_path = './';
 		} else {
 			//this is directory level of your installation. check autofind works!?!?
-			$url        = explode( '/', $request );
-			$count      = count( $url );
-			$site_url_x = str_replace( 'http://', "", $site_url );
-			$temp       = explode( '/', $site_url_x );
-			$install    = count( $temp );
-			
-			$dir_level = $install - 2;
-			if ( $dir_level < 0 ) {
+			$url        = explode('/', $request);
+			$count      = count($url);
+			$site_url_x = str_replace('http://', "", $site_url);
+			$temp       = explode('/', $site_url_x);
+			$install    = count($temp);
+			$dir_level  = $install - 2;
+			if ($dir_level < 0) {
 				$dir_level = 0;
 			}
-			
-			if ( isset( $url[$dir_level + 1] ) ) {
-				$s = strtolower( $url[$dir_level + 1] );
+			if (isset($url[$dir_level + 1])) {
+				$s = strtolower($url[$dir_level + 1]);
 			} else {
 				$s = NULL;
 			}
-			if ( isset( $url[$dir_level + 2] ) ) {
-				$m = strtolower( $url[$dir_level + 2] );
+			if (isset($url[$dir_level + 2])) {
+				$m = strtolower($url[$dir_level + 2]);
 			} else {
 				$m = NULL;
 			}
-			if ( isset( $url[$dir_level + 3] ) ) {
-				$x = strtolower( $url[$dir_level + 3] );
+			if (isset($url[$dir_level + 3])) {
+				$x = strtolower($url[$dir_level + 3]);
 			} else {
 				$x = NULL;
 			}
-			if ( isset( $url[$dir_level + 4] ) ) {
-				$p = strtolower( $url[$dir_level + 4] );
+			if (isset($url[$dir_level + 4])) {
+				$p = strtolower($url[$dir_level + 4]);
 			} else {
 				$p = NULL;
 			}
-			
-			switch ( $count ) {
+			switch ($count) {
 				case $dir_level + 3:
 					$rel_path = '../';
 					break;
@@ -111,174 +102,151 @@ function pixie()
 	} else {
 		$rel_path = './';
 	}
-	
-	if ( ( !isset( $s ) ) or ( !$s ) ) {
-		$last    = $default_page{strlen( $default_page ) - 1};
-		$default = explode( '/', $default_page );
-		
-		if ( isset( $default['0'] ) ) {
-			$s = sterilise_txt( $default['0'] );
+	if ((!isset($s)) or (!$s)) {
+		$last    = $default_page{strlen($default_page) - 1};
+		$default = explode('/', $default_page);
+		if (isset($default['0'])) {
+			$s = sterilise_txt($default['0']);
 		} else {
 			$s = NULL;
 		}
-		if ( isset( $default['1'] ) ) {
-			$m = sterilise_txt( $default['1'] );
+		if (isset($default['1'])) {
+			$m = sterilise_txt($default['1']);
 		} else {
 			$m = NULL;
 		}
-		if ( isset( $default['2'] ) ) {
-			$x = sterilise_txt( $default['2'] );
+		if (isset($default['2'])) {
+			$x = sterilise_txt($default['2']);
 		} else {
 			$x = NULL;
 		}
-		if ( isset( $default['3'] ) ) {
-			$p = sterilise_txt( $default['3'] );
+		if (isset($default['3'])) {
+			$p = sterilise_txt($default['3']);
 		} else {
 			$p = NULL;
 		}
 	}
-	
-	$s = public_check_404( $s );
-	
-	if ( ( isset( $s ) ) && ( $s == '404' ) ) {
+	$s = public_check_404($s);
+	if ((isset($s)) && ($s == '404')) {
 		$m = "";
 		$x = "";
 		$p = "";
 	}
-	
-	if ( $m == 'rss' ) {
-		if ( isset( $s ) ) {
-			$rss = public_check_rss( $s );
+	if ($m == 'rss') {
+		if (isset($s)) {
+			$rss = public_check_rss($s);
 		}
-		if ( !$rss ) {
+		if (!$rss) {
 			$s = '404';
 			$m = "";
 			$x = "";
 			$p = "";
 		}
 	}
-	
-	if ( isset( $s ) ) {
-		$page_type = check_type( $s );
+	if (isset($s)) {
+		$page_type = check_type($s);
 	}
-	if ( $page_type == 'dynamic' ) {
+	if ($page_type == 'dynamic') {
 		$style = $page_type;
-	} else if ( $page_type == 'static' ) {
+	} else if ($page_type == 'static') {
 		$style = $s;
 		$m     = "";
 		$x     = "";
 		$p     = "";
-	} else if ( $s == '404' ) {
+	} else if ($s == '404') {
 		$style = '404';
 	} else {
 		$style = $s;
 	}
-	
-	function resolver( $string )
-	{
-		$string = str_replace( '-', 'BREAK', $string );
-		$string = preg_replace( '/[^a-zA-Z0-9]/', "", $string );
-		$string = str_replace( 'BREAK', '-', $string );
+	function resolver($string) {
+		$string = str_replace('-', 'BREAK', $string);
+		$string = preg_replace('/[^a-zA-Z0-9]/', "", $string);
+		$string = str_replace('BREAK', '-', $string);
 		return $string;
 	}
-	
-	$s = resolver( $s );
-	$m = resolver( $m );
-	$x = resolver( $x );
-	$p = resolver( $p );
-	
-	$page_id           = get_page_id( $s );
-	$page_hits         = safe_field( 'page_views', 'pixie_core', "page_name='$s'" );
-	$page_display_name = safe_field( 'page_display_name', 'pixie_core', "page_name='$s'" );
-	safe_update( 'pixie_core', "page_views  = $page_hits + 1", "page_name = '$s'" );
+	$s                 = resolver($s);
+	$m                 = resolver($m);
+	$x                 = resolver($x);
+	$p                 = resolver($p);
+	$page_id           = get_page_id($s);
+	$page_hits         = safe_field('page_views', 'pixie_core', "page_name='$s'");
+	$page_display_name = safe_field('page_display_name', 'pixie_core', "page_name='$s'");
+	safe_update('pixie_core', "page_views  = $page_hits + 1", "page_name = '$s'");
 }
 // ------------------------------------------------------------------
 // Build the navigation dynamically or build it from specified array
-function build_navigation()
-{
+function build_navigation() {
 	global $s, $site_url, $nested_nav, $lang;
-	
-	$check_pages = safe_rows( '*', 'pixie_core', "public = 'yes' and in_navigation = 'yes' and page_name not in ('404','rss') order by page_order asc" );
-	$num         = count( $check_pages );
+	$check_pages = safe_rows('*', 'pixie_core', "public = 'yes' and in_navigation = 'yes' and page_name not in ('404','rss') order by page_order asc");
+	$num         = count($check_pages);
 	$current_dir = current_dir();
-	
 	echo '<h3>' . $lang['navigation'] . "</h3>\n\t\t\t\t<ul id=\"navigation_1\">\n";
 	$i     = 0;
 	$first = TRUE; // first link
 	$last  = FALSE; // last link
-	while ( $i < $num ) {
+	while ($i < $num) {
 		$out               = $check_pages[$i];
 		$page_display_name = $out['page_display_name'];
 		$page_name         = $out['page_name'];
 		$page_type         = $out['page_type'];
-		if ( $i == ( $num - 1 ) )
+		if ($i == ($num - 1))
 			$last = TRUE;
-		if ( $s == $page_name ) {
-			if ( $page_type == 'dynamic' ) {
+		if ($s == $page_name) {
+			if ($page_type == 'dynamic') {
 				$includestr = 'dynamic';
 			} else {
 				$includestr = $page_name;
 			}
-			if ( ( $nested_nav == 'yes' ) && ( file_exists( "admin/blocks/block_{$includestr}_nav.php" ) ) ) {
-				echo "\t\t\t\t\t<li id=\"li_1_$page_name\"><a href=\"" . createURL( $page_name ) . "\" title=\"$page_display_name\" id=\"navigation_1_$page_name\" class=\"nav_current_1 replace\">$page_display_name<span></span></a>\n";
-				include( 'admin/blocks/block_' . $includestr . '_nav.php' );
+			if (($nested_nav == 'yes') && (file_exists("admin/blocks/block_{$includestr}_nav.php"))) {
+				echo "\t\t\t\t\t<li id=\"li_1_$page_name\"><a href=\"" . createURL($page_name) . "\" title=\"$page_display_name\" id=\"navigation_1_$page_name\" class=\"nav_current_1 replace\">$page_display_name<span></span></a>\n";
+				include('admin/blocks/block_' . $includestr . '_nav.php');
 			} else {
-				echo "\t\t\t\t\t<li id=\"li_1_$page_name\" class=\"nav_current_li_1" . ( $first ? ' first' : "" ) . ( $last ? ' last' : "" ) . "\"><a href=\"" . createURL( $page_name ) . "\" title=\"$page_display_name\" id=\"navigation_1_$page_name\" class=\"nav_current_1 replace\">$page_display_name<span></span></a></li>\n";
+				echo "\t\t\t\t\t<li id=\"li_1_$page_name\" class=\"nav_current_li_1" . ($first ? ' first' : "") . ($last ? ' last' : "") . "\"><a href=\"" . createURL($page_name) . "\" title=\"$page_display_name\" id=\"navigation_1_$page_name\" class=\"nav_current_1 replace\">$page_display_name<span></span></a></li>\n";
 				$first = FALSE;
 			}
 		} else {
-			echo "\t\t\t\t\t<li id=\"li_1_$page_name\"" . ( $first ? " class=\"first\"" : "" ) . ( $last ? " class=\"last\"" : "" ) . "><a href=\"" . createURL( $page_name ) . "\" title=\"$page_display_name\" id=\"navigation_1_$page_name\" class=\"replace\">$page_display_name<span></span></a></li>\n";
+			echo "\t\t\t\t\t<li id=\"li_1_$page_name\"" . ($first ? " class=\"first\"" : "") . ($last ? " class=\"last\"" : "") . "><a href=\"" . createURL($page_name) . "\" title=\"$page_display_name\" id=\"navigation_1_$page_name\" class=\"replace\">$page_display_name<span></span></a></li>\n";
 			$first = FALSE;
 		}
 		$i++;
 	}
-	
 	echo "\t\t\t\t</ul>\n";
-	
 }
 // ------------------------------------------------------------------
 // Build and include the blocks for this page
-function build_blocks()
-{
+function build_blocks() {
 	global $s;
-	
-	extract( safe_row( '*', 'pixie_core', "page_name = '$s'" ) );
-	$blocks = explode( " ", $page_blocks );
-	
-	for ( $count = 0; $count < ( count( $blocks ) ); $count++ ) {
+	extract(safe_row('*', 'pixie_core', "page_name = '$s'"));
+	$blocks = explode(" ", $page_blocks);
+	for ($count = 0; $count < (count($blocks)); $count++) {
 		$current = $blocks[$count];
-		$current = str_replace( " ", "", $current );
-		
-		if ( file_exists( "admin/blocks/block_{$current}.php" ) ) {
-			include( "admin/blocks/block_{$current}.php" );
+		$current = str_replace(" ", "", $current);
+		if (file_exists("admin/blocks/block_{$current}.php")) {
+			include("admin/blocks/block_{$current}.php");
 			echo "\n";
 		}
 	}
 }
 // ------------------------------------------------------------------
 // Build a header bar for logged in users
-function build_head()
-{
+function build_head() {
 	global $site_url, $date_format;
-	
-	if ( isset( $_COOKIE['pixie_login'] ) ) {
-		list( $username, $cookie_hash ) = explode( ',', $_COOKIE['pixie_login'] );
-		$nonce = safe_field( 'nonce', 'pixie_users', "user_name='$username'" );
-		
-		if ( md5( $username . $nonce ) == $cookie_hash ) {
-			$privs                 = safe_field( 'privs', 'pixie_users', "user_name='$username'" );
-			$realname              = safe_field( 'realname', 'pixie_users', "user_name='$username'" );
+	if (isset($_COOKIE['pixie_login'])) {
+		list($username, $cookie_hash) = explode(',', $_COOKIE['pixie_login']);
+		$nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
+		if (md5($username . $nonce) == $cookie_hash) {
+			$privs                 = safe_field('privs', 'pixie_users', "user_name='$username'");
+			$realname              = safe_field('realname', 'pixie_users', "user_name='$username'");
 			$GLOBALS['pixie_user'] = $username;
-			$user_count            = mysql_num_rows( safe_query( 'select * from ' . PFX . 'pixie_log_users_online' ) );
+			$user_count            = mysql_num_rows(safe_query('select * from ' . PFX . 'pixie_log_users_online'));
 			$user_count            = $user_count - 1;
-			
 			echo "<div id=\"admin_header\">
 		<h1>Hello ";
-			if ( isset( $realname ) ) {
-				echo firstword( $realname );
+			if (isset($realname)) {
+				echo firstword($realname);
 			}
 			echo "</h1>
-		<div id=\"admin_header_text\"><p>" . safe_strftime( $date_format, time() + tz_offset() ) . ". Currently your site has $user_count visitor(s) online.</p></div>
+		<div id=\"admin_header_text\"><p>" . safe_strftime($date_format, time() + tz_offset()) . ". Currently your site has $user_count visitor(s) online.</p></div>
 		<div id=\"admin_header_controls\"><p><a href=\"" . $site_url . "admin/\" title=\"Goto Pixie\">Pixie</a><a href=\"" . $site_url . "admin/?s=logout\" title=\"Logout of pixie\">Logout</a></p></div>
 	</div>\n";
 			/* Needs language */
@@ -287,30 +255,27 @@ function build_head()
 }
 // ------------------------------------------------------------------
 // Build title for current page
-function build_title()
-{
+function build_title() {
 	global $site_name, $page_display_name, $page_type, $s, $m, $x, $p;
-	
 	// will probably need support for child pages!
-	
-	if ( $page_type == 'dynamic' && $m == 'permalink' ) {
-		$post_title = safe_field( 'title', 'pixie_dynamic_posts', "post_slug = '$x'" );
-		if ( $post_title ) {
+	if ($page_type == 'dynamic' && $m == 'permalink') {
+		$post_title = safe_field('title', 'pixie_dynamic_posts', "post_slug = '$x'");
+		if ($post_title) {
 			echo "$site_name - $page_display_name - $post_title";
 		} else {
 			echo "$site_name";
 			/* escaping other language characters can cause an error. */
 		}
-	} else if ( $m == 'tag' ) {
-		if ( $p ) {
-			echo "$site_name - $page_display_name - Tag - " . simplify( squash_slug( $x ) ) . " - Page $p";
+	} else if ($m == 'tag') {
+		if ($p) {
+			echo "$site_name - $page_display_name - Tag - " . simplify(squash_slug($x)) . " - Page $p";
 		} else {
-			echo "$site_name - $page_display_name - Tag - " . simplify( squash_slug( $x ) );
+			echo "$site_name - $page_display_name - Tag - " . simplify(squash_slug($x));
 		}
-	} else if ( $m == 'page' ) {
-		echo "$site_name - $page_display_name - " . simplify( $m ) . " " . simplify( $x );
-	} else if ( $m ) {
-		echo "$site_name - $page_display_name - " . simplify( $m );
+	} else if ($m == 'page') {
+		echo "$site_name - $page_display_name - " . simplify($m) . " " . simplify($x);
+	} else if ($m) {
+		echo "$site_name - $page_display_name - " . simplify($m);
 	} else {
 		echo "$site_name - $page_display_name";
 	}

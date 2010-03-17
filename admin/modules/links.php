@@ -1,6 +1,6 @@
 <?php
-if ( !defined( 'DIRECT_ACCESS' ) ) {
-	header( 'Location: ../../' );
+if (!defined('DIRECT_ACCESS')) {
+	header('Location: ../../');
 	exit();
 }
 /**
@@ -34,11 +34,9 @@ if ( !defined( 'DIRECT_ACCESS' ) ) {
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3
  *
  */
-
 // The module is loaded into Pixie in many different instances, the variable
 // $do is used to run the module in different ways.
-switch ( $do ) {
-	
+switch ($do) {
 	// General information:
 	// The general information is used to show information about the module within Pixie. 
 	// Simply enter details of your module here:
@@ -59,9 +57,7 @@ switch ( $do ) {
 		$m_publish       = 'yes';
 		// Put this module in the navigation by default?
 		$m_in_navigation = 'yes';
-		
 		break;
-	
 	// Install
 	// This section contains the SQL needed to create your modules tables
 	case 'install':
@@ -69,7 +65,6 @@ switch ( $do ) {
 		$execute  = "CREATE TABLE IF NOT EXISTS `pixie_module_links` (`links_id` int(4) NOT NULL auto_increment,`link_title` varchar(150) collate utf8_unicode_ci NOT NULL default '',`tags` varchar(200) collate utf8_unicode_ci NOT NULL default '',`url` varchar(255) collate utf8_unicode_ci NOT NULL default '',PRIMARY KEY  (`links_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=0 ;";
 		$execute1 = "CREATE TABLE IF NOT EXISTS `pixie_module_links_settings` (`links_id` mediumint(1) NOT NULL auto_increment,PRIMARY KEY  (`links_id`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;";
 		break;
-	
 	// The administration of the module (add, edit, delete)
 	// This is where Pixie really saves you time, these few lines of code will create the entire admin interface
 	case 'admin':
@@ -83,104 +78,82 @@ switch ( $do ) {
 		$asc_desc       = 'asc';
 		// Fields you want to exclude in your table view
 		$view_exclude   = array(
-			 'links_id',
-			'tags' 
+			'links_id',
+			'tags'
 		);
 		// Fields you do not want people to be able to edit
 		$edit_exclude   = array(
-			 'links_id' 
+			'links_id'
 		);
 		// The number of items per page in the table view
 		$items_per_page = 15;
 		// Does this module support tags (yes or no)
 		$tags           = 'yes';
-		
-		admin_module( $module_name, $table_name, $order_by, $asc_desc, $view_exclude, $edit_exclude, $items_per_page, $tags );
-		
+		admin_module($module_name, $table_name, $order_by, $asc_desc, $view_exclude, $edit_exclude, $items_per_page, $tags);
 		break;
-	
 	// The three sections below are all for the module output, a module is loaded at three different stages of a page build.
-	
 	// Pre
 	// Any code to be run before HTML output, any redirects or header changes must occur here
 	case 'pre':
-		
 		// lets have a look at $m to see what we are trying to get out of the page
-		switch ( $m ) {
-			
+		switch ($m) {
 			// ok so the visitor has come along to www.mysite.com/links/tag/something lets show them all links tagged "something"
 			case 'tag':
-				
 				// we need $x to be a valid variable so lets check it
-				$x  = squash_slug( $x );
-				$rz = safe_rows( '*', 'pixie_module_links', "tags REGEXP '[[:<:]]" . $x . "[[:>:]]'" );
-				if ( $rz ) {
+				$x  = squash_slug($x);
+				$rz = safe_rows('*', 'pixie_module_links', "tags REGEXP '[[:<:]]" . $x . "[[:>:]]'");
+				if ($rz) {
 					// we have found a entry tagged "something" to lets change the page title to reflect that
 					// first lets get the current sites title
-					$site_title = safe_field( 'site_name', 'pixie_settings', "settings_id = '1'" );
+					$site_title = safe_field('site_name', 'pixie_settings', "settings_id = '1'");
 					// $ptitle will overwrite the current page title
 					$ptitle     = $site_title . " - Links - Tagged - $x";
-					
 				} else {
 					// no tags were found, lets redirect back to the defualt view again.
 					// createURL is your friend... its one of the most useful functions in Pixie
-					if ( isset( $s ) ) {
-						$redirect = createURL( $s );
-						header( "Location: $redirect" );
+					if (isset($s)) {
+						$redirect = createURL($s);
+						header("Location: $redirect");
 					}
 					exit();
-					
 				}
-				
 				break;
-			
 			default:
-				
 				// By default this module is called the links module, Pixie will work this out for us so I do not need
 				// to set $ptitle here. Pixie will always TRY and create a unique, accurate page title if one is not set. 
-				
 				break;
-				
 		}
-		
 		break;
-	
 	// Head
 	// This will output code into the end of the head section of the HTML, this allows you to load in external CSS, JavaScript etc
 	case 'head':
-		
 		break;
-	
 	// Show Module
 	// This is where your module will output into the content div on the page
 	default:
-		
 		// Switch $m (our second variable from the URL) and adjust ouput accordingly
-		switch ( $m ) {
-			
+		switch ($m) {
 			// $m is set to tag the we want to filter our links page to only check this tag
 			case 'tag':
-				
-				if ( $x ) {
+				if ($x) {
 					// turn $x back into a tag from a slug
-					$x = squash_slug( $x );
-					if ( isset( $s ) ) {
-						extract( safe_row( '*', 'pixie_core', "page_name = '$s'" ) );
+					$x = squash_slug($x);
+					if (isset($s)) {
+						extract(safe_row('*', 'pixie_core', "page_name = '$s'"));
 					}
 					// find all the links with a matching tag to $x
-					$rz = safe_rows( '*', 'pixie_module_links', "tags REGEXP '[[:<:]]" . $x . "[[:>:]]'" );
-					
-					if ( $rz ) {
+					$rz = safe_rows('*', 'pixie_module_links', "tags REGEXP '[[:<:]]" . $x . "[[:>:]]'");
+					if ($rz) {
 						echo "<div ";
-						if ( isset( $s ) ) {
+						if (isset($s)) {
 							echo "id=\"$s\"";
 						}
 						echo ">\n\t\t\t\t\t<h3>$page_display_name</h3>\n";
-						$num = count( $rz );
-						echo "\t\t\t\t\t<div id=\"$x\" class=\"link_list\">\n\t\t\t\t\t\t<h4>" . ucwords( $x ) . "</h4>\n\t\t\t\t\t\t<ul>\n";
+						$num = count($rz);
+						echo "\t\t\t\t\t<div id=\"$x\" class=\"link_list\">\n\t\t\t\t\t\t<h4>" . ucwords($x) . "</h4>\n\t\t\t\t\t\t<ul>\n";
 						$i = 0;
 						// now loop out the results
-						while ( $i < $num ) {
+						while ($i < $num) {
 							$out        = $rz[$i];
 							$url        = $out['url'];
 							$link_title = $out['link_title'];
@@ -192,42 +165,37 @@ switch ( $do ) {
 						echo "\t\t\t\t</div>\n";
 					}
 				}
-				
 				break;
-			
 			default:
-				
 				// get the page display name from the database
-				if ( isset( $s ) ) {
-					extract( safe_row( '*', 'pixie_core', "page_name = '$s'" ) );
+				if (isset($s)) {
+					extract(safe_row('*', 'pixie_core', "page_name = '$s'"));
 				}
 				// print the display name into a h3
 				echo "<div ";
-				if ( isset( $s ) ) {
+				if (isset($s)) {
 					echo "id=\"$s\"";
 				}
 				echo ">\n\t\t\t\t\t<h3>$page_display_name</h3>\n";
-				
 				// get all the tags from the links page using the all_tags function within Pixie
-				$tags_array = all_tags( 'pixie_module_links', "links_id >= '0'" );
-				
+				$tags_array = all_tags('pixie_module_links', "links_id >= '0'");
 				// make sure we actually got something
-				if ( count( $tags_array ) != 0 ) {
+				if (count($tags_array) != 0) {
 					// sort the tags in the array
-					sort( $tags_array );
+					sort($tags_array);
 					$max = 0;
 					// begin to loop the array of tags
-					for ( $c = 1; $c < ( count( $tags_array ) ); $c++ ) {
+					for ($c = 1; $c < (count($tags_array)); $c++) {
 						// get the current tag
 						$current = $tags_array[$c];
 						// search for links tagged with the current tag
-						$rz      = safe_rows( '*', 'pixie_module_links', "tags REGEXP '[[:<:]]" . $current . "[[:>:]]'" );
-						$num     = count( $rz );
+						$rz      = safe_rows('*', 'pixie_module_links', "tags REGEXP '[[:<:]]" . $current . "[[:>:]]'");
+						$num     = count($rz);
 						// if found then output all those links into an unordered list
-						if ( $rz ) {
-							echo "\t\t\t\t\t<div id=\"$current\" class=\"link_list\">\n\t\t\t\t\t\t<h4>" . ucwords( $current ) . "</h4>\n\t\t\t\t\t\t<ul>\n";
+						if ($rz) {
+							echo "\t\t\t\t\t<div id=\"$current\" class=\"link_list\">\n\t\t\t\t\t\t<h4>" . ucwords($current) . "</h4>\n\t\t\t\t\t\t<ul>\n";
 							$i = 0;
-							while ( $i < $num ) {
+							while ($i < $num) {
 								$out        = $rz[$i];
 								$url        = $out['url'];
 								$link_title = $out['link_title'];
@@ -239,14 +207,9 @@ switch ( $do ) {
 						}
 					}
 				}
-				
 				echo "\t\t\t\t\t</div>\n";
-				
 				break;
-				
 		}
-		
 		break;
 }
-
 ?>
