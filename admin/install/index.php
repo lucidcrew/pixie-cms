@@ -19,7 +19,7 @@
 
     /* Vars that need to be defined first */
 
-    $pixie_version = '1.04-Beta'; /* You can define the version number for Pixie releases here */
+    $pixie_version = '1.04b'; /* You can define the version number for Pixie releases here */
     $pixie_user = 'Pixie Installer'; /* The name on the first log */
     $pixie_server_timezone = 'Europe/London'; /* Hosted server timezone */
     $pixie_charset = 'UTF-8';
