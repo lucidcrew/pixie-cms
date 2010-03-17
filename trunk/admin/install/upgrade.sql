@@ -12,4 +12,4 @@ ALTER TABLE `pixie_settings` ADD COLUMN `bb2_installed` SET( 'yes', 'no' ) NOT N
 
 -- v1.04a
 -- set version number
-UPDATE `pixie_settings` SET `version` = '1.04-Beta' WHERE `pixie_settings`.`settings_id` = 1 LIMIT 1 ;
+UPDATE `pixie_settings` SET `version` = '1.04b' WHERE `pixie_settings`.`settings_id` = 1 LIMIT 1 ;
