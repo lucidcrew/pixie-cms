@@ -161,7 +161,7 @@ visit: " . $site_url . "admin to login.";
 					$subject = NULL;
 				}
 				mail($email, $subject, $emessage);
-				$messageok = $lang['user_new_ok'] . " " . $realname . '.';
+				$messageok = "{$lang['user_new_ok']} {$realname}  :::  [ {$lang['form_username']} : {$uname} ]  :::  [ {$lang['form_password']} : {$password} ]";
 				logme($messageok, 'no', 'user');
 			}
 		} else {
