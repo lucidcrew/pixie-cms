@@ -1152,7 +1152,11 @@ if ((isset($GLOBALS['pixie_user'])) && (isset($GLOBALS['pixie_user_privs'])) && 
 						page_order_reset();
 					}
 					if ((isset($s)) && ($s == 'publish')) {
+						if ((isset($title)) && ($title)) {
 						$output = $title;
+						} else {
+						$output = NULL;
+						}
 						$icon   = 'page';
 						$pname  = safe_field('page_display_name', 'pixie_core', "page_id='$page_id'");
 						if ($m == 'static') {

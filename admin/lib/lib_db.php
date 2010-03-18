@@ -44,45 +44,6 @@ if (!empty($pixieconfig['table_prefix'])) {
 		define('PFX', '');
 	}
 }
-class DB {
-	function getTzdiff() {
-		if (strnatcmp(phpversion(), '5.1.0') <= 0) {
-			extract(getdate());
-			$serveroffset = gmmktime(0, 0, 0, $mon, $mday, $year) - mktime(0, 0, 0, $mon, $mday, $year);
-			return $serveroffset / 3600;
-		} else {
-			return 0;
-		}
-	}
-	function DB() {
-		global $pixieconfig;
-		$this->host = $pixieconfig['host'];
-		$this->db   = $pixieconfig['db'];
-		$this->user = $pixieconfig['user'];
-		$this->pass = $pixieconfig['pass'];
-		$this->link = mysql_connect($this->host, $this->user, $this->pass);
-		if (!$this->link) {
-			$GLOBALS['connected'] = FALSE;
-		} else
-			$GLOBALS['connected'] = TRUE;
-		mysql_select_db($this->db) or die(db_down());
-		/* Connect to the database */
-		if ((isset($pixieconfig['site_charset'])) && ($pixieconfig['site_charset'])) {
-			$charset              = strtolower(str_replace('-', '', $pixieconfig['site_charset']));
-			$query_names          = "SET NAMES '{$charset}'";
-			$set_db_names_charset = mysql_query($query_names);
-			/* Set the name character set for database connection */
-			$query_char           = "SET CHARACTER SET '{$charset}'";
-			$set_db_charset       = mysql_query($query_char);
-			/* Set the character set for database connection */
-		}
-		$diff = $this->getTzdiff();
-		if ($diff >= 0)
-			$diff = "+{$diff}";
-		mysql_query("set time_zone = '" . "$diff:00'");
-	}
-}
-$DB = new DB;
 //------------------------------------------------------------------
 function adjust_prefix($table) {
 	if (stripos($table, PFX) === 0)
@@ -116,10 +77,10 @@ function safe_query($q = '', $debug = '', $unbuf = '') {
 			}
 			// if $hours < 0 then prepend -, otherwise prepend +
 			$tzHM = (($hours < 0) ? "-" : "+") . "$hours:$mins";
-			$method("SET SESSION time_zone='$tzHM';", $DB->link);
+			$method("SET SESSION time_zone='$tzHM'", $DB->link);
 		}
 	}
-	if ((isset($q)) && ($q != '' or NULL)) {
+	if ((isset($q)) && ($q != '') && ($q !== NULL)) {
 		$result = $method($q, $DB->link);
 	}
 	if ((isset($result)) && ($result)) {
@@ -372,6 +333,46 @@ function getSqlVersion() {
 		return FALSE;
 	}
 }
+//------------------------------------------------------------------
+class DB {
+	function getTzdiff() {
+		if (strnatcmp(phpversion(), '5.1.0') <= 0) {
+			extract(getdate());
+			$serveroffset = gmmktime(0, 0, 0, $mon, $mday, $year) - mktime(0, 0, 0, $mon, $mday, $year);
+			return $serveroffset / 3600;
+		} else {
+			return 0;
+		}
+	}
+	function DB() {
+		global $pixieconfig;
+		$this->host = $pixieconfig['host'];
+		$this->db   = $pixieconfig['db'];
+		$this->user = $pixieconfig['user'];
+		$this->pass = $pixieconfig['pass'];
+		$this->link = mysql_connect($this->host, $this->user, $this->pass);
+		if (!$this->link) {
+			$GLOBALS['connected'] = FALSE;
+		} else
+			$GLOBALS['connected'] = TRUE;
+		mysql_select_db($this->db) or die(db_down());
+		/* Connect to the database */
+		if ((isset($pixieconfig['site_charset'])) && ($pixieconfig['site_charset'])) {
+			$charset              = strtolower(str_replace('-', '', $pixieconfig['site_charset']));
+			$query_names          = "SET NAMES '{$charset}'";
+			$set_db_names_charset = mysql_query($query_names);
+			/* Set the name character set for database connection */
+			$query_char           = "SET CHARACTER SET '{$charset}'";
+			$set_db_charset       = mysql_query($query_char);
+			/* Set the character set for database connection */
+		}
+		$diff = $this->getTzdiff();
+		if ($diff >= 0)
+			$diff = "+{$diff}";
+		mysql_query("set time_zone = '" . "$diff:00'");
+	}
+}
+$DB = new DB;
 //------------------------------------------------------------------
 	function db_down() 
 	{

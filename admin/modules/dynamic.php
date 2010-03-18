@@ -34,6 +34,7 @@ if (!defined('DIRECT_ACCESS')) {
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3
  *
  */
+global $timezone;
 switch ($do) {
 	// Module Admin
 	case 'admin':
@@ -105,7 +106,7 @@ switch ($do) {
 					if ($web == 'http://') {
 						$web = "";
 					}
-					$howmanycomments = count(safe_rows('*', 'pixie_log', "log_message like '%" . $lang['comment_save_log'] . "%' and user_ip = '" . $_SERVER["REMOTE_ADDR"] . "' and log_time < utc_timestamp() and log_time > DATE_ADD(utc_timestamp(), INTERVAL -4 HOUR)"));
+					$howmanycomments = count(safe_rows('*', 'pixie_log', "log_message like '%" . $lang['comment_save_log'] . "%' and user_ip = '" . $_SERVER["REMOTE_ADDR"] . "', INTERVAL -4 HOUR)"));
 					if ($howmanycomments >= 4) {
 						/* Spam limit - 4 posts every 4 hours. */
 						if (!$lang['comment_throttle_error']) {
@@ -169,7 +170,8 @@ switch ($do) {
 					if ($commentson == 'yes') {
 						// PROBABLY NEED TO SAVE DATE ON COMMENT MANUALLY
 						if (isset($error)) {
-							sleep(6); // slow spammers down  } else {
+							sleep(6); /* slow spammers down */
+						} else {
 							if ($duplicate !== 1) {
 								if ((isset($admin_user)) && ($admin_user)) {
 									$admin_user = strip_tags($admin_user);
@@ -196,24 +198,24 @@ switch ($do) {
 			case 'page':
 				$start  = $posts_per_page * ($x - 1);
 				$mtitle = "$page_display_name (" . $lang['dynamic_page'] . " $x)";
-				$rs     = safe_rows_start('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp() order by posted desc limit $start,$posts_per_page");
+				$rs     = safe_rows_start('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes' order by posted desc limit $start,$posts_per_page");
 				show_all($rs);
 				break;
 			case 'popular':
 				$mtitle = "$page_display_name (" . $lang['popular'] . " $posts_per_page " . $lang['posts'] . ")";
-				$rs     = safe_rows_start('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp() order by post_views desc limit $posts_per_page");
+				$rs     = safe_rows_start('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes' order by post_views desc limit $posts_per_page");
 				show_all($rs);
 				break;
 			case 'tag':
 				if ($p) {
 					$start  = $posts_per_page * ($p - 1);
 					$mtitle = "$page_display_name (" . $lang['tag'] . ": $x, " . $lang['dynamic_page'] . " $p)";
-					$rs     = safe_rows_start('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp() and tags REGEXP '[[:<:]]" . $x . "[[:>:]]' order by posted desc limit $start, $posts_per_page");
+					$rs     = safe_rows_start('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes' and tags REGEXP '[[:<:]]" . $x . "[[:>:]]' order by posted desc limit $start, $posts_per_page");
 					show_all($rs);
 				} else {
 					$x      = squash_slug($x);
 					$mtitle = "$page_display_name (" . $lang['tag'] . ": $x)";
-					$rs     = safe_rows_start('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp() and tags REGEXP '[[:<:]]" . $x . "[[:>:]]' order by posted desc limit $posts_per_page");
+					$rs     = safe_rows_start('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes' and tags REGEXP '[[:<:]]" . $x . "[[:>:]]' order by posted desc limit $posts_per_page");
 					show_all($rs);
 				}
 				break;
@@ -221,7 +223,7 @@ switch ($do) {
 				if (isset($s)) {
 					$id = get_page_id($s);
 					echo "<h3>$page_display_name (" . $lang['tags'] . ")</h3>\n\t\t\t\t\t<div class=\"tag_section\">\n";
-					public_tag_cloud('pixie_dynamic_posts', 'page_id = ' . $id . ' and posted < utc_timestamp()');
+					public_tag_cloud('pixie_dynamic_posts', "page_id = {$id} and public = 'yes'");
 					echo "\t\t\t\t\t</div>\n";
 				}
 				break;
@@ -229,7 +231,7 @@ switch ($do) {
 				$mtitle = "$page_display_name";
 				if (isset($s)) {
 					$id = get_page_id($s);
-					$rs = safe_rows_start('*', 'pixie_dynamic_posts', "page_id = '$id' and public = 'yes' and posted < utc_timestamp() order by posted desc limit $posts_per_page");
+					$rs = safe_rows_start('*', 'pixie_dynamic_posts', "page_id = '$id' and public = 'yes' order by posted desc limit $posts_per_page");
 					show_all($rs);
 				}
 				break;
@@ -239,7 +241,7 @@ switch ($do) {
 // ------------------------------------------------------------------
 // function show all
 function show_all($rs) {
-	global $s, $m, $x, $p, $mtitle, $site_url, $comments, $lang, $date_format, $posts_per_page;
+	global $s, $m, $x, $p, $mtitle, $site_url, $comments, $lang, $date_format, $posts_per_page, $timezone;
 	echo "<h3>$mtitle</h3>\n";
 	if (!$m) {
 		if (isset($s)) {
@@ -354,7 +356,7 @@ function show_all($rs) {
 	if ((!$m) or ($m == 'page')) {
 		// how many posts do we have in total?
 		if (isset($page_id)) {
-			$totalposts = count(safe_rows('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp()"));
+			$totalposts = count(safe_rows('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes'"));
 		} else {
 			$totalposts = 0;
 		}
@@ -394,7 +396,7 @@ function show_all($rs) {
 		}
 	} else if ($m == 'tag') {
 		$p          = squash_slug($p);
-		$totalposts = count(safe_rows('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes' and posted < utc_timestamp() and tags REGEXP '[[:<:]]" . $x . "[[:>:]]'"));
+		$totalposts = count(safe_rows('*', 'pixie_dynamic_posts', "page_id = '$page_id' and public = 'yes' and tags REGEXP '[[:<:]]" . $x . "[[:>:]]'"));
 		if ($p) {
 			$currentnum   = $posts_per_page * $p;
 			$nextpage     = $p + 1;
@@ -422,7 +424,7 @@ function show_all($rs) {
 // ------------------------------------------------------------------
 // function show single
 function show_single() {
-	global $s, $m, $x, $mtitle, $site_url, $comments, $page_display_name, $site_name, $comment_ok, $date_format, $lang, $error, $scream, $sname, $semail, $scomment, $sweb;
+	global $s, $m, $x, $mtitle, $site_url, $comments, $page_display_name, $site_name, $comment_ok, $date_format, $lang, $error, $scream, $sname, $semail, $scomment, $sweb, $timezone;
 	$rs = safe_row('*', 'pixie_dynamic_posts', "post_slug = '$x' and public = 'yes' limit 0,1");
 	if ($rs) {
 		extract($rs);
@@ -515,7 +517,7 @@ function show_single() {
 			$thisid = get_page_id($s);
 		}
 		// what post is next?
-		$searchnext = safe_field('post_id', 'pixie_dynamic_posts', "page_id = '$thisid' and public = 'yes' and posted > '$posted' and posted < utc_timestamp() limit 0,1");
+		$searchnext = safe_field('post_id', 'pixie_dynamic_posts', "page_id = '$thisid' and public = 'yes' and posted > '$posted' limit 0,1");
 		if ($searchnext) {
 			$ntitle = safe_field('title', 'pixie_dynamic_posts', "post_id ='$searchnext'");
 			$nslug  = safe_field('post_slug', 'pixie_dynamic_posts', "post_id ='$searchnext'");
@@ -526,7 +528,7 @@ function show_single() {
 			echo "\" title=\"" . $lang['next_post'] . ": $ntitle\">" . $lang['next_post'] . " &raquo;</a></div>\n";
 		}
 		// what post is previous?
-		$searchprev = safe_field('post_id', 'pixie_dynamic_posts', "page_id = '$thisid' and public = 'yes' and posted < '$posted' and posted < utc_timestamp() order by posted desc limit 0,1");
+		$searchprev = safe_field('post_id', 'pixie_dynamic_posts', "page_id = '$thisid' and public = 'yes' and posted < '$posted' order by posted desc limit 0,1");
 		if ($searchprev) {
 			$ptitle = safe_field('title', 'pixie_dynamic_posts', "post_id ='$searchprev'");
 			$pslug  = safe_field('post_slug', 'pixie_dynamic_posts', "post_id ='$searchprev'");
@@ -734,13 +736,13 @@ function show_single() {
 // ------------------------------------------------------------------
 // function show archives
 function show_archives() {
-	global $s, $m, $x, $mtitle, $site_url, $page_display_name, $lang;
+	global $s, $m, $x, $mtitle, $site_url, $page_display_name, $lang, $timezone;
 	$date_array = getdate();
 	$this_month = $date_array['mon'];
 	$this_year  = $date_array['year'];
 	if (isset($s)) {
 		$id = get_page_id($s);
-		$rs = safe_row('*', 'pixie_dynamic_posts', "page_id = '$id' and public = 'yes' and posted < utc_timestamp() order by posted asc limit 0,1");
+		$rs = safe_row('*', 'pixie_dynamic_posts', "page_id = '$id' and public = 'yes' order by posted asc limit 0,1");
 	}
 	echo "<div id=\"archives\">\n\t\t\t\t\t\t<h3>$mtitle</h3>\n\t\t\t\t\t\t<dl class=\"list_archives\">\n";
 	if ($rs) {
@@ -755,7 +757,7 @@ function show_archives() {
 			$last_day    = date('t', $smonth);
 			$emonth      = mktime(23, 59, 59, $this_month, $last_day, $this_year);
 			$end_month   = safe_strftime('%Y-%m-%d %H:%M:%S', $emonth);
-			$search      = safe_rows('*', 'pixie_dynamic_posts', "page_id = '$id' and public = 'yes' and posted between '" . $start_month . "' and date '" . $end_month . "' and posted < utc_timestamp() order by posted desc");
+			$search      = safe_rows('*', 'pixie_dynamic_posts', "page_id = '$id' and public = 'yes' and posted between '" . $start_month . "' and date '" . $end_month . "' order by posted desc");
 			if ($search) {
 				echo "\t\t\t\t\t\t\t<dt>" . date('F', $smonth) . " " . $this_year . "</dt>\n";
 				$numy = count($search);
