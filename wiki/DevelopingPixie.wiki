@@ -175,7 +175,7 @@ extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');
 }}}
 
 Globally.
-Currently, the files index.php, admin/index.php and admin/admin/modules/ajaxfileupload.php still use extract on the :
+Currently, the files index.php, admin/index.php, admin/admin/modules/ajaxfileupload.php and admin/install/createuser.php still use extract on the :
 
 {{{
 $_REQUEST
