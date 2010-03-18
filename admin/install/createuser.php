@@ -1,68 +1,74 @@
 <?php
-error_reporting(0);	// Turns off error reporting
-if (!file_exists('../config.php') or filesize('../config.php') < 10) {		// check for config
-require '../lib/lib_db.php'; db_down(); exit();
+error_reporting(0); // Turns off error reporting
+if (!file_exists('../config.php') or filesize('../config.php') < 10) { // check for config
+	require '../lib/lib_db.php';
+	db_down();
+	exit();
 }
-if (!defined('DIRECT_ACCESS')) { define('DIRECT_ACCESS', 1); }	/* very important to set this first, so that we can use the new config.php */
-	require '../lib/lib_misc.php';     																				//
-	$debug = 'no';	// Set this to yes to debug and see all the global vars coming into the file
-
-	globalSec('Pixie Installer createuser.php', 1);
-
-	extract($_REQUEST);
-	require '../config.php';
-	include '../lib/lib_db.php';       																				// load libraries order is important
-
-	if (strnatcmp(phpversion(),'5.1.0') >= 0) { if (!isset($server_timezone)) { $server_timezone = 'Europe/London'; } date_default_timezone_set("$server_timezone"); }	/* New! Built in php function. Tell php what the server timezone is so that we can use php's rewritten time and date functions with the correct time and without error messages  */
-	define('TZ', "$timezone");	/* timezone fix (php 5.1.0 or newer will set it's server timezone using function date_default_timezone_set!) */
-	if (isset($do)) { print ($do); }
-
-	if ($debug == 'yes') {
+if (!defined('DIRECT_ACCESS')) {
+	define('DIRECT_ACCESS', 1);
+}
+/* very important to set this first, so that we can use the new config.php */
+require '../lib/lib_misc.php'; //
+$debug = 'no'; // Set this to yes to debug and see all the global vars coming into the file
+globalSec('Pixie Installer createuser.php', 1);
+extract($_REQUEST);
+/* needs prefixing with pixie_ instead */
+require '../config.php';
+include '../lib/lib_db.php'; // load libraries order is important
+if (strnatcmp(phpversion(), '5.1.0') >= 0) {
+	if (!isset($server_timezone)) {
+		$server_timezone = 'Europe/London';
+	}
+	date_default_timezone_set("$server_timezone");
+}
+/* New! Built in php function. Tell php what the server timezone is so that we can use php's rewritten time and date functions with the correct time and without error messages  */
+define('TZ', "$timezone");
+/* timezone fix (php 5.1.0 or newer will set it's server timezone using function date_default_timezone_set!) */
+if (isset($do)) {
+	print($do);
+}
+if ($debug == 'yes') {
 	error_reporting(E_ALL & ~E_DEPRECATED);
 	$show_vars = get_defined_vars();
 	echo '<p><pre class="showvars">The _REQUEST array contains : ';
 	htmlspecialchars(print_r($show_vars["_REQUEST"]));
 	echo '</pre></p>';
-	}
-
+}
+$prefs = get_prefs();
+/* Add prefs to globals using php's extract function */
+extract($prefs);
+/* Get the language file */
+include_once "../lang/{$language}.php";
 if ((isset($user_new)) && ($user_new)) {
-
 	$table_name = 'pixie_users';
 	if (!isset($error)) {
-
 		$password = generate_password(6);
-		$nonce = md5( uniqid( rand(), TRUE ) );
+		$nonce    = md5(uniqid(rand(), TRUE));
 		if ((isset($realname)) && (isset($uname))) {
-		$sql = "user_name = '$uname', realname = '$realname', email = '$email', pass = password(lower('$password')), nonce = '$nonce', privs = '$privs', biography =''";
+			$sql = "user_name = '$uname', realname = '$realname', email = '$email', pass = password(lower('$password')), nonce = '$nonce', privs = '$privs', biography =''";
 		}
-
 		$ok = safe_insert($table_name, $sql);
-
 		if (!$ok) {
 			$message = $lang['user_name_dup'];
 		} else {
 			// send email
-			
-				$emessage = "
+			$emessage = "
 Your account information for Pixie has been set to:
 
 username: $uname
 password: $password
 
 ";
-			 
-			$subject = 'Pixie account information';
+			$subject  = 'Pixie account information';
 			mail($email, $subject, $emessage);
-			
-			$messageok = $lang['user_name_save_ok'];
+			$messageok = "{$lang['user_new_ok']} {$realname}  <br />  [ {$lang['form_username']} : {$uname} ]  :::  [ {$lang['form_password']} : {$password} ]";
 		}
-		
 	} else {
-		$err = explode("|", $error);
+		$err     = explode("|", $error);
 		$message = $err[0];
 	}
-} 
-
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -73,7 +79,9 @@ password: $password
 	<!-- 
 	Pixie Powered (www.getpixie.co.uk)
 	Licence: GNU General Public License v3                   		 
-	Copyright (C) <?php print date('Y');?>, Scott Evans   
+	Copyright (C) <?php
+print date('Y');
+?>, Scott Evans   
 	                             
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -228,15 +236,15 @@ password: $password
 <body>
 	<div id="bg">
 	<?php
-	if ($message) {
-		print "<p class=\"error\">$message</p>";
-	}
-	if (isset($messageok)) {
+if ($message) {
+	print "<p class=\"error\">$message</p>";
+}
+if (isset($messageok)) {
 	if ($messageok) {
 		print "<p class=\"success\">$messageok</p>";
 	}
-	}
-	?>
+}
+?>
 		<img src="banner.gif" alt="Pixie logo" id="logo">
 		<div id="placeholder">
 			<h3>Create a user</h3>
@@ -275,10 +283,13 @@ password: $password
  			</div>
  		</div>
 
-  <?php if ($debug == 'yes') {
-  /* Show the defined global vars */ print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), TRUE)) . '</pre>';
-  phpinfo();
-  } ?>
+  <?php
+if ($debug == 'yes') {
+	/* Show the defined global vars */
+	print '<pre class="showvars">' . htmlspecialchars(print_r(get_defined_vars(), TRUE)) . '</pre>';
+	phpinfo();
+}
+?>
 
 </body>
 </html>
