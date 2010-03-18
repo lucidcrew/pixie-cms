@@ -53,6 +53,7 @@ function pagetime($type) {
 // referral function for tracking site referrals 
 function referral() {
 	global $lang;
+	global $timezone;
 	$url    = $GLOBALS['site_url'];
 	$domain = trim(str_replace('www.', "", $url));
 	if (isset($_SERVER['HTTP_REFERER'])) {
@@ -83,6 +84,7 @@ function referral() {
 //------------------------------------------------------------------
 // log function for writing information to log database
 function logme($message, $imp, $icon) {
+	global $timezone;
 	$ip = $_SERVER['REMOTE_ADDR'];
 	if (isset($GLOBALS['pixie_user'])) {
 		$uname = $GLOBALS['pixie_user'];

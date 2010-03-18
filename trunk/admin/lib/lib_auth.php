@@ -56,6 +56,10 @@ if ((isset($login_submit)) && ($login_submit)) {
 } else if ((isset($s)) && ($s == 'logout')) {
 	setcookie('pixie_login', ' ', time() - 3600, '/');
 	$s = 'login';
+	if ((isset($tool)) && ($tool == 'home')) {
+	header('Location: ../');
+	exit();
+	}
 } else {
 	$log_in = auth_check();
 	if (isset($GLOBALS['pixie_user'])) {
@@ -78,6 +82,7 @@ if ((isset($login_submit)) && ($login_submit)) {
 // -------------------------------------------------------------
 function auth_login($username, $password, $remember) {
 	global $lang;
+	global $timezone;
 	$username = sterilise_txt($username, TRUE);
 	$password = sterilise_txt($password, TRUE);
 	$remember = sterilise_txt($remember, TRUE);
@@ -94,7 +99,7 @@ function auth_login($username, $password, $remember) {
 			pass = password(lower('" . doSlash($password) . "')) and privs >= 0");
 			if ($r) {
 				$user_hits = safe_field('user_hits', 'pixie_users', "user_name='$username'");
-				safe_update('pixie_users', 'last_access = utc_timestamp()', "user_name = '$username'");
+				safe_update('pixie_users', "last_access = utc_timestamp()", "user_name = '$username'");
 				safe_update('pixie_users', "user_hits  = $user_hits + 1", "user_name = '$username'");
 				$nonce = safe_field('nonce', 'pixie_users', "user_name='$username'");
 				if ((isset($remember)) && ($remember)) { // persistent cookie required

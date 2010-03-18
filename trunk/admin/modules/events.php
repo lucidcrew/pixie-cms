@@ -106,14 +106,16 @@ switch ($do) {
 		extract(safe_row('*', 'pixie_module_events_settings', "events_id='1'"));
 		switch ($m) {
 			case 'archives';
+				global $timezone;
 				$site_title = safe_field('site_name', 'pixie_settings', "settings_id = '1'");
 				$ptitle     = $site_title . ' - ' . $page_display_name . ' - Archives';
-				$rs         = safe_rows_start('*', 'pixie_module_events', "events_id >= '0' and date < utc_timestamp() and public = 'yes' order by date desc");
+				$rs         = safe_rows_start('*', 'pixie_module_events', "events_id >= '0' and public = 'yes' order by date desc");
 				break;
 			default:
+				global $timezone;
 				$site_title = safe_field('site_name', 'pixie_settings', "settings_id = '1'");
 				$ptitle     = $site_title . ' - ' . $page_display_name;
-				$rs         = safe_rows_start('*', 'pixie_module_events', "events_id >= '0' and date > utc_timestamp() and public = 'yes' order by date asc limit $number_of_events");
+				$rs         = safe_rows_start('*', 'pixie_module_events', "events_id >= '0' and public = 'yes' order by date asc limit $number_of_events");
 				break;
 		}
 		break;
