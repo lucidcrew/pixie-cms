@@ -107,9 +107,6 @@ if (isset($GLOBALS['pixie_user'])) {
 		echo "\t\t\t\t</div>";
 	}
 	if ($m) {
-		/* Was : */
-		/* $m = ereg_replace('[^A-Za-z0-9]', "", $m); */
-		/* But ereg_replace() is depreciated. */
 		$m = preg_replace('[^A-Za-z0-9]', "", $m);
 		include("../admin/modules/$m.php");
 	} else if ($x) {

@@ -35,9 +35,6 @@ if (!defined('DIRECT_ACCESS')) {
  * @todo Tag release for Pixie 1.04
  *
  */
-/* Was : */
-/* $x = ereg_replace('[^A-Za-z0-9]', "", $x); */
-/* but ereg_replace() is depreciated. */
 $x = preg_replace('[^A-Za-z0-9]', "", $x);
 if (!isset($username)) {
 	$username = NULL;

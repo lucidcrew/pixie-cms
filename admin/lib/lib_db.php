@@ -53,7 +53,7 @@ function adjust_prefix($table) {
 }
 //------------------------------------------------------------------
 function safe_query($q = '', $debug = '', $unbuf = '') {
-	global $DB, $pixieconfig, $message, $dst, $tzHM;
+	global $DB, $pixieconfig, $message, $dst, $tzHM, $timezone;
 	$method = (!$unbuf) ? 'mysql_query' : 'mysql_unbuffered_query';
 	if (!$q)
 		return FALSE;
@@ -65,7 +65,9 @@ function safe_query($q = '', $debug = '', $unbuf = '') {
 		if (defined('TZ')) {
 			$tz = TZ;
 		} else {
-			$tz = 0;
+		    if (isset($timezone)) {
+			$tz = $timezone;
+		    }
 		}
 		// calculate hours from the TZ constant - works only if time zone set as +3600, +7200 etc
 		if (is_numeric($tz)) {
