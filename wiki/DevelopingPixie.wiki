@@ -37,6 +37,10 @@ http://beta.phpformatter.com/
 Suggest using the following settings :
 
 Indentation style : K&R Style. (Tried PEAR style - found it hard to read.)
+<wiki:comment>
+By Sam:
+I prefer the Allman style (brace on new line) as it is far more readable, since you have to scroll horizontally if it is on the same line.
+</wiki:comment>
 
 Indent with : Tabs.
 
@@ -240,6 +244,10 @@ php is much faster when the coupled variables are expressed by wrapping them as 
 == Parenthesis (Brackets) ==
 
 ===(Proposal)===
+<wiki:comment>
+By Sam:
+If a code formatter is to be used, will it format the code in the way as detailed below?
+</wiki:comment>
 
 We use spaces between individual conditional statements like this :
 
