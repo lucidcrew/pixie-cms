@@ -767,24 +767,27 @@ function admin_carousel($current) {
 // edit table entry
 function admin_edit($table_name, $edit_id, $edit, $edit_exclude) {
 	global $message, $m, $lang;
+	$an = NULL;
+	$at = NULL;
+	$al = NULL;
+	$af = NULL;
+	$az = NULL;
 	if (isset($table_name)) {
 		$table_name = adjust_prefix($table_name);
 	}
+
 	if ((isset($edit)) && (isset($table_name))) {
-		$sql = "select * from $table_name where " . $edit_id . "=" . $edit . "";
+		$sql = "select * from $table_name where {$edit_id}={$edit}";
 		$r2  = safe_query($sql);
 	}
 	if ($r2) {
-		$an = NULL;
-		$at = NULL;
-		$al = NULL;
-		$af = NULL;
-		$az = NULL;
 		if ($f = mysql_fetch_array($r2)) {
 			for ($j = 0; $j < mysql_num_fields($r2); $j++) {
 				$an .= mysql_field_name($r2, $j) . "|";
 				$at .= mysql_field_type($r2, $j) . "|";
-				$al .= mysql_field_len($r2, $j) . "|";
+				$al .= "50|";
+				/* Some field lengths seem unset or inconsistent. CSS classes would handle this better. */
+				/* $al .= mysql_field_len($r2, $j) . "|"; */
 				$af .= mysql_field_flags($r2, $j) . "|";
 				$az .= $f[$j] . "|";
 			}
@@ -818,16 +821,9 @@ function admin_new($table_name, $edit_exclude) {
 			$af .= $flags . '|';
 			if ($F = mysql_fetch_array($r2)) {
 				$an .= $F['Field'] . '|';
-				/* Was : */
-				/* $at .= ereg_replace('([()0-9]+)', "", $F['Type']) . '|'; */
-				/* But ereg_replace() is now depreciated. */
-				$at .= preg_replace('/[0-9 ]/', "", $F['Type']) . '|';
-				/* Remove numbers in the $F['Type']) variable */
+				$at .= preg_replace('([()0-9]+)', "", $F['Type']) . '|';
 			}
-			/* Was if (ereg ('([0-9]+)', $F['Type'], $str)) { */
-			/* But ereg is depreciated */
-			if (preg_match('/[^0-9 ]/', $F['Type'], $str)) {
-				/* match everything but numbers from 0-9 in the $F['Type']) variable */
+			if (preg_match('([0-9]+)', $F['Type'], $str)) {
 				$al .= $str[0] . '|';
 			} else {
 				$al .= '|';
@@ -918,7 +914,7 @@ if ((isset($GLOBALS['pixie_user'])) && (isset($GLOBALS['pixie_user_privs'])) && 
 	}
 }
 // ------------------------------------------------------------------
-// save and edit code	/* This is too much of a mess to add an isset $table_name check. It needs to be cleaned up. */
+// save and edit code
 if ((isset($GLOBALS['pixie_user'])) && (isset($GLOBALS['pixie_user_privs'])) && ($GLOBALS['pixie_user_privs'] >= 1)) {
 	if ((isset($submit_edit)) && ($submit_edit) or (isset($submit_new)) && ($submit_new)) {
 		$rs = safe_row('*', 'pixie_core', "page_name = '$x' limit 0,1");
@@ -953,12 +949,9 @@ if ((isset($GLOBALS['pixie_user'])) && (isset($GLOBALS['pixie_user_privs'])) && 
 			$af[$j] = $flags;
 			if ($F = mysql_fetch_array($r2)) {
 				$an[$j] = $F['Field'];
-				/* Was : */
-				/* $at[$j] = ereg_replace('([()0-9]+)', "", $F['Type']); */
-				/* But ereg_replace() is now depreciated. */
-				$at[$j] = preg_replace('/[0-9 ]/', "", $F['Type']);
+				$at[$j] = preg_replace('([()0-9]+)', "", $F['Type']);
 			}
-			//echo $an[$j]."-".$at[$j]."-".$af[$j]."<br>"; //enable to see field properties 
+			//echo $an[$j]."-".$at[$j]."-".$af[$j]."<br>"; //enable to see field properties
 		}
 		for ($j = 0; $j < mysql_num_rows($r2); $j++) {
 			$check = new Validator();
