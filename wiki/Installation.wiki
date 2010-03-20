@@ -16,7 +16,7 @@ I am not a big fan of requirements, they are restricting and a little bit compli
    Pixie has been developed in a Linux/Unix hosting environment and is best suited to these platforms. Pixie should run (not currently tested) on a Windows server but some features may not work as expected.
 
   * PHP
-    Version 4.3.0 and above. Pixie will work on previous versions of PHP but you will lose the spell check features of [http://tinymce.moxiecode.com/ TinyMCE].
+    Version 5 and above. Pixie requires PHP5 to correctly support timezones.
 
   * MySQL
     Version 4.1 and above.
