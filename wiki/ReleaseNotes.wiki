@@ -13,7 +13,7 @@
 
   * Timezone fixes - the timezone issue should now be completely gone.
   * Latest jQuery (1.4.2).
-  * JS from Google - You can now use your themes settings.php to load jQuery or swfobject from Google's server. 
+  * JS from Google - You can now use your themes settings.php to load jQuery or swfobject from Google's servers. 
   * Tablesorter - clicking on a table header in the admin interface will sort the table.
   * GZIP compression - You can compress your site's theme and Pixie using gzip compression - perfect for slow hosts.
   * geshi - If you are a developer, you can post code snippets using the awesome geshi syntax highlighting class that is enabled as a CKEditor plugin.
