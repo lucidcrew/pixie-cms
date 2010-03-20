@@ -1,16 +1,38 @@
 #summary Upgrade advisories.
 
 = Intro =
+-------
+-------
+Whenever you upgrade a copy of Pixie, we will post up here advisories related to important changes to [http://www.getpixie.co.uk/ Pixie]'s code that you need to be informed about before attempting to upgrade.
 
-Upgrade advisories.
+It's important to take this information in and make decisions about choices presented to you in the upgrade utility to obtain the most suitable upgrade.
 
+= Advisories =
+-------
+-------
+==[http://www.getpixie.co.uk/ Pixie] 1.0x -> [http://www.getpixie.co.uk/ Pixie] 1.xx (All versions)==
+-------
 
-= Details =
+===[http://www.getpixie.co.uk/ Pixie] 1.0===
+Security patch for Pixie v1.0
 
+[http://pixie-cms.googlecode.com/files/patch_exploit_7886.zip Download].
+
+Details of the exploit can be found [http://milw0rm.com/exploits/7886 here], readme.txt file explains how to patch Pixie.
+
+===[http://www.getpixie.co.uk/ Pixie] 1.01===
+Security patch for Pixie v1.01
+
+[http://pixie-cms.googlecode.com/files/patch_exploit_1.01.zip Download].
+
+Details of the exploit can be found [http://lampsecurity.org/Pixie-CMS-Multiple-Vulnerabilities here], readme.txt file explains how to patch Pixie.
+-------
+==[http://www.getpixie.co.uk/ Pixie] 1.03 -> [http://www.getpixie.co.uk/ Pixie] 1.04==
+-------
 Temp list used for explain. TODO!
 
 dutch-nl.php is now nl.php
-robots.txt needs sitemap full address Sitemap: http://yoursite.com/sitemap.xml.php not Sitemap: sitemap.xml.php
+sitemap full address Sitemap: http://yoursite.com/sitemap.xml.php not Sitemap: sitemap.xml.php
 UTF-8
 .htaccess for extract request
 timezone
