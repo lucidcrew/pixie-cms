@@ -282,9 +282,8 @@ function ckToolbarSlider() {
 function carouselInit() {
 
     /* A function to move the carousel to the current page */
-    function mycarousel_itemFirstInCallback(carousel, item, idx, state) { if (state == 'init') carousel.scroll(5, false);};
 	$j(document).ready(function(){
-	    $j('#mycarousel').jcarousel({animation:'500', wrap:'both', scroll:5, itemFirstInCallback:{onAfterAnimation:mycarousel_itemFirstInCallback}
+	    $j('#mycarousel').jcarousel({animation:'500', wrap:'both', scroll:3, itemFirstInCallback:{onAfterAnimation:mycarousel_itemFirstInCallback}
 
 	});
 	var currentLi = $j('.current a').parent();
