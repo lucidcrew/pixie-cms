@@ -44,6 +44,8 @@ By Tony :
 It is exactly the opposite for me and braces on new lines result in slower output in my tests.
 Just for the record, I feel the same way about css and it's also true too regarding speed.
 I'm not saying you are wrong, I'm saying it doesn't do anything for me, makes the code output slower and I struggle to read it.
+By Sam:
+When you say 'code output' you mean the time spent by PHP parsing the code is longer? So the xx in 'page generated in xx' increases? Didn't think whitepsace would effect PHP.. so in theory a page with no line breaks or unnecessary whitespace will be fastest (not that it would be a good idea to do that)
 </wiki:comment>
 
 Indent with : Tabs.
