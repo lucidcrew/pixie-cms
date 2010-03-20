@@ -560,7 +560,7 @@ if ((isset($s)) && (isset($do)) && ($do == 'rss') && ($user)) {
 	bb2_insert_head();
 ?>
 	<!-- If javascript is disabled show more of the carousel and display the ckeditor textareas -->
-	<noscript><style type="text/css">.jcarousel-skin-tango{max-height:100%;}.ck-textarea{display:block;}</style></noscript>
+	<noscript><style type="text/css">.jcarousel-skin-tango{max-height:100%;}.ck-textarea{display:block;}#mycarousel {position:relative;overflow:hidden;padding:20px 0 27px 0; list-style: none; background-image:url("admin/theme/images/formbacklarge.gif");background-repeat:repeat-x;background-position:0 110px;width: 100%;}#mycarousel li { float: left; width:83px;height:129px; margin-right: 10px;}#mycarousel li:nth-child(1) { margin-left: 10px;}</style></noscript>
 </body>
 </html>
 	<!-- page generated in: <?php
