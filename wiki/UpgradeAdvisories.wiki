@@ -1,0 +1,24 @@
+#summary Upgrade advisories.
+
+= Intro =
+
+Upgrade advisories.
+
+
+= Details =
+
+Temp list used for explain. TODO!
+
+dutch-nl.php is now nl.php
+robots.txt needs sitemap full address Sitemap: http://yoursite.com/sitemap.xml.php not Sitemap: sitemap.xml.php
+UTF-8
+.htaccess for extract request
+timezone
+theme.php
+tinymce directory can be deleted
+define direct access
+public.js extract turned off and pixie prefix $pixie_s
+
+Delete the following from the existing site :
+FOLDER : admin/jscript/tiny_mce
+FILE : admin/lang/dutch-nl.php
