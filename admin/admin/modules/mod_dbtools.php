@@ -123,7 +123,8 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 		if ($fd) {
 			while (($part = @readdir($fd)) == true) {
 				if ($part != "." && $part != "..") {
-					if ($part != "index.php") {
+					$ext = pathinfo($part, PATHINFO_EXTENSION);
+					if ($part != "index.php" && $ext == "gz") {
 						if ($part == $last_backup) {
 							echo "\t\t\t\t\t\t<div class=\"abackup backuplatest\"><img src=\"admin/theme/images/icons/file_sql.png\" alt=\"SQL " . $lang['nav2_backup'] . "\" class=\"aicon\" /><span class=\"backup_fname\">" . str_replace(".sql.gz", "", $part) . "</span><a href=\"" . $site_url . "files/sqlbackups/$part\" title=\"" . $lang['download'] . ": $part\" class=\"backup_download\">" . $lang['download'] . "</a></div>\n";
 						} else {
