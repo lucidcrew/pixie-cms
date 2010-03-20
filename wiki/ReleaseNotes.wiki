@@ -15,7 +15,7 @@
   * Latest jQuery (1.4.2).
   * JS from Google - You can now use your themes settings.php to load jQuery or swfobject from Google's servers. 
   * Tablesorter - clicking on a table header in the admin interface will sort the table.
-  * GZIP compression - You can compress your site's theme and Pixie using gzip compression - perfect for slow hosts.
+  * GZIP compression - You can compress your site's theme and Pixie using gzip compression - perfect for slow hosts. To enable compression in Pixie navigate to the /admin/settings.php and set `$gzip_admin` to `"yes"`. To enable compression for your theme navigate to /admin/themes/YOUR_THEME/settings.php and set `$gzip_theme_output` to `"yes"`.
   * geshi - If you are a developer, you can post code snippets using the awesome geshi syntax highlighting class that is enabled as a CKEditor plugin.
   * More languages - We have added more translations from contributors around the world.
   * Several multi language bugs fixed - You can use latin type post titles for posts now.
