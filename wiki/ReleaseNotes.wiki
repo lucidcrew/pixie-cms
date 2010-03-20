@@ -1,7 +1,29 @@
 #summary Changes made in each release.
 #labels development,roadmap
 
-==== Version 1.1 (in progress) ====
+==== Version 1.04 ====
+
+
+*New*
+
+  * Pixie now uses [http://ckeditor.com/ CKEditor] for it's WYSIWYG.
+  * Choose a database prefix during the install. This allows multiple installs of Pixie on a single database.
+
+*Improved*
+
+  * Timezone fixes - the timezone issue should now be completely gone.
+  * Latest jQuery (1.4.2).
+  * JS from Google - You can now use your themes settings.php to load jQuery or swfobject from Google's server. 
+  * Tablesorter - clicking on a table header in the admin interface will sort the table.
+  * GZIP compression - You can compress your site's theme and Pixie using gzip compression - perfect for slow hosts.
+  * geshi - If you are a developer, you can post code snippets using the awesome geshi syntax highlighting class that is enabled as a CKEditor plugin.
+  * More languages - We have added more translations from contributors around the world.
+  * Several multi language bugs fixed - You can use latin type post titles for posts now.
+  * Several speed improvements - parts of Pixie don't load until you require them.
+  * Direct access to Pixie's core files has been prevented to increase security.
+  * The .htaccess has been improved to help secure your Pixie site.
+  * Improvements to the installer to further simplify the process.
+
 
 ==== Version 1.03 ====
 
