@@ -1,4 +1,4 @@
-#summary Upgrade advisories.
+#summary Important information for upgraders.
 
 = Intro =
 -------
@@ -29,15 +29,33 @@ Details of the exploit can be found [http://lampsecurity.org/Pixie-CMS-Multiple-
 -------
 ==[http://www.getpixie.co.uk/ Pixie] 1.03 -> [http://www.getpixie.co.uk/ Pixie] 1.04==
 -------
-Temp list used for explain. TODO!
+Due to a bug found in MySQL, the file : admin/lang/dutch-nl.php is now named admin/lang/nl.php and the old file : admin/lang/dutch-nl.php should be deleted from the admin/lang/ directory.
+If your site is set to use the Dutch language, you must set the language to English in Pixie's admin area before attempting any part of the upgrade. You can then set the language back to Dutch after upgrading.
 
-dutch-nl.php is now nl.php
-sitemap full address Sitemap: http://yoursite.com/sitemap.xml.php not Sitemap: sitemap.xml.php
+To improve search engines such as google's, ability to index your website, you should change the line :
+
+{{{
+Sitemap: sitemap.xml.php
+}}}
+
+To :
+
+{{{
+Sitemap: http://www.yoursite.com/sitemap.xml.php
+}}}
+
+(Replacing "www.yoursite.com" With the your website's address)
+In the file : robots.txt.
+
+The [http://code.google.com/p/pixie-cms/wiki/TemplateOverrides template override] feature theme file name has changed from : index.php to : theme.php. So if you have created a template which uses the [http://code.google.com/p/pixie-cms/wiki/TemplateOverrides template override] feature, the index.php file in your theme's folder needs to be renamed to : theme.php.
+
+IN PROGRESS - TODO :
+
+Explain stuff in upgrade utility
+
 UTF-8
 .htaccess for extract request
 timezone
-theme.php
-tinymce directory can be deleted
 define direct access
 public.js extract turned off and pixie prefix $pixie_s
 
