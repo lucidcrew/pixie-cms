@@ -229,7 +229,7 @@ $lang = array(
 	'helper_nocontent' => 'This page does not have any content, use the green button above to add the first entry (the green button is not available on the comments plugin).',
 	'helper_nopages' => 'A wise man once said that a website without pages is like a bird without wings... its not going anywhere. Use the form on the right to add the first page to your site. Once you have done that this insightful message will disapear.',
 	'helper_nopages404' => 'Your site only has one page, that page is the 404 error page and can be edited below.',
-	'helper_nopagesadmin' => 'You can <a href="?s=settings">add more pages in the \'Setup Stuff\' section</a> of Pixie.',
+	'helper_nopagesadmin' => 'You can <a href="?s=settings">add more pages in the \'Settings\' section</a> of Pixie.',
 	'helper_nopagesuser' => 'Contact a site administrator and ask them to add some pages to your website.',
 	'helper_search' => 'No entries were found. Try searching again.',
 	// navigation
