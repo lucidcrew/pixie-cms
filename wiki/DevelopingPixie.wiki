@@ -40,6 +40,10 @@ Indentation style : K&R Style. (Tried PEAR style - found it hard to read.)
 <wiki:comment>
 By Sam:
 I prefer the Allman style (brace on new line) as it is far more readable, since you have to scroll horizontally if it is on the same line.
+By Tony :
+It is exactly the opposite for me and braces on new lines result in slower output in my tests.
+Just for the record, I feel the same way about css and it's also true too regarding speed.
+I'm not saying you are wrong, I'm saying it doesn't do anything for me, makes the code output slower and I struggle to read it.
 </wiki:comment>
 
 Indent with : Tabs.
