@@ -20,7 +20,7 @@ global $timezone;
 define('TZ', "$timezone");
 /* Time zone fix (php 5.1.0 or newer will set it's server time zone using function date_default_timezone_set!) */
 /* Vars that need to be defined first */
-$pixie_version         = '1.04b';
+$pixie_version         = '1.04';
 /* You can define the version number for Pixie releases here */
 $pixie_user            = 'Pixie Installer';
 /* The name on the first log */
