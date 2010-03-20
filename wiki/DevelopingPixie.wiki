@@ -1,6 +1,6 @@
 #summary Guide on working with the Pixie codebase (WORKING DRAFT PROPOSAL, Work in Progress).
 
-=== File / Directory Structure ====
+==== File / Directory Structure ====
 
   * index.php
   * admin
@@ -26,9 +26,9 @@
     * video
 
 
-= Coding Standards =
+=== Coding Standards ===
 
-== Automation ==
+==== Automation ====
 
 Considering the huge immediate benefit of cleaning Pixie's code up, we can trial this on line tool :
 
@@ -60,7 +60,7 @@ Align assignments statements nicely : (True.)
 
 Initial results are good. It looks to be a very useful tool and will make the bulk of this work much easier.
 
-== Short Tags ==
+==== Short Tags ====
 {{{
 <? ... ?>
 }}}
@@ -70,25 +70,25 @@ Not to be used, since not all web hosts support them. Use :
 }}}
 Instead.
 
-== End tags ==
+==== End tags ====
 
-===(Proposal)===
+=====(Proposal)=====
 
 Document ending php close tags must not have a preceding empty space or line.
 Using document closing tags is not recommended because the php interpreter closes itself at the end of each script regardless.
 
-== Indentation ==
+==== Indentation ====
 
 Indent code using tabs, not spaces (perhaps some screenshots of settings to change in popular applications - e.g. Notepad++, Scintilla based apps like Programmers Notepad2?)
 One indentation is a double tab key tap (Double tap.)
 
-== Line Termination ==
+==== Line Termination ====
 
 Use Linux / Unix style line endings (LF)
 
-== Comments ==
+==== Comments ====
 
-===(Proposal)===
+=====(Proposal)=====
 
 {{{
 /* Style */
@@ -140,14 +140,14 @@ File content and license descriptors like this :
 At the top of every file, so that ide(s) such as kdevelop, (http://www.kdevelop.org/) netbeans, (http://netbeans.org/features/php/) Eclipse for PHP Developers (http://www.eclipse.org/) Or any syntax highlighting enabled text editor can understand them better.
 Anyone who edits the file adds their name to an @author statement, so it's easy to spot who has been working on it.
 
-== File type encoding, character set, database connection & storage collation ==
+==== File type encoding, character set, database connection & storage collation ====
 
-=== (Proposal) ===
+===== (Proposal) =====
 UTF-8 (Highly recommended as the default.)
 
-== TRUE, FALSE and NULL values ==
+==== TRUE, FALSE and NULL values ====
 
-=== (Proposal) ===
+===== (Proposal) =====
 
 Pixie's php code uses TRUE, FALSE and NULL (Must be upper case.)
 To check for a TRUE, FALSE and NULL value in a variable, constant or index use the code :
@@ -160,9 +160,9 @@ Notice that the === means exactly (In this case) NULL.
 
 Pixie's javascript code uses true, false and null (Must be lower case.)
 
-== Variables, constants, indexes and offsets ==
+==== Variables, constants, indexes and offsets ====
 
-===(Proposal)===
+=====(Proposal)=====
 
 All variables and arrays a part from the super globals must be prefixed with the string :
 
@@ -229,7 +229,7 @@ if ( (isset($foo)) && ($foo) ) { /* Do nothing */ } else { $foo = ''; }
 
 is just plain uninformative and can't be checked to see if it's value is NULL.
 
-=== Variable coupling (Chaining) ===
+===== Variable coupling (Chaining) =====
 
 Using :
 
@@ -245,9 +245,9 @@ $formtitle = $lang['advanced'] . " " . $lang['page_settings'];
 
 php is much faster when the coupled variables are expressed by wrapping them as one in quotation marks and then wrapping each variable inside the quotation marks individually as an expression (Using curly braces.) Spaces in between variables wrapped in curly braces, which are wrapped by double quotes are verbatim (Exactly as seen.)
 
-== Parenthesis (Brackets) ==
+==== Parenthesis (Brackets) ====
 
-===(Proposal)===
+=====(Proposal)=====
 <wiki:comment>
 By Sam:
 If a code formatter is to be used, will it format the code in the way as detailed below?
