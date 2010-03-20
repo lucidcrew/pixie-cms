@@ -5,6 +5,11 @@ Pixie offers basic support for languages. We are currently looking for people to
 
 We are also open for discussion on ways in which language support can be improved. For example we would like to offer a multi-lingual installer and build in support for right to left languages. If you can help with these areas please get in [http://groups.google.com/group/pixie-cms/ touch].
 
+
+=== How to create a language file ===
+
+
+
 ----
 
 If you have questions or comments about this page head to the [http://groups.google.com/group/pixie-cms/ Pixie forums].
