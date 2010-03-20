@@ -39,6 +39,7 @@ if (isset($GLOBALS['pixie_user']) && $GLOBALS['pixie_user_privs'] >= 1) {
 	if ((!$m) && (!$x)) {
 		// try find the first page in the navigation
 		$m = safe_field('page_type', 'pixie_core', "public = 'yes' and publish = 'yes' and in_navigation = 'yes' and page_order = '1' and privs <= '" . $GLOBALS['pixie_user_privs'] . "' order by page_views desc");
+		$x = rtrim($default_page, '/');
 		// if we do not have any pages in the navigation lets find any page
 		if (!$m) {
 			$m = safe_field('page_type', 'pixie_core', "public = 'yes' and publish = 'yes' and privs <= '" . $GLOBALS['pixie_user_privs'] . "' order by page_views desc");
