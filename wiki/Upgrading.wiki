@@ -43,13 +43,13 @@ Firstly you must ensure that :
 FILE : .htaccess
 }}}
 
-Has the permission 777 on your web server. And that :
+Has the permission *777* on your web server. And that :
 
 {{{
 FILE : admin/config.php
 }}}
 
-Has the permission 777 on your web server.
+Has the permission *777* on your web server.
 
 Then to upgrade your Pixie database visit :
 
@@ -58,7 +58,7 @@ www.yoursite.com/admin/install/upgrade.php
 }}}
 
 (Obviously replacing "www.yoursite.com" With your web site's address.
-Before you proceed to upgrade using the upgrade utility, please read the [http://code.google.com/p/pixie-cms/wiki/Upgrading Upgrade advisories] to help you to decide on any options you may be presented and make informed choices.
+Before you proceed to upgrade using the upgrade utility, please read the *[http://code.google.com/p/pixie-cms/wiki/UpgradeAdvisories Upgrade advisories]* to help you to decide on any options you may be presented and make informed choices.
 
 The upgrade utility will guide you through the rest of the database upgrade process.
 
@@ -77,13 +77,13 @@ You must also ensure that :
 FILE : .htaccess
 }}}
 
-Has the permission 644 on your web server. And that :
+Has the permission *644* on your web server. And that :
 
 {{{
 FILE : admin/config.php
 }}}
 
-Has the permission 640 on your web server.
+Has the permission *640* on your web server.
 
 Once you have successfully reached this stage you have successfully upgraded your Pixie web site and you can now enjoy the benefits of improved or new features and bug fixes.
 
