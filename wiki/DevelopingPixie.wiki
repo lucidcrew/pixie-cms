@@ -1,6 +1,6 @@
 #summary Guide on working with the Pixie codebase (WORKING DRAFT PROPOSAL, Work in Progress).
 
-= File / Directory Structure =
+=== File / Directory Structure ====
 
   * index.php
   * admin
