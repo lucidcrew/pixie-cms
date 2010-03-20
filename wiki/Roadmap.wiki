@@ -10,17 +10,17 @@ A very rough outline for the development of new features.
 ==== Version 1.1 ====
 
   * Quotes in Tags "" so you can have 2 words eg. "This tag". (Status : Pending)
-  * TinyMCE compressor or possibly a new rich text editor. (Status : Complete! CKEditor.)
+  * ~~TinyMCE compressor or possibly a new rich text editor.~~ (Status : Complete! CKEditor.)
   * A Cron implementation for automating tasks. (Status : Pending)
-  * Bring total amount of themes to 20+. (Status : Complete! 20+ Themes and counting on getpixie.co.uk)
+  * ~~Bring total amount of themes to 20+.~~ (Status : Complete! 20+ Themes and counting on getpixie.co.uk)
   * Subscribe to RSS of a certain user in multi user blogs (e.g. I want to see all Scott's posts). (Status : Pending)
-  * Table prefix during install to allow more than one site per database. (Status : Complete!)
+  * ~~Table prefix during install to allow more than one site per database.~~ (Status : Complete!)
   * More languages. (Status : Pending (More languages have been added.))
 
 ==== Version 1.2 ====
   
   * More install options with new modules (specifically for business sites/users). (Status : Pending)
-  * Upload functionality to be given in/around [http://tinymce.moxiecode.com TinyMce]. (Status : Complete! CKEditor has this ability.)
+  * ~~Upload functionality to be given in/around [http://tinymce.moxiecode.com TinyMce].~~ (Status : Complete! CKEditor has this ability.)
   * Upgraded [http://jqueryfordesigners.com/slider-gallery/ page carousel]. (Status : Pending - HIGH PRIORITY)
   * Site search module/plugin. (Status : Pending - HIGH PRIORITY)
 
@@ -39,7 +39,7 @@ A very rough outline for the development of new features.
   * Import from Textpattern, Wordpress, Moveabletype, blogger. (http://oauth.net/) (Status : Pending)
   * New interface design. (Status : Unknown)
   * New "default" theme. (Status : Unknown)
-  * Optional template files for your themes. (Status : Complete!)
+  * ~~Optional template files for your themes.~~ (Status : Complete!)
   * Multi-levels of [http://www.bernardopadua.com/nestedSortables/test/nested_sortable/]. (Status : Unknown - Potentially breaks any future touch screen support.) 
 
 ==== Version 1.6 ====
