@@ -6,7 +6,7 @@
 
 *New*
 
-  * Pixie now uses [http://ckeditor.com/ CKEditor] for it's WYSIWYG.
+  * Pixie now uses [http://ckeditor.com/ CKEditor] for it's WYSIWYG. With this comes plenty of useful enhancements - for example you can now upload files whilst creating a post.
   * Choose a database prefix during the install. This allows multiple installs of Pixie on a single database.
 
 *Improved*
