@@ -762,6 +762,15 @@ function admin_carousel($current) {
 		}
 		echo "\t\t\t\t</ul>\n";
 	}
+	// move carousel to current page
+	echo "
+			<script type=\"text/javascript\">
+			function mycarousel_itemFirstInCallback(carousel, item, idx, state)
+			{
+	    			if (state == 'init') carousel.scroll($scroll, false);
+		 	}; 
+  			</script>
+  ";
 }
 // ------------------------------------------------------------------
 // edit table entry
