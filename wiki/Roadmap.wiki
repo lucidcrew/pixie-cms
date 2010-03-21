@@ -40,7 +40,9 @@ A very rough outline for the development of new features.
   * New interface design. (Status : Unknown)
   * New "default" theme. (Status : Unknown)
   * ~~Optional template files for your themes.~~ (Status : Complete!)
-  * Multi-levels of [http://www.bernardopadua.com/nestedSortables/test/nested_sortable/]. (Status : Unknown - Potentially breaks any future touch screen support.) 
+  * Multi-levels of [http://www.bernardopadua.com/nestedSortables/test/nested_sortable/]. (Status : Unknown - Potentially breaks any future touch screen support.)
+  * Introduce pre-release security testing of Pixie using [http://code.google.com/p/skipfish/wiki/SkipfishDoc skipfish] (Status : Pending)
+  * Prefix all of Pixie's variables with {{{pixie_}}} and set extract to use prefix pixie. Requiring all variables to be prefixed pixie_ it will then become a requirement for all Pixie code. This will ensure safer code but also grow the code base considerably. (Status : Pending)
 
 ==== Version 1.6 ====
 
