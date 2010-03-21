@@ -3,7 +3,9 @@
 = Intro =
 -------
 -------
-Whenever you upgrade a copy of Pixie, we will post up here advisories related to important changes to [http://www.getpixie.co.uk/ Pixie]'s code that you need to be informed about before attempting to upgrade.
+First of all, please ensure that you backup your [http://www.getpixie.co.uk/ Pixie] web site and it's database before performing an upgrade. If something unfortunately goes wrong, you can then restore your previous site and seek help on the [http://groups.google.com/group/pixie-cms Pixie forums].
+
+Whenever you upgrade a copy of Pixie, we will post here advisories related to important changes to [http://www.getpixie.co.uk/ Pixie]'s code that you need to be informed about before attempting to upgrade.
 
 It's important to take this information in and make decisions about choices presented to you in the upgrade utility to obtain the most suitable upgrade.
 
@@ -32,6 +34,16 @@ Details of the exploit can be found [http://lampsecurity.org/Pixie-CMS-Multiple-
 Due to a bug found in MySQL, the file : admin/lang/dutch-nl.php is now named admin/lang/nl.php and the old file : admin/lang/dutch-nl.php should be deleted from the admin/lang/ directory.
 If your site is set to use the Dutch language, you must set the language to English in Pixie's admin area before attempting any part of the upgrade. You can then set the language back to Dutch after upgrading.
 
+After completing the upgrade process for [http://www.getpixie.co.uk/ Pixie] 1.04, you should delete the following :
+
+{{{
+FOLDER : admin/jscript/tiny_mce
+FILE : admin/lang/dutch-nl.php
+}}}
+
+As we no longer use TinyMce for editing in [http://www.getpixie.co.uk/ Pixie].
+Users of the Dutch language must switch their Pixie site to English prior to upgrading but can then return the site back to Dutch after the upgrade is successful.
+
 To improve search engines such as google's, ability to index your website, you should change the line :
 
 {{{
@@ -47,18 +59,42 @@ Sitemap: http://www.yoursite.com/sitemap.xml.php
 (Replacing "www.yoursite.com" With the your website's address)
 In the file : robots.txt.
 
-The [http://code.google.com/p/pixie-cms/wiki/TemplateOverrides template override] feature theme file name has changed from : index.php to : theme.php. So if you have created a template which uses the [http://code.google.com/p/pixie-cms/wiki/TemplateOverrides template override] feature, the index.php file in your theme's folder needs to be renamed to : theme.php.
+The [http://code.google.com/p/pixie-cms/wiki/TemplateOverrides template override] feature theme file name has changed from : index.php to : theme.php. So if you have created a template which uses the [http://code.google.com/p/pixie-cms/wiki/TemplateOverrides template override] feature, the index.php file in your theme's folder needs to be renamed to : theme.php
+
+All live user facing Pixie websites must turn on clean urls for security reasons. Due to a php "Quirk" One of php's functions does not perform exactly as initially assumed and the particular function's use can open a security hole which could be compromised by an attacker.
+It is for this reason, until the huge amount of code changes involved (Planned for the next released) That clean urls must be enabled. The exploit is prevented by using a rule set in the .htaccess file and turning on clean urls in Pixie's admin area activates the use of the rule set on your web server.
+The upgrade option to install the new .htaccess file to protect your Pixie web site is named "New! .htaccess" And it is highly recommended that every Pixie site has that upgrade option applied to it.
+
+You are advised to select the correct time zone for your server when upgrading using the upgrade utility. If your time zone is not listed, you can edit the file admin/config.php to add your correct time zone after upgrading by selecting the correct one from [http://php.net/manual/en/timezones.php this] list. The setting does not effect the time zone off set selected in Pixie's admin area, it it used for php 5's time and date functions on your web server because php 5 has a new time and date method.
+
+The file admin/jscript/public.js.php has changed and is likely a file that you use if you add javascript to your [http://www.getpixie.co.uk/ Pixie] web site. If you were using admin/jscript/public.js.php, you will need to port your code to the new file for security reasons. To do so, uncomment the line :
+
+{{{/* extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie'); */}}}
+
+To :
+
+{{{extract($_REQUEST, EXTR_PREFIX_ALL, 'pixie');}}}
+
+And place your javascript code below the closing php tag :
+
+{{{?>}}}
+
+Once you have completed that step, you must change any of [http://www.getpixie.co.uk/ Pixie]'s variables that you are using in your script to contain the the prefix :
+
+{{{pixie_}}}
+
+So, if you are using [http://www.getpixie.co.uk/ Pixie]'s {{{$s}}} variable for example, that variable is now called :
+
+{{{$pixie_s}}}
 
 IN PROGRESS - TODO :
 
 Explain stuff in upgrade utility
 
 UTF-8
-.htaccess for extract request
-timezone
-define direct access
-public.js extract turned off and pixie prefix $pixie_s
 
-Delete the following from the existing site :
-FOLDER : admin/jscript/tiny_mce
-FILE : admin/lang/dutch-nl.php
+Convert the database
+
+Do you want to try to convert your database to use character set utf8 and collate utf8_unicode_ci? (Only do this if you have backed up your database and your database is not UTF-8.)
+
+define direct access
