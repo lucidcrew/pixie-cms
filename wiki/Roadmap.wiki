@@ -15,7 +15,7 @@ A very rough outline for the development of new features.
   * ~~Bring total amount of themes to 20+.~~ (Status : Complete! 20+ Themes and counting on getpixie.co.uk)
   * Subscribe to RSS of a certain user in multi user blogs (e.g. I want to see all Scott's posts). (Status : Pending)
   * ~~Table prefix during install to allow more than one site per database.~~ (Status : Complete!)
-  * More languages. (Status : Pending (More languages have been added.))
+  * More languages by integrating [http://code.google.com/apis/ajaxlanguage/ Google AJAX Language API]. (Status : Pending (More languages have been added.))
 
 ==== Version 1.2 ====
   
