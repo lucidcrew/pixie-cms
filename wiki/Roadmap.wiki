@@ -32,7 +32,7 @@ A very rough outline for the development of new features.
 ==== Version 1.4 ====
 
   * Improved dashboard with much better [http://www.alistapart.com/d/accessibledata/example-final.html statistics visualisation] and Digg spy style updates. (Status : Unknown - Involves analytics.)
-  * Video player for uploaded videos. (Status : Potentially invalid due to html 5 video element. We can swap thickbox for http://catcubed.com/2008/12/23/ceebox-a-thickboxvideobox-mashup/ to  make embeds from yuotube, etc easy.)
+  * Video player for uploaded videos. (Status : Potentially invalid due to html 5 video element. We can swap thickbox for http://catcubed.com/2008/12/23/ceebox-a-thickboxvideobox-mashup/ to  make embeds from youtube, vimeo, etc easy.)
 
 ==== Version 1.5 ====
   
