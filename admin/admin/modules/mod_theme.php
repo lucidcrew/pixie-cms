@@ -56,15 +56,15 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 		if ($fd) {
 			while (($part = @readdir($fd)) == true) {
 				if ($part != "." && $part != "..") {
-					$newdir = $dir.$part;   
-					if (is_dir($newdir) && preg_match('/^[A-Za-z].*[A-Za-z]$/', $part)) {
+	         		$newdir = $dir.$part;   
+	         		if (is_dir($newdir) && preg_match('/^[A-Za-z].*[A-Za-z]$/', $part)) {
 						include "themes/$part/settings.php";
-						if ($part == $site_theme) {
-							echo "\t\t\t\t\t<div class=\"atheme currenttheme\"><a href=\"?s=$s&amp;x=$x&amp;do=$part\" title=\"".$lang['theme_apply']."\"><img src=\"themes/$part/thumb.jpg\" alt=\"".$lang['nav2_theme'].": $theme_name\" class=\"ticon\"/></a><span class=\"tname\">$theme_name</span><span class=\"tcreator\">".$lang['by']." <a href=\"$theme_link\">$theme_creator</a></span><span class=\"tselect\">Current theme</span></div>\n"; 
-						} else { 
-							echo "\t\t\t\t\t<div class=\"atheme\"><a href=\"?s=$s&amp;x=$x&amp;do=$part\" title=\"".$lang['theme_apply']."\"><img src=\"themes/$part/thumb.jpg\" alt=\"".$lang['nav2_theme'].": $theme_name\" class=\"ticon\"/></a><span class=\"tname\">$theme_name</span><span class=\"tcreator\">".$lang['by']." <a href=\"$theme_link\">$theme_creator</a></span><span class=\"tselect\"><a href=\"?s=$s&amp;x=$x&amp;do=$part\" title=\"".$lang['theme_apply']."\">".$lang['theme_apply']."</a></span></div>\n"; 
-						}
-					}
+	          			if ($part == $site_theme) {
+	          				echo "\t\t\t\t\t<div class=\"atheme currenttheme\"><a href=\"?s=$s&amp;x=$x&amp;do=$part\" title=\"".$lang['theme_apply']."\"><img src=\"themes/$part/thumb.jpg\" alt=\"".$lang['nav2_theme'].": $theme_name\" class=\"ticon\"/></a><span class=\"tname\">$theme_name</span><span class=\"tcreator\">".$lang['by']." <a href=\"$theme_link\">$theme_creator</a></span><span class=\"tselect\">Current theme</span></div>\n"; 
+	          			} else { 
+	          				echo "\t\t\t\t\t<div class=\"atheme\"><a href=\"?s=$s&amp;x=$x&amp;do=$part\" title=\"".$lang['theme_apply']."\"><img src=\"themes/$part/thumb.jpg\" alt=\"".$lang['nav2_theme'].": $theme_name\" class=\"ticon\"/></a><span class=\"tname\">$theme_name</span><span class=\"tcreator\">".$lang['by']." <a href=\"$theme_link\">$theme_creator</a></span><span class=\"tselect\"><a href=\"?s=$s&amp;x=$x&amp;do=$part\" title=\"".$lang['theme_apply']."\">".$lang['theme_apply']."</a></span></div>\n"; 
+	          			}	
+	        		}
 				}
 			}
 		}

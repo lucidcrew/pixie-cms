@@ -115,7 +115,7 @@ if ($GLOBALS['pixie_user'] && $GLOBALS['pixie_user_privs'] >= 2) {
 						<h3><?php
 	echo $lang['database_backups'];
 ?></h3>
-
+			
 <?php
 	$dir = "../files/sqlbackups/";
 	if (is_dir($dir)) {
