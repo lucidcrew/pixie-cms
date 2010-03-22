@@ -1,0 +1,230 @@
+/******************************************************* // Bus Full of Hippies Print style // *****************************************************/
+
+/* Hide elements that do not need printing */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+#tools
+	{
+	display: none;
+	}
+
+#navigation
+	{
+	display: none;
+	}
+
+#content_blocks
+	{
+	display: none;
+	}
+
+#footer
+	{
+	display: none;
+	}
+
+.form, form
+	{
+	display: none;
+	}
+
+#admin_header
+	{
+	display: none;
+	}
+	
+.post_edit
+	{
+	display: none;
+	}
+	
+#extradiv_1, #extradiv_2, #extradiv_3, #extradiv_4,
+#extradiv_a, #extradiv_b, #extradiv_c, #extradiv_d
+	{
+	display: none;
+	}
+
+/* Set the typography and styles for print */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+body
+	{
+  	font: normal 75% "Trebuchet MS", "Lucida Grande", "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
+	line-height: 1.5;
+  	color: #666;
+  	background: none;
+	}
+
+h1, h2, h3, h4, h5, h6
+	{
+ 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+	font-weight: bold;
+	color: #60761b;
+	}
+
+p
+	{
+	line-height: 18pt;
+	}
+
+/* General */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+#site_strapline
+	{
+	font-weight: normal;
+	}
+
+/* journal */
+
+.section
+	{
+	margin-bottom: 30px;
+	padding-bottom: 30px;
+	border-bottom: 1px solid #8CAE26;
+	}
+	
+.gr
+	{
+	display: none;
+	}
+	
+.comment_admin
+	{
+	color: #000;
+	}
+	
+.comment
+	{
+	border-bottom: 1px solid #CCC;	
+	margin-bottom: 20px;
+	}
+	
+.post_credits span
+	{
+	display: block;
+	}
+	
+.post_links li
+	{
+	list-style-type: none;
+	text-indent: -40px;
+	}
+	
+.message_time abbr
+	{
+	font-size: 1em;
+	display: block;
+	border-bottom: none;
+	}
+
+/* Links */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+a:link, a:visited 
+	{
+	color: #60761b;
+	background: transparent;
+	font-weight:700;
+	text-decoration: underline;
+	}
+
+/* Expand every link */
+
+#content a:link:after, #content a:visited:after 
+	{
+   	content: " (" attr(href) ") ";
+   	font-size: 90%;
+   	}
+   
+/* Tables */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+table
+	{
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid #CCC;
+	}
+
+th, tr, td
+	{
+	border: 1px solid #CCC;
+	}
+
+
+/* Custom / RTE classes */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+.dotrule
+	{
+	border-bottom: 1px dashed; color: #8CAE26;
+	}
+
+.hrule
+	{
+	color: #8CAE26;
+	}
+	
+.right
+	{
+	float:right;
+	}
+
+.left
+	{
+	float:left;
+	}
+
+.clear
+	{
+	clear: both;
+	}
+
+.small  
+	{ 
+	font-size: .8em; 
+	margin-bottom: 1.875em; 
+	line-height: 1.875em;
+	}
+	
+.large  
+	{ 
+	font-size: 1.2em; 
+	line-height: 2.5em; 
+	margin-bottom: 1.25em; 
+	}
+		
+.quiet  
+	{ 
+	color: #666; 
+	}
+		
+.hide   
+	{ 
+	display:none; 
+	}
+
+.highlight
+	{
+	background: #cfe493;
+	}
+	
+caption 
+	{ 
+	background: #e3f1ba; 
+	}
+	
+blockquote
+	{
+	color: #969696; 
+	font-style: italic; 
+	}
+
+/********************************************************** // End // ********************************************************/

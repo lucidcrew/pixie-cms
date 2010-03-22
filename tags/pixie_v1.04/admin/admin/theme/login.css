@@ -1,0 +1,8 @@
+/* pixie Login */
+.form_item_check{float:left;position:relative;top:-17px;}
+.form_label_small{margin-left:20px;font-size:9pt;}
+.forgotten,.return{font-family:Verdana, sans-serif;font-size:8pt;padding-left:15px;vertical-align:baseline;}
+.forgotten{background-image:url(images/icons/padlock_close.png);background-repeat:no-repeat;background-position:0 3px;}
+.return{background-image:url(images/icons/site.png);background-repeat:no-repeat;background-position:0 3px;}
+#login ul{padding-top:10px;list-style:none;}
+#nav_1{display:none;}

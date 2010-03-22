@@ -1,0 +1,146 @@
+/******************************************************* // itheme Dynamic pages // *****************************************************/
+
+/* Styles dynamic/blog pages */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/
+
+#content h3
+	{
+	display: none;
+	}
+
+.section h4, .section h4 a
+	{
+	margin-bottom: 0.3em;
+	}
+
+.section
+	{
+	border-bottom: 1px solid #88cfed;
+	margin-bottom: 15px;
+	padding-bottom: 15px;
+	}
+
+.post_links
+	{
+	margin-bottom: 15px;
+	}
+	
+.post_links li
+	{
+	list-style-type: none;
+	display: inline;
+	margin-right: 30px;
+	}
+	
+.published
+	{
+	display: block;
+	border: none;
+	margin-bottom: 15px;
+	}
+	
+.post_comments a
+	{
+	background: url(images/icons/comments.gif) 0px 3px no-repeat;
+	padding: 4px 0px 2px 23px;
+	}
+	
+.post_permalink a
+	{
+	background: url(images/icons/mini-blogroll.gif) 1px -3px no-repeat;
+	padding: 0px 0px 2px 18px;
+	}
+	
+.post_credits span
+	{
+	display: block;
+	}
+	
+.post_credits .author
+	{
+	background: url(images/icons/mini-user.gif) no-repeat;
+	padding-left: 17px;
+	}
+	
+.post_tags
+	{
+	background: url(images/icons/mini-page.gif) no-repeat;
+	padding-left: 17px;
+	}
+	
+/* pagination */
+
+.link_next a
+	{
+	float: right;
+	}
+	
+#nav_posts
+	{
+	margin-bottom: 20px;
+	height: 20px;
+	width: 495px;
+	}
+		
+/* comments */
+
+#comments
+	{
+	margin-bottom: 30px;
+	}
+
+#comments_title
+	{
+	font-size: 1.4em;
+	border-bottom: none;
+	}
+
+.comment
+	{
+	border-bottom: 1px solid #CCC;
+	padding: 10px 10px 0px 10px;
+	margin-bottom: 8px;
+	overflow: hidden;
+	}
+
+.message_body
+	{
+	margin-left: 55px;
+	}
+	
+#comments_title
+	{
+	margin-bottom: 10px;
+	}
+
+.gr
+	{
+	float: left;
+	border: 2px solid #ccc;
+	}
+
+.message_name
+	{
+	margin-left: 15px;
+	}
+	
+.message_time abbr
+	{
+	margin-left: 55px;
+	font-size: 1em;
+	}
+	
+.comment_admin
+	{
+	color: #44a1d0;;
+	}
+	
+/* comment form */
+
+#commentform .notice
+	{
+	display: none;
+	}
+	
+/********************************************************** // End // ********************************************************/
