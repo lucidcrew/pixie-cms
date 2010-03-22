@@ -1,0 +1,61 @@
+/******************************************************* // Theme Name IE6 Styles // *****************************************************/
+
+/* IE6 specific styles */
+/*///////////////////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////*/	
+
+#content
+	{
+	padding-bottom: 40px;
+	}
+	
+legend
+	{
+	margin-left: -8px;
+	padding-top: 0;
+	margin-top: 0;
+	}
+
+/* blocks */
+
+#content_blocks
+	{
+	padding-left: 5px;
+	}
+
+/* dynamic */
+
+.post_1, .single
+	{
+	background: none !important;
+	}
+
+.section
+	{
+	background: url(images/entry-bg.png) -15px 0px no-repeat;
+	padding: 15px 15px 0px 0px;
+	}
+	
+/* pagination */
+
+#nav_pages, #nav_posts
+	{
+	margin-bottom: 30px;
+	}
+	
+/* comments */
+
+#comments
+	{
+	margin-bottom: 20px;
+	}
+	
+/* forms */
+
+select
+	{
+	margin-left: -3px;
+	width: 313px;
+	}
+
+/********************************************************** // End // ********************************************************/

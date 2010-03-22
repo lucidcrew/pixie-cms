@@ -1,0 +1,26 @@
+/* IE7 only */
+#pixie_footer{clear:both;overflow:hidden;}
+legend{margin-bottom:20px;}
+fieldset{padding-top:0;padding-bottom:10px;margin:0;}
+#log_tools li,#page_tools li{margin-right:-3px;height:20px;position:relative;background-position:0 2px;padding:0;}
+#page_tools li{margin-right:1px;background-position:0 0;background-color:#bdd49a;padding:0;}
+#page_tools li:hover{background-image:url(images/bg_button_green.gif);}
+.page_delete,.page_empty{margin-right:-3px;padding:0;}
+.page_delete{background-color:#e4c8c4;}
+.page_empty{background-color:#c8c8c8;background-image:url(images/bg_button_grey.gif);background-repeat:repeat-x;}
+.page_delete:hover{background-image:url(images/bg_button_red.gif);}
+#tool_skip a{font-size:7pt;}
+#admin_block_stats{margin-top:1px;}
+.pcontent .pixie_module_comments{top:10px!important;}
+#mycarousel a{cursor:pointer;}
+#admin_block_search,#admin_block_filemanager,#admin_block_addpage,#admin_block_user{padding-bottom:0;}
+.helper{margin-top:10px;}
+.settings .admin_form{position:relative;top:-70px;}
+#backup{height:300px;}
+.settings .helper{position:relative;top:-50px;}
+.settings .helper h3{position:relative;top:-15px;margin:0;padding:0;}
+/* ----------------------------------------------------------------------------------------------------------------*/
+/* ---------->>> thickbox settings <<<-----------------------------------------------------------------------------*/
+/* ----------------------------------------------------------------------------------------------------------------*/
+.TB_overlayBG{filter:alpha(opacity=75);}
+#TB_HideSelect{filter:alpha(opacity=0);}
