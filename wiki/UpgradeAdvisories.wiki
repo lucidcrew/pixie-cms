@@ -72,7 +72,7 @@ It is for this reason, until the huge amount of code changes involved (Planned f
 The upgrade option to install the new .htaccess file to protect your Pixie web site is named "New! .htaccess" And it is highly recommended that every Pixie site has that upgrade option applied to it.
 
 ===PHP 5 time zone setting===
-You are advised to select the correct time zone for your server when upgrading using the upgrade utility. If your time zone is not listed, you can edit the file admin/config.php to add your correct time zone after upgrading by selecting the correct one from [http://php.net/manual/en/timezones.php this] list. The setting does not effect the time zone off set selected in Pixie's admin area, it it used for php 5's time and date functions on your web server because php 5 has a new time and date method.
+You are advised to select the correct time zone for your server when upgrading using the upgrade utility. If your time zone is not listed, you can edit the file admin/config.php to add your correct time zone after upgrading by selecting the correct one from [http://php.net/manual/en/timezones.php this] list. The setting does not effect the time zone off set selected in Pixie's admin area, it is used for php 5's time and date functions on your web server because php 5 has a new time and date method.
 
 ===public.js.php security fixes===
 The file admin/jscript/public.js.php has changed and is likely a file that you use if you add javascript to your [http://www.getpixie.co.uk/ Pixie] web site. If you were using admin/jscript/public.js.php, you will need to port your code to the new file for security reasons. To do so, uncomment the line :
@@ -121,4 +121,7 @@ Like this :
 
 In the file : admin/config.php after upgrading and the old behaviour will return. Manually copying the content you can then remove the hashes you added to config.php to create or edit the post to work with the new method.
 English language users will not see any difference selecting this upgrade option from the upgrade utility but it is still recommended to select it and English language users do not need to backup any of their posts before selecting this upgrade.
+
+===Underscore characters in post titles (And slugs)===
+If you have created any pages with an underscore originally _ in the title, those pages will not work any longer in Pixie. They must be recreated a fresh by copying the original page source, creating a new page and pasting the copied source into it.
 -------
