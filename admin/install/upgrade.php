@@ -346,7 +346,7 @@ ExpiresByType text/html A1
 # End - .htaccess rules";
 	fwrite($fh, $data_1);
 	fclose($fh);
-	@chmod('../../.htaccess', 0644); // Try to chmod the .htaccess file
+	/* @chmod('../../.htaccess', 0644); */ /* Disabled due to possible bug */
 }
 if ((isset($pixie_db_patch)) && ($pixie_db_patch == 'yes')) {
 	$fh = fopen('../config.php', 'w') or $error .= "Please check the permissions of the file admin/config.php and enable writing to it. Then please click <a href=\"./upgrade.php\">here</a> and try again.";
