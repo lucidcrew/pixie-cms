@@ -20,7 +20,7 @@ global $timezone;
 define('TZ', "$timezone");
 /* Time zone fix (php 5.1.0 or newer will set it's server time zone using function date_default_timezone_set!) */
 /* Vars that need to be defined first */
-$pixie_version         = '1.04';
+$pixie_version         = '1.05.dev';
 /* You can define the version number for Pixie releases here */
 $pixie_user            = 'Pixie Installer';
 /* The name on the first log */
@@ -676,7 +676,7 @@ ExpiresByType text/html A1
 # End - .htaccess rules";
 				fwrite($fh, $data);
 				fclose($fh);
-				@chmod('../../.htaccess', 0644); // Try to chmod the .htaccess file
+				/* @chmod('../../.htaccess', 0644); */ /* Disabled due to possible bug */  // Try to chmod the .htaccess file
 			}
 			/* I don't know if the following will work but if it does, we should use it or similar after config.php's creation too. */
 			/* if (!file_exists('../../.htaccess') or filesize('../../.htaccess') < 10) {

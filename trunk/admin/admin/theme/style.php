@@ -54,7 +54,7 @@ if (($refering['host'] == $_SERVER['HTTP_HOST'])) {
 	@import url(navigation.css);
 	";
 	if (isset($pixie_s)) {
-		$file = $pixie_s . '.css';
+		$file = "{$pixie_s}.css";
 		if (file_exists($file)) {
 			echo "@import url($file);";
 		}
