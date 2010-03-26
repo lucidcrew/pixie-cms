@@ -47,7 +47,7 @@ A very rough outline for the development of new features.
 ==== Version 1.6 ====
 
   * Page caching. (Status : Pending)
-  * iPhone version based on [http://www.davidcann.com/iphone/ iPhone interface JavaScript library]. (Status : Unknown - Why not an iphone app instead?)
+  * iPhone version based on [http://www.davidcann.com/iphone/ iPhone interface JavaScript library]. (Status : Unknown - The project was created in 2007 and no longer works. Why not an iphone app instead?)
 
 ==== Version 1.7 ====
 
