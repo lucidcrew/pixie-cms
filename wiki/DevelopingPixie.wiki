@@ -166,7 +166,7 @@ Pixie's javascript code uses true, false and null (Must be lower case.)
 
 =====(Proposal)=====
 
-All variables and arrays a part from the super globals must be prefixed with the string :
+All variables and arrays a part from the super globals and $this should be prefixed with the string :
 
 {{{
 pixie_
