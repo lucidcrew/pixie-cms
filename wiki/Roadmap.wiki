@@ -21,7 +21,7 @@ A very rough outline for the development of new features.
   
   * More install options with new modules (specifically for business sites/users). (Status : Pending)
   * ~~Upload functionality to be given in/around [http://tinymce.moxiecode.com TinyMce].~~ (Status : Complete! CKEditor has this ability.)
-  * Upgraded [http://jqueryfordesigners.com/slider-gallery/ page carousel]. (Status : Pending - HIGH PRIORITY)
+  * Upgraded [http://jqueryfordesigners.com/slider-gallery/ page carousel] [http://nettuts.s3.amazonaws.com/358_jquery/example%20files/example3.html menu]. (Status : Pending - HIGH PRIORITY)
   * Site search module/plugin. (Status : Pending - HIGH PRIORITY)
 
 ==== Version 1.3 ====
