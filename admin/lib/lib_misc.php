@@ -66,9 +66,6 @@ define('PIXIE_DEBUG', 'no');
 	 */
 if (!function_exists('stripos')) {
 	function stripos($haystack, $needle, $offset = 0) {
-		if (function_exists('stripos')) {
-			return stripos($haystack, $needle, $offset);
-		} else {
 			if (is_string($needle)) {
 				$needle = strtolower($needle);
 			}
@@ -81,7 +78,6 @@ if (!function_exists('stripos')) {
 			}
 
 			return strpos(strtolower($haystack), $needle, $offset);
-		}
 	}
 }
 /* An exit on error function */
