@@ -45,7 +45,45 @@ if (defined('PIXIE_DEBUG')) {
 define('PIXIE_DEBUG', 'no');
 /* Set debug to yes to log errors */
 // ------------------------------------------------------------------
+	/**
+	 * Re-implementation of PHP 5's stripos()
+	 *
+	 * Borrowed from simplepie for php4 (admin/lib/lib_simplepie.php)
+	 *
+	 * Returns the numeric position of the first occurrence of needle in the
+	 * haystack string.
+	 *
+	 * @static
+	 * @access string
+	 * @param object $haystack
+	 * @param string $needle Note that the needle may be a string of one or more
+	 *     characters. If needle is not a string, it is converted to an integer
+	 *     and applied as the ordinal value of a character.
+	 * @param int $offset The optional offset parameter allows you to specify which
+	 *     character in haystack to start searching. The position returned is still
+	 *     relative to the beginning of haystack.
+	 * @return bool If needle is not found, stripos() will return boolean false.
+	 */
+if (!function_exists('stripos')) {
+	function stripos($haystack, $needle, $offset = 0) {
+		if (function_exists('stripos')) {
+			return stripos($haystack, $needle, $offset);
+		} else {
+			if (is_string($needle)) {
+				$needle = strtolower($needle);
+			}
+			elseif (is_int($needle) || is_bool($needle) || is_double($needle)) {
+				$needle = strtolower(chr($needle));
+			}
+			else {
+				trigger_error('needle is not a string or an integer', E_USER_WARNING);
+				return false;
+			}
 
+			return strpos(strtolower($haystack), $needle, $offset);
+		}
+	}
+}
 /* An exit on error function */
 // ------------------------------------------------------------------
 function pixieExit() {
