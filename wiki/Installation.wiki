@@ -31,7 +31,7 @@ I am not a big fan of requirements, they are restricting and a little bit compli
 
 ==== Web Hosting ====
 
-Web hosting is cheap and easy to come by these days. You may already have some with your Internet service provider (ISP). Our recommended hosting provider is [http://www.arvixe.com/516-22-3-11.html Arvixe] who provide a one click install of Pixie.
+Web hosting is cheap and easy to come by these days. You may already have some with your Internet service provider (ISP). Our recommended hosting provider is [http://www.quicklyweb.com/aff.php?aff=011 QuicklyWeb].
 
 ==== Uploading your files ====
 
